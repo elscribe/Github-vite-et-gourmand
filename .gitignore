@@ -1,0 +1,120 @@
+# Dependencies
+# Dependencies can be reinstalled from lockfiles and package manifests.
+node_modules/
+vendor/
+bower_components/
+jspm_packages/
+web_modules/
+
+# Environment variables and secrets
+# Keep real credentials out of Git. Keep examples for reviewers and jury setup.
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
+*.local
+*.secret
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_dsa
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+composer-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+tmp/
+temp/
+
+# Build output
+# Generated folders should not be reviewed or committed.
+dist/
+build/
+public/build/
+.next/
+out/
+.nuxt/
+.output/
+.svelte-kit/
+.vite/
+.vuepress/dist/
+.docusaurus/
+
+# Test and coverage output
+coverage/
+*.lcov
+.nyc_output/
+.phpunit.result.cache
+htmlcov/
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.npm/
+.pnpm-store/
+.yarn-integrity
+*.tsbuildinfo
+
+# Package archives
+*.tgz
+
+# Yarn Berry
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Operating system files
+# Local machine noise, not project source.
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.localized
+Icon?
+__MACOSX/
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*~
+.nfs*
+
+# IDE and editor files
+# Keep shared VS Code project files if they are intentionally added later.
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+!*.code-workspace
+*.vsix
+
+# Project-specific local files
+*.bak
+*.backup
+*.tmp
+*.swp
+*.swo
