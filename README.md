@@ -317,12 +317,9 @@ Livrables UML :
 
 Base relationnelle :
 
-- [Creation SQL](database/sql/create.sql)
 - [Creation SQL complete](database/sql/create_database.sql)
-- [Donnees de demonstration](database/sql/seed.sql)
 - [Donnees de demonstration completes](database/sql/seed_database.sql)
-- [Index SQL](database/sql/indexes.sql)
-- [Vues SQL](database/sql/views.sql)
+- [Ancien decoupage SQL archive](database/sql/legacy/README.md)
 
 Base NoSQL :
 

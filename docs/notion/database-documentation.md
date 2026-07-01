@@ -13,10 +13,9 @@ Documenter la transformation de l'enonce ECF en modele de donnees, scripts SQL e
 - `docs/database/MLD.drawio` et `docs/database/MLD.png` : modele logique de donnees.
 - `docs/database/MPD.drawio` et `docs/database/MPD.png` : modele physique de donnees.
 - `docs/database/data-dictionary.md` : dictionnaire de donnees.
-- `database/sql/create.sql` : creation de la base relationnelle.
-- `database/sql/seed.sql` : donnees de demonstration.
-- `database/sql/indexes.sql` : index.
-- `database/sql/views.sql` : vues utiles.
+- `database/sql/create_database.sql` : creation complete de la base relationnelle.
+- `database/sql/seed_database.sql` : donnees de demonstration completes.
+- `database/sql/legacy/` : ancien decoupage SQL conserve uniquement comme archive.
 - `database/mongodb/collections.md` : collections MongoDB.
 - `database/mongodb/sample-data.json` : exemples de documents statistiques.
 - `docs/database/database-choices.md` : justification orale.

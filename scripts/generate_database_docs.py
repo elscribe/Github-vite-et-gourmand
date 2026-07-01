@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def ensure_dirs() -> None:
     for path in [
         ROOT / "database/sql",
+        ROOT / "database/sql/legacy",
         ROOT / "database/mongodb",
         ROOT / "docs/database",
         ROOT / "docs/uml",
@@ -355,9 +356,9 @@ def make_markdown_docs() -> None:
 
         Statut : conforme.
 
-        - `create.sql` reprend les tables, cles primaires, cles etrangeres, contraintes et controles de domaine du MPD.
-        - `indexes.sql` ajoute les index utiles aux recherches de menus, commandes, avis et statistiques.
-        - `seed.sql` contient des donnees de demonstration pour utilisateur, employe, administrateur, menus, plats, commandes et avis.
+        - `create_database.sql` reprend les tables, cles primaires, cles etrangeres, contraintes, controles de domaine et index du MPD.
+        - `seed_database.sql` contient les donnees de demonstration completes.
+        - L'ancien decoupage `create.sql`, `seed.sql`, `indexes.sql` et `views.sql` est conserve dans `database/sql/legacy/` uniquement comme archive de travail.
 
         ## Coherence MongoDB -> besoins administrateur
 
@@ -411,10 +412,9 @@ def make_markdown_docs() -> None:
         - `docs/database/MLD.drawio` et `docs/database/MLD.png` : modele logique de donnees.
         - `docs/database/MPD.drawio` et `docs/database/MPD.png` : modele physique de donnees.
         - `docs/database/data-dictionary.md` : dictionnaire de donnees.
-        - `database/sql/create.sql` : creation de la base relationnelle.
-        - `database/sql/seed.sql` : donnees de demonstration.
-        - `database/sql/indexes.sql` : index.
-        - `database/sql/views.sql` : vues utiles.
+        - `database/sql/create_database.sql` : creation complete de la base relationnelle.
+        - `database/sql/seed_database.sql` : donnees de demonstration completes.
+        - `database/sql/legacy/` : ancien decoupage SQL conserve uniquement comme archive.
         - `database/mongodb/collections.md` : collections MongoDB.
         - `database/mongodb/sample-data.json` : exemples de documents statistiques.
         - `docs/database/database-choices.md` : justification orale.
@@ -456,7 +456,7 @@ TABLE_DESCRIPTIONS = {
 
 def make_sql() -> None:
     write(
-        "database/sql/create.sql",
+        "database/sql/legacy/create.sql",
         """
         CREATE DATABASE IF NOT EXISTS vite_gourmand
           CHARACTER SET utf8mb4
@@ -704,7 +704,7 @@ def make_sql() -> None:
     )
 
     write(
-        "database/sql/indexes.sql",
+        "database/sql/legacy/indexes.sql",
         """
         USE vite_gourmand;
 
@@ -726,7 +726,7 @@ def make_sql() -> None:
     )
 
     write(
-        "database/sql/views.sql",
+        "database/sql/legacy/views.sql",
         """
         USE vite_gourmand;
 
@@ -778,7 +778,7 @@ def make_sql() -> None:
     )
 
     write(
-        "database/sql/seed.sql",
+        "database/sql/legacy/seed.sql",
         """
         USE vite_gourmand;
 
