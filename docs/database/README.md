@@ -8,6 +8,7 @@ Cette section regroupe les livrables de modelisation et de base de donnees du pr
 - [Dictionnaire de donnees](data-dictionary.md)
 - [Choix techniques base de donnees](database-choices.md)
 - [Rapport d'audit](audit-report.md)
+- [Audit des scripts SQL et MongoDB](scripts-audit.md)
 
 ## Merise
 
@@ -21,7 +22,9 @@ Cette section regroupe les livrables de modelisation et de base de donnees du pr
 ## SQL
 
 - [Creation SQL](../../database/sql/create.sql)
+- [Creation SQL complete](../../database/sql/create_database.sql)
 - [Donnees de demonstration](../../database/sql/seed.sql)
+- [Donnees de demonstration completes](../../database/sql/seed_database.sql)
 - [Index](../../database/sql/indexes.sql)
 - [Vues](../../database/sql/views.sql)
 
@@ -29,6 +32,8 @@ Cette section regroupe les livrables de modelisation et de base de donnees du pr
 
 - [Collections MongoDB](../../database/mongodb/collections.md)
 - [Exemples de documents](../../database/mongodb/sample-data.json)
+- [Creation collections MongoDB](../../database/mongodb/create_collections.js)
+- [Seed MongoDB](../../database/mongodb/seed_mongodb.js)
 
 ## UML
 

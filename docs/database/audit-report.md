@@ -37,8 +37,9 @@ Statut : conforme.
 
 Statut : conforme.
 
-- La collection principale `menu_statistics` contient `menuId`, `menuName`, `totalOrders`, `revenue`, `averagePersons`, `period` et `updatedAt`.
-- Les documents sont filtres par periode et exploitables pour comparer les menus.
+- Les collections principales sont `menu_statistics`, `monthly_statistics` et `dashboard_statistics`.
+- `menu_statistics` contient notamment `menuId`, `menuTitle`, `orders`, `revenue`, `averageBasket`, `averageRating`, `lastOrder` et `updatedAt`.
+- `monthly_statistics` et `dashboard_statistics` fournissent les donnees deja agregees pour les graphiques administrateur.
 - MongoDB est limite aux agregats statistiques ; la source de verite reste SQL.
 
 ## Conformite avec l'enonce ECF

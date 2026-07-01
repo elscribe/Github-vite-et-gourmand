@@ -1,53 +1,35 @@
-[
-  {
-    "menuId": 1,
-    "menuName": "Menu Terroir Bordelais",
-    "totalOrders": 12,
-    "revenue": 2280.0,
-    "averagePersons": 7.5,
-    "period": {
-      "start": "2026-06-01",
-      "end": "2026-06-30",
-      "granularity": "month"
-    },
-    "filters": {
-      "theme": "classique",
-      "regime": "classique"
-    },
-    "updatedAt": "2026-06-30T23:00:00Z"
-  },
-  {
-    "menuId": 2,
-    "menuName": "Menu Jardin de Saison",
-    "totalOrders": 8,
-    "revenue": 1080.0,
-    "averagePersons": 5.25,
-    "period": {
-      "start": "2026-06-01",
-      "end": "2026-06-30",
-      "granularity": "month"
-    },
-    "filters": {
-      "theme": "anniversaire",
-      "regime": "vegetarien"
-    },
-    "updatedAt": "2026-06-30T23:00:00Z"
-  },
-  {
-    "menuId": 3,
-    "menuName": "Menu Noel Gourmand",
-    "totalOrders": 18,
-    "revenue": 9360.0,
-    "averagePersons": 14.2,
-    "period": {
-      "start": "2026-12-01",
-      "end": "2026-12-31",
-      "granularity": "month"
-    },
-    "filters": {
-      "theme": "noel",
-      "regime": "classique"
-    },
-    "updatedAt": "2026-12-31T23:00:00Z"
-  }
-]
+{
+  "menu_statistics": [
+    {
+      "menuId": 1,
+      "menuTitle": "Christmas Menu",
+      "orders": 38,
+      "revenue": 29990.0,
+      "averageBasket": 789.21,
+      "averageRating": 4.8,
+      "lastOrder": "2026-12-24T18:30:00Z",
+      "updatedAt": "2026-12-31T23:30:00Z"
+    }
+  ],
+  "monthly_statistics": [
+    {
+      "month": "2026-12",
+      "revenue": 22410.0,
+      "orders": 18,
+      "averageBasket": 1245.0,
+      "bestSellingMenu": "Christmas Menu",
+      "updatedAt": "2026-12-31T23:30:00Z"
+    }
+  ],
+  "dashboard_statistics": [
+    {
+      "generatedAt": "2026-12-31T23:45:00Z",
+      "totalRevenue": 22410.0,
+      "totalOrders": 18,
+      "activeMenus": 6,
+      "topMenu": "Christmas Menu",
+      "averageBasket": 1245.0,
+      "averageRating": 4.8
+    }
+  ]
+}

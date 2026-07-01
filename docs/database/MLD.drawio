@@ -54,7 +54,7 @@
         <mxCell id="t_allergenes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;allergenes&lt;/b&gt;&lt;br&gt;PK id_allergene&lt;br&gt;libelle UNIQUE NOT NULL" vertex="1">
           <mxGeometry height="60" width="140" x="1250" y="190" as="geometry"></mxGeometry>
         </mxCell>
-        <mxCell id="t_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB: menu_statistics&lt;/b&gt;&lt;br&gt;_id ObjectId&lt;br&gt;menuId&lt;br&gt;menuName&lt;br&gt;totalOrders&lt;br&gt;revenue&lt;br&gt;averagePersons&lt;br&gt;period.start / period.end&lt;br&gt;filters.theme / filters.regime&lt;br&gt;updatedAt" vertex="1">
+        <mxCell id="t_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB: menu_statistics&lt;/b&gt;&lt;br&gt;_id ObjectId&lt;br&gt;menuId&lt;br&gt;menuTitle&lt;br&gt;orders&lt;br&gt;revenue&lt;br&gt;averageBasket&lt;br&gt;averageRating&lt;br&gt;lastOrder&lt;br&gt;updatedAt" vertex="1">
           <mxGeometry height="170" width="160" x="990" y="720" as="geometry"></mxGeometry>
         </mxCell>
         <mxCell id="mld_r1" edge="1" parent="1" source="t_roles" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_users" value="Role 1 / 0..* Utilisateur">

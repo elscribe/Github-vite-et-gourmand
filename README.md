@@ -297,6 +297,7 @@ Point d'entree de la documentation :
 - [Dictionnaire de donnees](docs/database/data-dictionary.md)
 - [Justification SQL, MongoDB, Merise et UML](docs/database/database-choices.md)
 - [Rapport d'audit de coherence](docs/database/audit-report.md)
+- [Audit des scripts SQL et MongoDB](docs/database/scripts-audit.md)
 
 Livrables Merise :
 
@@ -317,7 +318,9 @@ Livrables UML :
 Base relationnelle :
 
 - [Creation SQL](database/sql/create.sql)
+- [Creation SQL complete](database/sql/create_database.sql)
 - [Donnees de demonstration](database/sql/seed.sql)
+- [Donnees de demonstration completes](database/sql/seed_database.sql)
 - [Index SQL](database/sql/indexes.sql)
 - [Vues SQL](database/sql/views.sql)
 
@@ -325,6 +328,8 @@ Base NoSQL :
 
 - [Collections MongoDB](database/mongodb/collections.md)
 - [Documents d'exemple MongoDB](database/mongodb/sample-data.json)
+- [Creation collections MongoDB](database/mongodb/create_collections.js)
+- [Seed MongoDB](database/mongodb/seed_mongodb.js)
 
 Documentation Notion :
 

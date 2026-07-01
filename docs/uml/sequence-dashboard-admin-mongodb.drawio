@@ -63,7 +63,7 @@
             <mxPoint x="1475" y="2040" as="targetPoint"></mxPoint>
           </mxGeometry>
         </mxCell>
-        <mxCell id="p_mongo" parent="1" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f0fdf4;strokeColor=#15803d;fontSize=12;fontStyle=1;fontColor=#052e16;dashed=1;" value="MongoDB&#10;menu_statistics" vertex="1">
+        <mxCell id="p_mongo" parent="1" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f0fdf4;strokeColor=#15803d;fontSize=12;fontStyle=1;fontColor=#052e16;dashed=1;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB menu_statistics&lt;/b&gt;&lt;br&gt;_id ObjectId&lt;br&gt;menuId Number&lt;br&gt;menuTitle String&lt;br&gt;orders Number&lt;br&gt;revenue Number&lt;br&gt;averageBasket Number&lt;br&gt;averageRating Number&lt;br&gt;lastOrder Date&lt;br&gt;updatedAt Date" vertex="1">
           <mxGeometry height="60" width="170" x="1660" y="120" as="geometry"></mxGeometry>
         </mxCell>
         <mxCell id="life_mongo" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
@@ -180,7 +180,7 @@
             <mxPoint x="1745" y="1120" as="targetPoint"></mxPoint>
           </mxGeometry>
         </mxCell>
-        <mxCell id="msg_15" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="totalOrders, revenue, averagePersons, period">
+        <mxCell id="msg_15" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="orders, revenue, averageBasket, averageRating">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1745" y="1180" as="sourcePoint"></mxPoint>
             <mxPoint x="935" y="1180" as="targetPoint"></mxPoint>
@@ -222,7 +222,7 @@
             <mxPoint x="1205" y="1650" as="targetPoint"></mxPoint>
           </mxGeometry>
         </mxCell>
-        <mxCell id="msg_22" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Calcule totalOrders, revenue, averagePersons, period">
+        <mxCell id="msg_22" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Calcule orders, revenue, averageBasket, averageRating">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1205" y="1710" as="sourcePoint"></mxPoint>
             <mxPoint x="1205" y="1710" as="targetPoint"></mxPoint>

@@ -1,31 +1,72 @@
 # Collections MongoDB
 
-MongoDB est utilise uniquement pour les statistiques du tableau de bord administrateur. Les donnees metier restent dans la base SQL afin de conserver les cles etrangeres, les contraintes et les transactions.
+MongoDB est utilise pour servir rapidement les graphiques du tableau de bord administrateur. Les donnees metier restent dans MariaDB/MySQL ; les collections ci-dessous contiennent des agregats recalculables depuis les commandes SQL.
 
-## Collection `menu_statistics`
+## Base
 
-Objectif : fournir des donnees deja agregees pour les graphiques administrateur.
+- Base : `vite_gourmand`
+- Scripts :
+  - `create_collections.js` : creation des collections, validateurs et index.
+  - `seed_mongodb.js` : donnees statistiques de demonstration.
 
-Exemple de structure :
+## `menu_statistics`
+
+Statistiques agregees par menu.
 
 | Champ | Type | Description |
 | --- | --- | --- |
-| `_id` | ObjectId | Identifiant du document. |
-| `menuId` | Number | Identifiant SQL du menu. |
-| `menuName` | String | Nom du menu au moment de l'agregation. |
-| `totalOrders` | Number | Nombre de commandes sur la periode. |
-| `revenue` | Number | Chiffre d'affaires sur la periode. |
-| `averagePersons` | Number | Nombre moyen de personnes par commande. |
-| `period.start` | Date/String ISO | Debut de periode. |
-| `period.end` | Date/String ISO | Fin de periode. |
-| `filters.theme` | String | Theme du menu pour filtrage graphique. |
-| `filters.regime` | String | Regime du menu pour filtrage graphique. |
-| `updatedAt` | Date/String ISO | Date de recalcul. |
+| `menuId` | NumberInt | Identifiant SQL du menu. |
+| `menuTitle` | String | Titre du menu. |
+| `orders` | NumberInt | Nombre de commandes du menu. |
+| `revenue` | Number | Chiffre d'affaires du menu. |
+| `averageBasket` | Number | Panier moyen du menu. |
+| `averageRating` | Number | Note moyenne des avis valides. |
+| `lastOrder` | Date | Derniere commande du menu. |
+| `updatedAt` | Date | Date de recalcul. |
 
-## Pourquoi MongoDB plutot que SQL pour ces donnees ?
+Index :
 
-L'enonce demande explicitement que les statistiques administrateur viennent d'une base non relationnelle. Les statistiques sont des donnees de lecture, agregees et recalculables depuis SQL. Les stocker en documents MongoDB permet de servir rapidement un tableau de bord et de conserver des snapshots par periode sans alourdir le modele transactionnel SQL.
+- `menuId` unique.
+- `revenue` descendant.
+- `updatedAt` descendant.
+
+## `monthly_statistics`
+
+Statistiques agregees par mois.
+
+| Champ | Type | Description |
+| --- | --- | --- |
+| `month` | String | Mois au format `YYYY-MM`. |
+| `revenue` | Number | Chiffre d'affaires du mois. |
+| `orders` | NumberInt | Nombre de commandes du mois. |
+| `averageBasket` | Number | Panier moyen mensuel. |
+| `bestSellingMenu` | String | Menu le plus vendu du mois. |
+| `updatedAt` | Date | Date de recalcul. |
+
+Index :
+
+- `month` unique.
+- `revenue` descendant.
+
+## `dashboard_statistics`
+
+Snapshots statistiques du tableau de bord.
+
+| Champ | Type | Description |
+| --- | --- | --- |
+| `generatedAt` | Date | Date de generation du snapshot. |
+| `totalRevenue` | Number | Chiffre d'affaires de la periode affichee. |
+| `totalOrders` | NumberInt | Nombre de commandes de la periode affichee. |
+| `activeMenus` | NumberInt | Nombre de menus actifs. |
+| `topMenu` | String | Menu dominant sur la periode affichee. |
+| `averageBasket` | Number | Panier moyen de la periode affichee. |
+| `averageRating` | Number | Note moyenne de la periode affichee. |
+
+Index :
+
+- `generatedAt` descendant.
+- `topMenu`.
 
 ## Regle de synchronisation
 
-La source de verite reste SQL. Les documents `menu_statistics` sont recalcules apres validation, modification ou annulation d'une commande, ou par une tache planifiee. En cas d'ecart, SQL est prioritaire et MongoDB doit etre regenere.
+MariaDB/MySQL reste la source de verite. MongoDB ne doit pas etre modifie directement par les parcours metier : les collections sont alimentees par un service d'agregation apres creation, modification ou validation de commandes, ou par une tache planifiee.

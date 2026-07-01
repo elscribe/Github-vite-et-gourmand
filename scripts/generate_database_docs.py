@@ -363,7 +363,7 @@ def make_markdown_docs() -> None:
 
         Statut : conforme.
 
-        - La collection principale `menu_statistics` contient `menuId`, `menuName`, `totalOrders`, `revenue`, `averagePersons`, `period` et `updatedAt`.
+        - La collection principale `menu_statistics` contient `menuId`, `menuTitle`, `orders`, `revenue`, `averageBasket`, `period` et `updatedAt`.
         - Les documents sont filtres par periode et exploitables pour comparer les menus.
         - MongoDB est limite aux agregats statistiques ; la source de verite reste SQL.
 
@@ -900,15 +900,13 @@ def make_mongodb() -> None:
         | --- | --- | --- |
         | `_id` | ObjectId | Identifiant du document. |
         | `menuId` | Number | Identifiant SQL du menu. |
-        | `menuName` | String | Nom du menu au moment de l'agregation. |
-        | `totalOrders` | Number | Nombre de commandes sur la periode. |
+        | `menuTitle` | String | Nom du menu au moment de l'agregation. |
+        | `orders` | Number | Nombre de commandes sur la periode. |
         | `revenue` | Number | Chiffre d'affaires sur la periode. |
-        | `averagePersons` | Number | Nombre moyen de personnes par commande. |
-        | `period.start` | Date/String ISO | Debut de periode. |
-        | `period.end` | Date/String ISO | Fin de periode. |
-        | `filters.theme` | String | Theme du menu pour filtrage graphique. |
-        | `filters.regime` | String | Regime du menu pour filtrage graphique. |
-        | `updatedAt` | Date/String ISO | Date de recalcul. |
+        | `averageBasket` | Number | Nombre moyen de personnes par commande. |
+        | `averageRating` | Number | Note moyenne des avis valides. |
+        | `lastOrder` | Date/String ISO | Derniere commande du menu. |
+                | `updatedAt` | Date/String ISO | Date de recalcul. |
 
         ## Pourquoi MongoDB plutot que SQL pour ces donnees ?
 
@@ -923,30 +921,30 @@ def make_mongodb() -> None:
     sample = [
         {
             "menuId": 1,
-            "menuName": "Menu Terroir Bordelais",
-            "totalOrders": 12,
+            "menuTitle": "Menu Terroir Bordelais",
+            "orders": 12,
             "revenue": 2280.0,
-            "averagePersons": 7.5,
+            "averageBasket": 7.5,
             "period": {"start": "2026-06-01", "end": "2026-06-30", "granularity": "month"},
             "filters": {"theme": "classique", "regime": "classique"},
             "updatedAt": "2026-06-30T23:00:00Z",
         },
         {
             "menuId": 2,
-            "menuName": "Menu Jardin de Saison",
-            "totalOrders": 8,
+            "menuTitle": "Menu Jardin de Saison",
+            "orders": 8,
             "revenue": 1080.0,
-            "averagePersons": 5.25,
+            "averageBasket": 5.25,
             "period": {"start": "2026-06-01", "end": "2026-06-30", "granularity": "month"},
             "filters": {"theme": "anniversaire", "regime": "vegetarien"},
             "updatedAt": "2026-06-30T23:00:00Z",
         },
         {
             "menuId": 3,
-            "menuName": "Menu Noel Gourmand",
-            "totalOrders": 18,
+            "menuTitle": "Menu Noel Gourmand",
+            "orders": 18,
             "revenue": 9360.0,
-            "averagePersons": 14.2,
+            "averageBasket": 14.2,
             "period": {"start": "2026-12-01", "end": "2026-12-31", "granularity": "month"},
             "filters": {"theme": "noel", "regime": "classique"},
             "updatedAt": "2026-12-31T23:00:00Z",
@@ -1259,7 +1257,7 @@ def class_diagram() -> None:
         "Allergene": ["id", "libelle"],
         "ContactMessage": ["id", "titre", "email", "traite"],
         "PasswordReset": ["id", "tokenHash", "expiresAt", "usedAt"],
-        "StatistiqueMenu": ["<<Document MongoDB>>", "menuId", "totalOrders", "revenue", "period"],
+        "StatistiqueMenu": ["<<Document MongoDB>>", "menuId", "orders", "revenue", "period"],
     }
     nodes = []
     for name, (x,y) in zip(names, positions):
@@ -1351,7 +1349,7 @@ def make_uml() -> None:
         ("Navigateur","Controleur","Demande statistiques filtrees"),
         ("Controleur","Service","Controle role administrateur"),
         ("Service","MongoDB","Lit menu_statistics"),
-        ("MongoDB","Service","Retourne totalOrders, revenue, averagePersons, period"),
+        ("MongoDB","Service","Retourne orders, revenue, averageBasket, period"),
         ("Service","Navigateur","Construit le graphique depuis MongoDB"),
         ("Service","SQL","Synchronisation separee : lit commandes validees"),
         ("Service","MongoDB","Met a jour les agregats menu_statistics"),
