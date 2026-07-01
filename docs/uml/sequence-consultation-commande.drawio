@@ -1,0 +1,327 @@
+<mxfile host="Electron"><diagram name="SEQ - Consultation + Commande" id="seq_consultation_commande">
+    <mxGraphModel dx="1053" dy="652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2550" pageHeight="2850" math="0" shadow="0">
+      <root>
+        <mxCell id="0"></mxCell>
+        <mxCell id="1" parent="0"></mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#111827;" value="Diagramme de séquence - Consultation + Commande" vertex="1">
+          <mxGeometry height="40" width="1200" x="40" y="20" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#475569;" value="Parcours principal : consulter, filtrer, voir le détail, se connecter si besoin, commander et recevoir une confirmation." vertex="1">
+          <mxGeometry height="35" width="1900" x="40" y="60" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_acteur" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="Visiteur /&#10;Utilisateur" vertex="1">
+          <mxGeometry height="60" width="170" x="80" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_acteur" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="165" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_ui" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="Interface web" vertex="1">
+          <mxGeometry height="60" width="170" x="330" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_ui" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_menu" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="MenuController" vertex="1">
+          <mxGeometry height="60" width="170" x="590" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_menu" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="675" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_auth" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="AuthController" vertex="1">
+          <mxGeometry height="60" width="170" x="850" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_auth" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="935" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="935" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_cmd" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="CommandeController" vertex="1">
+          <mxGeometry height="60" width="170" x="1110" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_cmd" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_prix" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0369a1;fontSize=12;fontStyle=1;fontColor=#0f172a;" value="PrixService" vertex="1">
+          <mxGeometry height="60" width="170" x="1390" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_prix" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_sql" parent="1" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ecfdf5;strokeColor=#047857;fontSize=12;fontStyle=1;fontColor=#052e16;" value="MariaDB" vertex="1">
+          <mxGeometry height="60" width="170" x="1660" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_sql" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1745" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p_mail" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=12;fontStyle=1;fontColor=#451a03;" value="MailService" vertex="1">
+          <mxGeometry height="60" width="170" x="1930" y="120" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="life_mail" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#94a3b8;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2015" y="180" as="sourcePoint"></mxPoint>
+            <mxPoint x="2015" y="2760" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame_1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#94a3b8;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#334155;" value="opt Consultation et filtres dynamiques" vertex="1">
+          <mxGeometry height="290" width="1670" x="45" y="225" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="frame_2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#94a3b8;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#334155;" value="opt Détail menu" vertex="1">
+          <mxGeometry height="290" width="1670" x="45" y="575" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="frame_3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#7c2d12;" value="alt visiteur non authentifié : connexion ou création de compte obligatoire" vertex="1">
+          <mxGeometry height="120" width="900" x="760" y="995" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="frame_4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#94a3b8;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#334155;" value="opt Commande" vertex="1">
+          <mxGeometry height="1540" width="1770" x="45" y="1190" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="frame_5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#dc2626;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#7f1d1d;" value="alt nombre_personnes &lt; minimum ou stock indisponible : erreur, aucune commande créée" vertex="1">
+          <mxGeometry height="135" width="790" x="1025" y="1590" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="msg_1" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Consulte la page menus">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="250" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="250" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_2" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="GET /menus + filtres prix/thème/régime/personnes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="310" as="sourcePoint"></mxPoint>
+            <mxPoint x="675" y="310" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_3" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="SELECT menus actifs + régime + thème">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="370" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="370" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_4" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Menus filtrés">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1745" y="430" as="sourcePoint"></mxPoint>
+            <mxPoint x="675" y="430" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_5" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Affiche liste sans rechargement complet">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="490" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="490" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_6" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Ouvre le détail d'un menu">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="600" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="600" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_7" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="GET /menus/{id}">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="660" as="sourcePoint"></mxPoint>
+            <mxPoint x="675" y="660" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_8" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="SELECT menu, images, plats, allergènes, conditions, stock">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="720" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="720" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_9" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Détail complet">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1745" y="780" as="sourcePoint"></mxPoint>
+            <mxPoint x="675" y="780" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_10" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Affiche détail + conditions visibles">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="840" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="840" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_11" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Clique Commander">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="960" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="960" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_12" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Vérifie session">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="1020" as="sourcePoint"></mxPoint>
+            <mxPoint x="935" y="1020" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_13" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Connecté ou redirection login/register">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="935" y="1080" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="1080" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_14" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Charge formulaire commande prérempli">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="1210" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="1210" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_15" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="SELECT profil client + menu choisi">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1270" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="1270" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_16" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Données compte + minimum + prix + stock">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1745" y="1330" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="1330" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_17" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Formulaire avec menu et infos client">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1390" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="1390" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_18" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Saisit date, heure, lieu, nombre personnes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="1500" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="1500" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_19" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="POST /commandes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="1560" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="1560" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_20" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Relit règles menu + disponibilité">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1620" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="1620" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_21" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Minimum, prix, stock">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1745" y="1680" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="1680" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_22" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Calcule prix menu de base">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1765" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="1765" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_23" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Prix détaillé : menu + remise + livraison">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="2140" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="2140" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_24" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Affiche récapitulatif avant validation">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2200" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="2200" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_25" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Valide la commande">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="165" y="2300" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="2300" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_26" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Confirme création">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="415" y="2360" as="sourcePoint"></mxPoint>
+            <mxPoint x="1195" y="2360" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_27" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="INSERT commandes avec prix_livraison, remise, distance_km">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2420" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="2420" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_28" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="INSERT commande_statuts(en_attente)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2540" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="2540" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_29" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Envoie confirmation commande">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2610" as="sourcePoint"></mxPoint>
+            <mxPoint x="2015" y="2610" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_30" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=11;" value="Affiche commande dans espace client">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2670" as="sourcePoint"></mxPoint>
+            <mxPoint x="415" y="2670" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note_1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;fontColor=#422006;" value="&lt;div&gt;&lt;b&gt;Règles prix&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Bordeaux : prix_livraison = 0 EUR et distance_km = 0.&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Hors Bordeaux : prix_livraison = 5 EUR + 0,59 EUR/km.&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;distance_km est conservée pour justifier le calcul.&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Remise de 10 % si nombre_personnes &amp;gt;= nombre minimum + 5.&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Le stock du menu est décrémenté après validation de la commande.&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="165" width="500" x="1860" y="1510" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="note_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;fontColor=#422006;" value="&lt;b&gt;Traçabilité&lt;/b&gt;&lt;br&gt;La commande démarre en en_attente pour permettre modification/annulation client avant acceptation employé.&lt;br&gt;Le stock du menu est décrémenté après validation de la commande." vertex="1">
+          <mxGeometry height="150" width="500" x="1860" y="2290" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="frame_reduction" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#7c2d12;" value="alt réduction : nombre_personnes &gt;= minimum + 5" vertex="1">
+          <mxGeometry height="160" width="790" x="1025" y="1735" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="msg_discount_apply" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Appliquer remise 10 %">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1810" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="1810" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_discount_none" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Sinon : remise = 0">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1870" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="1870" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame_livraison" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#7c2d12;" value="alt livraison : Bordeaux / hors Bordeaux" vertex="1">
+          <mxGeometry height="220" width="790" x="1025" y="1910" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="msg_delivery_bordeaux" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Bordeaux : prixLivraison=0, distanceKm=0">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="1970" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="1970" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg_delivery_outside" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="Hors Bordeaux : prixLivraison=5 EUR + 0,59 EUR/km">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2030" as="sourcePoint"></mxPoint>
+            <mxPoint x="1475" y="2030" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame_stock" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#94a3b8;fontSize=11;align=left;verticalAlign=top;spacing=6;fontColor=#334155;" value="opt commande validée : décrémenter le stock du menu" vertex="1">
+          <mxGeometry height="175" width="790" x="1025" y="2388" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="msg_stock_update" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;strokeColor=#111827;fontSize=11;" value="UPDATE menus.stock_disponible = stock_disponible - 1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1195" y="2480" as="sourcePoint"></mxPoint>
+            <mxPoint x="1745" y="2480" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  </mxfile>

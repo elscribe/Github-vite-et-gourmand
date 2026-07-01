@@ -9,8 +9,6 @@ Les informations suivantes n'ont pas ete trouvees ou restent a confirmer :
 - fichier `package.json` ;
 - chargement applicatif des variables d'environnement a implementer ;
 - choix definitif entre MySQL et MariaDB ;
-- scripts SQL de creation et d'insertion ;
-- collections MongoDB finales ;
 - strategie d'envoi des emails ;
 - methode de calcul de distance hors Bordeaux ;
 - hebergeur final ;
@@ -246,8 +244,7 @@ Prerequis prevus :
 Les fichiers d'environnement suivants sont disponibles :
 
 - `.env` : fichier local ignore par Git ;
-- `.env.example` : modele principal versionnable ;
-- `docs/env.md` : notes de securite, versioning et permissions.
+- `.env.example` : modele principal versionnable.
 
 Les variables ci-dessous sont documentees pour la future implementation et devront etre chargees par le code applicatif.
 
@@ -260,7 +257,9 @@ Les variables ci-dessous sont documentees pour la future implementation et devro
 | `DB_NAME` | Yes | Nom de la base SQL. |
 | `DB_USER` | Yes | Utilisateur SQL. |
 | `DB_PASSWORD` | Yes | Mot de passe SQL. |
-| `MONGODB_URI` | Yes | URI de connexion MongoDB. |
+| `NOSQL_HOST` | Yes | Hote MongoDB local ou distant. |
+| `NOSQL_PORT` | Yes | Port MongoDB. |
+| `NOSQL_DATABASE` | Yes | Base MongoDB utilisee pour les statistiques. |
 | `MAIL_HOST` | To confirm | Serveur utilise pour l'envoi des emails. |
 | `MAIL_PORT` | To confirm | Port du serveur mail. |
 | `MAIL_USER` | To confirm | Identifiant du service mail. |
@@ -289,44 +288,47 @@ Des captures d'ecran ou GIFs seront utiles lorsque l'interface sera implementee.
 
 ## Database Design
 
-La modelisation actuelle est documentee dans les fichiers d'analyse et UML.
+La modelisation part du MCD fourni dans l'enonce ECF. Les ajouts au schema initial sont documentes lorsqu'ils couvrent une exigence explicite de l'enonce : galerie d'images, horaires, contact, reinitialisation de mot de passe, historique des statuts et statistiques NoSQL.
 
-Documentation disponible :
+Point d'entree de la documentation :
 
-- [Modelisation des donnees et diagrammes UML](../Analyse/analysis/data-models-and-uml.md)
-- [Diagrammes UML - README](../BDD/uml-notion/README.md)
-- [Diagramme de cas d'utilisation](../BDD/uml-notion/01-cas-utilisation.md)
-- [Diagramme de classes](../BDD/uml-notion/02-diagramme-classes.md)
-- [Sequence - passer une commande](../BDD/uml-notion/03-sequence-passer-commande.md)
-- [Activite - parcours de commande](../BDD/uml-notion/04-activite-parcours-commande.md)
-- [Etats de commande](../BDD/uml-notion/05-etats-commande.md)
+- [Documentation base de donnees](docs/database/README.md)
+- [Regles metier et cardinalites](database/business-rules.md)
+- [Dictionnaire de donnees](docs/database/data-dictionary.md)
+- [Justification SQL, MongoDB, Merise et UML](docs/database/database-choices.md)
+- [Rapport d'audit de coherence](docs/database/audit-report.md)
 
-Entites principales identifiees :
+Livrables Merise :
 
-- `utilisateurs`
-- `roles`
-- `commandes`
-- `menus`
-- `plats`
-- `avis`
-- `regimes`
-- `themes`
-- `allergenes`
-- `natures`
+- [MCD draw.io](docs/database/MCD.drawio) / [MCD PNG](docs/database/MCD.png)
+- [MLD draw.io](docs/database/MLD.drawio) / [MLD PNG](docs/database/MLD.png)
+- [MPD draw.io](docs/database/MPD.drawio) / [MPD PNG](docs/database/MPD.png)
 
-Relations principales :
+Livrables UML :
 
-- un utilisateur possede un role ;
-- un utilisateur passe des commandes ;
-- une commande concerne un menu ;
-- un menu est compose de plats ;
-- un menu est associe a un regime et un theme ;
-- un plat peut contenir des allergenes ;
-- un utilisateur peut publier un avis.
+- [Cas d'utilisation](docs/uml/use-case-diagram.drawio) / [PNG](docs/uml/use-case-diagram.png)
+- [Diagramme de classes](docs/uml/class-diagram.drawio) / [PNG](docs/uml/class-diagram.png)
+- [Sequence authentification](docs/uml/sequence-authentication.drawio) / [PNG](docs/uml/sequence-authentication.png)
+- [Sequence consultation et commande](docs/uml/sequence-consultation-commande.drawio) / [PNG](docs/uml/sequence-consultation-commande.png)
+- [Sequence gestion commande employe](docs/uml/sequence-gestion-commande-employe.drawio) / [PNG](docs/uml/sequence-gestion-commande-employe.png)
+- [Sequence gestion avis](docs/uml/sequence-gestion-avis.drawio) / [PNG](docs/uml/sequence-gestion-avis.png)
+- [Sequence dashboard administrateur MongoDB](docs/uml/sequence-dashboard-admin-mongodb.drawio) / [PNG](docs/uml/sequence-dashboard-admin-mongodb.png)
 
-Base NoSQL prevue :
+Base relationnelle :
 
-- MongoDB doit stocker des statistiques agregees, par exemple le nombre de commandes par menu, le chiffre d'affaires par periode et les donnees utiles aux graphiques administrateur.
+- [Creation SQL](database/sql/create.sql)
+- [Donnees de demonstration](database/sql/seed.sql)
+- [Index SQL](database/sql/indexes.sql)
+- [Vues SQL](database/sql/views.sql)
+
+Base NoSQL :
+
+- [Collections MongoDB](database/mongodb/collections.md)
+- [Documents d'exemple MongoDB](database/mongodb/sample-data.json)
+
+Documentation Notion :
+
+- [Page Notion importable](docs/notion/database-documentation.md)
 
 ## Security
 
@@ -392,13 +394,15 @@ npm run lint
 - [x] MCD, MLD et MPD documentes.
 - [x] Diagrammes UML principaux.
 - [x] Agent README renomme en `agents/readme-agent.md`.
-- [x] Fichiers d'environnement simples pour l'ECF : `.env`, `.env.example` et `docs/env.md`.
+- [x] Fichiers d'environnement simples pour l'ECF : `.env` et `.env.example`.
+- [x] Scripts SQL de creation, insertion, vues et index.
+- [x] Strategie MongoDB pour les statistiques administrateur.
+- [x] Historique des statuts de commande documente.
+- [x] Galerie d'images de menus integree au modele.
 
 ### In Progress
 
 - [ ] Finaliser le choix entre MySQL et MariaDB.
-- [ ] Finaliser la strategie MongoDB.
-- [ ] Produire les scripts SQL de creation et d'insertion.
 - [ ] Realiser les maquettes desktop et mobile.
 - [ ] Produire la charte graphique.
 - [ ] Implementer l'application PHP MVC.
@@ -411,8 +415,6 @@ npm run lint
 - [ ] Ajouter des captures d'ecran de l'application.
 - [ ] Ajouter un manuel utilisateur PDF.
 - [ ] Ajouter une strategie RGPD plus detaillee.
-- [ ] Ajouter un historique des statuts de commande.
-- [ ] Ajouter une table ou collection dediee aux images de menus.
 
 ## Documentation
 
@@ -428,7 +430,8 @@ npm run lint
 - [Journal de bord](../Gestion/journal-de-bord.md)
 - [Programme 15 jours](../Gestion/programme-15-jours.md)
 - [Informations de rendu](../Oral/informations-rendu.md)
-- [Variables d'environnement](docs/env.md)
+- [Contexte maître pour agents et développeurs](../AGENT.md)
+- [Documentation officielle base de donnees](../docs/database.md)
 
 ## Author
 

@@ -1,0 +1,53 @@
+[
+  {
+    "menuId": 1,
+    "menuName": "Menu Terroir Bordelais",
+    "totalOrders": 12,
+    "revenue": 2280.0,
+    "averagePersons": 7.5,
+    "period": {
+      "start": "2026-06-01",
+      "end": "2026-06-30",
+      "granularity": "month"
+    },
+    "filters": {
+      "theme": "classique",
+      "regime": "classique"
+    },
+    "updatedAt": "2026-06-30T23:00:00Z"
+  },
+  {
+    "menuId": 2,
+    "menuName": "Menu Jardin de Saison",
+    "totalOrders": 8,
+    "revenue": 1080.0,
+    "averagePersons": 5.25,
+    "period": {
+      "start": "2026-06-01",
+      "end": "2026-06-30",
+      "granularity": "month"
+    },
+    "filters": {
+      "theme": "anniversaire",
+      "regime": "vegetarien"
+    },
+    "updatedAt": "2026-06-30T23:00:00Z"
+  },
+  {
+    "menuId": 3,
+    "menuName": "Menu Noel Gourmand",
+    "totalOrders": 18,
+    "revenue": 9360.0,
+    "averagePersons": 14.2,
+    "period": {
+      "start": "2026-12-01",
+      "end": "2026-12-31",
+      "granularity": "month"
+    },
+    "filters": {
+      "theme": "noel",
+      "regime": "classique"
+    },
+    "updatedAt": "2026-12-31T23:00:00Z"
+  }
+]

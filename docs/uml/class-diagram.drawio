@@ -1,0 +1,133 @@
+<mxfile host="Electron"><diagram name="UML - classe" id="uml_classe">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2500" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"></mxCell>
+        <mxCell id="1" parent="0"></mxCell>
+        <mxCell id="cl_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#111827;" value="Diagramme de classes métier - Vite &amp;amp; Gourmand" vertex="1">
+          <mxGeometry height="40" width="920" x="40" y="20" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#475569;" value="Classes alignées avec les user stories et le modèle SQL cible : commande, modération des avis, statuts historisés et statistiques MongoDB." vertex="1">
+          <mxGeometry height="35" width="1500" x="40" y="60" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_role" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Role&lt;/b&gt;&lt;br&gt;- idRole:int&lt;br&gt;- libelle:string" vertex="1">
+          <mxGeometry height="70" width="90" x="40" y="140" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_user" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Utilisateur&lt;/b&gt;&lt;br&gt;- idUtilisateur:int&lt;br&gt;- email:string&lt;br&gt;- passwordHash:string&lt;br&gt;- nom:string&lt;br&gt;- prenom:string&lt;br&gt;- telephone:string&lt;br&gt;- adressePostale:string&lt;br&gt;- actif:bool&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime&lt;br&gt;&lt;br&gt;+ seConnecter()&lt;br&gt;+ seDeconnecter()&lt;br&gt;+ modifierProfil()&lt;br&gt;+ demanderReinitialisationMotDePasse()" vertex="1">
+          <mxGeometry height="240" width="240" x="340" y="112" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_contact" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;ContactMessage&lt;/b&gt;&lt;br&gt;- idContactMessage:int&lt;br&gt;- titre:string&lt;br&gt;- email:string&lt;br&gt;- description:text&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime&lt;br&gt;&lt;br&gt;+ envoyer()" vertex="1">
+          <mxGeometry height="145" width="130" x="1185" y="112" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_menu" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Menu&lt;/b&gt;&lt;br&gt;- idMenu:int&lt;br&gt;- titre:string&lt;br&gt;- description:text&lt;br&gt;- conditions:text&lt;br&gt;- nombrePersonnesMinimum:int&lt;br&gt;- prixMinimum:decimal&lt;br&gt;- stockDisponible:int&lt;br&gt;- actif:bool&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime&lt;br&gt;&lt;br&gt;+ filtrer()&lt;br&gt;+ mettreAJourStock()" vertex="1">
+          <mxGeometry height="210" width="180" x="640" y="310" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_image" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;MenuImage&lt;/b&gt;&lt;br&gt;- idImage:int&lt;br&gt;- url:string&lt;br&gt;- texteAlternatif:string&lt;br&gt;- position:int" vertex="1">
+          <mxGeometry height="87.5" width="120" x="690" y="100" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_regime" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Regime&lt;/b&gt;&lt;br&gt;- idRegime:int&lt;br&gt;- libelle:string" vertex="1">
+          <mxGeometry height="70" width="90" x="920" y="117.5" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_theme" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Theme&lt;/b&gt;&lt;br&gt;- idTheme:int&lt;br&gt;- libelle:string" vertex="1">
+          <mxGeometry height="60" width="80" x="1060" y="240" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_plat" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Plat&lt;/b&gt;&lt;br&gt;- idPlat:int&lt;br&gt;- titrePlat:string&lt;br&gt;- typePlat:entree|plat|dessert&lt;br&gt;- description:text&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime" vertex="1">
+          <mxGeometry height="117.5" width="160" x="1080" y="450" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_allergene" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Allergene&lt;/b&gt;&lt;br&gt;- idAllergene:int&lt;br&gt;- libelle:string" vertex="1">
+          <mxGeometry height="60" width="100" x="1760" y="550" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_order" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Commande&lt;/b&gt;&lt;br&gt;- idCommande:int&lt;br&gt;- dateCommande:datetime&lt;br&gt;- datePrestation:date&lt;br&gt;- heureLivraison:time&lt;br&gt;- adresseLivraison:string&lt;br&gt;- villeLivraison:string&lt;br&gt;- distanceKm:decimal&lt;br&gt;- nombrePersonnes:int&lt;br&gt;- prixMenu:decimal&lt;br&gt;- remise:decimal&lt;br&gt;- prixLivraison:decimal&lt;br&gt;- prixTotal:decimal&lt;br&gt;- statutActuel:string&lt;br&gt;- materielPrete:bool&lt;br&gt;- materielRetourne:bool&lt;br&gt;- modeContactModification:string&lt;br&gt;- motifAnnulation:text&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime&lt;br&gt;&lt;br&gt;+ calculerPrix()&lt;br&gt;+ modifier()&lt;br&gt;+ annuler()&lt;br&gt;+ changerStatut()" vertex="1">
+          <mxGeometry height="380" width="260" x="560" y="830" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_status" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;CommandeStatut&lt;/b&gt;&lt;br&gt;- idStatut:int&lt;br&gt;- statut:string&lt;br&gt;- commentaire:text&lt;br&gt;- createdAt:datetime" vertex="1">
+          <mxGeometry height="85" width="120" x="1020" y="870" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_review" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Avis&lt;/b&gt;&lt;br&gt;- idAvis:int&lt;br&gt;- note:int[1..5]&lt;br&gt;- commentaire:text&lt;br&gt;- statut:en_attente|valide|refuse&lt;br&gt;- createdAt:datetime&lt;br&gt;- updatedAt:datetime&lt;br&gt;- moderatedAt:datetime&lt;br&gt;- auteur:Utilisateur&lt;br&gt;- moderateur:Utilisateur&lt;br&gt;&lt;br&gt;+ publier()&lt;br&gt;+ refuser()&lt;br&gt;+ moderer()" vertex="1">
+          <mxGeometry height="210" width="170" x="50" y="560" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_hours" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;Horaire&lt;/b&gt;&lt;br&gt;- idHoraire:int&lt;br&gt;- jourSemaine:int&lt;br&gt;- ouvertureMatin:time&lt;br&gt;- fermetureMatin:time&lt;br&gt;- ouvertureApresMidi:time&lt;br&gt;- fermetureApresMidi:time&lt;br&gt;- ferme:bool" vertex="1">
+          <mxGeometry height="125" width="150" x="1790" y="195" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_stat" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#f0fdf4;strokeColor=#15803d;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#052e16;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;StatistiqueMenu&lt;/b&gt;&lt;br&gt;- menuId:int&lt;br&gt;- menuName:string&lt;br&gt;- totalOrders:int&lt;br&gt;- revenue:decimal&lt;br&gt;- averagePersons:decimal&lt;br&gt;- periodStart:date&lt;br&gt;- periodEnd:date&lt;br&gt;- updatedAt:datetime&lt;br&gt;&lt;br&gt;+ agrégerDepuisCommandes()" vertex="1">
+          <mxGeometry height="192.5" width="220" x="1410" y="280" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e1" edge="1" parent="1" source="c_role" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_user" value="Role 1 / 0..* Utilisateur">
+          <mxGeometry relative="1" x="0.034" y="-16" as="geometry">
+            <mxPoint as="offset"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e2" edge="1" parent="1" source="c_user" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_order" value="Utilisateur 1 / 0..* Commande : passe">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e3" edge="1" parent="1" source="c_menu" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="c_order" value="Menu 1 / 0..* Commande">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e4" edge="1" parent="1" source="c_order" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_status" value="Commande 1 / 1..* CommandeStatut">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e5" edge="1" parent="1" source="c_order" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_review" value="Commande 1 / 0..1 Avis">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e6" edge="1" parent="1" source="c_user" style="endArrow=none;html=1;rounded=0;strokeColor=#334155;fontSize=10;exitX=0.45;exitY=1.007;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.012;entryY=0.41;entryDx=0;entryDy=0;entryPerimeter=0;" target="c_review" value="Utilisateur 1 / 0..* Avis : dépose">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="530"></mxPoint>
+            </Array>
+            <mxPoint x="230" y="640" as="targetPoint"></mxPoint>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e7" edge="1" parent="1" source="c_user" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;exitX=0.113;exitY=1.008;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="c_review" value="Utilisateur 0..1 / 0..* Avis : modère">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="450"></mxPoint>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e8" edge="1" parent="1" source="c_regime" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_menu" value="Regime 1 / 0..* Menu">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e9" edge="1" parent="1" source="c_theme" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_menu" value="Theme 1 / 0..* Menu">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e10" edge="1" parent="1" source="c_menu" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_image" value="Menu 1 / 0..* MenuImage">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e14" edge="1" parent="1" source="c_menu" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="c_stat" value="alimente agrégats">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e15" edge="1" parent="1" source="c_order" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;entryX=0.195;entryY=1.013;entryDx=0;entryDy=0;entryPerimeter=0;" target="c_stat" value="alimente agrégats">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;" value="&lt;b&gt;Notes d'alignement&lt;/b&gt;&lt;br&gt;distanceKm trace la distance utilisée pour la livraison hors Bordeaux.&lt;br&gt;L'administrateur est un Utilisateur avec Role=administrateur, créé hors inscription publique.&lt;br&gt;StatistiqueMenu représente la collection MongoDB utilisée pour le tableau de bord.&lt;br&gt;ContactMessage représente le formulaire envoyé par mail, il n’est pas nécessairement persisté." vertex="1">
+          <mxGeometry height="165" width="420" x="620" y="1320" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_password_reset" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;PasswordReset&lt;/b&gt;&lt;br&gt;- idReset:int&lt;br&gt;- tokenHash:string&lt;br&gt;- expiresAt:datetime&lt;br&gt;- usedAt:datetime&lt;br&gt;- createdAt:datetime&lt;br&gt;&lt;br&gt;+ estValide()&lt;br&gt;+ marquerUtilise()" vertex="1">
+          <mxGeometry height="150" width="130" x="30" y="340" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e16" edge="1" parent="1" source="c_user" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_password_reset" value="Utilisateur 1 / 0..* PasswordReset : demande">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_menu_plat" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;MenuPlat&lt;/b&gt;&lt;br&gt;idMenu:int&lt;br&gt;idPlat:int&lt;br&gt;position:int" vertex="1">
+          <mxGeometry height="80" width="70" x="870" y="625" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="c_plat_allergene" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#0f172a;" value="&lt;b&gt;PlatAllergene&lt;/b&gt;&lt;br&gt;idPlat:int&lt;br&gt;idAllergene:int" vertex="1">
+          <mxGeometry height="65" width="90" x="1410" y="660" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e11a" edge="1" parent="1" source="c_menu" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_menu_plat" value="Menu 1 / 1..* MenuPlat : compose">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e11b" edge="1" parent="1" source="c_plat" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_menu_plat" value="Plat 1 / 0..* MenuPlat : appartient">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e12a" edge="1" parent="1" source="c_plat" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_plat_allergene" value="Plat 1 / 0..* PlatAllergene : contient">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="cl_e12b" edge="1" parent="1" source="c_allergene" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="c_plat_allergene" value="Allergene 1 / 0..* PlatAllergene : référence">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  </mxfile>
