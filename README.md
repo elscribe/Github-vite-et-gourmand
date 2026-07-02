@@ -25,6 +25,24 @@ Etat au 2026-07-02 :
 Ce depot contient donc principalement la documentation technique, la modelisation
 et les scripts de base de donnees. Le code applicatif PHP sera ajoute ensuite.
 
+## Depot et rendu
+
+- Depot GitHub vise : <https://github.com/elscribe/Github-vite-et-gourmand>
+- Branche principale : `main`
+- Dernier commit local de nettoyage : `9fd282c docs: polish github repository`
+- Statut actuel : le depot local est pret, mais le dernier commit doit encore
+  etre pousse vers GitHub depuis un terminal authentifie.
+- Point de vigilance rendu : verifier que le depot est public et accessible sans
+  connexion avant de transmettre le lien au jury.
+
+Controles locaux effectues le 2026-07-02 :
+
+- liens Markdown internes verifies ;
+- fichier `.env` ignore par Git ;
+- fichiers parasites `.DS_Store` et `.bkp` nettoyes ;
+- `.gitignore` mis a jour pour ignorer les backups `.bkp` ;
+- documentation d'organisation du depot ajoutee dans `docs/repository.md`.
+
 ## Contexte ECF
 
 Le sujet demande une application web ou web mobile securisee, responsive,
@@ -442,7 +460,7 @@ Tests a prevoir :
 
 ## Informations restant a fournir
 
-- Lien public definitif du depot GitHub.
+- Verification de l'acces public au depot GitHub.
 - Lien de l'application deployee.
 - Identifiants administrateur de demonstration.
 - Informations auteur pour le document final.
