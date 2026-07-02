@@ -15,7 +15,6 @@ Documenter la transformation de l'enonce ECF en modele de donnees, scripts SQL e
 - `docs/database/data-dictionary.md` : dictionnaire de donnees.
 - `database/sql/create_database.sql` : creation complete de la base relationnelle.
 - `database/sql/seed_database.sql` : donnees de demonstration completes.
-- `database/sql/legacy/` : ancien decoupage SQL conserve uniquement comme archive.
 - `database/mongodb/collections.md` : collections MongoDB.
 - `database/mongodb/sample-data.json` : exemples de documents statistiques.
 - `docs/database/database-choices.md` : justification orale.

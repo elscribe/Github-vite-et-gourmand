@@ -367,7 +367,6 @@ execution conforme pour un environnement local ou de demonstration.
 
 - [Creation SQL complete](database/sql/create_database.sql)
 - [Donnees SQL de demonstration](database/sql/seed_database.sql)
-- [Ancien decoupage SQL archive](database/sql/legacy/README.md)
 - [Collections MongoDB](database/mongodb/collections.md)
 - [Documents d'exemple MongoDB](database/mongodb/sample-data.json)
 - [Creation collections MongoDB](database/mongodb/create_collections.js)

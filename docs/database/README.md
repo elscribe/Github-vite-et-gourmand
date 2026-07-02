@@ -23,7 +23,6 @@ Cette section regroupe les livrables de modelisation et de base de donnees du pr
 
 - [Creation SQL complete](../../database/sql/create_database.sql)
 - [Donnees de demonstration completes](../../database/sql/seed_database.sql)
-- [Ancien decoupage SQL archive](../../database/sql/legacy/README.md)
 
 ## MongoDB
 
