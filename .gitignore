@@ -114,6 +114,7 @@ $RECYCLE.BIN/
 
 # Project-specific local files
 *.bak
+*.bkp
 *.backup
 *.tmp
 *.swp
