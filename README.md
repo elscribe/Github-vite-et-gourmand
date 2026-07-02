@@ -3,45 +3,36 @@
 Projet ECF Studi - Developpeur Web et Web Mobile.
 
 Vite & Gourmand est une application web prevue pour une entreprise familiale de
-traiteur situee a Bordeaux. L'objectif est de remplacer un fonctionnement base
-sur l'envoi manuel de menus par mail par une plateforme permettant de consulter
+traiteur situee a Bordeaux. Le projet vise a remplacer un fonctionnement base
+sur l'envoi manuel des menus par mail par une plateforme permettant de consulter
 les menus, passer commande, suivre les commandes et piloter l'activite depuis un
 espace interne.
 
-## Etat du projet
+## Etat Actuel
 
-Etat au 2026-07-02 :
+Ce depot contient actuellement la phase de cadrage technique du projet :
 
-- documentation fonctionnelle et technique en cours de structuration dans Notion ;
-- backlog, user stories, priorisation MVP et gestion agile documentes ;
+- analyse fonctionnelle et gestion de projet centralisees dans Notion ;
 - modelisation Merise disponible : MCD, MLD et MPD ;
-- diagrammes UML principaux disponibles en draw.io et PNG ;
-- scripts SQL de creation et d'insertion disponibles et audites ;
-- scripts MongoDB de creation et de seed disponibles et audites ;
-- depot nettoye des fichiers locaux inutiles comme `.DS_Store` ;
-- application PHP MVC non encore implementee dans le depot ;
-- maquettes UX/UI, charte graphique, deploiement et manuel utilisateur encore a produire.
+- diagrammes UML disponibles en sources draw.io et exports PNG ;
+- scripts SQL de creation et d'insertion disponibles ;
+- scripts MongoDB de creation et d'insertion disponibles ;
+- documentation technique de base de donnees disponible ;
+- architecture cible PHP MVC preparee ;
+- fichier `.env.example` disponible pour documenter la configuration.
 
-Ce depot contient donc principalement la documentation technique, la modelisation
-et les scripts de base de donnees. Le code applicatif PHP sera ajoute ensuite.
+Le code applicatif PHP n'est pas encore implemente. Les prochaines etapes sont
+le maquettage UX/UI, la charte graphique, puis le developpement de l'application
+PHP.
 
-## Depot et rendu
+## Liens De Rendu
 
-- Depot GitHub vise : <https://github.com/elscribe/Github-vite-et-gourmand>
-- Branche principale : `main`
-- Dernier commit local de nettoyage : `9fd282c docs: polish github repository`
-- Statut actuel : le depot local est pret, mais le dernier commit doit encore
-  etre pousse vers GitHub depuis un terminal authentifie.
-- Point de vigilance rendu : verifier que le depot est public et accessible sans
-  connexion avant de transmettre le lien au jury.
+- Depot GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
+- Outil de gestion de projet : Notion
+- Application deployee : a completer apres deploiement
 
-Controles locaux effectues le 2026-07-02 :
-
-- liens Markdown internes verifies ;
-- fichier `.env` ignore par Git ;
-- fichiers parasites `.DS_Store` et `.bkp` nettoyes ;
-- `.gitignore` mis a jour pour ignorer les backups `.bkp` ;
-- documentation d'organisation du depot ajoutee dans `docs/repository.md`.
+Avant le rendu final, les liens GitHub, Notion et application deployee devront
+etre testes depuis une fenetre privee ou un navigateur non connecte.
 
 ## Contexte ECF
 
@@ -50,139 +41,129 @@ documentee, deployee et appuyee par :
 
 - une base de donnees relationnelle ;
 - une base de donnees non relationnelle ;
-- un depot GitHub public pour le rendu ;
+- un depot GitHub public ;
 - une documentation de gestion de projet ;
 - des maquettes desktop et mobile ;
 - une charte graphique ;
 - un manuel utilisateur ;
 - une documentation de deploiement.
 
-## Fonctionnalites attendues
-
-Les fonctionnalites ci-dessous sont documentees dans l'analyse, le backlog, les
-diagrammes UML et la modelisation. Elles ne sont pas encore implementees dans le
-code applicatif.
+## Fonctionnalites Attendues
 
 ### Visiteur
 
-- [ ] Consulter la page d'accueil.
-- [ ] Consulter la presentation de l'entreprise.
-- [ ] Consulter les avis clients valides.
-- [ ] Consulter la liste des menus.
-- [ ] Filtrer les menus sans rechargement complet de la page.
-- [ ] Consulter le detail d'un menu.
-- [ ] Acceder a la page de contact.
-- [ ] Envoyer un message de contact.
-- [ ] Creer un compte utilisateur.
+- Consulter la page d'accueil.
+- Consulter la presentation de l'entreprise.
+- Consulter les avis clients valides.
+- Consulter la liste des menus.
+- Filtrer les menus sans rechargement complet de la page.
+- Consulter le detail d'un menu.
+- Acceder a la page de contact.
+- Envoyer un message de contact.
+- Creer un compte utilisateur.
 
-### Utilisateur connecte
+### Utilisateur Connecte
 
-- [ ] Se connecter avec un email et un mot de passe.
-- [ ] Reinitialiser son mot de passe.
-- [ ] Commander un menu.
-- [ ] Voir le prix detaille avant validation.
-- [ ] Recevoir une confirmation de commande.
-- [ ] Consulter ses commandes.
-- [ ] Modifier ses informations personnelles.
-- [ ] Modifier ou annuler une commande tant qu'elle n'est pas acceptee.
-- [ ] Suivre les etats d'une commande acceptee.
-- [ ] Laisser un avis apres une commande terminee.
+- Se connecter avec un email et un mot de passe.
+- Reinitialiser son mot de passe.
+- Commander un menu.
+- Voir le prix detaille avant validation.
+- Recevoir une confirmation de commande.
+- Consulter ses commandes.
+- Modifier ses informations personnelles.
+- Modifier ou annuler une commande tant qu'elle n'est pas acceptee.
+- Suivre les etats d'une commande acceptee.
+- Laisser un avis apres une commande terminee.
 
 ### Employe
 
-- [ ] Gerer les menus.
-- [ ] Gerer les plats.
-- [ ] Gerer les horaires.
-- [ ] Filtrer les commandes par statut ou par client.
-- [ ] Mettre a jour le statut d'une commande.
-- [ ] Annuler ou modifier une commande apres contact client.
-- [ ] Renseigner le motif d'annulation et le mode de contact.
-- [ ] Valider ou refuser les avis clients.
+- Gerer les menus.
+- Gerer les plats.
+- Gerer les horaires.
+- Filtrer les commandes par statut ou par client.
+- Mettre a jour le statut d'une commande.
+- Annuler ou modifier une commande apres contact client.
+- Renseigner le motif d'annulation et le mode de contact.
+- Valider ou refuser les avis clients.
 
 ### Administrateur
 
-- [ ] Acceder aux fonctionnalites employe.
-- [ ] Creer un compte employe.
-- [ ] Desactiver un compte employe.
-- [ ] Visualiser le nombre de commandes par menu.
-- [ ] Comparer les menus avec un graphique.
-- [ ] Consulter le chiffre d'affaires par menu.
-- [ ] Filtrer les statistiques par menu et par periode.
+- Acceder aux fonctionnalites employe.
+- Creer un compte employe.
+- Desactiver un compte employe.
+- Visualiser le nombre de commandes par menu.
+- Comparer les menus avec un graphique.
+- Consulter le chiffre d'affaires par menu.
+- Filtrer les statistiques par menu et par periode.
 
-## Stack technique cible
+## Stack Technique Cible
 
-### Frontend
+| Couche | Choix |
+| --- | --- |
+| Frontend | HTML5, CSS3, Bootstrap 5, JavaScript vanilla |
+| Backend | PHP 8, PDO |
+| Architecture | MVC simple |
+| Base relationnelle | MariaDB, compatible MySQL 8 pour les tests |
+| Base non relationnelle | MongoDB pour les statistiques administrateur |
+| Gestion projet | Notion |
+| Depot | GitHub |
+| Deploiement pressenti | Fly.io, a confirmer apres implementation |
 
-- HTML5.
-- CSS3.
-- Bootstrap 5.
-- JavaScript vanilla.
+La base SQL reste la source de verite pour les donnees metier. MongoDB est
+limite aux agregats statistiques utilises par le tableau de bord administrateur.
 
-### Backend
-
-- PHP 8.
-- PDO pour l'acces a la base relationnelle.
-- Architecture MVC simple.
-- Services pour la logique metier reutilisable.
-- Middlewares pour l'authentification, les roles et les protections de routes.
-
-### Bases de donnees
-
-- MariaDB pour les donnees metier relationnelles.
-- MongoDB pour les statistiques agregees du tableau de bord administrateur.
-
-La base SQL reste la source de verite. MongoDB contient uniquement des agregats
-de lecture recalculables a partir des commandes SQL.
-
-Les scripts SQL restent compatibles avec MySQL 8 pour faciliter les tests en
-environnement local ou de demonstration.
-
-### Deploiement cible
-
-- Fly.io est l'hebergeur pressenti pour la mise en ligne de l'application PHP.
-- La procedure de deploiement sera documentee lorsque le code applicatif sera
-  implemente.
-
-## Architecture cible
-
-L'application est prevue en PHP natif avec une architecture MVC simple :
+## Organisation Du Depot
 
 ```text
-public/
-app/
-├── Controllers/
-├── Models/
-├── Views/
-├── Core/
-├── Services/
-└── Middlewares/
-config/
-database/
-docs/
+vite-gourmand/
+├── app/
+│   ├── Controllers/
+│   ├── Core/
+│   ├── Models/
+│   └── Views/
+├── config/
+├── database/
+│   ├── mongodb/
+│   ├── sql/
+│   └── business-rules.md
+├── docs/
+│   ├── database/
+│   ├── notion/
+│   ├── uml/
+│   └── repository.md
+├── public/
+├── scripts/
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
-Responsabilites principales :
+### Role Des Dossiers
 
-- `public/` : point d'entree HTTP et assets publics.
-- `app/Controllers/` : reception des requetes et coordination des actions.
-- `app/Models/` : acces aux donnees SQL / NoSQL.
-- `app/Views/` : rendu HTML.
-- `app/Core/` : routeur, base controller, connexion et outils communs.
-- `app/Services/` : logique metier reutilisable.
-- `app/Middlewares/` : session, authentification, roles, CSRF.
-- `config/` : configuration applicative.
-- `database/` : scripts SQL, MongoDB et regles metier.
-- `docs/` : documentation technique, Merise, UML et exports.
+- `app/` : futur code PHP organise en MVC.
+- `app/Controllers/` : controleurs qui recoivent les actions utilisateur.
+- `app/Models/` : acces aux donnees SQL et MongoDB.
+- `app/Views/` : vues HTML affichees a l'utilisateur.
+- `app/Core/` : routeur, classe de base, connexion et outils communs.
+- `config/` : future configuration applicative.
+- `database/sql/` : scripts SQL de creation et de donnees de demonstration.
+- `database/mongodb/` : documentation, creation et seed des collections MongoDB.
+- `docs/database/` : documentation Merise, dictionnaire, choix et audits.
+- `docs/uml/` : diagrammes UML en draw.io et PNG.
+- `docs/notion/` : contenu technique pret a reporter dans Notion.
+- `public/` : futur point d'entree web et assets publics.
+- `scripts/` : outils de generation ou maintenance de documentation.
 
-Le depot ne contient pas encore le code applicatif PHP final.
+Les dossiers `app/`, `config/` et `public/` sont encore vides car le
+developpement PHP n'a pas commence.
 
-## Installation locale
+## Installation Locale
 
 ### Prerequis
 
 - Git.
 - PHP 8.
-- MariaDB.
+- MariaDB ou MySQL 8.
 - MongoDB.
 - `mongosh`.
 - Navigateur web moderne.
@@ -190,14 +171,14 @@ Le depot ne contient pas encore le code applicatif PHP final.
 Composer et npm ne sont pas encore requis, car aucun `composer.json` ni
 `package.json` n'est present dans le depot.
 
-### Recuperer le projet
+### Recuperer Le Projet
 
 ```bash
 git clone https://github.com/elscribe/Github-vite-et-gourmand.git
 cd Github-vite-et-gourmand
 ```
 
-### Configuration
+### Configurer L'Environnement
 
 Creer un fichier `.env` local a partir du modele :
 
@@ -221,19 +202,17 @@ Adapter ensuite les valeurs selon l'environnement local :
 
 Les secrets et mots de passe ne doivent jamais etre versionnes.
 
-### Initialiser la base SQL
+### Initialiser La Base SQL
 
-Les scripts SQL sont prevus pour une base de demonstration ECF.
-
-Attention : `database/sql/create_database.sql` commence par
-`DROP DATABASE IF EXISTS vite_gourmand`.
+Attention : `database/sql/create_database.sql` supprime et recree la base
+`vite_gourmand`.
 
 ```bash
 mariadb -u root -p < database/sql/create_database.sql
 mariadb -u root -p < database/sql/seed_database.sql
 ```
 
-Equivalent possible avec MySQL 8 pour verifier la compatibilite :
+Equivalent possible avec MySQL 8 :
 
 ```bash
 mysql -u root -p < database/sql/create_database.sql
@@ -247,30 +226,29 @@ mongosh database/mongodb/create_collections.js
 mongosh database/mongodb/seed_mongodb.js
 ```
 
-Les collections statistiques creees sont :
+Collections statistiques prevues :
 
 - `menu_statistics`
 - `monthly_statistics`
 - `dashboard_statistics`
 
-### Lancer l'application
+### Lancer L'Application
 
-L'application PHP n'est pas encore implementee. Lorsque le point d'entree
-`public/index.php` sera ajoute, le lancement local pourra se faire par exemple
-avec :
+L'application PHP n'est pas encore implementee. Lorsque `public/index.php` sera
+ajoute, le lancement local pourra se faire avec :
 
 ```bash
 php -S localhost:8000 -t public
 ```
 
-## Configuration disponible
+## Configuration
 
-Le fichier `.env.example` documente les variables attendues :
+Le fichier [.env.example](.env.example) documente les variables attendues :
 
 | Variable | Description |
 | --- | --- |
 | `APP_NAME` | Nom de l'application. |
-| `APP_ENV` | Environnement d'execution, par exemple `local` ou `production`. |
+| `APP_ENV` | Environnement d'execution. |
 | `APP_DEBUG` | Activation du debug en local. |
 | `APP_URL` | URL locale ou publique de l'application. |
 | `APP_KEY` | Cle applicative a remplacer en local. |
@@ -299,7 +277,7 @@ Le fichier `.env.example` documente les variables attendues :
 | `DELIVERY_PRICE_PER_KM` | Prix par kilometre hors Bordeaux. |
 | `DELIVERY_DISTANCE_PROVIDER` | Methode prevue pour la distance. |
 
-## Base de donnees
+## Base De Donnees
 
 La base SQL cible s'appelle `vite_gourmand`. Le script de creation contient 16
 tables :
@@ -321,39 +299,29 @@ tables :
 - `contact_messages`
 - `password_resets`
 
-Le seed SQL contient notamment :
+Le seed SQL contient des donnees de demonstration pour tester les roles, menus,
+plats, commandes, historiques, avis, horaires, messages de contact et resets de
+mot de passe.
 
-- 3 roles ;
-- 13 utilisateurs ;
-- 6 menus ;
-- 24 plats ;
-- 14 allergenes standards ;
-- 20 commandes ;
-- un historique de statut pour les commandes ;
-- des avis, horaires, messages de contact et resets de mot de passe.
+## Documentation Disponible
 
-L'audit des scripts indique une compatibilite MariaDB 11 / MySQL 8 et une
-execution conforme pour un environnement local ou de demonstration.
-
-## Documentation technique
-
-### Documentation base de donnees
+### Base De Donnees
 
 - [Documentation base de donnees](docs/database/README.md)
 - [Regles metier et cardinalites](database/business-rules.md)
 - [Dictionnaire de donnees](docs/database/data-dictionary.md)
-- [Justification SQL, MongoDB, Merise et UML](docs/database/database-choices.md)
+- [Choix techniques base de donnees](docs/database/database-choices.md)
 - [Rapport d'audit de coherence](docs/database/audit-report.md)
 - [Audit des scripts SQL et MongoDB](docs/database/scripts-audit.md)
 - [Documentation Notion importable](docs/notion/database-documentation.md)
 
-### Livrables Merise
+### Merise
 
 - [MCD draw.io](docs/database/MCD.drawio) / [MCD PNG](docs/database/MCD.png)
 - [MLD draw.io](docs/database/MLD.drawio) / [MLD PNG](docs/database/MLD.png)
 - [MPD draw.io](docs/database/MPD.drawio) / [MPD PNG](docs/database/MPD.png)
 
-### Livrables UML
+### UML
 
 - [Cas d'utilisation](docs/uml/use-case-diagram.drawio) / [PNG](docs/uml/use-case-diagram.png)
 - [Diagramme de classes](docs/uml/class-diagram.drawio) / [PNG](docs/uml/class-diagram.png)
@@ -374,7 +342,7 @@ execution conforme pour un environnement local ou de demonstration.
 - [Generation documentation BDD](scripts/generate_database_docs.py)
 - [Organisation du depot GitHub](docs/repository.md)
 
-## Securite prevue
+## Securite Prevue
 
 Les mecanismes suivants sont prevus dans la conception :
 
@@ -394,81 +362,81 @@ Les mecanismes suivants sont prevus dans la conception :
 Ces points devront etre verifies dans le code applicatif lorsqu'il sera
 implemente.
 
-## Qualite et tests
+## Qualite Et Tests
 
 Aucun test automatise n'est encore present.
 
 Tests a prevoir :
 
-- tests fonctionnels des parcours visiteur, client, employe et administrateur ;
-- tests des calculs de prix, reduction et frais de livraison ;
-- tests des droits par role ;
-- tests des statuts de commande ;
-- tests des formulaires et messages d'erreur ;
-- tests d'accessibilite : navigation clavier, contrastes, labels, textes alternatifs ;
-- verification du dashboard administrateur alimente par MongoDB.
+- parcours visiteur, client, employe et administrateur ;
+- calcul du prix, de la reduction et des frais de livraison ;
+- droits d'acces par role ;
+- transitions de statuts de commande ;
+- formulaires et messages d'erreur ;
+- accessibilite : navigation clavier, contrastes, labels, textes alternatifs ;
+- dashboard administrateur alimente par MongoDB.
 
 ## Roadmap
 
 ### Termine
 
-- [x] Analyse du besoin.
-- [x] Cahier des charges.
-- [x] Identification des acteurs et roles.
-- [x] Backlog MVP et user stories.
-- [x] Methode de gestion hybride : predictive puis agile.
-- [x] Planning agile simplifie.
-- [x] Choix de stack cible.
+- [x] Analyse du besoin dans Notion.
+- [x] Cahier des charges dans Notion.
+- [x] Backlog, user stories et priorisation MVP dans Notion.
+- [x] Methode de gestion hybride documentee dans Notion.
 - [x] Architecture MVC cible documentee.
-- [x] MCD, MLD et MPD documentes.
+- [x] MCD, MLD et MPD.
 - [x] Diagrammes UML principaux.
 - [x] Scripts SQL de creation et d'insertion.
 - [x] Scripts MongoDB de creation et d'insertion.
 - [x] Audit de coherence Merise / SQL / MongoDB / UML.
 - [x] Fichier `.env.example`.
 
-### En cours
+### En Cours
 
-- [ ] Implementation de l'application PHP MVC.
 - [ ] Maquettes desktop et mobile.
 - [ ] Charte graphique.
+- [ ] Implementation de l'application PHP MVC.
 - [ ] Documentation securite.
 - [ ] Documentation de deploiement.
 - [ ] Manuel utilisateur.
 - [ ] Recherche anglophone.
 - [ ] Livrables finaux.
 
-### Ameliorations futures
+### Ameliorations Futures
 
 - [ ] Ajouter des tests automatises.
 - [ ] Ajouter des captures d'ecran de l'application.
 - [ ] Ajouter une strategie RGPD detaillee.
 - [ ] Ajouter une documentation de maintenance.
 
-## Decisions techniques
+## Suivi Git
 
-| Decision | Raison | Limite |
-| --- | --- | --- |
-| PHP 8 avec PDO | Stack simple, lisible et adaptee a une application web serveur. | Moins de structure prete a l'emploi qu'un framework complet. |
-| Architecture MVC simple | Separation claire entre affichage, logique metier et acces aux donnees. | Demande de definir soi-meme certaines briques techniques. |
-| HTML5, CSS3, Bootstrap 5 et JavaScript vanilla | Interface responsive sans framework front-end lourd. | Moins d'outillage que React, Vue ou Angular. |
-| MariaDB | Donnees fortement relationnelles : utilisateurs, menus, commandes, roles. | Les scripts sont conserves compatibles MySQL 8 pour faciliter les tests. |
-| MongoDB pour les statistiques | Repond a l'obligation NoSQL et isole les agregats administrateur. | Les agregats doivent rester coherents avec la base SQL. |
-| Notion pour la gestion de projet | Outil simple pour suivre backlog, risques, planning et livrables. | Les elements importants doivent etre exportables ou cites dans le rendu. |
-| Fly.io pressenti pour le deploiement | Plateforme compatible avec une application PHP conteneurisee et explicable a l'oral. | La procedure definitive sera validee apres implementation. |
+Le README ne liste pas les derniers commits, car cette information devient vite
+obsolete. L'historique complet est consultable directement dans GitHub via
+l'onglet des commits.
 
-## Informations restant a fournir
+Regles retenues :
+
+- branche principale : `main` ;
+- commits courts et explicites ;
+- `.env` et fichiers contenant des secrets exclus du depot ;
+- fichiers temporaires, caches et parasites exclus via `.gitignore`.
+
+## Points A Completer Avant Rendu
 
 - Verification de l'acces public au depot GitHub.
 - Lien de l'application deployee.
 - Identifiants administrateur de demonstration.
-- Informations auteur pour le document final.
-- Licence eventuelle.
-- Captures d'ecran de l'application.
-- Exports PDF des maquettes et de la charte graphique.
+- Informations candidat dans la copie finale Studi.
+- Maquettes desktop et mobile.
+- Charte graphique PDF.
 - Manuel utilisateur PDF.
+- Documentation de deploiement.
+- Recherche anglophone.
+- Veille securite.
 
-## Notes pour le jury
+## Notes Pour Le Jury
 
 Le depot montre deja :
 
