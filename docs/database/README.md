@@ -41,12 +41,8 @@ Cette section regroupe les livrables de modelisation et de base de donnees du pr
 - [Sequence gestion avis](../uml/sequence-gestion-avis.drawio)
 - [Sequence dashboard administrateur MongoDB](../uml/sequence-dashboard-admin-mongodb.drawio)
 
-## Documentation Notion
-
-- [Page Notion importable](../notion/database-documentation.md)
-
 ## Notes de maintenance
 
 Les fichiers `.drawio` sont les sources modifiables. Les fichiers `.png` sont des exports pour lecture rapide dans GitHub ou dans un dossier de rendu.
 
-Le script [generate_database_docs.py](../../scripts/generate_database_docs.py) permet de regenerer les livrables a partir d'un modele centralise. Apres modification manuelle d'un diagramme dans diagrams.net, il faut reexporter le PNG correspondant.
+Le script [generate_database_docs.py](../../scripts/generate_database_docs.py) permet de regenerer les livrables a partir d'un modele centralise. La documentation de gestion de projet reste maintenue directement dans Notion. Apres modification manuelle d'un diagramme dans diagrams.net, il faut reexporter le PNG correspondant.

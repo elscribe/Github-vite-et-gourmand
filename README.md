@@ -19,20 +19,28 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - scripts MongoDB de creation et d'insertion disponibles ;
 - documentation technique de base de donnees disponible ;
 - architecture cible PHP MVC preparee ;
+- branches Git `develop` et `feature/*` initialisees pour le developpement ;
+- lien Figma global synchronise pour les wireframes, maquettes, composants,
+  charte graphique et exports ;
 - fichier `.env.example` disponible pour documenter la configuration.
 
-Le code applicatif PHP n'est pas encore implemente. Les prochaines etapes sont
-le maquettage UX/UI, la charte graphique, puis le developpement de l'application
-PHP.
+Le code applicatif PHP n'est pas encore implemente. Le fichier Figma actuel
+contient les wireframes basse fidelite, les maquettes haute qualite, les
+composants de base, la charte graphique et une page d'exports PDF. Les
+prochaines etapes sont le nettoyage/harmonisation finale des maquettes, puis le
+developpement de l'application PHP MVC.
 
 ## Liens De Rendu
 
 - Depot GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
-- Outil de gestion de projet : Notion
+- Maquettes et charte graphique Figma : <https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6>
+- Outil de gestion de projet : Notion, lien partage a completer avant rendu
 - Application deployee : a completer apres deploiement
 
-Avant le rendu final, les liens GitHub, Notion et application deployee devront
-etre testes depuis une fenetre privee ou un navigateur non connecte.
+Avant le rendu final, les liens GitHub, Figma, Notion et application deployee
+devront etre testes depuis une fenetre privee ou un navigateur non connecte.
+Le depot GitHub peut rester prive pendant le developpement, mais il devra etre
+rendu public et reverifie avant transmission au jury.
 
 ## Contexte ECF
 
@@ -114,6 +122,8 @@ limite aux agregats statistiques utilises par le tableau de bord administrateur.
 
 ## Organisation Du Depot
 
+Arborescence cible du depot :
+
 ```text
 vite-gourmand/
 ├── app/
@@ -128,7 +138,6 @@ vite-gourmand/
 │   └── business-rules.md
 ├── docs/
 │   ├── database/
-│   ├── notion/
 │   ├── uml/
 │   └── repository.md
 ├── public/
@@ -150,12 +159,12 @@ vite-gourmand/
 - `database/mongodb/` : documentation, creation et seed des collections MongoDB.
 - `docs/database/` : documentation Merise, dictionnaire, choix et audits.
 - `docs/uml/` : diagrammes UML en draw.io et PNG.
-- `docs/notion/` : contenu technique pret a reporter dans Notion.
 - `public/` : futur point d'entree web et assets publics.
 - `scripts/` : outils de generation ou maintenance de documentation.
 
-Les dossiers `app/`, `config/` et `public/` sont encore vides car le
-developpement PHP n'a pas commence.
+Les dossiers `app/`, `config/` et `public/` sont encore des emplacements cibles
+car le developpement PHP n'a pas commence. Ils seront versionnes avec leurs
+fichiers applicatifs au demarrage de l'implementation.
 
 ## Installation Locale
 
@@ -313,7 +322,6 @@ mot de passe.
 - [Choix techniques base de donnees](docs/database/database-choices.md)
 - [Rapport d'audit de coherence](docs/database/audit-report.md)
 - [Audit des scripts SQL et MongoDB](docs/database/scripts-audit.md)
-- [Documentation Notion importable](docs/notion/database-documentation.md)
 
 ### Merise
 
@@ -330,6 +338,11 @@ mot de passe.
 - [Sequence gestion commande employe](docs/uml/sequence-gestion-commande-employe.drawio) / [PNG](docs/uml/sequence-gestion-commande-employe.png)
 - [Sequence gestion avis](docs/uml/sequence-gestion-avis.drawio) / [PNG](docs/uml/sequence-gestion-avis.png)
 - [Sequence dashboard administrateur MongoDB](docs/uml/sequence-dashboard-admin-mongodb.drawio) / [PNG](docs/uml/sequence-dashboard-admin-mongodb.png)
+
+### UX/UI
+
+- [Suivi UX/UI et charte graphique](docs/design.md)
+- [Figma global Vite & Gourmand](https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6)
 
 ### Scripts
 
@@ -390,12 +403,13 @@ Tests a prevoir :
 - [x] Scripts SQL de creation et d'insertion.
 - [x] Scripts MongoDB de creation et d'insertion.
 - [x] Audit de coherence Merise / SQL / MongoDB / UML.
+- [x] Lien Figma global synchronise.
 - [x] Fichier `.env.example`.
 
 ### En Cours
 
-- [ ] Maquettes desktop et mobile.
-- [ ] Charte graphique.
+- [ ] Nettoyage et harmonisation finale des maquettes Figma.
+- [ ] Export final des maquettes desktop/mobile et de la charte graphique.
 - [ ] Implementation de l'application PHP MVC.
 - [ ] Documentation securite.
 - [ ] Documentation de deploiement.
@@ -418,18 +432,35 @@ l'onglet des commits.
 
 Regles retenues :
 
-- branche principale : `main` ;
+- `main` : branche stable et presentable pour le rendu ;
+- `develop` : branche d'integration du developpement ;
+- `feature/*` : branches de travail par grande fonctionnalite ;
 - commits courts et explicites ;
 - `.env` et fichiers contenant des secrets exclus du depot ;
 - fichiers temporaires, caches et parasites exclus via `.gitignore`.
 
+Branches initialisees pour la suite du projet :
+
+- `feature/setup-mvc` ;
+- `feature/authentication` ;
+- `feature/menu-catalog` ;
+- `feature/order-workflow` ;
+- `feature/back-office` ;
+- `feature/admin-dashboard` ;
+- `feature/final-documentation`.
+
+Workflow prevu : les fonctionnalites partent de `develop`, sont fusionnees dans
+`develop` apres verification, puis `develop` est fusionnee dans `main` quand une
+version stable est prete pour presentation.
+
 ## Points A Completer Avant Rendu
 
 - Verification de l'acces public au depot GitHub.
+- Verification de l'acces public au fichier Figma.
 - Lien de l'application deployee.
 - Identifiants administrateur de demonstration.
 - Informations candidat dans la copie finale Studi.
-- Maquettes desktop et mobile.
+- Exports PDF des maquettes desktop et mobile.
 - Charte graphique PDF.
 - Manuel utilisateur PDF.
 - Documentation de deploiement.
