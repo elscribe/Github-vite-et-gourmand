@@ -8,84 +8,100 @@ use App\Core\BaseController;
 use App\Core\Response;
 
 /**
- * Controleur temporaire pour reserver les routes de Sprint 1 sans feature.
+ * Temporary controller used to reserve Sprint 1 routes before real features are implemented.
  */
 final class PlaceholderController extends BaseController
 {
     public function menus(): void
     {
-        $this->show('Menus', 'Catalogue public des menus');
+        $this->show('Menus', 'Public menu catalog');
     }
 
     public function menuDetail(string $id): void
     {
-        $this->show('Detail menu', 'Route parametree preparee pour le menu #' . $id);
+        $this->show('Menu detail', 'Dynamic route prepared for menu #' . $id);
     }
 
     public function login(): void
     {
-        $this->show('Connexion', 'Authentification utilisateur, employe et administrateur');
+        $this->show('Login', 'Authentication for users, employees, and administrators');
+    }
+
+    public function logout(): void
+    {
+        $this->show('Logout', 'Logout route reserved for the future authentication flow');
     }
 
     public function register(): void
     {
-        $this->show('Inscription', 'Creation publique de compte utilisateur');
+        $this->show('Register', 'Public user account creation');
     }
 
     public function forgotPassword(): void
     {
-        $this->show('Mot de passe oublie', 'Demande de lien de reinitialisation');
+        $this->show('Forgot password', 'Password reset link request');
     }
 
     public function resetPassword(): void
     {
-        $this->show('Reinitialisation mot de passe', 'Changement de mot de passe via jeton');
+        $this->show('Reset password', 'Password update through a secure token');
     }
 
     public function orders(): void
     {
-        $this->show('Commandes', 'Liste et suivi des commandes utilisateur');
+        $this->show('Orders', 'User order list and order tracking');
     }
 
     public function orderCreate(?string $menuId = null): void
     {
-        $label = $menuId === null ? 'Creation de commande' : 'Creation de commande pour le menu #' . $menuId;
-        $this->show('Commande', $label);
+        $label = $menuId === null ? 'Order creation' : 'Order creation for menu #' . $menuId;
+
+        $this->show('Order', $label);
     }
 
     public function account(): void
     {
-        $this->show('Mon compte', 'Informations personnelles, commandes et avis');
+        $this->show('My account', 'Personal information, orders, and reviews');
     }
 
     public function employeeDashboard(): void
     {
-        $this->show('Espace employe', 'Gestion des commandes, menus, plats, horaires et avis');
+        $this->show('Employee area', 'Orders, menus, dishes, opening hours, and review management');
     }
 
     public function employeeOrders(): void
     {
-        $this->show('Commandes employe', 'Filtrage et mise a jour des statuts de commande');
+        $this->show('Employee orders', 'Order filtering and status update');
     }
 
     public function adminDashboard(): void
     {
-        $this->show('Espace administrateur', 'Administration et acces aux fonctions employe');
+        $this->show('Administrator area', 'Administration dashboard with employee permissions');
     }
 
     public function adminStatistics(): void
     {
-        $this->show('Statistiques administrateur', 'Dashboard MongoDB et filtres par periode');
+        $this->show('Administrator statistics', 'MongoDB dashboard and period filters');
     }
 
     public function contact(): void
     {
-        $this->show('Contact', 'Formulaire public de contact');
+        $this->show('Contact', 'Public contact form');
+    }
+
+    public function legalNotice(): void
+    {
+        $this->show('Legal notice', 'Legal notice page required from the footer');
+    }
+
+    public function terms(): void
+    {
+        $this->show('Terms and conditions', 'Terms and conditions page required from the footer');
     }
 
     public function formSubmit(): void
     {
-        $this->show('Traitement formulaire', 'Route POST reservee pour validation serveur et CSRF');
+        $this->show('Form processing', 'POST route reserved for server validation and CSRF protection');
     }
 
     private function show(string $sectionTitle, string $sectionDescription): void
@@ -93,7 +109,7 @@ final class PlaceholderController extends BaseController
         Response::status(501);
 
         $this->view('placeholder/show', [
-            'pageTitle' => $sectionTitle . ' - Sprint 0',
+            'pageTitle' => $sectionTitle . ' - Sprint 1',
             'sectionTitle' => $sectionTitle,
             'sectionDescription' => $sectionDescription,
         ]);

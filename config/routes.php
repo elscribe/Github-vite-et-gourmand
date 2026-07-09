@@ -17,8 +17,11 @@ return static function (Router $router): void {
 
     $router->get('/connexion', [PlaceholderController::class, 'login']);
     $router->post('/connexion', [PlaceholderController::class, 'formSubmit']);
+    $router->get('/deconnexion', [PlaceholderController::class, 'logout']);
+
     $router->get('/inscription', [PlaceholderController::class, 'register']);
     $router->post('/inscription', [PlaceholderController::class, 'formSubmit']);
+
     $router->get('/mot-de-passe/oublie', [PlaceholderController::class, 'forgotPassword']);
     $router->post('/mot-de-passe/oublie', [PlaceholderController::class, 'formSubmit']);
     $router->get('/mot-de-passe/reinitialisation', [PlaceholderController::class, 'resetPassword']);
@@ -39,4 +42,7 @@ return static function (Router $router): void {
 
     $router->get('/contact', [PlaceholderController::class, 'contact']);
     $router->post('/contact', [PlaceholderController::class, 'formSubmit']);
+
+    $router->get('/mentions-legales', [PlaceholderController::class, 'legalNotice']);
+    $router->get('/cgv', [PlaceholderController::class, 'terms']);
 };
