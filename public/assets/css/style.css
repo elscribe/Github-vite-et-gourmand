@@ -1,0 +1,10 @@
+/*
+ * Feuille de style principale de Vite & Gourmand.
+ *
+ * Bootstrap 5 fournit la base responsive. Ce fichier est reserve aux petites
+ * regles CSS propres au projet qui seront ajoutees pendant l'implementation.
+ */
+
+body {
+    min-height: 100vh;
+}

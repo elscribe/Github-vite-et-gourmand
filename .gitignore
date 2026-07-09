@@ -25,6 +25,9 @@ id_dsa
 # Logs
 logs/
 *.log
+!storage/
+!storage/logs/
+!storage/logs/.gitkeep
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -22,17 +22,19 @@ depot.
 
 Etat actuel :
 
-- `main` : branche principale utilisee pendant la phase de documentation.
+- `main` : branche stable et presentable ;
+- `develop` : branche d'integration active ;
+- `feature/*` : branches de travail pour les futures fonctionnalites.
 
-Organisation prevue pendant le developpement :
+Organisation pendant le developpement :
 
 - `main` : version stable et presentable ;
-- `feature/*` : branches de travail pour les grandes fonctionnalites ;
-- `develop` : branche intermediaire seulement si le volume de code le justifie.
+- `develop` : integration Sprint 0 et futures fonctionnalites testees ;
+- `feature/*` : branches de travail creees depuis `develop`.
 
-Pour un projet ECF realise seul, l'usage de `main` reste acceptable pendant la
-phase de cadrage. Les branches de fonctionnalites deviendront utiles au moment
-de l'implementation PHP.
+Une fonctionnalite doit partir de `develop`, etre testee, puis etre fusionnee
+dans `develop`. La branche `main` est synchronisee seulement lorsqu'une version
+stable est prete a etre presentee.
 
 ## Fichiers versionnes
 
@@ -83,4 +85,5 @@ Avant de transmettre le lien au jury :
 - verifier que les scripts SQL et MongoDB sont presents ;
 - verifier que les fichiers parasites ne sont pas presents ;
 - verifier que les diagrammes ont leurs sources `.drawio` et leurs exports PNG ;
-- pousser tous les commits locaux vers `origin/main`.
+- pousser tous les commits locaux vers `origin/develop`, puis fusionner dans
+  `main` quand la version est stable.

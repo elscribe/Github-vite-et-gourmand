@@ -16,19 +16,24 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - modelisation Merise disponible : MCD, MLD et MPD ;
 - diagrammes UML disponibles en sources draw.io et exports PNG ;
 - scripts SQL de creation et d'insertion disponibles ;
-- scripts MongoDB de creation et d'insertion disponibles ;
+- dossier MongoDB prepare pour les statistiques futures, non connecte au code PHP ;
 - documentation technique de base de donnees disponible ;
-- architecture cible PHP MVC preparee ;
+- squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
+- infrastructure Sprint 0 disponible : routes de reservation, pages 404/500,
+  session, chargement `.env`, gestion d'erreurs, helpers HTTP/securite et base
+  model ;
+- route d'accueil disponible pour verifier le fonctionnement MVC ;
 - branches Git `develop` et `feature/*` initialisees pour le developpement ;
 - lien Figma global synchronise pour les wireframes, maquettes, composants,
   charte graphique et exports ;
 - fichier `.env.example` disponible pour documenter la configuration.
 
-Le code applicatif PHP n'est pas encore implemente. Le fichier Figma actuel
-contient les wireframes basse fidelite, les maquettes haute qualite, les
-composants de base, la charte graphique et une page d'exports PDF. Les
-prochaines etapes sont le nettoyage/harmonisation finale des maquettes, puis le
-developpement de l'application PHP MVC.
+Le code metier PHP n'est pas encore implemente. Le depot est pret pour le
+developpement : controleur frontal, routeur parametre simple, controleurs de
+base, modele de base, placeholders HTTP 501, configuration, session, erreurs et
+connexion PDO preparee. Le fichier Figma actuel contient les wireframes basse
+fidelite, les maquettes haute qualite, les composants de base, la charte
+graphique et une page d'exports PDF.
 
 ## Liens De Rendu
 
@@ -109,16 +114,18 @@ documentee, deployee et appuyee par :
 | Couche | Choix |
 | --- | --- |
 | Frontend | HTML5, CSS3, Bootstrap 5, JavaScript vanilla |
-| Backend | PHP 8, PDO |
+| Backend | PHP 8.3, PDO |
 | Architecture | MVC simple |
+| Autoload | Composer, PSR-4 |
 | Base relationnelle | MariaDB, compatible MySQL 8 pour les tests |
-| Base non relationnelle | MongoDB pour les statistiques administrateur |
+| Base non relationnelle | Dossier MongoDB prepare, implementation future |
 | Gestion projet | Notion |
 | Depot | GitHub |
 | Deploiement pressenti | Fly.io, a confirmer apres implementation |
 
-La base SQL reste la source de verite pour les donnees metier. MongoDB est
-limite aux agregats statistiques utilises par le tableau de bord administrateur.
+La base SQL reste la source de verite pour les donnees metier. MongoDB sera
+limite plus tard aux agregats statistiques utilises par le tableau de bord
+administrateur.
 
 ## Organisation Du Depot
 
@@ -129,7 +136,9 @@ vite-gourmand/
 ├── app/
 │   ├── Controllers/
 │   ├── Core/
+│   ├── Middlewares/
 │   ├── Models/
+│   ├── Services/
 │   └── Views/
 ├── config/
 ├── database/
@@ -141,50 +150,61 @@ vite-gourmand/
 │   ├── uml/
 │   └── repository.md
 ├── public/
+│   ├── assets/
+│   │   ├── css/
+│   │   ├── images/
+│   │   └── js/
+│   └── index.php
 ├── scripts/
+├── storage/
+├── tests/
 ├── .env.example
 ├── .gitignore
+├── composer.json
 └── README.md
 ```
 
 ### Role Des Dossiers
 
-- `app/` : futur code PHP organise en MVC.
+- `app/` : code PHP prive organise en MVC.
 - `app/Controllers/` : controleurs qui recoivent les actions utilisateur.
-- `app/Models/` : acces aux donnees SQL et MongoDB.
+- `app/Models/` : futures classes d'acces aux donnees SQL.
 - `app/Views/` : vues HTML affichees a l'utilisateur.
 - `app/Core/` : routeur, classe de base, connexion et outils communs.
-- `config/` : future configuration applicative.
+- `app/Middlewares/` : futurs middlewares de securite et controle d'acces.
+- `app/Services/` : futurs services metier reutilisables.
+- `config/` : configuration applicative, session, routes et base de donnees.
 - `database/sql/` : scripts SQL de creation et de donnees de demonstration.
-- `database/mongodb/` : documentation, creation et seed des collections MongoDB.
+- `database/mongodb/` : espace MongoDB prepare, non relie au PHP pour l'instant.
 - `docs/database/` : documentation Merise, dictionnaire, choix et audits.
 - `docs/uml/` : diagrammes UML en draw.io et PNG.
-- `public/` : futur point d'entree web et assets publics.
+- `public/` : point d'entree web et assets publics.
 - `scripts/` : outils de generation ou maintenance de documentation.
+- `storage/` : logs et fichiers generes localement, non publics.
+- `tests/` : futurs tests automatises.
 
-Les dossiers `app/`, `config/` et `public/` sont encore des emplacements cibles
-car le developpement PHP n'a pas commence. Ils seront versionnes avec leurs
-fichiers applicatifs au demarrage de l'implementation.
+Chaque dossier important contient un fichier `README.md` pour expliquer son role
+a un developpeur junior ou au jury.
 
 ## Installation Locale
 
 ### Prerequis
 
 - Git.
-- PHP 8.
+- PHP 8.3.
+- Composer.
 - MariaDB ou MySQL 8.
-- MongoDB.
-- `mongosh`.
+- MongoDB et `mongosh` plus tard, pour la partie statistiques.
 - Navigateur web moderne.
 
-Composer et npm ne sont pas encore requis, car aucun `composer.json` ni
-`package.json` n'est present dans le depot.
+Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN.
 
 ### Recuperer Le Projet
 
 ```bash
 git clone https://github.com/elscribe/Github-vite-et-gourmand.git
 cd Github-vite-et-gourmand
+composer install
 ```
 
 ### Configurer L'Environnement
@@ -228,7 +248,11 @@ mysql -u root -p < database/sql/create_database.sql
 mysql -u root -p < database/sql/seed_database.sql
 ```
 
-### Initialiser MongoDB
+### Initialiser MongoDB Plus Tard
+
+MongoDB n'est pas necessaire pour lancer le squelette MVC. Le dossier
+`database/mongodb/` est prepare pour la future partie statistiques
+administrateur.
 
 ```bash
 mongosh database/mongodb/create_collections.js
@@ -243,12 +267,55 @@ Collections statistiques prevues :
 
 ### Lancer L'Application
 
-L'application PHP n'est pas encore implementee. Lorsque `public/index.php` sera
-ajoute, le lancement local pourra se faire avec :
+Le squelette MVC peut etre lance en local avec le serveur PHP integre :
+
+```bash
+composer serve
+```
+
+Commande equivalente sans script Composer :
 
 ```bash
 php -S localhost:8000 -t public
 ```
+
+### Verifier Le Socle Technique
+
+```bash
+composer check
+```
+
+Cette commande valide `composer.json` puis lance un controle de syntaxe PHP sur
+`app/`, `config/` et `public/`.
+
+## Guide Developpeur Sprint 0
+
+Le depot est volontairement limite a l'infrastructure. Les routes des futures
+sections existent dans [config/routes.php](config/routes.php), mais les pages
+metier retournent un statut HTTP `501 Not Implemented`.
+
+Sections reservees :
+
+- `GET /menus`
+- `GET /menus/{id}`
+- `GET /connexion`
+- `GET /inscription`
+- `GET /commandes`
+- `GET /mon-compte`
+- `GET /employe`
+- `GET /admin`
+- `GET /contact`
+
+Regles de developpement :
+
+- garder `public/` comme seul web root ;
+- ajouter les futures routes dans `config/routes.php` ;
+- garder les controleurs minces ;
+- placer les requetes SQL dans les modeles ;
+- placer la logique reutilisable dans `app/Services/` ;
+- utiliser `App\Core\Security::escape()` ou `htmlspecialchars()` pour les sorties ;
+- proteger les futurs formulaires POST avec le token CSRF prepare ;
+- ne jamais versionner `.env`.
 
 ## Configuration
 
@@ -259,11 +326,18 @@ Le fichier [.env.example](.env.example) documente les variables attendues :
 | `APP_NAME` | Nom de l'application. |
 | `APP_ENV` | Environnement d'execution. |
 | `APP_DEBUG` | Activation du debug en local. |
+| `APP_DISPLAY_ERRORS` | Affichage des erreurs en developpement. |
+| `APP_LOG_ERRORS` | Journalisation des erreurs PHP. |
+| `APP_LOG_PATH` | Chemin du fichier de logs applicatif. |
+| `APP_TIMEZONE` | Fuseau horaire applicatif. |
 | `APP_URL` | URL locale ou publique de l'application. |
 | `APP_KEY` | Cle applicative a remplacer en local. |
 | `PASSWORD_MIN_LENGTH` | Longueur minimale du mot de passe. |
 | `SESSION_NAME` | Nom de la session PHP. |
 | `SESSION_LIFETIME_MINUTES` | Duree de vie prevue de la session. |
+| `SESSION_SECURE` | Cookie de session limite au HTTPS en production. |
+| `SESSION_HTTP_ONLY` | Cookie de session inaccessible en JavaScript. |
+| `SESSION_SAME_SITE` | Politique SameSite du cookie de session. |
 | `DB_CONNECTION` | Type de connexion SQL. |
 | `DB_HOST` | Hote SQL. |
 | `DB_PORT` | Port SQL. |
@@ -354,6 +428,16 @@ mot de passe.
 - [Seed MongoDB](database/mongodb/seed_mongodb.js)
 - [Generation documentation BDD](scripts/generate_database_docs.py)
 - [Organisation du depot GitHub](docs/repository.md)
+
+### Livrables A Completer
+
+- [Gestion de projet](docs/project-management/README.md)
+- [Documentation de deploiement](docs/deployment/README.md)
+- [Manuel utilisateur](docs/manual/README.md)
+- [Documentation securite](docs/security/README.md)
+- [Wireframes](docs/deliverables/wireframes/README.md)
+- [Mockups](docs/deliverables/mockups/README.md)
+- [Charte graphique](docs/deliverables/graphic-charter/README.md)
 
 ## Securite Prevue
 

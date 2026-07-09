@@ -1,0 +1,11 @@
+# Configuration Apache du dossier public.
+#
+# Ce fichier permet d'utiliser des URLs propres lorsque le projet est servi par
+# Apache : les fichiers existants comme le CSS, le JavaScript et les images sont
+# servis directement, tandis que les autres requetes sont envoyees vers
+# public/index.php, le controleur frontal.
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
