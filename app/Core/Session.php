@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Core;
 
 /**
- * Encapsule la configuration et les acces de base a la session PHP.
+ * Centralise la configuration de session PHP, le stockage temporaire,
+ * les messages flash et les informations d'authentification.
  */
 final class Session
 {
+    private const USER_ID_KEY = 'auth_user_id';
+    private const USER_ROLE_KEY = 'auth_user_role';
+
     /**
      * @param array<string, mixed> $config
      */
@@ -70,5 +74,77 @@ final class Session
         unset($_SESSION['_flash'][$key]);
 
         return is_string($message) ? $message : null;
+    }
+
+    public static function login(int $userId, string $role): void
+    {
+        self::regenerate();
+
+        $_SESSION[self::USER_ID_KEY] = $userId;
+        $_SESSION[self::USER_ROLE_KEY] = $role;
+    }
+
+    public static function logout(): void
+    {
+        unset($_SESSION[self::USER_ID_KEY], $_SESSION[self::USER_ROLE_KEY]);
+
+        self::regenerate();
+    }
+
+    public static function isAuthenticated(): bool
+    {
+        return self::userId() !== null;
+    }
+
+    public static function userId(): ?int
+    {
+        $userId = $_SESSION[self::USER_ID_KEY] ?? null;
+
+        return is_int($userId) ? $userId : null;
+    }
+
+    public static function role(): ?string
+    {
+        $role = $_SESSION[self::USER_ROLE_KEY] ?? null;
+
+        return is_string($role) && $role !== '' ? $role : null;
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public static function hasRole(array $roles): bool
+    {
+        $currentRole = self::role();
+
+        return $currentRole !== null && in_array($currentRole, $roles, true);
+    }
+
+    public static function destroy(): void
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            return;
+        }
+
+        $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            $cookieParams = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                '',
+                [
+                    'expires' => time() - 42000,
+                    'path' => $cookieParams['path'],
+                    'domain' => $cookieParams['domain'],
+                    'secure' => $cookieParams['secure'],
+                    'httponly' => $cookieParams['httponly'],
+                    'samesite' => $cookieParams['samesite'] ?? 'Lax',
+                ]
+            );
+        }
+
+        session_destroy();
     }
 }
