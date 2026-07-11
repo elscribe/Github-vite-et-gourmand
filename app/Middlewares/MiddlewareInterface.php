@@ -6,5 +6,5 @@ namespace App\Middlewares;
 
 interface MiddlewareInterface
 {
-    public function handle(callable $next): void;
+    public function handle(): bool;
 }

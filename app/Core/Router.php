@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Middlewares\MiddlewareInterface;
+
 /**
  * Routeur tres simple pour un projet MVC en PHP natif.
  *
  * Le routeur relie un chemin d'URL, comme "/", a une methode de controleur.
- * Il reste volontairement simple pour qu'un developpeur junior comprenne le
- * parcours d'une requete avant que le projet grandisse.
+ * Il peut aussi executer des middlewares simples avant le controleur.
  */
 final class Router
 {
     /**
-     * @var array<string, list<array{path: string, pattern: string, parameters: list<string>, handler: array{0: class-string, 1: string}}>>
+     * @var array<string, list<array{path: string, pattern: string, parameters: list<string>, handler: array{0: class-string, 1: string}, middlewares: list<MiddlewareInterface>}>>
      */
     private array $routes = [];
 
@@ -27,20 +28,22 @@ final class Router
      * Enregistre une route qui repond a une requete HTTP GET.
      *
      * @param array{0: class-string, 1: string} $handler Classe controleur et methode.
+     * @param list<MiddlewareInterface> $middlewares
      */
-    public function get(string $path, array $handler): void
+    public function get(string $path, array $handler, array $middlewares = []): void
     {
-        $this->addRoute('GET', $path, $handler);
+        $this->addRoute('GET', $path, $handler, $middlewares);
     }
 
     /**
      * Enregistre une route qui repond a une requete HTTP POST.
      *
      * @param array{0: class-string, 1: string} $handler Classe controleur et methode.
+     * @param list<MiddlewareInterface> $middlewares
      */
-    public function post(string $path, array $handler): void
+    public function post(string $path, array $handler, array $middlewares = []): void
     {
-        $this->addRoute('POST', $path, $handler);
+        $this->addRoute('POST', $path, $handler, $middlewares);
     }
 
     /**
@@ -60,6 +63,10 @@ final class Router
 
             foreach ($route['parameters'] as $parameterName) {
                 $parameters[] = $matches[$parameterName] ?? null;
+            }
+
+            if (!$this->runMiddlewares($route['middlewares'])) {
+                return;
             }
 
             $this->callHandler($route['handler'], $parameters);
@@ -86,6 +93,20 @@ final class Router
     }
 
     /**
+     * @param list<MiddlewareInterface> $middlewares
+     */
+    private function runMiddlewares(array $middlewares): bool
+    {
+        foreach ($middlewares as $middleware) {
+            if (!$middleware->handle()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param array{0: class-string, 1: string} $handler
      * @param list<mixed> $parameters
      */
@@ -100,8 +121,9 @@ final class Router
      * Stocke une route en interne avec une cle normalisee.
      *
      * @param array{0: class-string, 1: string} $handler Classe controleur et methode.
+     * @param list<MiddlewareInterface> $middlewares
      */
-    private function addRoute(string $method, string $path, array $handler): void
+    private function addRoute(string $method, string $path, array $handler, array $middlewares = []): void
     {
         $normalizedPath = $this->normalizePath($path);
 
@@ -110,6 +132,7 @@ final class Router
             'pattern' => $this->compilePattern($normalizedPath),
             'parameters' => $this->extractParameterNames($normalizedPath),
             'handler' => $handler,
+            'middlewares' => $middlewares,
         ];
     }
 
