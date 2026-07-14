@@ -6,22 +6,6 @@
  * @var list<array<string, mixed>> $regimes
  */
 
-$themeLabels = [
-    'Christmas' => 'Noël',
-    'Cocktail' => 'Cocktail',
-    'Family' => 'Famille',
-    'Prestige' => 'Réception',
-    'Vegetarian' => 'Végétarien',
-    'Wedding' => 'Mariage',
-];
-
-$regimeLabels = [
-    'Classic' => 'Classique',
-    'Gluten-free' => 'Sans gluten',
-    'Vegan' => 'Vegan',
-    'Vegetarian' => 'Végétarien',
-];
-
 $menuPresentation = [
     1 => [
         'order' => 1,

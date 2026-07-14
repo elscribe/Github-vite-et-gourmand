@@ -31,6 +31,11 @@ Statut : conforme.
 
 - `create_database.sql` reprend les tables, cles primaires, cles etrangeres, contraintes, controles de domaine et index du MPD.
 - `seed_database.sql` contient les donnees de demonstration completes pour roles, utilisateurs, menus, plats, commandes, historiques, avis, contacts, horaires et resets de mot de passe.
+- Mise a jour du 14 juillet 2026 : les noms, themes, regimes, prix minimums
+  et minimums de personnes du catalogue de demonstration sont alignes avec les
+  menus publics Figma : Menu Noël Tradition, Menu Cocktail Bordelais,
+  Menu Végé-Gourmand, Menu Terre & Mer, Menu Saint-Valentin et Menu Pâques en
+  Famille.
 
 ## Coherence MongoDB -> besoins administrateur
 

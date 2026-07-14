@@ -36,16 +36,16 @@ Categories alimentaires associees aux menus.
 | Colonne | Type | Contraintes | Description |
 | --- | --- | --- | --- |
 | `id_regime` | `INT` | PK | Identifiant du regime |
-| `libelle` | `VARCHAR(80)` | UNIQUE NOT NULL | Classique, vegetarien, vegan... |
+| `libelle` | `VARCHAR(80)` | UNIQUE NOT NULL | Classique, Végétarien, Vegan, Sans gluten... |
 
 ## `themes`
 
-Themes de menus tels que Noel, Paques ou classique.
+Themes commerciaux associes aux menus publics.
 
 | Colonne | Type | Contraintes | Description |
 | --- | --- | --- | --- |
 | `id_theme` | `INT` | PK | Identifiant du theme |
-| `libelle` | `VARCHAR(80)` | UNIQUE NOT NULL | Noel, Paques, classique... |
+| `libelle` | `VARCHAR(80)` | UNIQUE NOT NULL | Noël / fêtes, Saint-Valentin, Terre & Mer, Pâques / famille... |
 
 ## `menus`
 
@@ -65,6 +65,10 @@ Offres de menus traiteur commandables.
 | `actif` | `BOOLEAN` | NOT NULL | Affichage catalogue |
 | `created_at` | `DATETIME` | NOT NULL | Date de creation |
 | `updated_at` | `DATETIME` | NULL | Derniere modification |
+
+Jeu de demonstration public aligne avec Figma : `Menu Noël Tradition`,
+`Menu Cocktail Bordelais`, `Menu Végé-Gourmand`, `Menu Terre & Mer`,
+`Menu Saint-Valentin` et `Menu Pâques en Famille`.
 
 ## `menu_images`
 

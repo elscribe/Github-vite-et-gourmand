@@ -7,8 +7,8 @@ namespace App\Services;
 /**
  * Textes publics alignes avec les maquettes Figma.
  *
- * La base contient encore des donnees de demonstration en anglais. Ce service
- * garde un affichage francais coherent sans modifier la base de donnees.
+ * Ce service centralise les contenus publics enrichis issus de Figma : images,
+ * libelles marketing, statuts d'affichage et sections detaillees.
  */
 final class MenuPresentation
 {
@@ -492,24 +492,12 @@ final class MenuPresentation
 
     public static function themeLabel(string $label): string
     {
-        return [
-            'Christmas' => 'Noël',
-            'Cocktail' => 'Cocktail',
-            'Family' => 'Famille',
-            'Prestige' => 'Réception',
-            'Vegetarian' => 'Végétarien',
-            'Wedding' => 'Mariage',
-        ][$label] ?? $label;
+        return $label;
     }
 
     public static function regimeLabel(string $label): string
     {
-        return [
-            'Classic' => 'Classique',
-            'Gluten-free' => 'Sans gluten',
-            'Vegan' => 'Vegan',
-            'Vegetarian' => 'Végétarien',
-        ][$label] ?? $label;
+        return $label;
     }
 
     public static function allergenLabel(string $label): string

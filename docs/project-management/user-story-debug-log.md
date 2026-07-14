@@ -23,7 +23,7 @@ vigilance.
 | US | Echec ou point de vigilance | Cause probable | Solution appliquee | Phrase pour le jury |
 |---|---|---|---|---|
 | US-001 Accueil avis valides | Ne pas afficher tous les avis sans moderation. | La page d'accueil ne devait pas lire les avis non valides. | Ajout de `ReviewModel::findValidated` et affichage limite aux avis `valide`. | "Les avis publics passent par une moderation avant d'etre visibles." |
-| US-002 Liste menus | Certains menus de la base ne correspondaient pas encore aux titres Figma. | Les donnees de demo SQL et la maquette evoluent separement. | Garder la structure fonctionnelle et reporter l'alignement final du contenu apres Figma. | "Le code est pret, les contenus peuvent etre ajustes ensuite en base." |
+| US-002 Liste menus | Certains menus de la base ne correspondaient pas encore aux titres Figma. | Les donnees de demo SQL et la maquette avaient evolue separement. | Alignement du seed SQL, de la base locale et des donnees MongoDB de demonstration sur les noms Figma. | "J'ai corrige la source de donnees apres avoir stabilise l'interface." |
 | US-003 Filtres menus | Les filtres demandaient plus qu'une simple liste : il fallait aussi charger themes et regimes. | La vue avait besoin de donnees de reference en plus des menus. | Ajout des methodes `findThemes`, `findRegimes` et des filtres dans `MenuModel`. | "Le controleur prepare les listes, le modele applique les conditions SQL." |
 | US-004 Detail menu | La zone presentation semblait mal cadree sur certaines largeurs. | La grille detail/menu devait passer en une colonne selon la taille ecran. | Ajustement CSS responsive avec grille adaptee et espacements fixes. | "J'ai corrige le responsive pour garder une lecture propre sur tablette/mobile." |
 | US-005 Contact | La route contact n'etait pas facile a retrouver dans `routes.php`. | Le fichier avait surtout des placeholders et la navigation dans Nano etait confuse. | Ajout de `ContactController`, `ContactModel`, vue contact et routes GET/POST. | "Un formulaire suit le cycle GET formulaire, POST validation, INSERT, redirection." |
@@ -100,7 +100,7 @@ node `460:19068`.
 | Le header mobile affichait un logo horizontal illisible par rapport aux frames Figma. | Les frames mobiles utilisent un petit carre `VG`, tandis que le code utilisait le logo desktop reduit. | Creation de `logo-mobile-vg.png` depuis la capture Figma mobile, affichage du logo desktop en desktop et du carre VG en mobile. | "Un logo responsive peut avoir deux assets : un lockup complet desktop et une marque compacte mobile." |
 | Le header mobile etait trop haut. | Les pages publiques mobiles Figma utilisent un header d'environ 60px, alors que le code gardait 72px. | Passage du header mobile a 60px, logo 38px et bouton burger centre verticalement. | "J'ajuste les dimensions globales du layout avant de retoucher chaque page." |
 | Le bouton `Tous les filtres` sur la page menus etait uniquement visuel. | Le formulaire avance precedent avait ete retire en attendant l'overlay Figma, donc il n'y avait plus d'interaction derriere le bouton. | Creation d'une overlay simple avec les champs deja prevus par le modele : theme, regime, prix maximum et convives, puis filtrage cote JavaScript sans rechargement. | "Le modele fournit les donnees, la vue affiche l'overlay, et le JavaScript applique les criteres sur les cartes deja presentes." |
-| Les options de l'overlay sortaient en anglais (`Christmas`, `Classic`). | La base de donnees locale contient des libelles anglais, alors que l'interface publique Figma est en francais. | Ajout d'une traduction d'affichage dans la vue, sans modifier les valeurs ni la base. | "Je n'ai pas change la donnee source ; j'ai seulement adapte son libelle pour l'interface utilisateur." |
+| Les options de l'overlay sortaient au depart en anglais (`Christmas`, `Classic`). | La base de donnees locale contenait encore les anciens libelles de demonstration. | D'abord traduction d'affichage dans la vue, puis alignement du seed SQL et de la base locale sur les noms Figma. | "J'ai commence par proteger l'interface, puis j'ai corrige la source de donnees pour eviter l'ecart documentaire." |
 | L'overlay `Tous les filtres` ne ressemblait pas encore a la frame Figma finale. | La premiere version etait un formulaire technique avec selects et inputs, pas la carte blanche a pastilles de Figma. | Reprise du composant `614:89721` : deux colonnes, pastilles, bouton fermer rond, ligne doree, boutons reset/appliquer, tout en gardant le filtrage JavaScript sans rechargement. | "J'ai separe l'habillage Figma du comportement : les pastilles remplissent des champs caches que le JavaScript sait deja lire." |
 | Le premier test Playwright de fermeture de l'overlay a bloque. | Le selecteur `[data-filter-overlay-close]` ciblait d'abord le fond noir, partiellement couvert par le panneau, au lieu du bouton rond. | Test relance avec le selecteur exact `[aria-label=\"Fermer les filtres\"]`, puis verification : overlay cachee, pas d'erreur JavaScript. | "Un test peut echouer parce que le selecteur est trop vague ; je dois cibler l'element interactif exact." |
 | L'overlay filtres mobile ne ressemblait pas au bottom-sheet Figma. | La version mobile etait seulement une adaptation du formulaire desktop, avec un panneau mal place et un contenu qui ne scrollait pas comme la frame. | Ajout d'une hauteur mobile `100dvh - 84px`, d'une poignee, d'un header fixe, d'une zone centrale scrollable, d'actions fixes et d'un resume visible apres scroll. | "Le responsive ne consiste pas seulement a empiler : parfois il faut changer le comportement du composant." |
@@ -164,11 +164,13 @@ node `460:19068`.
 - Solution : utiliser PHP `get_headers` pour tester les routes locales.
 - A retenir : le test compte plus que l'outil utilise.
 
-### Donnees Figma et base pas encore parfaitement alignees
+### Donnees Figma et base initialement non alignees
 
 - Symptome : titres ou contenus de menus differents de la maquette.
 - Cause : la maquette continue d'evoluer pendant le codage.
-- Solution : coder la structure puis faire une passe finale de synchronisation des contenus.
+- Solution : coder la structure, puis faire une passe de synchronisation des
+  titres, themes, regimes, prix minimums et stocks dans `seed_database.sql`, la
+  base locale et les donnees MongoDB de demonstration.
 - A retenir : separer le developpement fonctionnel et le remplissage editorial.
 
 ## Checklist quand une erreur arrive

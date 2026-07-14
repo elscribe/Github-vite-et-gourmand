@@ -67,15 +67,15 @@ Regles :
 Exemple :
 
 ```text
-Family Menu : 160 EUR pour 4 personnes
-Commande : 9 personnes a Pessac, 10 km
-Prix menu : 40 x 9 = 360 EUR
-Remise : 36 EUR
+Menu Cocktail Bordelais : 220 EUR pour 10 personnes
+Commande : 15 personnes a Pessac, 10 km
+Prix menu : 22 x 15 = 330 EUR
+Remise : 33 EUR
 Livraison : 5 + 0,59 x 10 = 10,90 EUR
-Total : 360 - 36 + 10,90 = 334,90 EUR
+Total : 330 - 33 + 10,90 = 307,90 EUR
 ```
 
-Exercice : calcule le total du Vegetarian Menu pour 11 personnes a Talence, 5 km.
+Exercice : calcule le total du Menu Végé-Gourmand pour 11 personnes a Talence, 5 km.
 
 ## Fiche 5 - Parcours de demo jury
 
