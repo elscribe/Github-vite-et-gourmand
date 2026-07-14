@@ -22,6 +22,15 @@ final class HomeController extends BaseController
     {
         $this->view('home/index', [
             'pageTitle' => 'Accueil - Vite & Gourmand',
+            'bodyClass' => 'page-home',
         ]);
+    }
+
+    /**
+     * Redirige l'URL /accueil vers l'accueil principal.
+     */
+    public function redirectToHome(): void
+    {
+        $this->redirect('/');
     }
 }

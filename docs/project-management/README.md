@@ -1,7 +1,31 @@
 # Documentation gestion de projet
 
-Placeholder Sprint 0.
+Ce dossier regroupe les documents locaux qui completent le suivi Notion du
+projet Vite & Gourmand.
 
-La documentation de gestion de projet finale doit etre ajoutee ici ou referencee
-depuis ce dossier avant le rendu ECF. Ne pas inventer de contenu : importer ou
-lier le support reel utilise pour le suivi du projet.
+La source de pilotage principale reste Notion, mais ces fichiers permettent de
+garder une trace versionnee dans GitHub pour le jury.
+
+## Documents
+
+| Fichier | Role |
+|---|---|
+| `user-story-implementation-report.md` | Etat d'avancement des user stories et tests realises. |
+| `user-story-debug-log.md` | Journal des echecs, causes et solutions par user story. |
+| `public-figma-inventory.md` | Correspondance entre pages publiques, Figma, code et captures. |
+| `public-layout-documentation.md` | Explication du layout public, des routes, vues, assets et interactions. |
+| `journal-de-bord-public-layout.md` | Entree de journal de bord pour l'integration publique et le premier commit. |
+
+## Utilisation pour l'oral
+
+Avant une demonstration, relire dans cet ordre :
+
+```text
+1. user-story-implementation-report.md
+2. public-layout-documentation.md
+3. user-story-debug-log.md
+4. journal-de-bord-public-layout.md
+```
+
+Cette lecture donne le fil logique : besoin utilisateur, code MVC, tests,
+problemes rencontres, solutions et prochaines actions.

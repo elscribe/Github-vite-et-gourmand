@@ -20,19 +20,19 @@ INSERT INTO `utilisateurs` (
     `created_at`,
     `updated_at`
 ) VALUES
-(1, 1, 'admin.jose@vitegourmand.test', '$2y$10$vgAdminJoseHashDemo0000000000000000000000000000000000000000', 'Garcia', 'Jose', '0601000001', '8 place de la Bourse', 'Bordeaux', 'France', TRUE, '2025-01-05 09:00:00', NULL),
-(2, 1, 'admin.marie@vitegourmand.test', '$2y$10$vgAdminMarieHashDemo000000000000000000000000000000000000000', 'Bernard', 'Marie', '0601000002', '14 rue du Parlement', 'Bordeaux', 'France', TRUE, '2025-01-06 09:00:00', NULL),
-(3, 2, 'lucas.employee@vitegourmand.test', '$2y$10$vgEmployeeLucasHashDemo000000000000000000000000000000000000', 'Petit', 'Lucas', '0602000001', '22 cours Victor Hugo', 'Bordeaux', 'France', TRUE, '2025-02-01 08:30:00', NULL),
-(4, 2, 'emma.employee@vitegourmand.test', '$2y$10$vgEmployeeEmmaHashDemo0000000000000000000000000000000000000', 'Moreau', 'Emma', '0602000002', '9 rue Notre-Dame', 'Bordeaux', 'France', TRUE, '2025-02-03 08:30:00', NULL),
-(5, 2, 'nathan.employee@vitegourmand.test', '$2y$10$vgEmployeeNathanHashDemo00000000000000000000000000000000000', 'Roux', 'Nathan', '0602000003', '31 quai des Chartrons', 'Bordeaux', 'France', TRUE, '2025-02-05 08:30:00', NULL),
-(6, 3, 'claire.martin@example.test', '$2y$10$vgCustomerClaireHashDemo00000000000000000000000000000000000', 'Martin', 'Claire', '0603000001', '12 rue Sainte-Catherine', 'Bordeaux', 'France', TRUE, '2025-03-10 10:20:00', NULL),
-(7, 3, 'thomas.durand@example.test', '$2y$10$vgCustomerThomasHashDemo0000000000000000000000000000000000', 'Durand', 'Thomas', '0603000002', '4 avenue Thiers', 'Cenon', 'France', TRUE, '2025-03-11 11:15:00', NULL),
-(8, 3, 'sophie.leroy@example.test', '$2y$10$vgCustomerSophieHashDemo0000000000000000000000000000000000', 'Leroy', 'Sophie', '0603000003', '6 allee de Tourny', 'Bordeaux', 'France', TRUE, '2025-03-12 14:00:00', NULL),
-(9, 3, 'antoine.morel@example.test', '$2y$10$vgCustomerAntoineHashDemo00000000000000000000000000000000', 'Morel', 'Antoine', '0603000004', '45 rue Fondaudege', 'Bordeaux', 'France', TRUE, '2025-03-15 09:45:00', NULL),
-(10, 3, 'camille.fournier@example.test', '$2y$10$vgCustomerCamilleHashDemo00000000000000000000000000000000', 'Fournier', 'Camille', '0603000005', '18 avenue Jean Jaures', 'Talence', 'France', TRUE, '2025-03-18 16:25:00', NULL),
-(11, 3, 'hugo.lambert@example.test', '$2y$10$vgCustomerHugoHashDemo000000000000000000000000000000000000', 'Lambert', 'Hugo', '0603000006', '2 rue des Remparts', 'Bordeaux', 'France', TRUE, '2025-03-20 13:10:00', NULL),
-(12, 3, 'julie.faure@example.test', '$2y$10$vgCustomerJulieHashDemo00000000000000000000000000000000000', 'Faure', 'Julie', '0603000007', '27 rue Judaique', 'Bordeaux', 'France', TRUE, '2025-03-22 12:35:00', NULL),
-(13, 3, 'maxime.girard@example.test', '$2y$10$vgCustomerMaximeHashDemo0000000000000000000000000000000000', 'Girard', 'Maxime', '0603000008', '3 place Pey-Berland', 'Bordeaux', 'France', TRUE, '2025-03-24 18:05:00', NULL);
+(1, 1, 'admin.jose@vitegourmand.test', '$2y$12$KFH/XbZLck264GDRSHli8ugFaTQkPpYV6JVmrrAZ9egYevq59Essa', 'Garcia', 'Jose', '0601000001', '8 place de la Bourse', 'Bordeaux', 'France', TRUE, '2025-01-05 09:00:00', NULL),
+(2, 1, 'admin.marie@vitegourmand.test', '$2y$12$KFH/XbZLck264GDRSHli8ugFaTQkPpYV6JVmrrAZ9egYevq59Essa', 'Bernard', 'Marie', '0601000002', '14 rue du Parlement', 'Bordeaux', 'France', TRUE, '2025-01-06 09:00:00', NULL),
+(3, 2, 'lucas.employee@vitegourmand.test', '$2y$12$hVqnZfF/EgP1Vbp5mgC6SeFSMmg.o2Yy2Zx1NIO5y7UxFw.zjkcMy', 'Petit', 'Lucas', '0602000001', '22 cours Victor Hugo', 'Bordeaux', 'France', TRUE, '2025-02-01 08:30:00', NULL),
+(4, 2, 'emma.employee@vitegourmand.test', '$2y$12$hVqnZfF/EgP1Vbp5mgC6SeFSMmg.o2Yy2Zx1NIO5y7UxFw.zjkcMy', 'Moreau', 'Emma', '0602000002', '9 rue Notre-Dame', 'Bordeaux', 'France', TRUE, '2025-02-03 08:30:00', NULL),
+(5, 2, 'nathan.employee@vitegourmand.test', '$2y$12$hVqnZfF/EgP1Vbp5mgC6SeFSMmg.o2Yy2Zx1NIO5y7UxFw.zjkcMy', 'Roux', 'Nathan', '0602000003', '31 quai des Chartrons', 'Bordeaux', 'France', TRUE, '2025-02-05 08:30:00', NULL),
+(6, 3, 'claire.martin@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Martin', 'Claire', '0603000001', '12 rue Sainte-Catherine', 'Bordeaux', 'France', TRUE, '2025-03-10 10:20:00', NULL),
+(7, 3, 'thomas.durand@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Durand', 'Thomas', '0603000002', '4 avenue Thiers', 'Cenon', 'France', TRUE, '2025-03-11 11:15:00', NULL),
+(8, 3, 'sophie.leroy@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Leroy', 'Sophie', '0603000003', '6 allee de Tourny', 'Bordeaux', 'France', TRUE, '2025-03-12 14:00:00', NULL),
+(9, 3, 'antoine.morel@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Morel', 'Antoine', '0603000004', '45 rue Fondaudege', 'Bordeaux', 'France', TRUE, '2025-03-15 09:45:00', NULL),
+(10, 3, 'camille.fournier@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Fournier', 'Camille', '0603000005', '18 avenue Jean Jaures', 'Talence', 'France', TRUE, '2025-03-18 16:25:00', NULL),
+(11, 3, 'hugo.lambert@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Lambert', 'Hugo', '0603000006', '2 rue des Remparts', 'Bordeaux', 'France', TRUE, '2025-03-20 13:10:00', NULL),
+(12, 3, 'julie.faure@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Faure', 'Julie', '0603000007', '27 rue Judaique', 'Bordeaux', 'France', TRUE, '2025-03-22 12:35:00', NULL),
+(13, 3, 'maxime.girard@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Girard', 'Maxime', '0603000008', '3 place Pey-Berland', 'Bordeaux', 'France', TRUE, '2025-03-24 18:05:00', NULL);
 
 INSERT INTO `regimes` (`id_regime`, `libelle`) VALUES
 (1, 'Classic'),
