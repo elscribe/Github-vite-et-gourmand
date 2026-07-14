@@ -30,7 +30,7 @@ Le detail des erreurs rencontrees et des solutions appliquees est conserve dans
 | US-008 | Mot de passe oublie | Valide demo | `PasswordResetModel`, vues auth reset | Token hash, expiration, reinitialisation locale. |
 | US-009 | Modification profil | Valide | `AccountController`, `UserModel`, `account/show.php` | POST `/mon-compte`. |
 | US-010 | Commander un menu | Valide | `OrderController`, `OrderModel`, `orders/create.php` | POST `/commandes` cree commande + historique initial. |
-| US-011 | Calcul prix/remise/livraison | Valide | `OrderModel::calculateTotals`, `app.js` | Famille 9 pers. Pessac 10 km = 334,90 EUR. |
+| US-011 | Calcul prix/remise/livraison | Valide | `OrderModel::calculateTotals`, `app.js` | Menu Cocktail Bordelais, 15 pers., Pessac 10 km = 307,90 EUR. |
 | US-012 | Historique commandes client | Valide | `OrderController::index`, `orders/index.php` | `GET /commandes`. |
 | US-013 | Suivi statut commande | Valide | `OrderModel::findHistory`, `orders/show.php` | Detail commande affiche timeline. |
 | US-014 | Modifier/annuler avant acceptation | Valide | `OrderController::edit/update/cancel` | Autorise uniquement statut `en_attente`. |
@@ -58,7 +58,8 @@ Le detail des erreurs rencontrees et des solutions appliquees est conserve dans
 - Connexion admin : `admin.jose@vitegourmand.test` / `AdminVite2026!`.
 - Connexion employe : `lucas.employee@vitegourmand.test` / `EmployeVite2026!`.
 - Connexion client : `claire.martin@example.test` / `ClientVite2026!`.
-- Creation commande test #21 : calcul serveur `334,90 EUR`.
+- Exemple de calcul serveur : Menu Cocktail Bordelais, 15 personnes a Pessac,
+  10 km = `307,90 EUR`.
 - Changement statut employe : #21 de `en_attente` a `acceptee`, puis `terminee`.
 - Depot avis client sur #21, moderation en `valide`.
 - Reinitialisation mot de passe par token local.
