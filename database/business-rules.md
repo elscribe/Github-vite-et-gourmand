@@ -37,6 +37,7 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - `adresse_postale` (VARCHAR(255)) : Adresse
 - `ville` (VARCHAR(80)) : Ville
 - `pays` (VARCHAR(80)) : Pays
+- `canal_contact_prefere` (VARCHAR(20)) : Preference client pour le suivi (`email` ou `telephone`)
 - `actif` (BOOLEAN) : Desactivation employe
 - `created_at` (DATETIME) : Date de creation
 - `updated_at` (DATETIME) : Derniere modification
@@ -88,8 +89,10 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - `date_prestation` (DATE) : Date evenement
 - `heure_livraison` (TIME) : Heure souhaitee
 - `adresse_livraison` (VARCHAR(255)) : Lieu prestation
+- `code_postal_livraison` (VARCHAR(10)) : Code postal de livraison
 - `ville_livraison` (VARCHAR(80)) : Ville livraison
 - `distance_km` (DECIMAL(6,2)) : Distance hors Bordeaux utilisee pour calculer la livraison
+- `commentaire_client` (TEXT) : Demande particuliere du client : allergenes, code d'acces, etage ou consignes de livraison
 - `nombre_personnes` (INT) : Convives
 - `prix_menu` (DECIMAL(10,2)) : Prix menu calcule
 - `remise` (DECIMAL(10,2)) : Reduction appliquee
@@ -169,7 +172,7 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - Un plat peut posseder plusieurs allergenes ; la table `plat_allergenes` conserve uniquement l'association plat/allergene.
 - Le nombre de personnes commande doit etre superieur ou egal au minimum du menu.
 - Une reduction de 10 % s'applique lorsque la commande contient au moins 5 personnes de plus que le minimum du menu.
-- La livraison dans Bordeaux n'ajoute pas la majoration hors Bordeaux ; hors Bordeaux, l'enonce indique 5 EUR plus 0,59 EUR par kilometre parcouru. La methode de calcul de distance reste a implementer et doit etre documentee dans le code.
+- La livraison dans Bordeaux n'ajoute pas la majoration hors Bordeaux ; hors Bordeaux, l'enonce indique 5 EUR plus 0,59 EUR par kilometre parcouru. En version MVP, aucune API de geolocalisation n'est branchee : le client saisit une distance approximative depuis Bordeaux, puis l'equipe verifie l'adresse et la distance avant validation. Une evolution possible consisterait a brancher une API d'adresses/geocodage.
 - Un client peut modifier ou annuler une commande tant qu'elle n'est pas acceptee. Le choix du menu n'est pas modifiable.
 - Un employe ne peut modifier ou annuler une commande qu'apres contact client par appel GSM ou mail ; le mode de contact et le motif doivent etre conserves.
 - Les statuts de commande doivent etre historises avec une date et une heure.

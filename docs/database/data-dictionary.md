@@ -134,8 +134,10 @@ Commandes passees par les utilisateurs.
 | `date_prestation` | `DATE` | NOT NULL | Date evenement |
 | `heure_livraison` | `TIME` | NOT NULL | Heure souhaitee |
 | `adresse_livraison` | `VARCHAR(255)` | NOT NULL | Lieu prestation |
+| `code_postal_livraison` | `VARCHAR(10)` | NOT NULL | Code postal de livraison |
 | `ville_livraison` | `VARCHAR(80)` | NOT NULL | Ville livraison |
 | `distance_km` | `DECIMAL(6,2)` | NOT NULL | Distance hors Bordeaux utilisee pour calculer la livraison |
+| `commentaire_client` | `TEXT` | NULL | Demande particuliere du client : allergenes, code d'acces, etage ou consignes de livraison |
 | `nombre_personnes` | `INT` | NOT NULL | Convives |
 | `prix_menu` | `DECIMAL(10,2)` | NOT NULL | Prix menu calcule |
 | `remise` | `DECIMAL(10,2)` | NOT NULL | Reduction appliquee |
