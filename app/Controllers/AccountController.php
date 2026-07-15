@@ -29,9 +29,30 @@ final class AccountController extends BaseController
 
         $this->view('account/show', [
             'pageTitle' => 'Mon compte - Vite & Gourmand',
+            'bodyClass' => 'page-client page-client-account',
             'user' => $userModel->findById($userId),
+            'currentOrder' => $orderModel->findCurrentForUser($userId),
+            'reviewableOrder' => $orderModel->findReviewableForUser($userId),
             'orders' => array_slice($orderModel->findForUser($userId), 0, 5),
+            'statusLabels' => $orderModel->statusLabels(),
             'errors' => [],
+        ]);
+    }
+
+    public function edit(): void
+    {
+        $userId = Session::userId();
+
+        if ($userId === null) {
+            $this->redirect('/connexion');
+        }
+
+        $this->view('account/edit', [
+            'pageTitle' => 'Modifier mes informations - Vite & Gourmand',
+            'bodyClass' => 'page-client page-client-profile-edit',
+            'user' => (new UserModel())->findById($userId),
+            'errors' => [],
+            'success' => Input::getString('success') === '1',
         ]);
     }
 
@@ -50,6 +71,7 @@ final class AccountController extends BaseController
             'adresse_postale' => Input::postString('adresse_postale'),
             'ville' => Input::postString('ville'),
             'pays' => Input::postString('pays', 'France'),
+            'canal_contact_prefere' => Input::postString('canal_contact_prefere', 'email'),
         ];
 
         $validator = Validator::make($data, [
@@ -59,25 +81,26 @@ final class AccountController extends BaseController
             'adresse_postale' => ['required', 'max:255'],
             'ville' => ['required', 'max:80'],
             'pays' => ['required', 'max:80'],
+            'canal_contact_prefere' => ['required', 'in:email,telephone'],
         ]);
 
         if ($validator->fails()) {
-            $orderModel = new OrderModel();
+            $user = (new UserModel())->findById($userId) ?? [];
 
-            $this->view('account/show', [
-                'pageTitle' => 'Mon compte - Vite & Gourmand',
-                'user' => $data + ['email' => ''],
-                'orders' => array_slice($orderModel->findForUser($userId), 0, 5),
+            $this->view('account/edit', [
+                'pageTitle' => 'Modifier mes informations - Vite & Gourmand',
+                'bodyClass' => 'page-client page-client-profile-edit',
+                'user' => $data + ['email' => $user['email'] ?? ''],
                 'errors' => $this->flattenErrors($validator->errors()),
+                'success' => false,
             ]);
 
             return;
         }
 
         (new UserModel())->updateProfile($userId, $data);
-        Session::flash('success', 'Vos informations ont ete mises a jour.');
 
-        $this->redirect('/mon-compte');
+        $this->redirect('/mon-compte/modifier?success=1');
     }
 
     /**

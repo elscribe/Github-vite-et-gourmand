@@ -23,7 +23,15 @@ $isAuthActive = in_array($currentPath, [
     '/mot-de-passe/oublie',
     '/mot-de-passe/reinitialisation',
 ], true);
+$isClientActive = str_starts_with($currentPath, '/mon-compte')
+    || str_starts_with($currentPath, '/commandes')
+    || str_starts_with($currentPath, '/avis');
 $bodyClass = $bodyClass ?? '';
+$assetVersion = static function (string $assetPath): string {
+    $fullPath = dirname(__DIR__, 3) . '/public' . $assetPath;
+
+    return is_file($fullPath) ? (string) filemtime($fullPath) : '1';
+};
 ?>
 <!doctype html>
 <html lang="fr">
@@ -36,7 +44,7 @@ $bodyClass = $bodyClass ?? '';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style.css?v=<?= $assetVersion('/assets/css/style.css') ?>" rel="stylesheet">
 </head>
 <body id="top" class="<?= htmlspecialchars($bodyClass, ENT_QUOTES, 'UTF-8') ?>">
     <header class="site-header">
@@ -61,14 +69,14 @@ $bodyClass = $bodyClass ?? '';
                     <a class="nav-link<?= $isMenusActive ? ' is-active' : '' ?>" href="/menus">Nos Menus</a>
                     <a class="nav-link<?= $isContactActive ? ' is-active' : '' ?>" href="/contact">Contact</a>
                     <?php if ($isAuthenticated): ?>
-                        <a class="nav-link" href="/mon-compte">Mon compte</a>
+                        <a class="nav-link<?= $isClientActive ? ' is-active' : '' ?>" href="/mon-compte">Mon espace</a>
                         <?php if ($currentRole === 'employe' || $currentRole === 'administrateur'): ?>
                             <a class="nav-link" href="/employe">Employe</a>
                         <?php endif; ?>
                         <?php if ($currentRole === 'administrateur'): ?>
                             <a class="nav-link" href="/admin">Admin</a>
                         <?php endif; ?>
-                        <a class="nav-link" href="/deconnexion">Deconnexion</a>
+                        <a class="nav-link site-nav-logout" href="/deconnexion">Deconnexion</a>
                     <?php else: ?>
                         <a class="nav-link<?= $isAuthActive ? ' is-active' : '' ?>" href="/connexion">Mon espace</a>
                     <?php endif; ?>
@@ -91,7 +99,7 @@ $bodyClass = $bodyClass ?? '';
                 <a href="/menus"<?= $isMenusActive ? ' aria-current="page"' : '' ?>>Nos menus</a>
                 <a href="/contact"<?= $isContactActive ? ' aria-current="page"' : '' ?>>Contact</a>
                 <?php if ($isAuthenticated): ?>
-                    <a href="/mon-compte">Mon compte</a>
+                    <a href="/mon-compte"<?= $isClientActive ? ' aria-current="page"' : '' ?>>Mon espace</a>
                     <a href="/deconnexion">Deconnexion</a>
                 <?php else: ?>
                     <a href="/connexion"<?= $isAuthActive ? ' aria-current="page"' : '' ?>>Connexion</a>
@@ -157,6 +165,6 @@ $bodyClass = $bodyClass ?? '';
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/app.js?v=<?= $assetVersion('/assets/js/app.js') ?>"></script>
 </body>
 </html>

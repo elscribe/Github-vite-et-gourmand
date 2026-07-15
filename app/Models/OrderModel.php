@@ -19,13 +19,13 @@ final class OrderModel extends BaseModel
     {
         return [
             'en_attente' => 'En attente',
-            'acceptee' => 'Acceptee',
-            'en_preparation' => 'En preparation',
+            'acceptee' => 'Acceptée',
+            'en_preparation' => 'En préparation',
             'en_cours_de_livraison' => 'En cours de livraison',
-            'livre' => 'Livre',
-            'en_attente_retour_materiel' => 'En attente retour materiel',
-            'terminee' => 'Terminee',
-            'annulee' => 'Annulee',
+            'livre' => 'Livrée',
+            'en_attente_retour_materiel' => 'Retour matériel',
+            'terminee' => 'Terminée',
+            'annulee' => 'Annulée',
         ];
     }
 
@@ -37,9 +37,12 @@ final class OrderModel extends BaseModel
         $sql = <<<SQL
             SELECT
                 c.*,
-                m.titre AS menu_titre
+                m.titre AS menu_titre,
+                a.id_avis AS avis_id,
+                a.statut AS avis_statut
             FROM commandes c
             INNER JOIN menus m ON m.id_menu = c.id_menu
+            LEFT JOIN avis a ON a.id_commande = c.id_commande
             WHERE c.id_utilisateur = :user_id
             ORDER BY c.date_commande DESC, c.id_commande DESC
         SQL;
@@ -48,6 +51,64 @@ final class OrderModel extends BaseModel
         $statement->execute(['user_id' => $userId]);
 
         return $statement->fetchAll();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function findCurrentForUser(int $userId): ?array
+    {
+        $sql = <<<SQL
+            SELECT
+                c.*,
+                m.titre AS menu_titre,
+                a.id_avis AS avis_id,
+                a.statut AS avis_statut
+            FROM commandes c
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            LEFT JOIN avis a ON a.id_commande = c.id_commande
+            WHERE c.id_utilisateur = :user_id
+              AND c.statut_actuel NOT IN ('terminee', 'annulee')
+            ORDER BY
+                FIELD(c.statut_actuel, 'en_attente', 'acceptee', 'en_preparation', 'en_cours_de_livraison', 'livre', 'en_attente_retour_materiel') DESC,
+                c.date_prestation ASC,
+                c.id_commande DESC
+            LIMIT 1
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(['user_id' => $userId]);
+        $order = $statement->fetch();
+
+        return $order === false ? null : $order;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function findReviewableForUser(int $userId): ?array
+    {
+        $sql = <<<SQL
+            SELECT
+                c.*,
+                m.titre AS menu_titre,
+                a.id_avis AS avis_id,
+                a.statut AS avis_statut
+            FROM commandes c
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            LEFT JOIN avis a ON a.id_commande = c.id_commande
+            WHERE c.id_utilisateur = :user_id
+              AND c.statut_actuel = 'terminee'
+              AND a.id_avis IS NULL
+            ORDER BY c.date_prestation DESC, c.id_commande DESC
+            LIMIT 1
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(['user_id' => $userId]);
+        $order = $statement->fetch();
+
+        return $order === false ? null : $order;
     }
 
     /**
@@ -148,7 +209,7 @@ final class OrderModel extends BaseModel
     }
 
     /**
-     * @param array{date_prestation: string, heure_livraison: string, adresse_livraison: string, ville_livraison: string, distance_km: float, nombre_personnes: int} $data
+     * @param array{date_prestation: string, heure_livraison: string, adresse_livraison: string, code_postal_livraison: string, ville_livraison: string, distance_km: float, commentaire_client: string, nombre_personnes: int} $data
      */
     public function create(int $userId, int $menuId, array $data): int
     {
@@ -175,8 +236,10 @@ final class OrderModel extends BaseModel
                     date_prestation,
                     heure_livraison,
                     adresse_livraison,
+                    code_postal_livraison,
                     ville_livraison,
                     distance_km,
+                    commentaire_client,
                     nombre_personnes,
                     prix_menu,
                     remise,
@@ -189,8 +252,10 @@ final class OrderModel extends BaseModel
                     :date_prestation,
                     :heure_livraison,
                     :adresse_livraison,
+                    :code_postal_livraison,
                     :ville_livraison,
                     :distance_km,
+                    :commentaire_client,
                     :nombre_personnes,
                     :prix_menu,
                     :remise,
@@ -207,8 +272,10 @@ final class OrderModel extends BaseModel
                 'date_prestation' => $data['date_prestation'],
                 'heure_livraison' => $data['heure_livraison'],
                 'adresse_livraison' => $data['adresse_livraison'],
+                'code_postal_livraison' => $data['code_postal_livraison'],
                 'ville_livraison' => $data['ville_livraison'],
                 'distance_km' => $data['distance_km'],
+                'commentaire_client' => $data['commentaire_client'],
                 'nombre_personnes' => $data['nombre_personnes'],
                 'prix_menu' => $totals['prix_menu'],
                 'remise' => $totals['remise'],
@@ -228,7 +295,7 @@ final class OrderModel extends BaseModel
     }
 
     /**
-     * @param array{date_prestation: string, heure_livraison: string, adresse_livraison: string, ville_livraison: string, distance_km: float, nombre_personnes: int} $data
+     * @param array{date_prestation: string, heure_livraison: string, adresse_livraison: string, code_postal_livraison: string, ville_livraison: string, distance_km: float, commentaire_client: string, nombre_personnes: int} $data
      */
     public function updatePendingForUser(int $orderId, int $userId, array $data): bool
     {
@@ -260,8 +327,10 @@ final class OrderModel extends BaseModel
                     date_prestation = :date_prestation,
                     heure_livraison = :heure_livraison,
                     adresse_livraison = :adresse_livraison,
+                    code_postal_livraison = :code_postal_livraison,
                     ville_livraison = :ville_livraison,
                     distance_km = :distance_km,
+                    commentaire_client = :commentaire_client,
                     nombre_personnes = :nombre_personnes,
                     prix_menu = :prix_menu,
                     remise = :remise,
@@ -277,8 +346,10 @@ final class OrderModel extends BaseModel
                 'date_prestation' => $data['date_prestation'],
                 'heure_livraison' => $data['heure_livraison'],
                 'adresse_livraison' => $data['adresse_livraison'],
+                'code_postal_livraison' => $data['code_postal_livraison'],
                 'ville_livraison' => $data['ville_livraison'],
                 'distance_km' => $data['distance_km'],
+                'commentaire_client' => $data['commentaire_client'],
                 'nombre_personnes' => $data['nombre_personnes'],
                 'prix_menu' => $totals['prix_menu'],
                 'remise' => $totals['remise'],

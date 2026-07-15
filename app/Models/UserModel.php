@@ -28,6 +28,7 @@ final class UserModel extends BaseModel
                 u.adresse_postale,
                 u.ville,
                 u.pays,
+                u.canal_contact_prefere,
                 u.actif,
                 r.libelle AS role
             FROM utilisateurs u
@@ -60,6 +61,7 @@ final class UserModel extends BaseModel
                 u.adresse_postale,
                 u.ville,
                 u.pays,
+                u.canal_contact_prefere,
                 u.actif,
                 r.libelle AS role
             FROM utilisateurs u
@@ -124,7 +126,7 @@ final class UserModel extends BaseModel
     }
 
     /**
-     * @param array{nom: string, prenom: string, telephone: string, adresse_postale: string, ville: string, pays: string} $data
+     * @param array{nom: string, prenom: string, telephone: string, adresse_postale: string, ville: string, pays: string, canal_contact_prefere: string} $data
      */
     public function updateProfile(int $userId, array $data): bool
     {
@@ -137,6 +139,7 @@ final class UserModel extends BaseModel
                 adresse_postale = :adresse_postale,
                 ville = :ville,
                 pays = :pays,
+                canal_contact_prefere = :canal_contact_prefere,
                 updated_at = CURRENT_TIMESTAMP
             WHERE id_utilisateur = :user_id
         SQL;
@@ -150,6 +153,7 @@ final class UserModel extends BaseModel
             'adresse_postale' => $data['adresse_postale'],
             'ville' => $data['ville'],
             'pays' => $data['pays'],
+            'canal_contact_prefere' => $data['canal_contact_prefere'],
             'user_id' => $userId,
         ]);
     }

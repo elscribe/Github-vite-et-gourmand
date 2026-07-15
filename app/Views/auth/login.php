@@ -9,13 +9,7 @@
             <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
             <h2>Se connecter</h2>
-            <p class="auth-card-lead">Choisissez votre espace puis renseignez vos identifiants.</p>
-
-            <div class="auth-role-switch" aria-label="Type d'espace">
-                <button class="auth-role-button is-active" type="button" aria-pressed="true">Client</button>
-                <button class="auth-role-button" type="button" aria-pressed="false">Employé</button>
-                <button class="auth-role-button" type="button" aria-pressed="false">Admin</button>
-            </div>
+            <p class="auth-card-lead">Renseignez vos identifiants pour vous connecter.</p>
 
             <?php if (!empty($errors['credentials'])): ?>
                 <p class="alert-message error-message"><?= htmlspecialchars($errors['credentials'], ENT_QUOTES, 'UTF-8') ?></p>
@@ -55,11 +49,8 @@
         </form>
 
         <aside class="auth-role-card" aria-label="Accès selon votre rôle">
-            <h2>Accès selon votre rôle</h2>
-            <p>Client : suivi de commande et informations personnelles.</p>
-            <p>Employé : commandes à traiter, avis et contact client.</p>
-            <p>Administrateur : menus, statistiques et gestion interne.</p>
-            <em>Les accès internes sont réservés au personnel autorisé.</em>
+            <h2>Un seul accès sécurisé</h2>
+            <p>Connectez-vous avec votre adresse email. Votre espace s'ouvre automatiquement selon votre profil.</p>
         </aside>
     </div>
 </section>
