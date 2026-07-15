@@ -1,7 +1,23 @@
-# Manuel utilisateur
+# Manuel et revisions
 
-Placeholder Sprint 0.
+Ce dossier sert a preparer la recette MVP, les revisions techniques et la
+demonstration orale du projet Vite & Gourmand.
 
-Le manuel utilisateur final devra presenter les parcours reels et les
-identifiants de demonstration. Il sera redige lorsque les fonctionnalites seront
-developpees.
+## Documents
+
+| Fichier | Role |
+|---|---|
+| `mvp-test-checklist.md` | Checklist de test des parcours prioritaires et des livrables ECF. |
+| `revision-sheets.md` | Fiches de revision pour expliquer le MVC, la securite, les commandes et les tests. |
+
+## Parcours client connecte
+
+La validation detaillee des user stories client connecte se trouve dans :
+
+```text
+docs/project-management/client-connected-user-stories-validation.md
+```
+
+Elle couvre `/mon-compte`, `/mon-compte/modifier`, `/commandes`,
+`/commandes/creation`, `/commandes/{id}`, les actions modifier/annuler et la
+page `/avis`.

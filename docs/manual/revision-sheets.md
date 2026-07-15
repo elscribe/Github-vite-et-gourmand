@@ -155,3 +155,44 @@ Exercice : choisis une user story et classe-la dans une de ces familles avant de
 - "Les changements de statut sont historises pour garder une trace de qui a fait quoi et quand."
 - "Les acces prives sont controles par middleware cote serveur."
 - "Les formulaires POST sont proteges par token CSRF."
+
+## Fiche 9 - User stories client connecte
+
+Document de reference :
+`docs/project-management/client-connected-user-stories-validation.md`.
+
+Schema commun :
+
+```text
+Route protegee -> AuthMiddleware -> Session::userId()
+-> Controleur client -> Modele filtre par utilisateur
+-> Vue client -> Test navigateur + verification SQL si besoin
+```
+
+US a savoir expliquer :
+
+- US-009 : `/mon-compte` affiche l'espace client, `/mon-compte/modifier` modifie le profil.
+- US-010 : `/commandes/creation/{menuId}` prepare une commande depuis un menu.
+- US-011 : `OrderModel::calculateTotals` recalcule le prix cote serveur.
+- US-012 : `OrderModel::findForUser` affiche uniquement les commandes du client connecte.
+- US-013 : `OrderModel::findHistory` alimente la timeline de suivi.
+- US-014 : modification et annulation client seulement si `statut_actuel = en_attente`.
+- Avis client : `/avis` affiche le formulaire seulement apres une commande `terminee` sans avis.
+
+Exercice oral :
+
+```text
+Explique le parcours "je commande un menu" en 60 secondes :
+1. route
+2. controleur
+3. modele
+4. regle metier
+5. test qui prouve que ca marche
+```
+
+Phrases utiles :
+
+- "L'id client ne vient jamais d'un champ cache : il vient de la session."
+- "La vue peut masquer un bouton, mais le modele reverifie toujours la regle."
+- "Le JavaScript aide a afficher l'estimation ; le serveur reste la source de verite."
+- "Un avis est possible seulement apres une commande terminee et reste en attente de moderation."
