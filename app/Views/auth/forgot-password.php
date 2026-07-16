@@ -1,7 +1,6 @@
 <?php
 /**
  * @var array<string, string> $errors
- * @var string|null $resetLink
  */
 ?>
 <section class="password-page">
@@ -35,13 +34,6 @@
 
             <?php if (!empty($errors['email'])): ?>
                 <p class="password-error-text">Veuillez saisir une adresse email valide.</p>
-            <?php endif; ?>
-
-            <?php if ($resetLink !== null): ?>
-                <p class="password-demo-link">
-                    Lien de démonstration :
-                    <a href="<?= $this->e($resetLink) ?>"><?= $this->e($resetLink) ?></a>
-                </p>
             <?php endif; ?>
 
             <button class="password-submit-button" type="submit">Envoyer le lien</button>

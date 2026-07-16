@@ -13,6 +13,7 @@ use App\Models\MenuModel;
 use App\Models\ScheduleModel;
 use App\Models\StatisticsModel;
 use App\Models\UserModel;
+use App\Services\MailService;
 
 /**
  * Controleur du tableau de bord administrateur.
@@ -97,9 +98,16 @@ final class AdminController extends BaseController
             return;
         }
 
-        $temporaryPassword = 'EmployeTemp2026!';
+        $temporaryPassword = $this->generateTemporaryPassword();
         $userModel->createEmployee($data, $temporaryPassword);
-        Session::flash('success', 'Compte employe cree. Mot de passe temporaire : ' . $temporaryPassword);
+        $resetUrl = rtrim(getenv('APP_URL') ?: 'http://127.0.0.1:8000', '/') . '/mot-de-passe/oublie';
+
+        (new MailService())->send(
+            $data['email'],
+            'Votre compte employe Vite & Gourmand',
+            "Bonjour {$data['prenom']},\n\nUn compte employe Vite & Gourmand vient d'etre cree pour vous.\nPour choisir votre mot de passe, utilisez la page de reinitialisation :\n{$resetUrl}\n\nPour des raisons de securite, aucun mot de passe n'est transmis par email.\n\nL'equipe Vite & Gourmand"
+        );
+        Session::flash('success', 'Compte employe cree. Une notification a ete envoyee par email.');
 
         $this->redirect('/admin/employes');
     }
@@ -262,6 +270,11 @@ final class AdminController extends BaseController
     private function nullableTime(string $value): ?string
     {
         return $value === '' ? null : $value;
+    }
+
+    private function generateTemporaryPassword(): string
+    {
+        return 'Vg-' . bin2hex(random_bytes(6)) . '!';
     }
 
     /**

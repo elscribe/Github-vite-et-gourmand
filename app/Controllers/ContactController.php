@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Core\BaseController;
 use App\Core\Input;
 use App\Models\ContactModel;
+use App\Services\MailService;
 
 /**
  * Controleur de la page de contact publique.
@@ -78,6 +79,12 @@ final class ContactController extends BaseController
 
         $contactModel = new ContactModel();
         $contactModel->createMessage($title, $email, $message);
+
+        (new MailService())->send(
+            getenv('MAIL_CONTACT_TO') ?: (getenv('MAIL_FROM_ADDRESS') ?: 'contact@vitegourmand.test'),
+            'Nouvelle demande de contact - ' . $title,
+            "Expediteur : {$name} <{$email}>\nTelephone : " . ($phone !== '' ? $phone : 'Non renseigne') . "\n\n{$description}"
+        );
 
         $this->redirect('/contact?success=1');
     }

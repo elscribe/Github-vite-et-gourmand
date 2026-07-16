@@ -125,6 +125,34 @@ final class OrderModel extends BaseModel
     }
 
     /**
+     * @return array<string, mixed>|null
+     */
+    public function findOneForEmployee(int $orderId): ?array
+    {
+        $sql = <<<SQL
+            SELECT
+                c.*,
+                m.titre AS menu_titre,
+                u.email AS client_email,
+                u.nom AS client_nom,
+                u.prenom AS client_prenom,
+                u.telephone AS client_telephone
+            FROM commandes c
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            INNER JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur
+            WHERE c.id_commande = :order_id
+            LIMIT 1
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(['order_id' => $orderId]);
+
+        $order = $statement->fetch();
+
+        return $order === false ? null : $order;
+    }
+
+    /**
      * @return list<array<string, mixed>>
      */
     public function findHistory(int $orderId): array

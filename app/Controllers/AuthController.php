@@ -10,6 +10,7 @@ use App\Core\Session;
 use App\Core\Validator;
 use App\Models\PasswordResetModel;
 use App\Models\UserModel;
+use App\Services\MailService;
 
 /**
  * Controleur des parcours d'inscription, connexion et deconnexion.
@@ -85,6 +86,11 @@ final class AuthController extends BaseController
             'pays' => $data['pays'],
         ]);
 
+        (new MailService())->send(
+            $data['email'],
+            'Bienvenue chez Vite & Gourmand',
+            "Bonjour {$data['prenom']},\n\nVotre compte client Vite & Gourmand a bien ete cree.\nVous pouvez maintenant suivre vos commandes et laisser un avis apres une prestation terminee.\n\nA tres bientot,\nL'equipe Vite & Gourmand"
+        );
         Session::login($userId, 'utilisateur');
         Session::flash('success', 'Votre compte a bien ete cree.');
 
@@ -153,7 +159,6 @@ final class AuthController extends BaseController
         $this->view('auth/forgot-password', [
             'pageTitle' => 'Mot de passe oublie - Vite & Gourmand',
             'errors' => [],
-            'resetLink' => null,
         ]);
     }
 
@@ -161,7 +166,6 @@ final class AuthController extends BaseController
     {
         $email = Input::postString('email');
         $errors = [];
-        $resetLink = null;
 
         if ($email === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             $errors['email'] = 'Adresse email invalide.';
@@ -172,13 +176,19 @@ final class AuthController extends BaseController
 
         if ($user !== null && (int) $user['actif'] === 1) {
             $token = (new PasswordResetModel())->createForUser((int) $user['id_utilisateur']);
-            $resetLink = '/mot-de-passe/reinitialisation?token=' . urlencode($token);
+            $resetPath = '/mot-de-passe/reinitialisation?token=' . urlencode($token);
+            $absoluteResetLink = rtrim(getenv('APP_URL') ?: 'http://127.0.0.1:8000', '/') . $resetPath;
+
+            (new MailService())->send(
+                $email,
+                'Reinitialisation de votre mot de passe',
+                "Bonjour,\n\nVous avez demande la reinitialisation de votre mot de passe Vite & Gourmand.\nCliquez sur ce lien pour choisir un nouveau mot de passe :\n{$absoluteResetLink}\n\nCe lien expire dans 1 heure.\nSi vous n'etes pas a l'origine de cette demande, ignorez cet email."
+            );
         }
 
         $this->view('auth/forgot-password', [
             'pageTitle' => 'Mot de passe oublie - Vite & Gourmand',
             'errors' => $errors,
-            'resetLink' => $resetLink,
         ]);
     }
 

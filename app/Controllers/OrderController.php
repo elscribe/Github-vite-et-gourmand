@@ -10,6 +10,8 @@ use App\Core\Response;
 use App\Core\Session;
 use App\Models\MenuModel;
 use App\Models\OrderModel;
+use App\Models\UserModel;
+use App\Services\MailService;
 
 /**
  * Controleur du parcours commande client et de la gestion employe.
@@ -64,6 +66,7 @@ final class OrderController extends BaseController
         }
 
         $orderId = $orderModel->create($userId, $menuId, $data);
+        $this->notifyOrderCreated($userId, $orderId);
 
         Session::flash('success', 'Votre commande a ete enregistree et attend validation.');
         $this->redirect('/commandes/' . $orderId);
@@ -203,7 +206,13 @@ final class OrderController extends BaseController
             $comment = 'Statut mis a jour par un employe.';
         }
 
-        $updated = (new OrderModel())->changeStatusByEmployee((int) $id, $userId, $status, $comment);
+        $orderModel = new OrderModel();
+        $updated = $orderModel->changeStatusByEmployee((int) $id, $userId, $status, $comment);
+
+        if ($updated) {
+            $this->notifyCustomerAfterEmployeeStatus($orderModel, (int) $id, $status);
+        }
+
         Session::flash($updated ? 'success' : 'error', $updated ? 'Statut mis a jour.' : 'Le statut demande est invalide.');
 
         $this->redirect('/employe/commandes');
@@ -214,7 +223,12 @@ final class OrderController extends BaseController
         $userId = $this->authenticatedUserId();
         $modeContact = Input::postString('mode_contact_modification');
         $motif = Input::postString('motif_annulation');
-        $cancelled = (new OrderModel())->cancelByEmployee((int) $id, $userId, $modeContact, $motif);
+        $orderModel = new OrderModel();
+        $cancelled = $orderModel->cancelByEmployee((int) $id, $userId, $modeContact, $motif);
+
+        if ($cancelled && $modeContact === 'email') {
+            $this->notifyCustomerAboutCancellation($orderModel, (int) $id, $motif);
+        }
 
         Session::flash(
             $cancelled ? 'success' : 'error',
@@ -288,5 +302,66 @@ final class OrderController extends BaseController
         }
 
         return $userId;
+    }
+
+    private function notifyOrderCreated(int $userId, int $orderId): void
+    {
+        $user = (new UserModel())->findById($userId);
+        $order = (new OrderModel())->findOneForEmployee($orderId);
+
+        if ($user === null || $order === null) {
+            return;
+        }
+
+        (new MailService())->send(
+            (string) $user['email'],
+            'Confirmation de votre commande Vite & Gourmand',
+            "Bonjour {$user['prenom']},\n\nVotre commande #{$orderId} pour le menu {$order['menu_titre']} a bien ete enregistree.\nElle est actuellement en attente de validation par notre equipe.\n\nVous pouvez la suivre depuis votre espace :\n" . $this->absoluteUrl('/commandes/' . $orderId) . "\n\nL'equipe Vite & Gourmand"
+        );
+    }
+
+    private function notifyCustomerAfterEmployeeStatus(OrderModel $orderModel, int $orderId, string $status): void
+    {
+        $order = $orderModel->findOneForEmployee($orderId);
+
+        if ($order === null) {
+            return;
+        }
+
+        if ($status === 'terminee') {
+            (new MailService())->send(
+                (string) $order['client_email'],
+                'Votre avis nous interesse',
+                "Bonjour {$order['client_prenom']},\n\nVotre commande #{$orderId} est terminee. Vous pouvez maintenant partager votre avis sur le menu {$order['menu_titre']} depuis votre espace client :\n" . $this->absoluteUrl('/avis/creation/' . $orderId) . "\n\nMerci pour votre confiance,\nL'equipe Vite & Gourmand"
+            );
+        }
+
+        if ($status === 'en_attente_retour_materiel') {
+            (new MailService())->send(
+                (string) $order['client_email'],
+                'Retour du materiel de votre prestation',
+                "Bonjour {$order['client_prenom']},\n\nLe materiel prete pour votre commande #{$orderId} est en attente de retour.\nMerci de le restituer sous 10 jours ouvres. Passe ce delai, des frais de 600 EUR peuvent etre appliques selon les conditions de prestation.\n\nL'equipe Vite & Gourmand"
+            );
+        }
+    }
+
+    private function notifyCustomerAboutCancellation(OrderModel $orderModel, int $orderId, string $reason): void
+    {
+        $order = $orderModel->findOneForEmployee($orderId);
+
+        if ($order === null) {
+            return;
+        }
+
+        (new MailService())->send(
+            (string) $order['client_email'],
+            'Annulation de votre commande Vite & Gourmand',
+            "Bonjour {$order['client_prenom']},\n\nVotre commande #{$orderId} pour le menu {$order['menu_titre']} a ete annulee apres contact avec notre equipe.\nMotif : {$reason}\n\nL'equipe Vite & Gourmand"
+        );
+    }
+
+    private function absoluteUrl(string $path): string
+    {
+        return rtrim(getenv('APP_URL') ?: 'http://127.0.0.1:8000', '/') . $path;
     }
 }

@@ -12,7 +12,7 @@
         <div class="section-heading">
             <p class="section-kicker">Administration</p>
             <h1>Comptes employes</h1>
-            <p class="muted-text">Un administrateur peut creer ou desactiver un compte employe, jamais un autre administrateur.</p>
+            <p class="muted-text">Un administrateur peut creer ou desactiver un compte employe. Le mot de passe n'est jamais affiche dans l'interface.</p>
         </div>
 
         <div class="account-layout">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <button class="primary-link" type="submit">Creer le compte</button>
+                <button class="primary-link" type="submit">Creer et notifier</button>
             </form>
 
             <aside class="page-panel account-orders">
