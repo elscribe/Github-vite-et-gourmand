@@ -101,9 +101,6 @@ documentee, deployee et appuyee par :
 
 ### Employe
 
-- Gerer les menus.
-- Gerer les plats.
-- Gerer les horaires.
 - Filtrer les commandes par statut ou par client.
 - Mettre a jour le statut d'une commande.
 - Annuler ou modifier une commande apres contact client.
@@ -113,6 +110,9 @@ documentee, deployee et appuyee par :
 ### Administrateur
 
 - Acceder aux fonctionnalites employe.
+- Gerer les menus et leur composition en plats.
+- Gerer les plats et leurs allergenes.
+- Gerer les horaires.
 - Creer un compte employe.
 - Desactiver un compte employe.
 - Visualiser le nombre de commandes par menu.
@@ -302,13 +302,16 @@ composer check
 Cette commande valide `composer.json` puis lance un controle de syntaxe PHP sur
 `app/`, `config/` et `public/`.
 
-## Guide Developpeur Sprint 0
+## Guide Developpeur
 
-Le depot est volontairement limite a l'infrastructure. Les routes des futures
-sections existent dans [config/routes.php](config/routes.php), mais les pages
-metier retournent un statut HTTP `501 Not Implemented`.
+Le depot contient le socle MVC attendu pour developper sans framework :
+autoload PSR-4, controleur frontal, routeur, middlewares, configuration
+centralisee, helpers HTTP/securite, connexion PDO et dossiers de documentation.
+La branche courante contient aussi des parcours MVP deja avances ; ils doivent
+etre conserves et stabilises progressivement sans melanger logique metier et
+infrastructure.
 
-Sections reservees :
+Sections principales declarees dans [config/routes.php](config/routes.php) :
 
 - `GET /menus`
 - `GET /menus/{id}`
@@ -319,6 +322,10 @@ Sections reservees :
 - `GET /employe`
 - `GET /admin`
 - `GET /contact`
+
+Les erreurs 404 sont gerees par le routeur via `ErrorController::notFound`.
+Les erreurs 500 sont gerees par `App\Core\ErrorHandler` et rendues par
+`ErrorController::serverError`.
 
 Regles de developpement :
 
@@ -369,6 +376,7 @@ Le fichier [.env.example](.env.example) documente les variables attendues :
 | `MAIL_PASSWORD` | Mot de passe mail si necessaire. |
 | `MAIL_FROM_ADDRESS` | Adresse d'expedition. |
 | `MAIL_FROM_NAME` | Nom d'expedition. |
+| `MAIL_CONTACT_TO` | Adresse recevant les demandes du formulaire contact. |
 | `STORE_CITY` | Ville de reference pour la livraison. |
 | `DELIVERY_BASE_FEE` | Frais fixes hors Bordeaux. |
 | `DELIVERY_PRICE_PER_KM` | Prix par kilometre hors Bordeaux. |

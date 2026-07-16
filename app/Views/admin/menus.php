@@ -3,9 +3,12 @@
  * @var list<array<string, mixed>> $menus
  * @var list<array<string, mixed>> $themes
  * @var list<array<string, mixed>> $regimes
+ * @var list<array<string, mixed>> $dishes
+ * @var array<int, list<int>> $selectedDishIds
  * @var array<string, mixed> $old
  * @var array<string, string> $errors
  */
+$newMenuDishIds = $selectedDishIds[0] ?? [];
 ?>
 <section class="page-section">
     <div class="container">
@@ -14,7 +17,7 @@
         <div class="section-heading">
             <p class="section-kicker">Administration</p>
             <h1>Gestion des menus</h1>
-            <p class="muted-text">Version simple : creation et modification des informations principales du menu.</p>
+            <p class="muted-text">Creation, modification, activation et composition des menus.</p>
         </div>
 
         <form class="auth-form admin-create-form" action="/admin/menus" method="post" novalidate>
@@ -73,15 +76,40 @@
                 <textarea id="conditions" name="conditions" rows="3"><?= $this->e($old['conditions'] ?? '') ?></textarea>
             </div>
 
+            <fieldset class="form-field">
+                <legend>Plats associes</legend>
+                <div class="checkbox-grid">
+                    <?php foreach ($dishes as $dish): ?>
+                        <?php $dishId = (int) $dish['id_plat']; ?>
+                        <label class="checkbox-label">
+                            <input
+                                type="checkbox"
+                                name="dish_ids[]"
+                                value="<?= $dishId ?>"
+                                <?= in_array($dishId, $newMenuDishIds, true) ? 'checked' : '' ?>
+                            >
+                            <?= $this->e($dish['titre_plat']) ?>
+                            <span><?= $this->e($dish['type_plat']) ?></span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </fieldset>
+
             <input type="hidden" name="actif" value="1">
             <button class="primary-link" type="submit">Creer le menu</button>
         </form>
 
         <div class="admin-edit-list">
             <?php foreach ($menus as $menu): ?>
+                <?php $menuDishIds = $selectedDishIds[(int) $menu['id_menu']] ?? []; ?>
                 <form class="admin-edit-card" action="/admin/menus/<?= (int) $menu['id_menu'] ?>" method="post">
                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                     <h2><?= $this->e($menu['titre']) ?></h2>
+                    <p class="admin-card-meta">
+                        <?= (int) $menu['plats_count'] ?> plats associes -
+                        <?= (int) $menu['images_count'] ?> images referencees -
+                        <?= ((int) $menu['actif'] === 1) ? 'Actif' : 'Inactif' ?>
+                    </p>
 
                     <div class="form-grid">
                         <div class="form-field">
@@ -133,6 +161,25 @@
                         <label for="conditions-<?= (int) $menu['id_menu'] ?>">Conditions</label>
                         <textarea id="conditions-<?= (int) $menu['id_menu'] ?>" name="conditions" rows="3"><?= $this->e($menu['conditions']) ?></textarea>
                     </div>
+
+                    <fieldset class="form-field">
+                        <legend>Plats associes</legend>
+                        <div class="checkbox-grid">
+                            <?php foreach ($dishes as $dish): ?>
+                                <?php $dishId = (int) $dish['id_plat']; ?>
+                                <label class="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        name="dish_ids[]"
+                                        value="<?= $dishId ?>"
+                                        <?= in_array($dishId, $menuDishIds, true) ? 'checked' : '' ?>
+                                    >
+                                    <?= $this->e($dish['titre_plat']) ?>
+                                    <span><?= $this->e($dish['type_plat']) ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </fieldset>
 
                     <label class="checkbox-label">
                         <input type="checkbox" name="actif" value="1" <?= (int) $menu['actif'] === 1 ? 'checked' : '' ?>>

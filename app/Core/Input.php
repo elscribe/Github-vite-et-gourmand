@@ -39,4 +39,14 @@ final class Input
 
         return filter_var($value, FILTER_VALIDATE_INT) === false ? $default : (int) $value;
     }
+
+    /**
+     * @return list<mixed>
+     */
+    public static function postArray(string $key): array
+    {
+        $value = $_POST[$key] ?? [];
+
+        return is_array($value) ? array_values($value) : [];
+    }
 }

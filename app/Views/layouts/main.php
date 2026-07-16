@@ -156,6 +156,17 @@ $bodyClass = $bodyClass ?? '';
         </div>
     </footer>
 
+    <div class="image-lightbox" data-image-lightbox hidden>
+        <button class="image-lightbox-backdrop" type="button" data-image-lightbox-close aria-label="Fermer l'aperçu"></button>
+        <figure class="image-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Aperçu de l'image">
+            <button class="image-lightbox-close" type="button" data-image-lightbox-close aria-label="Fermer l'aperçu">
+                &times;
+            </button>
+            <img src="" alt="" data-image-lightbox-image>
+            <figcaption data-image-lightbox-caption></figcaption>
+        </figure>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/app.js"></script>
 </body>

@@ -154,12 +154,15 @@ final class AdminController extends BaseController
     public function menus(): void
     {
         $menuModel = new MenuModel();
+        $dishModel = new DishModel();
 
         $this->view('admin/menus', [
             'pageTitle' => 'Gestion menus - Vite & Gourmand',
             'menus' => $menuModel->findAllForAdmin(),
             'themes' => $menuModel->findThemes(),
             'regimes' => $menuModel->findRegimes(),
+            'dishes' => $dishModel->findAll(),
+            'selectedDishIds' => $menuModel->findDishIdsByMenu(),
             'old' => ['actif' => 1],
             'errors' => [],
         ]);
@@ -168,7 +171,9 @@ final class AdminController extends BaseController
     public function storeMenu(): void
     {
         $menuModel = new MenuModel();
+        $dishModel = new DishModel();
         $data = $this->menuData();
+        $dishIds = $this->selectedIds('dish_ids');
         $errors = $this->validateMenuData($data);
 
         if ($errors !== []) {
@@ -177,6 +182,8 @@ final class AdminController extends BaseController
                 'menus' => $menuModel->findAllForAdmin(),
                 'themes' => $menuModel->findThemes(),
                 'regimes' => $menuModel->findRegimes(),
+                'dishes' => $dishModel->findAll(),
+                'selectedDishIds' => [0 => $dishIds] + $menuModel->findDishIdsByMenu(),
                 'old' => $data,
                 'errors' => $errors,
             ]);
@@ -184,7 +191,8 @@ final class AdminController extends BaseController
             return;
         }
 
-        $menuModel->create($data);
+        $menuId = $menuModel->create($data);
+        $menuModel->syncDishes($menuId, $dishIds);
         Session::flash('success', 'Menu cree.');
 
         $this->redirect('/admin/menus');
@@ -192,7 +200,18 @@ final class AdminController extends BaseController
 
     public function updateMenu(string $id): void
     {
-        (new MenuModel())->updateBasic((int) $id, $this->menuData());
+        $menuModel = new MenuModel();
+        $data = $this->menuData();
+        $errors = $this->validateMenuData($data);
+
+        if ($errors !== []) {
+            Session::flash('error', 'Menu non mis a jour : verifiez les champs obligatoires.');
+            $this->redirect('/admin/menus');
+        }
+
+        $menuId = (int) $id;
+        $menuModel->updateBasic($menuId, $data);
+        $menuModel->syncDishes($menuId, $this->selectedIds('dish_ids'));
         Session::flash('success', 'Menu mis a jour.');
 
         $this->redirect('/admin/menus');
@@ -200,9 +219,13 @@ final class AdminController extends BaseController
 
     public function dishes(): void
     {
+        $dishModel = new DishModel();
+
         $this->view('admin/dishes', [
             'pageTitle' => 'Gestion plats - Vite & Gourmand',
-            'dishes' => (new DishModel())->findAll(),
+            'dishes' => $dishModel->findAll(),
+            'allergens' => $dishModel->findAllergens(),
+            'selectedAllergenIds' => $dishModel->findAllergenIdsByDish(),
             'old' => ['type_plat' => 'plat'],
             'errors' => [],
         ]);
@@ -212,12 +235,15 @@ final class AdminController extends BaseController
     {
         $dishModel = new DishModel();
         $data = $this->dishData();
+        $allergenIds = $this->selectedIds('allergen_ids');
         $errors = $this->validateDishData($data);
 
         if ($errors !== []) {
             $this->view('admin/dishes', [
                 'pageTitle' => 'Gestion plats - Vite & Gourmand',
                 'dishes' => $dishModel->findAll(),
+                'allergens' => $dishModel->findAllergens(),
+                'selectedAllergenIds' => [0 => $allergenIds] + $dishModel->findAllergenIdsByDish(),
                 'old' => $data,
                 'errors' => $errors,
             ]);
@@ -225,7 +251,8 @@ final class AdminController extends BaseController
             return;
         }
 
-        $dishModel->create($data);
+        $dishId = $dishModel->create($data);
+        $dishModel->syncAllergens($dishId, $allergenIds);
         Session::flash('success', 'Plat cree.');
 
         $this->redirect('/admin/plats');
@@ -233,7 +260,18 @@ final class AdminController extends BaseController
 
     public function updateDish(string $id): void
     {
-        (new DishModel())->update((int) $id, $this->dishData());
+        $dishModel = new DishModel();
+        $data = $this->dishData();
+        $errors = $this->validateDishData($data);
+
+        if ($errors !== []) {
+            Session::flash('error', 'Plat non mis a jour : verifiez le titre et le type.');
+            $this->redirect('/admin/plats');
+        }
+
+        $dishId = (int) $id;
+        $dishModel->update($dishId, $data);
+        $dishModel->syncAllergens($dishId, $this->selectedIds('allergen_ids'));
         Session::flash('success', 'Plat mis a jour.');
 
         $this->redirect('/admin/plats');
@@ -347,5 +385,23 @@ final class AdminController extends BaseController
         }
 
         return $errors;
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function selectedIds(string $field): array
+    {
+        $ids = [];
+
+        foreach (Input::postArray($field) as $value) {
+            $id = (int) $value;
+
+            if ($id > 0 && !in_array($id, $ids, true)) {
+                $ids[] = $id;
+            }
+        }
+
+        return $ids;
     }
 }

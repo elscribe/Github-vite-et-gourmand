@@ -1,10 +1,13 @@
 <?php
 /**
  * @var list<array<string, mixed>> $dishes
+ * @var list<array<string, mixed>> $allergens
+ * @var array<int, list<int>> $selectedAllergenIds
  * @var array<string, mixed> $old
  * @var array<string, string> $errors
  */
 $types = ['entree' => 'Entree', 'plat' => 'Plat', 'dessert' => 'Dessert'];
+$newDishAllergenIds = $selectedAllergenIds[0] ?? [];
 ?>
 <section class="page-section">
     <div class="container">
@@ -41,13 +44,36 @@ $types = ['entree' => 'Entree', 'plat' => 'Plat', 'dessert' => 'Dessert'];
                 <textarea id="description" name="description" rows="3"><?= $this->e($old['description'] ?? '') ?></textarea>
             </div>
 
+            <fieldset class="form-field">
+                <legend>Allergenes</legend>
+                <div class="checkbox-grid">
+                    <?php foreach ($allergens as $allergen): ?>
+                        <?php $allergenId = (int) $allergen['id_allergene']; ?>
+                        <label class="checkbox-label">
+                            <input
+                                type="checkbox"
+                                name="allergen_ids[]"
+                                value="<?= $allergenId ?>"
+                                <?= in_array($allergenId, $newDishAllergenIds, true) ? 'checked' : '' ?>
+                            >
+                            <?= $this->e($allergen['libelle']) ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </fieldset>
+
             <button class="primary-link" type="submit">Creer le plat</button>
         </form>
 
         <div class="admin-edit-list">
             <?php foreach ($dishes as $dish): ?>
+                <?php $dishAllergenIds = $selectedAllergenIds[(int) $dish['id_plat']] ?? []; ?>
                 <form class="admin-edit-card" action="/admin/plats/<?= (int) $dish['id_plat'] ?>" method="post">
                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                    <h2><?= $this->e($dish['titre_plat']) ?></h2>
+                    <p class="admin-card-meta">
+                        <?= $this->e($dish['allergenes'] ?: 'Aucun allergene renseigne') ?>
+                    </p>
                     <div class="form-grid">
                         <div class="form-field">
                             <label for="titre-<?= (int) $dish['id_plat'] ?>">Titre</label>
@@ -66,6 +92,23 @@ $types = ['entree' => 'Entree', 'plat' => 'Plat', 'dessert' => 'Dessert'];
                         <label for="description-<?= (int) $dish['id_plat'] ?>">Description</label>
                         <textarea id="description-<?= (int) $dish['id_plat'] ?>" name="description" rows="3"><?= $this->e($dish['description']) ?></textarea>
                     </div>
+                    <fieldset class="form-field">
+                        <legend>Allergenes</legend>
+                        <div class="checkbox-grid">
+                            <?php foreach ($allergens as $allergen): ?>
+                                <?php $allergenId = (int) $allergen['id_allergene']; ?>
+                                <label class="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        name="allergen_ids[]"
+                                        value="<?= $allergenId ?>"
+                                        <?= in_array($allergenId, $dishAllergenIds, true) ? 'checked' : '' ?>
+                                    >
+                                    <?= $this->e($allergen['libelle']) ?>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </fieldset>
                     <button class="primary-link" type="submit">Enregistrer</button>
                 </form>
             <?php endforeach; ?>

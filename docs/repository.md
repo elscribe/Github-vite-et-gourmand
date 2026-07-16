@@ -12,7 +12,7 @@ Le depot sert a centraliser :
 - les scripts MongoDB de creation et de seed ;
 - la documentation technique utile au jury ;
 - les sources draw.io et exports PNG des diagrammes Merise et UML ;
-- le futur code applicatif PHP MVC.
+- le code applicatif PHP MVC.
 
 La gestion de projet detaillee reste suivie dans Notion. Les elements techniques
 necessaires a l'installation ou a la comprehension du projet sont repris dans le
@@ -24,7 +24,7 @@ Etat actuel :
 
 - `main` : branche stable et presentable ;
 - `develop` : branche d'integration active ;
-- `feature/*` : branches de travail pour les futures fonctionnalites.
+- `feature/*` : branches de travail par fonctionnalite ou lot technique.
 
 Organisation pendant le developpement :
 

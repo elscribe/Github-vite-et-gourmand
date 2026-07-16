@@ -110,7 +110,8 @@ final class OrderModel extends BaseModel
                 m.titre AS menu_titre,
                 u.email AS client_email,
                 u.nom AS client_nom,
-                u.prenom AS client_prenom
+                u.prenom AS client_prenom,
+                u.telephone AS client_telephone
             FROM commandes c
             INNER JOIN menus m ON m.id_menu = c.id_menu
             INNER JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur
@@ -361,7 +362,7 @@ final class OrderModel extends BaseModel
 
     public function changeStatusByEmployee(int $orderId, int $userId, string $status, string $comment): bool
     {
-        if (!array_key_exists($status, $this->statusLabels())) {
+        if ($status === 'annulee' || !array_key_exists($status, $this->statusLabels())) {
             return false;
         }
 
@@ -369,7 +370,10 @@ final class OrderModel extends BaseModel
 
         try {
             $statement = $this->pdo()->prepare(
-                'UPDATE commandes SET statut_actuel = :status WHERE id_commande = :order_id'
+                "UPDATE commandes
+                 SET statut_actuel = :status
+                 WHERE id_commande = :order_id
+                   AND statut_actuel NOT IN ('terminee', 'annulee')"
             );
             $statement->execute([
                 'status' => $status,
@@ -405,7 +409,8 @@ final class OrderModel extends BaseModel
                  SET statut_actuel = 'annulee',
                      mode_contact_modification = :mode_contact,
                      motif_annulation = :motif
-                 WHERE id_commande = :order_id"
+                 WHERE id_commande = :order_id
+                   AND statut_actuel NOT IN ('terminee', 'annulee')"
             );
             $statement->execute([
                 'mode_contact' => $modeContact,

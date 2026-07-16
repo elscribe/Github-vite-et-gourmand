@@ -17,12 +17,44 @@ const updateBackToTop = () => {
     document.body.classList.toggle('show-back-to-top', window.scrollY > 360);
 };
 
-window.addEventListener('scroll', () => {
+const refreshPageChrome = () => {
     updateHomeHeader();
     updateBackToTop();
-});
-updateHomeHeader();
-updateBackToTop();
+};
+
+window.addEventListener('scroll', refreshPageChrome, { passive: true });
+window.addEventListener('load', refreshPageChrome);
+window.addEventListener('pageshow', refreshPageChrome);
+document.addEventListener('DOMContentLoaded', refreshPageChrome);
+requestAnimationFrame(refreshPageChrome);
+refreshPageChrome();
+
+const initFlashMessages = () => {
+    document.querySelectorAll('.flash-container .success-message').forEach((message) => {
+        if (!(message instanceof HTMLElement) || message.dataset.autoDismiss === 'true') {
+            return;
+        }
+
+        message.dataset.autoDismiss = 'true';
+
+        window.setTimeout(() => {
+            message.classList.add('is-hiding');
+
+            window.setTimeout(() => {
+                const container = message.closest('.flash-container');
+
+                message.remove();
+
+                if (container instanceof HTMLElement && container.querySelector('.alert-message') === null) {
+                    container.remove();
+                }
+            }, 260);
+        }, 2500);
+    });
+};
+
+window.addEventListener('pageshow', initFlashMessages);
+initFlashMessages();
 
 const mobileMenu = document.querySelector('[data-mobile-menu]');
 const mobileMenuOpenButton = document.querySelector('[data-mobile-menu-open]');
@@ -132,7 +164,7 @@ if (homeMenuFilters instanceof HTMLElement) {
 
 const menuFilterForm = document.querySelector('[data-menu-filters]');
 
-if (menuFilterForm instanceof HTMLFormElement) {
+if (menuFilterForm instanceof HTMLElement) {
     const menuCards = Array.from(document.querySelectorAll('[data-menu-card]'));
     const resultCount = document.querySelector('[data-menu-results-count]');
     const emptyState = document.querySelector('[data-menu-empty-state]');
@@ -331,6 +363,19 @@ if (menuFilterForm instanceof HTMLFormElement) {
         setAdvancedFieldValue('allergens', selectedAllergens.join(','));
     };
 
+    const clearAdvancedAvailability = () => {
+        setAdvancedFieldValue('availability', '');
+
+        filterChips
+            .filter((chip) => chip.dataset.filterChip === 'availability')
+            .forEach((chip) => {
+                chip.classList.remove('is-selected');
+                chip.setAttribute('aria-pressed', 'false');
+            });
+
+        advancedFilters.availability = '';
+    };
+
     const activateQuickButton = (buttonToActivate) => {
         quickButtons.forEach((quickButton) => {
             const isActive = quickButton === buttonToActivate;
@@ -409,14 +454,21 @@ if (menuFilterForm instanceof HTMLFormElement) {
         }
     };
 
-    menuFilterForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        applyMenuFilters();
-    });
+    if (menuFilterForm instanceof HTMLFormElement) {
+        menuFilterForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            applyMenuFilters();
+        });
+    }
 
     quickButtons.forEach((button) => {
         button.addEventListener('click', () => {
             selectedQuickFilter = button.dataset.quickFilter || 'all';
+
+            if (selectedQuickFilter === 'available') {
+                clearAdvancedAvailability();
+            }
+
             activateQuickButton(button);
 
             applyMenuFilters();
@@ -456,6 +508,10 @@ if (menuFilterForm instanceof HTMLFormElement) {
                 setAdvancedFieldValue(filterName, isSelected ? button.dataset.value || '' : '');
             }
 
+            if (filterName === 'availability' && isSelected && selectedQuickFilter === 'available') {
+                resetQuickFilter();
+            }
+
             syncAdvancedFiltersFromFields();
             updateOverlayButtonState();
         });
@@ -479,6 +535,7 @@ if (menuFilterForm instanceof HTMLFormElement) {
             resetAdvancedFields();
             resetQuickFilter();
             applyMenuFilters();
+            closeFilterOverlay();
         });
     }
 
@@ -505,16 +562,87 @@ if (menuFilterForm instanceof HTMLFormElement) {
     applyMenuFilters();
 }
 
-const authRoleButtons = Array.from(document.querySelectorAll('.auth-role-button'));
+const imageLightbox = document.querySelector('[data-image-lightbox]');
+const imageLightboxImage = imageLightbox?.querySelector('[data-image-lightbox-image]');
+const imageLightboxCaption = imageLightbox?.querySelector('[data-image-lightbox-caption]');
+const imageLightboxCloseButtons = imageLightbox instanceof HTMLElement
+    ? Array.from(imageLightbox.querySelectorAll('[data-image-lightbox-close]'))
+    : [];
+let imageLightboxReturnFocus = null;
 
-authRoleButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        authRoleButtons.forEach((roleButton) => {
-            const isActive = roleButton === button;
-            roleButton.classList.toggle('is-active', isActive);
-            roleButton.setAttribute('aria-pressed', String(isActive));
+const closeImageLightbox = () => {
+    if (!(imageLightbox instanceof HTMLElement)) {
+        return;
+    }
+
+    imageLightbox.hidden = true;
+    document.body.classList.remove('image-lightbox-open');
+
+    if (imageLightboxImage instanceof HTMLImageElement) {
+        imageLightboxImage.src = '';
+        imageLightboxImage.alt = '';
+    }
+
+    if (imageLightboxCaption instanceof HTMLElement) {
+        imageLightboxCaption.textContent = '';
+    }
+
+    if (imageLightboxReturnFocus instanceof HTMLElement) {
+        imageLightboxReturnFocus.focus();
+    }
+
+    imageLightboxReturnFocus = null;
+};
+
+const openImageLightbox = (button) => {
+    if (
+        !(imageLightbox instanceof HTMLElement)
+        || !(imageLightboxImage instanceof HTMLImageElement)
+    ) {
+        return;
+    }
+
+    const src = button.dataset.imageSrc || '';
+    const alt = button.dataset.imageAlt || '';
+
+    if (src === '') {
+        return;
+    }
+
+    imageLightboxReturnFocus = button;
+    imageLightboxImage.src = src;
+    imageLightboxImage.alt = alt;
+
+    if (imageLightboxCaption instanceof HTMLElement) {
+        imageLightboxCaption.textContent = alt;
+    }
+
+    imageLightbox.hidden = false;
+    document.body.classList.add('image-lightbox-open');
+
+    const closeButton = imageLightbox.querySelector('.image-lightbox-close');
+
+    if (closeButton instanceof HTMLElement) {
+        closeButton.focus();
+    }
+};
+
+document.querySelectorAll('[data-image-preview]').forEach((button) => {
+    if (button instanceof HTMLElement) {
+        button.addEventListener('click', () => {
+            openImageLightbox(button);
         });
-    });
+    }
+});
+
+imageLightboxCloseButtons.forEach((button) => {
+    button.addEventListener('click', closeImageLightbox);
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && imageLightbox instanceof HTMLElement && !imageLightbox.hidden) {
+        closeImageLightbox();
+    }
 });
 
 const orderForm = document.querySelector('[data-order-form]');

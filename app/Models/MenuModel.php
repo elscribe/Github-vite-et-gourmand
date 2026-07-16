@@ -20,7 +20,17 @@ final class MenuModel extends BaseModel
             SELECT
                 m.*,
                 r.libelle AS regime,
-                t.libelle AS theme
+                t.libelle AS theme,
+                (
+                    SELECT COUNT(*)
+                    FROM menu_plats mp_count
+                    WHERE mp_count.id_menu = m.id_menu
+                ) AS plats_count,
+                (
+                    SELECT COUNT(*)
+                    FROM menu_images mi_count
+                    WHERE mi_count.id_menu = m.id_menu
+                ) AS images_count
             FROM menus m
             INNER JOIN regimes r ON r.id_regime = m.id_regime
             INNER JOIN themes t ON t.id_theme = m.id_theme
@@ -30,6 +40,26 @@ final class MenuModel extends BaseModel
         $statement = $this->pdo()->query($sql);
 
         return $statement->fetchAll();
+    }
+
+    /**
+     * @return array<int, list<int>>
+     */
+    public function findDishIdsByMenu(): array
+    {
+        $statement = $this->pdo()->query(
+            'SELECT id_menu, id_plat FROM menu_plats ORDER BY id_menu ASC, position ASC, id_plat ASC'
+        );
+
+        $dishIdsByMenu = [];
+
+        foreach ($statement->fetchAll() as $row) {
+            $menuId = (int) $row['id_menu'];
+            $dishIdsByMenu[$menuId] ??= [];
+            $dishIdsByMenu[$menuId][] = (int) $row['id_plat'];
+        }
+
+        return $dishIdsByMenu;
     }
 
     /**
@@ -240,5 +270,57 @@ final class MenuModel extends BaseModel
         $statement->execute($data + ['id_menu' => $menuId]);
 
         return $statement->rowCount() === 1;
+    }
+
+    /**
+     * @param list<int> $dishIds
+     */
+    public function syncDishes(int $menuId, array $dishIds): void
+    {
+        $dishIds = $this->normalizeIds($dishIds);
+
+        $this->pdo()->beginTransaction();
+
+        try {
+            $delete = $this->pdo()->prepare('DELETE FROM menu_plats WHERE id_menu = :menu_id');
+            $delete->execute(['menu_id' => $menuId]);
+
+            $insert = $this->pdo()->prepare(
+                'INSERT INTO menu_plats (id_menu, id_plat, position) VALUES (:menu_id, :dish_id, :position)'
+            );
+
+            foreach ($dishIds as $position => $dishId) {
+                $insert->execute([
+                    'menu_id' => $menuId,
+                    'dish_id' => $dishId,
+                    'position' => $position + 1,
+                ]);
+            }
+
+            $this->pdo()->commit();
+        } catch (\Throwable $exception) {
+            $this->pdo()->rollBack();
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param list<int> $ids
+     *
+     * @return list<int>
+     */
+    private function normalizeIds(array $ids): array
+    {
+        $normalized = [];
+
+        foreach ($ids as $id) {
+            $id = (int) $id;
+
+            if ($id > 0 && !in_array($id, $normalized, true)) {
+                $normalized[] = $id;
+            }
+        }
+
+        return $normalized;
     }
 }

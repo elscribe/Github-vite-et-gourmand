@@ -202,6 +202,11 @@ final class OrderController extends BaseController
         $status = Input::postString('statut');
         $comment = Input::postString('commentaire');
 
+        if ($status === 'annulee') {
+            Session::flash('error', 'Pour annuler une commande, utilisez le formulaire avec mode de contact et motif.');
+            $this->redirect('/employe/commandes');
+        }
+
         if ($comment === '') {
             $comment = 'Statut mis a jour par un employe.';
         }

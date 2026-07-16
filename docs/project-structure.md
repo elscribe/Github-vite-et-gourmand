@@ -9,11 +9,11 @@ public/
 
 app/
     Controllers/           Gestion des requetes dans l'architecture MVC.
-    Models/                Futures classes d'acces aux donnees.
+    Models/                Classes d'acces aux donnees SQL.
     Views/                 Templates HTML rendus par les controleurs.
     Core/                  Classes techniques partagees.
-    Services/              Futurs services metier reutilisables.
-    Middlewares/           Futurs middlewares applicatifs.
+    Services/              Services reutilisables.
+    Middlewares/           Middlewares applicatifs.
 
 config/                    Fichiers de configuration PHP.
 database/sql/              Scripts et notes MySQL ou MariaDB.
@@ -24,10 +24,9 @@ tests/                     Futurs tests automatises.
 ```
 
 L'idee importante est la separation des responsabilites : `public/index.php`
-demarre la requete, le `Router` choisit un controleur, le controleur charge une
-vue, puis les modeles et services seront ajoutes plus tard uniquement lorsque les
-fonctionnalites metier seront developpees.
+demarre la requete, le `Router` choisit un controleur, le controleur coordonne
+les modeles et services, puis charge une vue.
 
-Sprint 0 reserve aussi les routes des futures sections dans `config/routes.php`.
-Les placeholders retournent `501 Not Implemented` tant que les fonctionnalites
-ne sont pas codees.
+Les routes principales sont centralisees dans `config/routes.php`. Les
+controleurs doivent rester minces : validation et orchestration cote
+controleur, acces aux donnees cote modele, logique reutilisable cote service.
