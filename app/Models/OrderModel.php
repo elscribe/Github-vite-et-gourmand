@@ -327,6 +327,92 @@ final class OrderModel extends BaseModel
         }
     }
 
+    /**
+     * @param array{date_prestation: string, heure_livraison: string, adresse_livraison: string, ville_livraison: string, distance_km: float, nombre_personnes: int} $data
+     */
+    public function updateByEmployeeAfterContact(
+        int $orderId,
+        int $userId,
+        array $data,
+        string $modeContact,
+        string $motif
+    ): bool {
+        if (!in_array($modeContact, ['gsm', 'email'], true) || $motif === '') {
+            return false;
+        }
+
+        $order = $this->findOneForEmployee($orderId);
+
+        if ($order === null || in_array($order['statut_actuel'], ['terminee', 'annulee'], true)) {
+            return false;
+        }
+
+        $menu = $this->findMenuForExistingOrder((int) $order['id_menu']);
+
+        if ($menu === null) {
+            return false;
+        }
+
+        $totals = $this->calculateTotals(
+            $menu,
+            $data['nombre_personnes'],
+            $data['ville_livraison'],
+            $data['distance_km']
+        );
+
+        $this->pdo()->beginTransaction();
+
+        try {
+            $sql = <<<SQL
+                UPDATE commandes
+                SET
+                    date_prestation = :date_prestation,
+                    heure_livraison = :heure_livraison,
+                    adresse_livraison = :adresse_livraison,
+                    ville_livraison = :ville_livraison,
+                    distance_km = :distance_km,
+                    nombre_personnes = :nombre_personnes,
+                    prix_menu = :prix_menu,
+                    remise = :remise,
+                    prix_livraison = :prix_livraison,
+                    prix_total = :prix_total,
+                    mode_contact_modification = :mode_contact
+                WHERE id_commande = :order_id
+                  AND statut_actuel NOT IN ('terminee', 'annulee')
+            SQL;
+
+            $statement = $this->pdo()->prepare($sql);
+            $statement->execute([
+                'date_prestation' => $data['date_prestation'],
+                'heure_livraison' => $data['heure_livraison'],
+                'adresse_livraison' => $data['adresse_livraison'],
+                'ville_livraison' => $data['ville_livraison'],
+                'distance_km' => $data['distance_km'],
+                'nombre_personnes' => $data['nombre_personnes'],
+                'prix_menu' => $totals['prix_menu'],
+                'remise' => $totals['remise'],
+                'prix_livraison' => $totals['prix_livraison'],
+                'prix_total' => $totals['prix_total'],
+                'mode_contact' => $modeContact,
+                'order_id' => $orderId,
+            ]);
+
+            if ($statement->rowCount() !== 1) {
+                $this->pdo()->rollBack();
+                return false;
+            }
+
+            $comment = 'Commande modifiee apres contact ' . $modeContact . ' : ' . $motif;
+            $this->insertStatus($orderId, $userId, (string) $order['statut_actuel'], $comment);
+            $this->pdo()->commit();
+
+            return true;
+        } catch (\Throwable $exception) {
+            $this->pdo()->rollBack();
+            throw $exception;
+        }
+    }
+
     public function cancelPendingForUser(int $orderId, int $userId, string $motif): bool
     {
         $this->pdo()->beginTransaction();
@@ -463,6 +549,21 @@ final class OrderModel extends BaseModel
     {
         $statement = $this->pdo()->prepare(
             'SELECT id_menu, titre, prix_minimum, nombre_personnes_minimum, stock_disponible FROM menus WHERE id_menu = :menu_id AND actif = 1 LIMIT 1'
+        );
+        $statement->execute(['menu_id' => $menuId]);
+
+        $menu = $statement->fetch();
+
+        return $menu === false ? null : $menu;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function findMenuForExistingOrder(int $menuId): ?array
+    {
+        $statement = $this->pdo()->prepare(
+            'SELECT id_menu, titre, prix_minimum, nombre_personnes_minimum, stock_disponible FROM menus WHERE id_menu = :menu_id LIMIT 1'
         );
         $statement->execute(['menu_id' => $menuId]);
 

@@ -84,6 +84,49 @@
                                 <input id="motif-<?= (int) $order['id_commande'] ?>" name="motif_annulation" type="text" placeholder="Motif obligatoire">
                                 <button class="secondary-button" type="submit">Annuler</button>
                             </form>
+
+                            <form action="/employe/commandes/<?= (int) $order['id_commande'] ?>/modifier" method="post" class="employee-action-form employee-order-edit-form">
+                                <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                <h3>Modifier apres contact client</h3>
+                                <div class="employee-order-edit-grid">
+                                    <div>
+                                        <label for="date-prestation-<?= (int) $order['id_commande'] ?>">Date</label>
+                                        <input id="date-prestation-<?= (int) $order['id_commande'] ?>" name="date_prestation" type="date" value="<?= $this->e($order['date_prestation']) ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="heure-livraison-<?= (int) $order['id_commande'] ?>">Heure</label>
+                                        <input id="heure-livraison-<?= (int) $order['id_commande'] ?>" name="heure_livraison" type="time" value="<?= $this->e(substr((string) $order['heure_livraison'], 0, 5)) ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="nombre-personnes-<?= (int) $order['id_commande'] ?>">Personnes</label>
+                                        <input id="nombre-personnes-<?= (int) $order['id_commande'] ?>" name="nombre_personnes" type="number" min="1" value="<?= (int) $order['nombre_personnes'] ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="distance-km-<?= (int) $order['id_commande'] ?>">Distance km</label>
+                                        <input id="distance-km-<?= (int) $order['id_commande'] ?>" name="distance_km" type="number" min="0" step="0.1" value="<?= $this->e((string) $order['distance_km']) ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="adresse-livraison-<?= (int) $order['id_commande'] ?>">Adresse</label>
+                                        <input id="adresse-livraison-<?= (int) $order['id_commande'] ?>" name="adresse_livraison" type="text" value="<?= $this->e($order['adresse_livraison']) ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="ville-livraison-<?= (int) $order['id_commande'] ?>">Ville</label>
+                                        <input id="ville-livraison-<?= (int) $order['id_commande'] ?>" name="ville_livraison" type="text" value="<?= $this->e($order['ville_livraison']) ?>" required>
+                                    </div>
+                                    <div>
+                                        <label for="mode-modification-<?= (int) $order['id_commande'] ?>">Contact client</label>
+                                        <select id="mode-modification-<?= (int) $order['id_commande'] ?>" name="mode_contact_modification" required>
+                                            <option value="email" <?= $order['mode_contact_modification'] === 'email' ? 'selected' : '' ?>>Email</option>
+                                            <option value="gsm" <?= $order['mode_contact_modification'] === 'gsm' ? 'selected' : '' ?>>GSM</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="motif-modification-<?= (int) $order['id_commande'] ?>">Motif</label>
+                                        <textarea id="motif-modification-<?= (int) $order['id_commande'] ?>" name="motif_modification" rows="2" placeholder="Motif obligatoire" required></textarea>
+                                    </div>
+                                </div>
+                                <button class="primary-link" type="submit">Modifier apres contact</button>
+                            </form>
                         <?php endif; ?>
                     </article>
                 <?php endforeach; ?>

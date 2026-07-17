@@ -16,7 +16,7 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - modelisation Merise disponible : MCD, MLD et MPD ;
 - diagrammes UML disponibles en sources draw.io et exports PNG ;
 - scripts SQL de creation et d'insertion disponibles ;
-- dossier MongoDB prepare pour les statistiques administrateur ;
+- collections MongoDB preparees pour les statistiques administrateur ;
 - documentation technique de base de donnees disponible ;
 - squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
 - infrastructure Sprint 0 disponible : routes de reservation, pages 404/500,
@@ -134,11 +134,10 @@ documentee, deployee et appuyee par :
 | Depot | GitHub |
 | Deploiement pressenti | Fly.io, a confirmer apres implementation |
 
-La base SQL reste la source de verite pour les donnees metier. MongoDB est
-prepare pour les agregats statistiques utilises par le tableau de bord
-administrateur. En local, l'extension PHP MongoDB n'est pas installee : le
-dashboard affiche donc des agregats SQL transparents, avec scripts MongoDB
-fournis pour la cible NoSQL.
+La base SQL reste la source de verite pour les donnees metier. MongoDB sert les
+agregats statistiques utilises par le tableau de bord administrateur. Le code
+lit ces agregats avec `mongosh` quand MongoDB est disponible et conserve un
+secours SQL local pour afficher le dashboard en environnement incomplet.
 
 ## Organisation Du Depot
 
@@ -188,7 +187,7 @@ vite-gourmand/
 - `app/Services/` : futurs services metier reutilisables.
 - `config/` : configuration applicative, session, routes et base de donnees.
 - `database/sql/` : scripts SQL de creation et de donnees de demonstration.
-- `database/mongodb/` : espace MongoDB prepare, non relie au PHP pour l'instant.
+- `database/mongodb/` : collections MongoDB alimentees pour les statistiques admin.
 - `docs/database/` : documentation Merise, dictionnaire, choix et audits.
 - `docs/uml/` : diagrammes UML en draw.io et PNG.
 - `public/` : point d'entree web et assets publics.
@@ -207,7 +206,7 @@ a un developpeur junior ou au jury.
 - PHP 8.3.
 - Composer.
 - MariaDB ou MySQL 8.
-- MongoDB et `mongosh` plus tard, pour la partie statistiques.
+- MongoDB et `mongosh`, pour les statistiques administrateur.
 - Navigateur web moderne.
 
 Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN et le
@@ -262,11 +261,11 @@ mysql -u root -p < database/sql/create_database.sql
 mysql -u root -p < database/sql/seed_database.sql
 ```
 
-### Initialiser MongoDB Plus Tard
+### Initialiser MongoDB
 
-MongoDB n'est pas necessaire pour lancer le squelette MVC. Le dossier
-`database/mongodb/` est prepare pour la future partie statistiques
-administrateur.
+MongoDB sert les agregats statistiques du tableau de bord administrateur. Si
+MongoDB n'est pas disponible en local, l'application conserve un secours SQL
+pour ne pas bloquer la navigation.
 
 ```bash
 mongosh database/mongodb/create_collections.js
@@ -277,6 +276,7 @@ Collections statistiques prevues :
 
 - `menu_statistics`
 - `monthly_statistics`
+- `menu_monthly_statistics`
 - `dashboard_statistics`
 
 ### Lancer L'Application

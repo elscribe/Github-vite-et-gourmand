@@ -223,6 +223,51 @@ final class OrderController extends BaseController
         $this->redirect('/employe/commandes');
     }
 
+    public function employeeUpdateOrder(string $id): void
+    {
+        $userId = $this->authenticatedUserId();
+        $orderModel = new OrderModel();
+        $order = $orderModel->findOneForEmployee((int) $id);
+        $data = $this->orderFormData();
+        $modeContact = Input::postString('mode_contact_modification');
+        $motif = Input::postString('motif_modification');
+        $menu = $order === null ? null : $orderModel->findMenuForExistingOrder((int) $order['id_menu']);
+        $errors = $this->validateOrderData($data, $menu);
+
+        if ($order === null) {
+            Session::flash('error', 'Commande introuvable.');
+            $this->redirect('/employe/commandes');
+        }
+
+        if (in_array($order['statut_actuel'], ['terminee', 'annulee'], true)) {
+            $errors['statut'] = 'Cette commande est cloturee et ne peut plus etre modifiee.';
+        }
+
+        if (!in_array($modeContact, ['gsm', 'email'], true)) {
+            $errors['mode_contact'] = 'Le mode de contact client est obligatoire.';
+        }
+
+        if ($motif === '') {
+            $errors['motif'] = 'Le motif de modification apres contact client est obligatoire.';
+        }
+
+        if ($errors !== []) {
+            Session::flash('error', implode(' ', array_values($errors)));
+            $this->redirect('/employe/commandes');
+        }
+
+        $updated = $orderModel->updateByEmployeeAfterContact((int) $id, $userId, $data, $modeContact, $motif);
+
+        Session::flash(
+            $updated ? 'success' : 'error',
+            $updated
+                ? 'Commande modifiee apres contact client.'
+                : 'La commande n a pas pu etre modifiee.'
+        );
+
+        $this->redirect('/employe/commandes');
+    }
+
     public function employeeCancel(string $id): void
     {
         $userId = $this->authenticatedUserId();

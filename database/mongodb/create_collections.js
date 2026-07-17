@@ -2,6 +2,7 @@ use('vite_gourmand');
 
 db.menu_statistics.drop();
 db.monthly_statistics.drop();
+db.menu_monthly_statistics.drop();
 db.dashboard_statistics.drop();
 
 const collections = db.getCollectionNames();
@@ -175,6 +176,106 @@ if (!collections.includes('monthly_statistics')) {
   });
 }
 
+if (!collections.includes('menu_monthly_statistics')) {
+  db.createCollection('menu_monthly_statistics', {
+    validator: {
+      $jsonSchema: {
+        bsonType: 'object',
+        required: [
+          'menuId',
+          'menuTitle',
+          'month',
+          'orders',
+          'revenue',
+          'averageBasket',
+          'averageRating',
+          'lastOrder',
+          'updatedAt'
+        ],
+        properties: {
+          menuId: {
+            bsonType: ['int', 'long'],
+            description: 'SQL menu identifier'
+          },
+          menuTitle: {
+            bsonType: 'string',
+            description: 'Menu title copied from the SQL source'
+          },
+          month: {
+            bsonType: 'string',
+            pattern: '^\\d{4}-\\d{2}$',
+            description: 'Aggregation month formatted as YYYY-MM'
+          },
+          orders: {
+            bsonType: ['int', 'long'],
+            minimum: 0,
+            description: 'Monthly order count for this menu'
+          },
+          revenue: {
+            bsonType: ['int', 'long', 'double', 'decimal'],
+            minimum: 0,
+            description: 'Monthly revenue for this menu'
+          },
+          averageBasket: {
+            bsonType: ['int', 'long', 'double', 'decimal'],
+            minimum: 0,
+            description: 'Average order amount for this menu and month'
+          },
+          averageRating: {
+            bsonType: ['int', 'long', 'double', 'decimal'],
+            minimum: 0,
+            maximum: 5,
+            description: 'Average validated customer rating'
+          },
+          lastOrder: {
+            bsonType: 'date',
+            description: 'Date of the last order for this menu and month'
+          },
+          updatedAt: {
+            bsonType: 'date',
+            description: 'Last aggregation update date'
+          }
+        }
+      }
+    },
+    validationLevel: 'strict',
+    validationAction: 'error'
+  });
+} else {
+  db.runCommand({
+    collMod: 'menu_monthly_statistics',
+    validator: {
+      $jsonSchema: {
+        bsonType: 'object',
+        required: [
+          'menuId',
+          'menuTitle',
+          'month',
+          'orders',
+          'revenue',
+          'averageBasket',
+          'averageRating',
+          'lastOrder',
+          'updatedAt'
+        ],
+        properties: {
+          menuId: { bsonType: ['int', 'long'] },
+          menuTitle: { bsonType: 'string' },
+          month: { bsonType: 'string', pattern: '^\\d{4}-\\d{2}$' },
+          orders: { bsonType: ['int', 'long'], minimum: 0 },
+          revenue: { bsonType: ['int', 'long', 'double', 'decimal'], minimum: 0 },
+          averageBasket: { bsonType: ['int', 'long', 'double', 'decimal'], minimum: 0 },
+          averageRating: { bsonType: ['int', 'long', 'double', 'decimal'], minimum: 0, maximum: 5 },
+          lastOrder: { bsonType: 'date' },
+          updatedAt: { bsonType: 'date' }
+        }
+      }
+    },
+    validationLevel: 'strict',
+    validationAction: 'error'
+  });
+}
+
 if (!collections.includes('dashboard_statistics')) {
   db.createCollection('dashboard_statistics', {
     validator: {
@@ -267,6 +368,10 @@ db.menu_statistics.createIndex({ updatedAt: -1 });
 
 db.monthly_statistics.createIndex({ month: 1 }, { unique: true });
 db.monthly_statistics.createIndex({ revenue: -1 });
+
+db.menu_monthly_statistics.createIndex({ menuId: 1, month: 1 }, { unique: true });
+db.menu_monthly_statistics.createIndex({ month: 1 });
+db.menu_monthly_statistics.createIndex({ revenue: -1 });
 
 db.dashboard_statistics.createIndex({ generatedAt: -1 });
 db.dashboard_statistics.createIndex({ topMenu: 1 });

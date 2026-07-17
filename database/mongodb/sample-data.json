@@ -21,6 +21,19 @@
       "updatedAt": "2026-12-31T23:30:00Z"
     }
   ],
+  "menu_monthly_statistics": [
+    {
+      "menuId": 1,
+      "menuTitle": "Menu Noël Tradition",
+      "month": "2026-12",
+      "orders": 4,
+      "revenue": 3875.62,
+      "averageBasket": 968.91,
+      "averageRating": 4.8,
+      "lastOrder": "2026-12-28T12:00:00Z",
+      "updatedAt": "2026-12-31T23:30:00Z"
+    }
+  ],
   "dashboard_statistics": [
     {
       "generatedAt": "2026-12-31T23:45:00Z",

@@ -3248,6 +3248,7 @@ body.image-lightbox-open {
 .order-form textarea,
 .employee-action-form select,
 .employee-action-form input,
+.employee-action-form textarea,
 .inline-form textarea {
     width: 100%;
     padding: 12px;
@@ -3383,6 +3384,23 @@ body.image-lightbox-open {
 .employee-action-form .primary-link {
     border: 0;
     cursor: pointer;
+}
+
+.employee-order-edit-form {
+    grid-column: 1 / -1;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.employee-order-edit-form h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.employee-order-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
 }
 
 .review-card {
@@ -4318,6 +4336,7 @@ body.image-lightbox-open {
     .account-layout,
     .stats-grid,
     .review-grid,
+    .employee-order-edit-grid,
     .employee-order-card {
         grid-template-columns: 1fr;
     }
@@ -4392,6 +4411,7 @@ body.image-lightbox-open {
 
     .account-layout,
     .review-grid,
+    .employee-order-edit-grid,
     .employee-order-card {
         grid-template-columns: 1fr;
     }

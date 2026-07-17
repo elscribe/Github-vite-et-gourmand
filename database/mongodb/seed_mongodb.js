@@ -2,6 +2,7 @@ use('vite_gourmand');
 
 db.menu_statistics.deleteMany({});
 db.monthly_statistics.deleteMany({});
+db.menu_monthly_statistics.deleteMany({});
 db.dashboard_statistics.deleteMany({});
 
 db.menu_statistics.insertMany([
@@ -165,6 +166,46 @@ db.monthly_statistics.insertMany([
     updatedAt: ISODate('2026-12-31T23:30:00Z')
   }
 ]);
+
+const seededMenus = db.menu_statistics.find().sort({ menuId: 1 }).toArray();
+const seededMonths = db.monthly_statistics.find().sort({ month: 1 }).toArray();
+const totalMenuRevenue = seededMenus.reduce((total, menu) => total + Number(menu.revenue || 0), 0);
+const totalMenuOrders = seededMenus.reduce((total, menu) => total + Number(menu.orders || 0), 0);
+const menuMonthlyStatistics = [];
+
+seededMonths.forEach((month) => {
+  let remainingOrders = Number(month.orders || 0);
+  let remainingRevenue = Number(month.revenue || 0);
+
+  seededMenus.forEach((menu, index) => {
+    const isLastMenu = index === seededMenus.length - 1;
+    const orderShare = totalMenuOrders > 0 ? Number(menu.orders || 0) / totalMenuOrders : 0;
+    const revenueShare = totalMenuRevenue > 0 ? Number(menu.revenue || 0) / totalMenuRevenue : 0;
+    const orders = isLastMenu
+      ? Math.max(0, remainingOrders)
+      : Math.max(0, Math.floor(Number(month.orders || 0) * orderShare));
+    const revenue = isLastMenu
+      ? Math.max(0, Math.round(remainingRevenue * 100) / 100)
+      : Math.max(0, Math.round(Number(month.revenue || 0) * revenueShare * 100) / 100);
+
+    remainingOrders -= orders;
+    remainingRevenue = Math.round((remainingRevenue - revenue) * 100) / 100;
+
+    menuMonthlyStatistics.push({
+      menuId: menu.menuId,
+      menuTitle: menu.menuTitle,
+      month: month.month,
+      orders: NumberInt(orders),
+      revenue,
+      averageBasket: orders > 0 ? Math.round((revenue / orders) * 100) / 100 : 0,
+      averageRating: menu.averageRating,
+      lastOrder: ISODate(`${month.month}-28T12:00:00Z`),
+      updatedAt: month.updatedAt
+    });
+  });
+});
+
+db.menu_monthly_statistics.insertMany(menuMonthlyStatistics);
 
 db.dashboard_statistics.insertMany([
   {
