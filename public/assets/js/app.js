@@ -105,6 +105,83 @@ if (mobileMenu instanceof HTMLElement) {
     });
 }
 
+const backofficeMobileNav = document.querySelector('[data-backoffice-mobile-nav]');
+const backofficeMobileNavToggle = document.querySelector('[data-backoffice-mobile-menu-toggle]');
+
+const closeBackofficeMobileNav = () => {
+    document.body.classList.remove('backoffice-mobile-nav-open');
+
+    if (backofficeMobileNavToggle instanceof HTMLElement) {
+        backofficeMobileNavToggle.setAttribute('aria-expanded', 'false');
+    }
+};
+
+if (backofficeMobileNavToggle instanceof HTMLElement && backofficeMobileNav instanceof HTMLElement) {
+    backofficeMobileNavToggle.addEventListener('click', () => {
+        const isOpen = document.body.classList.toggle('backoffice-mobile-nav-open');
+
+        backofficeMobileNavToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    backofficeMobileNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeBackofficeMobileNav);
+    });
+}
+
+const backofficeNotifications = document.querySelector('[data-backoffice-notifications]');
+
+if (backofficeNotifications instanceof HTMLElement) {
+    const notificationToggle = backofficeNotifications.querySelector('[data-backoffice-notification-toggle]');
+    const notificationPanel = backofficeNotifications.querySelector('[data-backoffice-notification-panel]');
+
+    const closeNotifications = () => {
+        if (!(notificationPanel instanceof HTMLElement) || !(notificationToggle instanceof HTMLElement)) {
+            return;
+        }
+
+        notificationPanel.hidden = true;
+        notificationToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    const openNotifications = () => {
+        if (!(notificationPanel instanceof HTMLElement) || !(notificationToggle instanceof HTMLElement)) {
+            return;
+        }
+
+        notificationPanel.hidden = false;
+        notificationToggle.setAttribute('aria-expanded', 'true');
+    };
+
+    if (notificationToggle instanceof HTMLElement && notificationPanel instanceof HTMLElement) {
+        notificationToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            if (notificationPanel.hidden) {
+                openNotifications();
+                return;
+            }
+
+            closeNotifications();
+        });
+
+        notificationPanel.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (event.target instanceof Node && !backofficeNotifications.contains(event.target)) {
+                closeNotifications();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeNotifications();
+            }
+        });
+    }
+}
+
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && mobileMenu instanceof HTMLElement && !mobileMenu.hidden) {
         closeMobileMenu();

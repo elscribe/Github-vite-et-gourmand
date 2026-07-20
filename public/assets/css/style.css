@@ -3547,6 +3547,1051 @@ body.image-lightbox-open {
     font-size: 0.9rem;
 }
 
+/* Espace back-office */
+body.backoffice-body {
+    background: #fbf4e8;
+}
+
+.backoffice-shell {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    min-height: 100vh;
+    background: #fbf4e8;
+}
+
+.backoffice-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--color-primary-dark);
+    color: #ffffff;
+}
+
+.backoffice-brand {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: 32px 20px 28px;
+    color: var(--color-accent);
+    font-family: var(--font-title);
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+}
+
+.backoffice-brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 16px 34px rgba(42, 20, 18, 0.24);
+    color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.backoffice-brand:hover,
+.backoffice-brand:focus,
+.backoffice-nav a:hover,
+.backoffice-nav a:focus,
+.backoffice-logout:hover,
+.backoffice-logout:focus {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.backoffice-nav {
+    display: grid;
+    gap: 4px;
+}
+
+.backoffice-nav a,
+.backoffice-logout {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 48px;
+    padding: 0 24px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.backoffice-nav a::before {
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 4px;
+    background: transparent;
+    border-radius: 0 999px 999px 0;
+    content: "";
+}
+
+.backoffice-nav a.is-active {
+    background: rgba(255, 255, 255, 0.11);
+    color: var(--color-accent);
+    font-weight: 800;
+}
+
+.backoffice-nav a.is-active::before {
+    background: var(--color-accent);
+}
+
+.backoffice-nav i,
+.backoffice-logout i {
+    width: 18px;
+    font-size: 1.08rem;
+}
+
+.backoffice-logout {
+    margin-top: 12px;
+    min-height: 52px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.backoffice-main {
+    min-width: 0;
+}
+
+.backoffice-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 100px;
+    padding: 0 40px;
+    background: #ffffff;
+    border-bottom: 1px solid #e6d7bd;
+}
+
+.backoffice-mobile-menu-toggle,
+.backoffice-mobile-logo,
+.backoffice-mobile-nav {
+    display: none;
+}
+
+.backoffice-user {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    min-width: 0;
+}
+
+.backoffice-notification-wrapper {
+    position: relative;
+}
+
+.backoffice-notification {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #687184;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.backoffice-notification:hover,
+.backoffice-notification:focus {
+    background: rgba(114, 47, 55, 0.08);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.backoffice-notification span {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.backoffice-notification-panel {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: -10px;
+    z-index: 1200;
+    width: min(340px, calc(100vw - 32px));
+    padding: 16px;
+    border: 1px solid #e1cda8;
+    border-radius: 12px;
+    background: #fffdf8;
+    box-shadow: 0 18px 42px rgba(43, 26, 20, 0.18);
+    color: #241913;
+}
+
+.backoffice-notification-panel::before {
+    position: absolute;
+    top: -7px;
+    right: 21px;
+    width: 14px;
+    height: 14px;
+    border-top: 1px solid #e1cda8;
+    border-left: 1px solid #e1cda8;
+    background: #fffdf8;
+    content: "";
+    transform: rotate(45deg);
+}
+
+.backoffice-notification-panel-heading,
+.admin-dashboard-card-heading,
+.employee-recent-list article,
+.employee-review-heading,
+.revenue-bar-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.backoffice-notification-panel-heading {
+    margin-bottom: 12px;
+}
+
+.backoffice-notification-panel-heading strong,
+.admin-dashboard-row > div:not(.admin-dashboard-row-actions) > span,
+.backoffice-user strong {
+    color: #241913;
+}
+
+.backoffice-notification-panel-heading span,
+.backoffice-notification-empty,
+.backoffice-notification-list small,
+.backoffice-user-info span,
+.backoffice-content .muted-text,
+.employee-recent-list span,
+.employee-recent-list small,
+.employee-order-summary small,
+.employee-review-comment,
+.revenue-bar-row small,
+.figma-line-chart div,
+.monthly-summary-grid span {
+    color: #687184;
+}
+
+.backoffice-notification-list {
+    display: grid;
+    gap: 10px;
+}
+
+.backoffice-notification-list a {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #eadcc3;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #241913;
+    text-decoration: none;
+}
+
+.backoffice-notification-list a:hover,
+.backoffice-notification-list a:focus {
+    border-color: var(--color-primary);
+    background: #fff8eb;
+    text-decoration: none;
+}
+
+.backoffice-notification-list i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(212, 163, 74, 0.16);
+    color: var(--color-accent);
+}
+
+.backoffice-notification-list span,
+.backoffice-user-info,
+.employee-recent-list div,
+.admin-dashboard-card,
+.admin-dashboard-row > div:not(.admin-dashboard-row-actions),
+.admin-dashboard-row-actions,
+.employee-review-card,
+.employee-manage-details,
+.figma-line-chart,
+.monthly-summary-grid div {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.backoffice-notification-list strong {
+    overflow: hidden;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.backoffice-user-info {
+    text-align: right;
+}
+
+.backoffice-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: var(--color-primary);
+    box-shadow: 0 8px 20px rgba(43, 26, 20, 0.15);
+    color: #ffffff !important;
+    font-size: 0.82rem !important;
+    font-weight: 800;
+}
+
+.backoffice-content {
+    padding: 44px 40px 72px;
+}
+
+.backoffice-content .page-section {
+    padding: 0;
+}
+
+.backoffice-content .container {
+    max-width: 1120px;
+    padding: 0;
+}
+
+.backoffice-content .back-link {
+    display: none;
+}
+
+.backoffice-content .section-heading {
+    margin-bottom: 30px;
+}
+
+.backoffice-content .section-kicker {
+    color: #a66f13;
+}
+
+.backoffice-content .section-heading h1 {
+    margin-bottom: 4px;
+    color: var(--color-primary);
+    font-size: clamp(2.1rem, 3.2vw, 3.25rem);
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.backoffice-flash {
+    max-width: 1120px;
+    margin: 0 auto 28px;
+    padding: 0;
+}
+
+.backoffice-content .alert-message {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    margin: 0;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.backoffice-content .menu-filters,
+.backoffice-card,
+.backoffice-content .auth-form,
+.backoffice-content .admin-create-form,
+.backoffice-table-card,
+.backoffice-content .page-panel,
+.backoffice-content .chart-panel {
+    background: #ffffff;
+    border: 1px solid #e1cda8;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.backoffice-content .menu-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 32px;
+    padding: 20px;
+}
+
+.employee-order-filter-bar,
+.employee-status-tabs,
+.employee-review-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.employee-status-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 18px;
+    border: 1px solid #2f2f2f;
+    border-radius: 999px;
+    background: #171717;
+    color: #ffffff;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.employee-status-tab:hover,
+.employee-status-tab:focus {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.employee-status-tab.is-active {
+    border-color: #9bd2ff;
+    background: #9bd2ff;
+    color: #102033;
+}
+
+.backoffice-content .employee-order-search-form {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 32px;
+}
+
+.employee-order-search-form .menu-filters-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+}
+
+.backoffice-content select,
+.backoffice-content input,
+.backoffice-content textarea {
+    background: #fffdf8;
+    border: 1px solid #e1cda8;
+    border-radius: 7px;
+    color: #241913;
+}
+
+.backoffice-content textarea {
+    min-height: 80px;
+}
+
+.backoffice-content .primary-link,
+.backoffice-content .secondary-link,
+.backoffice-content .secondary-button,
+.admin-dashboard-card-heading a,
+.admin-dashboard-row-actions a,
+.review-approve-button,
+.review-reject-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 7px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.backoffice-content .primary-link {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.backoffice-content .secondary-link,
+.admin-dashboard-card-heading a,
+.admin-dashboard-row-actions a {
+    border: 1px solid #e1cda8;
+    background: #ffffff;
+    color: var(--color-primary);
+}
+
+.backoffice-content .secondary-button,
+.review-reject-button {
+    border: 1px solid #d72828;
+    background: #ffffff;
+    color: #d72828;
+}
+
+.backoffice-content .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.backoffice-content .stat-card {
+    min-height: 112px;
+    padding: 18px 20px;
+    border-color: #e1cda8;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.backoffice-content .stat-card strong {
+    color: var(--color-primary);
+    font-size: 2rem;
+    line-height: 1.1;
+}
+
+.backoffice-content .stat-card:nth-child(odd) strong {
+    color: var(--color-accent);
+}
+
+.backoffice-content .admin-daily-stats {
+    margin-bottom: 28px;
+}
+
+.backoffice-card {
+    margin: 28px 0;
+    padding: 24px;
+}
+
+.backoffice-card h2,
+.backoffice-table-card h2,
+.backoffice-content .chart-panel h2,
+.backoffice-content .auth-form h2,
+.backoffice-content .admin-create-form h2,
+.backoffice-content .admin-edit-card h2 {
+    margin: 0 0 18px;
+    color: #241913;
+    font-family: var(--font-title);
+    font-size: 1.55rem;
+    line-height: 1.2;
+}
+
+.admin-dashboard-grid,
+.backoffice-chart-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+}
+
+.admin-dashboard-card {
+    align-content: start;
+    gap: 20px;
+    margin: 0;
+}
+
+.admin-dashboard-list,
+.employee-recent-list,
+.employee-review-list,
+.revenue-bar-list {
+    display: grid;
+    gap: 12px;
+}
+
+.admin-dashboard-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid #e1cda8;
+    border-radius: 10px;
+    background: #fffdf8;
+}
+
+.admin-dashboard-row > div:not(.admin-dashboard-row-actions) > strong,
+.employee-recent-list strong,
+.employee-order-summary strong,
+.employee-review-heading strong,
+.employee-review-menu strong,
+.revenue-bar-heading span,
+.monthly-summary-grid strong {
+    color: var(--color-primary);
+}
+
+.admin-dashboard-row-actions {
+    justify-items: end;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.backoffice-table-card {
+    margin: 28px 0;
+    padding: 20px 24px 24px;
+}
+
+.backoffice-table-card .data-table {
+    min-width: 840px;
+}
+
+.backoffice-content .data-table th {
+    background: #f5ecdc;
+    color: #241913;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.backoffice-content .data-table th,
+.backoffice-content .data-table td {
+    border-bottom-color: #e6d7bd;
+}
+
+.table-action-link {
+    color: #c69d3f;
+    font-weight: 800;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 4px 11px;
+    border: 1px solid #e1cda8;
+    border-radius: 999px;
+    background: #fffdf8;
+    color: var(--color-primary);
+    box-sizing: border-box;
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-en-attente {
+    border-color: #d1d5db;
+    background: #f9f9f9;
+    color: #4a1c23;
+}
+
+.status-acceptee {
+    border-color: #fff4d7;
+    background: #fff4d7;
+    color: #8a5a00;
+}
+
+.status-en-preparation {
+    border-color: #dbeafe;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-en-cours-de-livraison {
+    border-color: #f3e8ff;
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
+.status-en-attente-retour-materiel {
+    border-color: rgba(179, 38, 30, 0.08);
+    background: rgba(179, 38, 30, 0.08);
+    color: #b3261e;
+}
+
+.status-livre,
+.status-valide {
+    border-color: #8d9863;
+    background: #e8f5ec;
+    color: #2f6b3f;
+}
+
+.status-terminee {
+    border-color: #eef0f3;
+    background: #f1f2f4;
+    color: #667085;
+}
+
+.status-annulee,
+.status-refuse {
+    border-color: #fdecec;
+    background: #fdecec;
+    color: #b3261e;
+}
+
+.backoffice-content .employee-order-list {
+    gap: 12px;
+}
+
+.backoffice-content .employee-order-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+    scroll-margin-top: 110px;
+    padding: 18px 20px;
+    border-color: #e1cda8;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.employee-order-summary {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) 150px auto;
+    gap: 18px;
+    align-items: center;
+    min-width: 0;
+}
+
+.employee-order-summary div {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.employee-order-summary span,
+.employee-order-summary small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.employee-manage-details {
+    grid-column: 1 / -1;
+}
+
+.employee-manage-details summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    width: max-content;
+    min-width: 74px;
+    min-height: 36px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    background: var(--color-primary);
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 800;
+    list-style: none;
+}
+
+.employee-manage-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.employee-order-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #e6d7bd;
+}
+
+.employee-contact-warning {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid #e6d7bd;
+    border-radius: 10px;
+    background: #fff8e8;
+    color: #8a5b00;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.backoffice-content .employee-action-form {
+    padding: 22px;
+    border: 1px solid #e1cda8;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.employee-order-edit-form {
+    grid-column: 1 / -1;
+}
+
+.employee-order-edit-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.employee-review-card {
+    gap: 16px;
+    padding: 24px;
+    border: 1px solid #e1cda8;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.employee-review-heading {
+    align-items: flex-start;
+}
+
+.employee-review-menu,
+.employee-review-comment,
+.review-rating {
+    margin: 0;
+}
+
+.review-rating {
+    color: #c69d3f;
+    font-size: 1.08rem;
+    letter-spacing: 0;
+}
+
+.review-approve-button {
+    border: 1px solid #2f9a45;
+    background: #ffffff;
+    color: #2f7d38;
+}
+
+.backoffice-chart-grid {
+    gap: 24px;
+}
+
+.revenue-bar-row {
+    display: grid;
+    gap: 8px;
+}
+
+.revenue-bar-track {
+    height: 13px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #f1e7d4;
+}
+
+.revenue-bar-track i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--color-primary), #cfb052);
+}
+
+.figma-line-chart svg {
+    width: 100%;
+    height: 220px;
+    overflow: visible;
+}
+
+.figma-line-chart line {
+    stroke: #e6d7bd;
+    stroke-dasharray: 2 3;
+    stroke-width: 0.5;
+}
+
+.figma-line-chart polyline {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.2;
+    vector-effect: non-scaling-stroke;
+}
+
+.figma-line-chart circle {
+    fill: #cfb052;
+    stroke: #ffffff;
+    stroke-width: 0.7;
+    vector-effect: non-scaling-stroke;
+}
+
+.monthly-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.monthly-summary-grid div {
+    padding: 14px;
+    border: 1px solid #e1cda8;
+    border-radius: 10px;
+    background: #fffdf8;
+}
+
+@media (max-width: 760px) {
+    .backoffice-shell {
+        display: block;
+        min-height: 100vh;
+    }
+
+    .backoffice-sidebar {
+        display: none;
+    }
+
+    .backoffice-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 900;
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr) auto;
+        align-items: center;
+        min-height: 72px;
+        padding: 0 22px;
+    }
+
+    .backoffice-mobile-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 48px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--color-primary-dark);
+        cursor: pointer;
+        font-size: 1.6rem;
+        line-height: 1;
+    }
+
+    .backoffice-mobile-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
+        width: 54px;
+        height: 46px;
+    }
+
+    .backoffice-mobile-logo img {
+        display: block;
+        width: 54px;
+        height: 46px;
+        object-fit: contain;
+    }
+
+    .backoffice-user {
+        justify-self: end;
+        gap: 10px;
+    }
+
+    .backoffice-user-info {
+        display: none;
+    }
+
+    .backoffice-notification {
+        width: 38px;
+        height: 38px;
+    }
+
+    .backoffice-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.72rem !important;
+    }
+
+    .backoffice-mobile-nav {
+        position: sticky;
+        top: 72px;
+        z-index: 850;
+        display: none;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 10px 22px;
+        background: #fbf4e8;
+        border-bottom: 1px solid #e6d7bd;
+        scrollbar-width: none;
+    }
+
+    .backoffice-mobile-nav-open .backoffice-mobile-nav {
+        display: flex;
+    }
+
+    .backoffice-mobile-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 8px 12px;
+        border: 1px solid #e1cda8;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #241913;
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .backoffice-mobile-nav a.is-active {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #ffffff;
+    }
+
+    .backoffice-content {
+        padding: 24px 22px 56px;
+    }
+
+    .backoffice-content .section-heading h1 {
+        font-size: 2rem;
+        text-transform: none;
+    }
+
+    .backoffice-content .menu-filters,
+    .backoffice-content .stats-grid,
+    .employee-order-summary,
+    .employee-order-actions,
+    .employee-order-edit-grid,
+    .admin-dashboard-grid,
+    .backoffice-chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .backoffice-quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .backoffice-card,
+    .backoffice-content .chart-panel,
+    .backoffice-table-card,
+    .backoffice-content .auth-form,
+    .backoffice-content .admin-create-form,
+    .backoffice-content .admin-edit-card {
+        padding: 18px 16px;
+        border-radius: 11px;
+    }
+
+    .backoffice-content .employee-order-card {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .employee-order-summary span,
+    .employee-order-summary small {
+        white-space: normal;
+    }
+
+    .employee-manage-details summary,
+    .employee-review-actions button {
+        width: 100%;
+    }
+
+    .figma-bar-chart,
+    .figma-line-chart svg {
+        height: 180px;
+    }
+}
+
 .site-footer {
     background: var(--color-primary-dark);
     color: #ffffff;
