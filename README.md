@@ -16,24 +16,24 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - modelisation Merise disponible : MCD, MLD et MPD ;
 - diagrammes UML disponibles en sources draw.io et exports PNG ;
 - scripts SQL de creation et d'insertion disponibles ;
-- dossier MongoDB prepare pour les statistiques futures, non connecte au code PHP ;
+- dossier MongoDB prepare pour les statistiques administrateur ;
 - documentation technique de base de donnees disponible ;
 - squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
 - infrastructure Sprint 0 disponible : routes de reservation, pages 404/500,
   session, chargement `.env`, gestion d'erreurs, helpers HTTP/securite et base
   model ;
-- route d'accueil disponible pour verifier le fonctionnement MVC ;
+- parcours MVC principaux implementes : menus, contact, authentification,
+  commandes, suivi client, espace employe, avis et statistiques admin ;
 - branches Git `develop` et `feature/*` initialisees pour le developpement ;
 - lien Figma global synchronise pour les wireframes, maquettes, composants,
   charte graphique et exports ;
 - fichier `.env.example` disponible pour documenter la configuration.
 
-Le code metier PHP n'est pas encore implemente. Le depot est pret pour le
-developpement : controleur frontal, routeur parametre simple, controleurs de
-base, modele de base, placeholders HTTP 501, configuration, session, erreurs et
-connexion PDO preparee. Le fichier Figma actuel contient les wireframes basse
-fidelite, les maquettes haute qualite, les composants de base, la charte
-graphique et une page d'exports PDF.
+Le code metier PHP couvre maintenant le MVP principal : consultation des menus,
+filtres, detail menu, contact, inscription, connexion, mot de passe oublie,
+commande, suivi, traitement employe, moderation des avis et dashboard admin. Le
+fichier Figma actuel contient les wireframes basse fidelite, les maquettes haute
+qualite, les composants de base, la charte graphique et une page d'exports PDF.
 
 ## Liens De Rendu
 
@@ -46,6 +46,17 @@ Avant le rendu final, les liens GitHub, Figma, Notion et application deployee
 devront etre testes depuis une fenetre privee ou un navigateur non connecte.
 Le depot GitHub peut rester prive pendant le developpement, mais il devra etre
 rendu public et reverifie avant transmission au jury.
+
+## Comptes De Demonstration
+
+| Role | Email | Mot de passe |
+| --- | --- | --- |
+| Client | `claire.martin@example.test` | `ClientVite2026!` |
+| Employe | `lucas.employee@vitegourmand.test` | `EmployeVite2026!` |
+| Administrateur | `admin.jose@vitegourmand.test` | `AdminVite2026!` |
+
+Ces mots de passe sont uniquement des identifiants de demonstration. En base,
+ils sont stockes sous forme de hash bcrypt.
 
 ## Contexte ECF
 
@@ -118,14 +129,16 @@ documentee, deployee et appuyee par :
 | Architecture | MVC simple |
 | Autoload | Composer, PSR-4 |
 | Base relationnelle | MariaDB, compatible MySQL 8 pour les tests |
-| Base non relationnelle | Dossier MongoDB prepare, implementation future |
+| Base non relationnelle | MongoDB prepare pour les agregats statistiques |
 | Gestion projet | Notion |
 | Depot | GitHub |
 | Deploiement pressenti | Fly.io, a confirmer apres implementation |
 
-La base SQL reste la source de verite pour les donnees metier. MongoDB sera
-limite plus tard aux agregats statistiques utilises par le tableau de bord
-administrateur.
+La base SQL reste la source de verite pour les donnees metier. MongoDB est
+prepare pour les agregats statistiques utilises par le tableau de bord
+administrateur. En local, l'extension PHP MongoDB n'est pas installee : le
+dashboard affiche donc des agregats SQL transparents, avec scripts MongoDB
+fournis pour la cible NoSQL.
 
 ## Organisation Du Depot
 
@@ -197,7 +210,8 @@ a un developpeur junior ou au jury.
 - MongoDB et `mongosh` plus tard, pour la partie statistiques.
 - Navigateur web moderne.
 
-Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN.
+Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN et le
+CSS propre au projet est ecrit dans `public/assets/css/style.css`.
 
 ### Recuperer Le Projet
 

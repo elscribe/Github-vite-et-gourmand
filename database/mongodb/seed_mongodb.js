@@ -7,7 +7,7 @@ db.dashboard_statistics.deleteMany({});
 db.menu_statistics.insertMany([
   {
     menuId: NumberInt(1),
-    menuTitle: 'Christmas Menu',
+    menuTitle: 'Menu Noël Tradition',
     orders: NumberInt(38),
     revenue: 29990.00,
     averageBasket: 789.21,
@@ -17,7 +17,7 @@ db.menu_statistics.insertMany([
   },
   {
     menuId: NumberInt(2),
-    menuTitle: 'Wedding Menu',
+    menuTitle: 'Menu Saint-Valentin',
     orders: NumberInt(18),
     revenue: 52320.00,
     averageBasket: 2906.67,
@@ -27,7 +27,7 @@ db.menu_statistics.insertMany([
   },
   {
     menuId: NumberInt(3),
-    menuTitle: 'Prestige Menu',
+    menuTitle: 'Menu Terre & Mer',
     orders: NumberInt(32),
     revenue: 38278.61,
     averageBasket: 1196.21,
@@ -37,7 +37,7 @@ db.menu_statistics.insertMany([
   },
   {
     menuId: NumberInt(4),
-    menuTitle: 'Vegetarian Menu',
+    menuTitle: 'Menu Végé-Gourmand',
     orders: NumberInt(26),
     revenue: 8254.63,
     averageBasket: 317.49,
@@ -47,7 +47,7 @@ db.menu_statistics.insertMany([
   },
   {
     menuId: NumberInt(5),
-    menuTitle: 'Family Menu',
+    menuTitle: 'Menu Pâques en Famille',
     orders: NumberInt(45),
     revenue: 13876.55,
     averageBasket: 308.37,
@@ -57,7 +57,7 @@ db.menu_statistics.insertMany([
   },
   {
     menuId: NumberInt(6),
-    menuTitle: 'Cocktail Menu',
+    menuTitle: 'Menu Cocktail Bordelais',
     orders: NumberInt(32),
     revenue: 42262.00,
     averageBasket: 1320.69,
@@ -73,7 +73,7 @@ db.monthly_statistics.insertMany([
     revenue: 2740.00,
     orders: NumberInt(5),
     averageBasket: 548.00,
-    bestSellingMenu: 'Family Menu',
+    bestSellingMenu: 'Menu Pâques en Famille',
     updatedAt: ISODate('2026-01-31T23:30:00Z')
   },
   {
@@ -81,7 +81,7 @@ db.monthly_statistics.insertMany([
     revenue: 4360.00,
     orders: NumberInt(7),
     averageBasket: 622.86,
-    bestSellingMenu: 'Prestige Menu',
+    bestSellingMenu: 'Menu Terre & Mer',
     updatedAt: ISODate('2026-02-28T23:30:00Z')
   },
   {
@@ -89,7 +89,7 @@ db.monthly_statistics.insertMany([
     revenue: 7386.60,
     orders: NumberInt(14),
     averageBasket: 527.61,
-    bestSellingMenu: 'Family Menu',
+    bestSellingMenu: 'Menu Pâques en Famille',
     updatedAt: ISODate('2026-03-31T23:30:00Z')
   },
   {
@@ -97,7 +97,7 @@ db.monthly_statistics.insertMany([
     revenue: 11875.50,
     orders: NumberInt(16),
     averageBasket: 742.22,
-    bestSellingMenu: 'Cocktail Menu',
+    bestSellingMenu: 'Menu Cocktail Bordelais',
     updatedAt: ISODate('2026-04-30T23:30:00Z')
   },
   {
@@ -105,7 +105,7 @@ db.monthly_statistics.insertMany([
     revenue: 17328.12,
     orders: NumberInt(21),
     averageBasket: 825.15,
-    bestSellingMenu: 'Wedding Menu',
+    bestSellingMenu: 'Menu Saint-Valentin',
     updatedAt: ISODate('2026-05-31T23:30:00Z')
   },
   {
@@ -113,7 +113,7 @@ db.monthly_statistics.insertMany([
     revenue: 22108.84,
     orders: NumberInt(28),
     averageBasket: 789.60,
-    bestSellingMenu: 'Cocktail Menu',
+    bestSellingMenu: 'Menu Cocktail Bordelais',
     updatedAt: ISODate('2026-06-30T23:30:00Z')
   },
   {
@@ -121,7 +121,7 @@ db.monthly_statistics.insertMany([
     revenue: 19642.26,
     orders: NumberInt(20),
     averageBasket: 982.11,
-    bestSellingMenu: 'Prestige Menu',
+    bestSellingMenu: 'Menu Terre & Mer',
     updatedAt: ISODate('2026-07-31T23:30:00Z')
   },
   {
@@ -129,7 +129,7 @@ db.monthly_statistics.insertMany([
     revenue: 15340.00,
     orders: NumberInt(13),
     averageBasket: 1180.00,
-    bestSellingMenu: 'Wedding Menu',
+    bestSellingMenu: 'Menu Saint-Valentin',
     updatedAt: ISODate('2026-08-31T23:30:00Z')
   },
   {
@@ -137,7 +137,7 @@ db.monthly_statistics.insertMany([
     revenue: 28640.00,
     orders: NumberInt(18),
     averageBasket: 1591.11,
-    bestSellingMenu: 'Wedding Menu',
+    bestSellingMenu: 'Menu Saint-Valentin',
     updatedAt: ISODate('2026-09-30T23:30:00Z')
   },
   {
@@ -145,7 +145,7 @@ db.monthly_statistics.insertMany([
     revenue: 12175.00,
     orders: NumberInt(12),
     averageBasket: 1014.58,
-    bestSellingMenu: 'Prestige Menu',
+    bestSellingMenu: 'Menu Terre & Mer',
     updatedAt: ISODate('2026-10-31T23:30:00Z')
   },
   {
@@ -153,7 +153,7 @@ db.monthly_statistics.insertMany([
     revenue: 20975.47,
     orders: NumberInt(19),
     averageBasket: 1103.97,
-    bestSellingMenu: 'Christmas Menu',
+    bestSellingMenu: 'Menu Noël Tradition',
     updatedAt: ISODate('2026-11-30T23:30:00Z')
   },
   {
@@ -161,7 +161,7 @@ db.monthly_statistics.insertMany([
     revenue: 22410.00,
     orders: NumberInt(18),
     averageBasket: 1245.00,
-    bestSellingMenu: 'Christmas Menu',
+    bestSellingMenu: 'Menu Noël Tradition',
     updatedAt: ISODate('2026-12-31T23:30:00Z')
   }
 ]);
@@ -172,7 +172,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 2740.00,
     totalOrders: NumberInt(5),
     activeMenus: NumberInt(6),
-    topMenu: 'Family Menu',
+    topMenu: 'Menu Pâques en Famille',
     averageBasket: 548.00,
     averageRating: 4.3
   },
@@ -181,7 +181,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 4360.00,
     totalOrders: NumberInt(7),
     activeMenus: NumberInt(6),
-    topMenu: 'Prestige Menu',
+    topMenu: 'Menu Terre & Mer',
     averageBasket: 622.86,
     averageRating: 4.4
   },
@@ -190,7 +190,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 7386.60,
     totalOrders: NumberInt(14),
     activeMenus: NumberInt(6),
-    topMenu: 'Family Menu',
+    topMenu: 'Menu Pâques en Famille',
     averageBasket: 527.61,
     averageRating: 4.5
   },
@@ -199,7 +199,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 11875.50,
     totalOrders: NumberInt(16),
     activeMenus: NumberInt(6),
-    topMenu: 'Cocktail Menu',
+    topMenu: 'Menu Cocktail Bordelais',
     averageBasket: 742.22,
     averageRating: 4.6
   },
@@ -208,7 +208,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 17328.12,
     totalOrders: NumberInt(21),
     activeMenus: NumberInt(6),
-    topMenu: 'Wedding Menu',
+    topMenu: 'Menu Saint-Valentin',
     averageBasket: 825.15,
     averageRating: 4.6
   },
@@ -217,7 +217,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 22108.84,
     totalOrders: NumberInt(28),
     activeMenus: NumberInt(6),
-    topMenu: 'Cocktail Menu',
+    topMenu: 'Menu Cocktail Bordelais',
     averageBasket: 789.60,
     averageRating: 4.7
   },
@@ -226,7 +226,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 19642.26,
     totalOrders: NumberInt(20),
     activeMenus: NumberInt(6),
-    topMenu: 'Prestige Menu',
+    topMenu: 'Menu Terre & Mer',
     averageBasket: 982.11,
     averageRating: 4.6
   },
@@ -235,7 +235,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 15340.00,
     totalOrders: NumberInt(13),
     activeMenus: NumberInt(6),
-    topMenu: 'Wedding Menu',
+    topMenu: 'Menu Saint-Valentin',
     averageBasket: 1180.00,
     averageRating: 4.8
   },
@@ -244,7 +244,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 28640.00,
     totalOrders: NumberInt(18),
     activeMenus: NumberInt(6),
-    topMenu: 'Wedding Menu',
+    topMenu: 'Menu Saint-Valentin',
     averageBasket: 1591.11,
     averageRating: 4.9
   },
@@ -253,7 +253,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 12175.00,
     totalOrders: NumberInt(12),
     activeMenus: NumberInt(6),
-    topMenu: 'Prestige Menu',
+    topMenu: 'Menu Terre & Mer',
     averageBasket: 1014.58,
     averageRating: 4.6
   },
@@ -262,7 +262,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 20975.47,
     totalOrders: NumberInt(19),
     activeMenus: NumberInt(6),
-    topMenu: 'Christmas Menu',
+    topMenu: 'Menu Noël Tradition',
     averageBasket: 1103.97,
     averageRating: 4.7
   },
@@ -271,7 +271,7 @@ db.dashboard_statistics.insertMany([
     totalRevenue: 22410.00,
     totalOrders: NumberInt(18),
     activeMenus: NumberInt(6),
-    topMenu: 'Christmas Menu',
+    topMenu: 'Menu Noël Tradition',
     averageBasket: 1245.00,
     averageRating: 4.8
   }

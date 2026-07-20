@@ -2,7 +2,7 @@
   "menu_statistics": [
     {
       "menuId": 1,
-      "menuTitle": "Christmas Menu",
+      "menuTitle": "Menu Noël Tradition",
       "orders": 38,
       "revenue": 29990.0,
       "averageBasket": 789.21,
@@ -17,7 +17,7 @@
       "revenue": 22410.0,
       "orders": 18,
       "averageBasket": 1245.0,
-      "bestSellingMenu": "Christmas Menu",
+      "bestSellingMenu": "Menu Noël Tradition",
       "updatedAt": "2026-12-31T23:30:00Z"
     }
   ],
@@ -27,7 +27,7 @@
       "totalRevenue": 22410.0,
       "totalOrders": 18,
       "activeMenus": 6,
-      "topMenu": "Christmas Menu",
+      "topMenu": "Menu Noël Tradition",
       "averageBasket": 1245.0,
       "averageRating": 4.8
     }

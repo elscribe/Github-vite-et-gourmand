@@ -91,12 +91,54 @@ final class PlaceholderController extends BaseController
 
     public function legalNotice(): void
     {
-        $this->show('Legal notice', 'Legal notice page required from the footer');
+        $this->showPublicPage(
+            'Mentions légales',
+            'Informations légales principales de Vite & Gourmand, présentées simplement pour le livrable UX/UI.',
+            'Éditeur du site',
+            [
+                'Vite & Gourmand',
+                'Traiteur événementiel à Bordeaux',
+                '12 rue des Vignes, 33000 Bordeaux',
+                'contact@viteetgourmand.fr',
+                'Responsable de publication : Julie Martin',
+                'Hébergement : information à compléter au moment de la mise en production.',
+                'Données personnelles : les informations collectées servent uniquement à la gestion des commandes, des contacts et des avis clients.',
+            ],
+            'Point clé UX : ces pages secondaires complètent le footer et sécurisent le parcours public.'
+        );
     }
 
     public function terms(): void
     {
-        $this->show('Terms and conditions', 'Terms and conditions page required from the footer');
+        $this->showPublicPage(
+            'Conditions générales de vente',
+            'Règles essentielles liées aux réservations, commandes et prestations de traiteur.',
+            'Commande et validation',
+            [
+                '1. Une demande de menu est enregistrée avec les informations du client, la date, l’adresse et le nombre de personnes.',
+                '2. Une commande peut être modifiée ou annulée par le client uniquement tant qu’elle n’a pas été acceptée par l’équipe.',
+                '3. Après acceptation, toute modification interne nécessite un contact client préalable par appel ou email.',
+                '4. Les statuts affichés au client suivent les étapes : reçue, acceptée, en préparation, en livraison, livrée.',
+                '5. Les avis clients sont publiés après validation par l’équipe.',
+            ],
+            'Point clé UX : rendre visibles les règles d’annulation, de modification et de contact client.'
+        );
+    }
+
+    public function privacy(): void
+    {
+        $this->showPublicPage(
+            'Confidentialité',
+            'Informations sur la protection des données personnelles collectées pendant le parcours client.',
+            'Données personnelles',
+            [
+                'Les données saisies dans les formulaires servent uniquement à gérer les demandes, les commandes et les avis.',
+                'Les informations de contact permettent à l’équipe de confirmer une prestation ou de répondre à une question.',
+                'Les accès internes sont réservés au personnel autorisé.',
+                'Aucune donnée de paiement n’est stockée dans cette version du projet.',
+            ],
+            'Point clé UX : expliquer simplement pourquoi les informations sont demandées.'
+        );
     }
 
     public function formSubmit(): void
@@ -112,6 +154,28 @@ final class PlaceholderController extends BaseController
             'pageTitle' => $sectionTitle . ' - Sprint 1',
             'sectionTitle' => $sectionTitle,
             'sectionDescription' => $sectionDescription,
+        ]);
+    }
+
+    /**
+     * @param list<string> $contentLines
+     */
+    private function showPublicPage(
+        string $sectionTitle,
+        string $sectionDescription,
+        string $contentTitle,
+        array $contentLines,
+        string $keyPoint
+    ): void {
+        $this->view('placeholder/show', [
+            'pageTitle' => $sectionTitle . ' - Vite & Gourmand',
+            'bodyClass' => 'page-legal',
+            'sectionTitle' => $sectionTitle,
+            'sectionDescription' => $sectionDescription,
+            'isPublicInfoPage' => true,
+            'contentTitle' => $contentTitle,
+            'contentLines' => $contentLines,
+            'keyPoint' => $keyPoint,
         ]);
     }
 }
