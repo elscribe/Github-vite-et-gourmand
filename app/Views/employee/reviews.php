@@ -2,6 +2,7 @@
 /**
  * @var list<array<string, mixed>> $reviews
  */
+$reviewManagementBasePath = $reviewManagementBasePath ?? '/employe/avis';
 $statusLabels = [
     'en_attente' => '&Agrave; valider',
     'valide' => 'Valid&eacute;',
@@ -44,7 +45,7 @@ $statusLabels = [
 
                         <?php if ($status === 'en_attente'): ?>
                             <div class="employee-review-actions">
-                                <form action="/employe/avis/<?= (int) $review['id_avis'] ?>/moderation" method="post">
+                                <form action="<?= htmlspecialchars($reviewManagementBasePath . '/' . (int) $review['id_avis'] . '/moderation', ENT_QUOTES, 'UTF-8') ?>" method="post">
                                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                                     <input type="hidden" name="statut" value="valide">
                                     <button class="review-approve-button" type="submit">
@@ -52,7 +53,7 @@ $statusLabels = [
                                         Approuver l'avis
                                     </button>
                                 </form>
-                                <form action="/employe/avis/<?= (int) $review['id_avis'] ?>/moderation" method="post">
+                                <form action="<?= htmlspecialchars($reviewManagementBasePath . '/' . (int) $review['id_avis'] . '/moderation', ENT_QUOTES, 'UTF-8') ?>" method="post">
                                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                                     <input type="hidden" name="statut" value="refuse">
                                     <button class="review-reject-button" type="submit">

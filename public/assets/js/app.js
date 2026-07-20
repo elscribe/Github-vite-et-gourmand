@@ -107,24 +107,40 @@ if (mobileMenu instanceof HTMLElement) {
 
 const backofficeMobileNav = document.querySelector('[data-backoffice-mobile-nav]');
 const backofficeMobileNavToggle = document.querySelector('[data-backoffice-mobile-menu-toggle]');
+const backofficeMobileNavCloseButtons = backofficeMobileNav instanceof HTMLElement
+    ? Array.from(backofficeMobileNav.querySelectorAll('[data-backoffice-mobile-nav-close]'))
+    : [];
 
-const closeBackofficeMobileNav = () => {
-    document.body.classList.remove('backoffice-mobile-nav-open');
+const setBackofficeMobileNavOpen = (isOpen) => {
+    if (!(backofficeMobileNav instanceof HTMLElement)) {
+        return;
+    }
+
+    backofficeMobileNav.hidden = !isOpen;
+    document.body.classList.toggle('backoffice-mobile-nav-open', isOpen);
 
     if (backofficeMobileNavToggle instanceof HTMLElement) {
-        backofficeMobileNavToggle.setAttribute('aria-expanded', 'false');
+        backofficeMobileNavToggle.setAttribute('aria-expanded', String(isOpen));
     }
+};
+
+const closeBackofficeMobileNav = () => {
+    setBackofficeMobileNavOpen(false);
 };
 
 if (backofficeMobileNavToggle instanceof HTMLElement && backofficeMobileNav instanceof HTMLElement) {
     backofficeMobileNavToggle.addEventListener('click', () => {
-        const isOpen = document.body.classList.toggle('backoffice-mobile-nav-open');
+        const isOpen = !document.body.classList.contains('backoffice-mobile-nav-open');
 
-        backofficeMobileNavToggle.setAttribute('aria-expanded', String(isOpen));
+        setBackofficeMobileNavOpen(isOpen);
     });
 
     backofficeMobileNav.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', closeBackofficeMobileNav);
+    });
+
+    backofficeMobileNavCloseButtons.forEach((button) => {
+        button.addEventListener('click', closeBackofficeMobileNav);
     });
 }
 
@@ -185,6 +201,10 @@ if (backofficeNotifications instanceof HTMLElement) {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && mobileMenu instanceof HTMLElement && !mobileMenu.hidden) {
         closeMobileMenu();
+    }
+
+    if (event.key === 'Escape' && backofficeMobileNav instanceof HTMLElement && !backofficeMobileNav.hidden) {
+        closeBackofficeMobileNav();
     }
 });
 

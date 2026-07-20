@@ -7,10 +7,11 @@
 $searchFilterKeys = ['id_commande', 'nom', 'prenom', 'email', 'telephone', 'adresse', 'ville'];
 $backofficeStatusLabels = $statusLabels;
 $backofficeStatusLabels['en_attente'] = 'Reçue';
-$statusTabs = ['' => 'Tous'] + $backofficeStatusLabels;
+$orderManagementBasePath = $orderManagementBasePath ?? '/employe/commandes';
+$statusTabs = ['' => 'Toutes'] + $backofficeStatusLabels;
 $focusedOrderId = ctype_digit($filters['id_commande']) ? (int) $filters['id_commande'] : 0;
 
-$statusTabUrl = static function (string $status) use ($filters, $searchFilterKeys): string {
+$statusTabUrl = static function (string $status) use ($filters, $searchFilterKeys, $orderManagementBasePath): string {
     $query = [];
 
     if ($status !== '') {
@@ -25,7 +26,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
         }
     }
 
-    return $query === [] ? '/employe/commandes' : '/employe/commandes?' . http_build_query($query);
+    return $query === [] ? $orderManagementBasePath : $orderManagementBasePath . '?' . http_build_query($query);
 };
 ?>
 <section class="page-section">
@@ -38,9 +39,10 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
         <div class="employee-order-filter-bar">
             <div class="employee-status-tabs" aria-label="Filtrer par statut">
                 <?php foreach ($statusTabs as $status => $label): ?>
+                    <?php $statusClass = $status === '' ? 'all' : str_replace('_', '-', $status); ?>
                     <a
                         href="<?= htmlspecialchars($statusTabUrl($status), ENT_QUOTES, 'UTF-8') ?>"
-                        class="employee-status-tab<?= $filters['status'] === $status ? ' is-active' : '' ?>"
+                        class="employee-status-tab employee-status-tab-<?= $this->e($statusClass) ?><?= $filters['status'] === $status ? ' is-active' : '' ?>"
                     >
                         <?= $this->e($label) ?>
                     </a>
@@ -48,7 +50,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
             </div>
         </div>
 
-        <form class="menu-filters employee-order-search-form" action="/employe/commandes" method="get">
+        <form class="menu-filters employee-order-search-form" action="<?= htmlspecialchars($orderManagementBasePath, ENT_QUOTES, 'UTF-8') ?>" method="get">
             <input type="hidden" name="status" value="<?= $this->e($filters['status']) ?>">
             <div>
                 <label for="id_commande">ID commande</label>
@@ -80,7 +82,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
             </div>
             <div class="menu-filters-actions">
                 <button class="primary-link" type="submit">Rechercher</button>
-                <a class="secondary-link" href="/employe/commandes">R&eacute;initialiser</a>
+                <a class="secondary-link" href="<?= htmlspecialchars($orderManagementBasePath, ENT_QUOTES, 'UTF-8') ?>">R&eacute;initialiser</a>
             </div>
         </form>
 
@@ -115,12 +117,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
                             </span>
                         </div>
 
-                        <?php if ($isClosed): ?>
-                            <div class="employee-order-locked">
-                                <strong>Commande cl&ocirc;tur&eacute;e</strong>
-                                <span>Aucune action employ&eacute; n'est n&eacute;cessaire.</span>
-                            </div>
-                        <?php else: ?>
+                        <?php if (!$isClosed): ?>
                             <details class="employee-manage-details"<?= $focusedOrderId === (int) $order['id_commande'] ? ' open' : '' ?>>
                                 <summary>Gerer</summary>
                                 <div class="employee-order-actions">
@@ -129,7 +126,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
                                         <span>Modification ou annulation uniquement apres contact client par email ou GSM.</span>
                                     </p>
 
-                                    <form action="/employe/commandes/<?= (int) $order['id_commande'] ?>/statut" method="post" class="employee-action-form">
+                                    <form action="<?= htmlspecialchars($orderManagementBasePath . '/' . (int) $order['id_commande'] . '/statut', ENT_QUOTES, 'UTF-8') ?>" method="post" class="employee-action-form">
                                         <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                                         <h3>Modifier le statut</h3>
                                         <label for="statut-<?= (int) $order['id_commande'] ?>">Nouveau statut</label>
@@ -146,7 +143,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
                                         <button class="primary-link" type="submit">Enregistrer le statut</button>
                                     </form>
 
-                                    <form action="/employe/commandes/<?= (int) $order['id_commande'] ?>/annuler" method="post" class="employee-action-form">
+                                    <form action="<?= htmlspecialchars($orderManagementBasePath . '/' . (int) $order['id_commande'] . '/annuler', ENT_QUOTES, 'UTF-8') ?>" method="post" class="employee-action-form">
                                         <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                                         <h3>Annuler une commande</h3>
                                         <label for="mode-<?= (int) $order['id_commande'] ?>">Contact client</label>
@@ -159,7 +156,7 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
                                         <button class="secondary-button" type="submit">Annuler la commande</button>
                                     </form>
 
-                                    <form action="/employe/commandes/<?= (int) $order['id_commande'] ?>/modifier" method="post" class="employee-action-form employee-order-edit-form">
+                                    <form action="<?= htmlspecialchars($orderManagementBasePath . '/' . (int) $order['id_commande'] . '/modifier', ENT_QUOTES, 'UTF-8') ?>" method="post" class="employee-action-form employee-order-edit-form">
                                         <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                                         <h3>Modifier apres contact client</h3>
                                         <div class="employee-order-edit-grid">

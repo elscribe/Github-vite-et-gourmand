@@ -69,6 +69,12 @@ return static function (Router $router): void {
     $router->post('/employe/avis/{id}/moderation', [ReviewController::class, 'moderate'], $employeeAccessCsrf);
 
     $router->get('/admin', [AdminController::class, 'dashboard'], $adminAccess);
+    $router->get('/admin/commandes', [OrderController::class, 'employeeIndex'], $adminAccess);
+    $router->post('/admin/commandes/{id}/modifier', [OrderController::class, 'employeeUpdateOrder'], $adminAccessCsrf);
+    $router->post('/admin/commandes/{id}/statut', [OrderController::class, 'employeeStatus'], $adminAccessCsrf);
+    $router->post('/admin/commandes/{id}/annuler', [OrderController::class, 'employeeCancel'], $adminAccessCsrf);
+    $router->get('/admin/avis', [ReviewController::class, 'employeeIndex'], $adminAccess);
+    $router->post('/admin/avis/{id}/moderation', [ReviewController::class, 'moderate'], $adminAccessCsrf);
     $router->get('/admin/statistiques', [AdminController::class, 'statistics'], $adminAccess);
     $router->get('/admin/employes', [AdminController::class, 'employees'], $adminAccess);
     $router->post('/admin/employes', [AdminController::class, 'storeEmployee'], $adminAccessCsrf);

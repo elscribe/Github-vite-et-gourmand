@@ -766,7 +766,18 @@ h3 {
 
 .page-home .flash-container .alert-message,
 .page-menus .flash-container .alert-message {
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-left: auto;
+    box-shadow: 0 14px 34px rgba(43, 26, 20, 0.16);
     pointer-events: auto;
+}
+
+@media (max-width: 760px) {
+    .page-home .flash-container,
+    .page-menus .flash-container {
+        top: 72px;
+    }
 }
 
 .auth-form {
@@ -3356,25 +3367,6 @@ body.image-lightbox-open {
     box-shadow: var(--shadow-card);
 }
 
-.employee-order-card-closed {
-    grid-template-columns: minmax(0, 1fr) 280px;
-}
-
-.employee-order-locked {
-    display: grid;
-    gap: 6px;
-    align-content: start;
-    padding: 14px;
-    color: var(--color-muted);
-    background: #f8f3ea;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-}
-
-.employee-order-locked strong {
-    color: var(--color-text);
-}
-
 .employee-action-form {
     display: grid;
     gap: 10px;
@@ -3955,33 +3947,98 @@ body.backoffice-body {
     align-items: center;
 }
 
+.employee-order-filter-bar {
+    margin-bottom: 14px;
+}
+
+.employee-status-tabs {
+    gap: 12px 14px;
+}
+
+.employee-status-tabs::before {
+    content: "FILTRER PAR STATUT";
+    flex: 0 0 100%;
+    color: #6b7280;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
 .employee-status-tab {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 38px;
-    padding: 8px 18px;
-    border: 1px solid #2f2f2f;
+    min-height: 36px;
+    padding: 9px 24px;
+    border: 1px solid transparent;
     border-radius: 999px;
-    background: #171717;
-    color: #ffffff;
+    background: #ffffff;
+    color: var(--color-primary);
+    font-size: 0.88rem;
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: none;
 }
 
 .employee-status-tab:hover,
 .employee-status-tab:focus {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: #ffffff;
+    border-color: var(--color-accent);
+    color: var(--color-primary);
     text-decoration: none;
 }
 
-.employee-status-tab.is-active {
-    border-color: #9bd2ff;
-    background: #9bd2ff;
-    color: #102033;
+.employee-status-tab-all {
+    background: #fff7ef;
+    border-color: #e3cda8;
+    color: var(--color-primary);
+}
+
+.employee-status-tab-en-attente {
+    background: #ffffff;
+    border-color: #ccd6e2;
+    color: var(--color-primary);
+}
+
+.employee-status-tab-acceptee {
+    background: #fff1c9;
+    color: #9a6400;
+}
+
+.employee-status-tab-en-preparation {
+    background: #dbeafe;
+    color: #145bd6;
+}
+
+.employee-status-tab-en-cours-de-livraison {
+    background: #eadcff;
+    color: #7b3ff2;
+}
+
+.employee-status-tab-livre {
+    background: #dff2e5;
+    color: #28704f;
+}
+
+.employee-status-tab-en-attente-retour-materiel,
+.employee-status-tab-annulee {
+    background: #fde7e7;
+    color: #c52222;
+}
+
+.employee-status-tab-terminee {
+    background: #eef0f3;
+    color: #6b7280;
+}
+
+.employee-status-tab.is-active,
+.employee-status-tab.is-active:hover,
+.employee-status-tab.is-active:focus {
+    border-color: #8a2f3e;
+    background: #8a2f3e;
+    color: #ffffff;
 }
 
 .backoffice-content .employee-order-search-form {
@@ -4255,6 +4312,10 @@ body.backoffice-body {
     min-width: 0;
 }
 
+.backoffice-content .employee-order-card-closed .employee-order-summary {
+    grid-column: 1 / -1;
+}
+
 .employee-order-summary div {
     display: grid;
     gap: 2px;
@@ -4500,42 +4561,83 @@ body.backoffice-body {
     }
 
     .backoffice-mobile-nav {
-        position: sticky;
-        top: 72px;
-        z-index: 850;
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        display: block;
+    }
+
+    .backoffice-mobile-nav[hidden] {
         display: none;
-        gap: 8px;
-        overflow-x: auto;
-        padding: 10px 22px;
-        background: #fbf4e8;
-        border-bottom: 1px solid #e6d7bd;
-        scrollbar-width: none;
     }
 
-    .backoffice-mobile-nav-open .backoffice-mobile-nav {
+    .backoffice-mobile-nav-scrim {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: rgba(36, 25, 19, 0.48);
+    }
+
+    .backoffice-mobile-nav-panel {
+        position: relative;
         display: flex;
-    }
-
-    .backoffice-mobile-nav a {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        flex: 0 0 auto;
-        min-height: 38px;
-        padding: 8px 12px;
-        border: 1px solid #e1cda8;
-        border-radius: 999px;
-        background: #ffffff;
-        color: #241913;
-        font-size: 0.82rem;
-        font-weight: 800;
-        text-decoration: none;
-    }
-
-    .backoffice-mobile-nav a.is-active {
-        background: var(--color-primary);
-        border-color: var(--color-primary);
+        flex-direction: column;
+        width: min(82vw, 304px);
+        min-height: 100dvh;
+        padding-bottom: 22px;
+        background: var(--color-primary-dark);
         color: #ffffff;
+        box-shadow: 18px 0 40px rgba(36, 25, 19, 0.28);
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-brand {
+        padding: 28px 20px 24px;
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav {
+        margin-top: 4px;
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav a,
+    .backoffice-mobile-nav-panel .backoffice-logout {
+        min-height: 52px;
+        padding-right: 24px;
+        padding-left: 24px;
+        font-size: 0.98rem;
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav a:hover,
+    .backoffice-mobile-nav-panel .backoffice-nav a:focus,
+    .backoffice-mobile-nav-panel .backoffice-logout:hover,
+    .backoffice-mobile-nav-panel .backoffice-logout:focus {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav a:hover::before,
+    .backoffice-mobile-nav-panel .backoffice-nav a:focus::before {
+        background: rgba(216, 168, 78, 0.58);
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active,
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active:hover,
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active:focus {
+        background: rgba(255, 255, 255, 0.14);
+        color: var(--color-accent);
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active::before,
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active:hover::before,
+    .backoffice-mobile-nav-panel .backoffice-nav a.is-active:focus::before {
+        background: var(--color-accent);
+    }
+
+    .backoffice-mobile-nav-panel .backoffice-logout {
+        margin-top: 12px;
+    }
+
+    body.backoffice-mobile-nav-open {
+        overflow: hidden;
     }
 
     .backoffice-content {

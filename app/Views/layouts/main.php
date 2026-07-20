@@ -33,6 +33,8 @@ $isBackOffice = $isBackOfficeRoute;
 $isCustomerArea = $isAuthenticated && !$isBackOffice && !in_array($currentRole, ['administrateur', 'employe'], true);
 $bodyClass = trim(($bodyClass ?? '') . ($isBackOffice ? ' backoffice-body' : ''));
 $currentUser = null;
+$backOfficeOrdersBasePath = $isAdminArea ? '/admin/commandes' : '/employe/commandes';
+$backOfficeReviewsBasePath = $isAdminArea ? '/admin/avis' : '/employe/avis';
 
 if ($isAuthenticated && \App\Core\Session::userId() !== null) {
     $currentUser = (new \App\Models\UserModel())->findById((int) \App\Core\Session::userId());
@@ -63,11 +65,11 @@ $backOfficeNotificationCount = $backOfficePendingOrders + $backOfficePendingRevi
 $backOfficeNav = $isAdminArea
     ? [
         ['href' => '/admin', 'label' => 'Tableau de bord', 'icon' => 'bi-grid-1x2', 'active' => $currentPath === '/admin'],
-        ['href' => '/employe/commandes', 'label' => 'Commandes', 'icon' => 'bi-inbox', 'active' => str_starts_with($currentPath, '/employe/commandes')],
+        ['href' => '/admin/commandes', 'label' => 'Commandes', 'icon' => 'bi-inbox', 'active' => str_starts_with($currentPath, '/admin/commandes')],
         ['href' => '/admin/menus', 'label' => 'Menus', 'icon' => 'bi-journal-bookmark', 'active' => str_starts_with($currentPath, '/admin/menus')],
         ['href' => '/admin/plats', 'label' => 'Plats / Recettes', 'icon' => 'bi-clipboard2', 'active' => str_starts_with($currentPath, '/admin/plats')],
         ['href' => '/admin/horaires', 'label' => 'Horaires', 'icon' => 'bi-clock', 'active' => str_starts_with($currentPath, '/admin/horaires')],
-        ['href' => '/employe/avis', 'label' => 'Avis clients', 'icon' => 'bi-chat-left', 'active' => str_starts_with($currentPath, '/employe/avis')],
+        ['href' => '/admin/avis', 'label' => 'Avis clients', 'icon' => 'bi-chat-left', 'active' => str_starts_with($currentPath, '/admin/avis')],
         ['href' => '/admin/employes', 'label' => 'Employés', 'icon' => 'bi-person', 'active' => str_starts_with($currentPath, '/admin/employes')],
         ['href' => '/admin/statistiques', 'label' => 'Statistiques', 'icon' => 'bi-bar-chart', 'active' => str_starts_with($currentPath, '/admin/statistiques')],
     ]
@@ -76,6 +78,12 @@ $backOfficeNav = $isAdminArea
         ['href' => '/employe/commandes', 'label' => 'Commandes', 'icon' => 'bi-inbox', 'active' => str_starts_with($currentPath, '/employe/commandes')],
         ['href' => '/employe/avis', 'label' => 'Avis clients', 'icon' => 'bi-chat-left', 'active' => str_starts_with($currentPath, '/employe/avis')],
     ];
+
+$assetVersion = static function (string $assetPath): string {
+    $fullPath = dirname(__DIR__, 3) . '/public' . $assetPath;
+
+    return is_file($fullPath) ? (string) filemtime($fullPath) : '1';
+};
 ?>
 <!doctype html>
 <html lang="fr">
@@ -88,15 +96,14 @@ $backOfficeNav = $isAdminArea
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style.css?v=<?= $assetVersion('/assets/css/style.css') ?>" rel="stylesheet">
 </head>
 <body id="top" class="<?= htmlspecialchars($bodyClass, ENT_QUOTES, 'UTF-8') ?>">
     <?php if ($isBackOffice): ?>
         <main class="backoffice-shell">
             <aside class="backoffice-sidebar" aria-label="Navigation interne">
-                <a class="backoffice-brand" href="<?= $isAdminArea ? '/admin' : '/employe' ?>">
+                <a class="backoffice-brand" href="<?= $isAdminArea ? '/admin' : '/employe' ?>" aria-label="Vite & Gourmand">
                     <span class="backoffice-brand-mark" aria-hidden="true">VG</span>
-                    <span>Vite &amp; Gourmand</span>
                 </a>
 
                 <nav class="backoffice-nav">
@@ -160,7 +167,7 @@ $backOfficeNav = $isAdminArea
                                 <?php else: ?>
                                     <div class="backoffice-notification-list">
                                         <?php if ($backOfficePendingOrders > 0): ?>
-                                            <a href="/employe/commandes?status=en_attente">
+                                            <a href="<?= htmlspecialchars($backOfficeOrdersBasePath . '?status=en_attente', ENT_QUOTES, 'UTF-8') ?>">
                                                 <i class="bi bi-inbox" aria-hidden="true"></i>
                                                 <span>
                                                     <strong><?= (int) $backOfficePendingOrders ?> commande<?= $backOfficePendingOrders > 1 ? 's' : '' ?> &agrave; valider</strong>
@@ -170,7 +177,7 @@ $backOfficeNav = $isAdminArea
                                         <?php endif; ?>
 
                                         <?php if ($backOfficePendingReviews > 0): ?>
-                                            <a href="/employe/avis">
+                                            <a href="<?= htmlspecialchars($backOfficeReviewsBasePath, ENT_QUOTES, 'UTF-8') ?>">
                                                 <i class="bi bi-chat-left" aria-hidden="true"></i>
                                                 <span>
                                                     <strong><?= (int) $backOfficePendingReviews ?> avis client<?= $backOfficePendingReviews > 1 ? 's' : '' ?> &agrave; valider</strong>
@@ -190,14 +197,39 @@ $backOfficeNav = $isAdminArea
                     </div>
                 </header>
 
-                <nav id="backoffice-mobile-nav" class="backoffice-mobile-nav" aria-label="Navigation interne mobile" data-backoffice-mobile-nav>
-                    <?php foreach ($backOfficeNav as $item): ?>
-                        <a href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>" class="<?= $item['active'] ? 'is-active' : '' ?>">
-                            <i class="bi <?= htmlspecialchars($item['icon'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i>
-                            <span><?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?></span>
+                <aside
+                    id="backoffice-mobile-nav"
+                    class="backoffice-mobile-nav"
+                    aria-label="Navigation interne mobile"
+                    data-backoffice-mobile-nav
+                    hidden
+                >
+                    <button
+                        class="backoffice-mobile-nav-scrim"
+                        type="button"
+                        aria-label="Fermer la navigation interne"
+                        data-backoffice-mobile-nav-close
+                    ></button>
+                    <div class="backoffice-mobile-nav-panel" role="dialog" aria-modal="true" aria-label="Navigation interne">
+                        <a class="backoffice-brand" href="<?= $isAdminArea ? '/admin' : '/employe' ?>" aria-label="Vite & Gourmand">
+                            <span class="backoffice-brand-mark" aria-hidden="true">VG</span>
                         </a>
-                    <?php endforeach; ?>
-                </nav>
+
+                        <nav class="backoffice-nav" aria-label="Navigation interne">
+                            <?php foreach ($backOfficeNav as $item): ?>
+                                <a href="<?= htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8') ?>" class="<?= $item['active'] ? 'is-active' : '' ?>">
+                                    <i class="bi <?= htmlspecialchars($item['icon'], ENT_QUOTES, 'UTF-8') ?>" aria-hidden="true"></i>
+                                    <span><?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?></span>
+                                </a>
+                            <?php endforeach; ?>
+                        </nav>
+
+                        <a class="backoffice-logout" href="/deconnexion">
+                            <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                            <span>Deconnexion</span>
+                        </a>
+                    </div>
+                </aside>
 
                 <div class="backoffice-content">
                     <?php if ($successFlash !== null || $errorFlash !== null): ?>
@@ -367,6 +399,6 @@ $backOfficeNav = $isAdminArea
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/app.js?v=<?= $assetVersion('/assets/js/app.js') ?>"></script>
 </body>
 </html>

@@ -7,6 +7,8 @@
  */
 $backofficeStatusLabels = $statusLabels;
 $backofficeStatusLabels['en_attente'] = 'Reçue';
+$orderManagementBasePath = $orderManagementBasePath ?? '/employe/commandes';
+$reviewManagementBasePath = $reviewManagementBasePath ?? '/employe/avis';
 ?>
 <section class="page-section">
     <div class="container">
@@ -38,7 +40,7 @@ $backofficeStatusLabels['en_attente'] = 'Reçue';
             <section class="backoffice-card admin-dashboard-card">
                 <div class="admin-dashboard-card-heading">
                     <h2>Derni&egrave;res commandes &agrave; traiter</h2>
-                    <a href="/employe/commandes">Voir toutes</a>
+                    <a href="<?= htmlspecialchars($orderManagementBasePath, ENT_QUOTES, 'UTF-8') ?>">Voir toutes</a>
                 </div>
 
                 <?php if ($ordersToProcess === []): ?>
@@ -49,7 +51,7 @@ $backofficeStatusLabels['en_attente'] = 'Reçue';
                             <?php
                             $status = (string) $order['statut_actuel'];
                             $orderId = (int) $order['id_commande'];
-                            $orderUrl = '/employe/commandes?' . http_build_query([
+                            $orderUrl = $orderManagementBasePath . '?' . http_build_query([
                                 'status' => $status,
                                 'id_commande' => (string) $orderId,
                             ]) . '#commande-' . $orderId;
@@ -66,7 +68,7 @@ $backofficeStatusLabels['en_attente'] = 'Reçue';
                                     <span class="status-pill status-<?= $this->e(str_replace('_', '-', $status)) ?>">
                                         <?= $this->e($backofficeStatusLabels[$status] ?? $status) ?>
                                     </span>
-                                    <a href="<?= htmlspecialchars($orderUrl, ENT_QUOTES, 'UTF-8') ?>">Ouvrir</a>
+                                    <a href="<?= htmlspecialchars($orderUrl, ENT_QUOTES, 'UTF-8') ?>">Gérer</a>
                                 </div>
                             </article>
                         <?php endforeach; ?>
@@ -77,7 +79,7 @@ $backofficeStatusLabels['en_attente'] = 'Reçue';
             <section class="backoffice-card admin-dashboard-card">
                 <div class="admin-dashboard-card-heading">
                     <h2>Avis clients &agrave; valider</h2>
-                    <a href="/employe/avis">Voir les avis</a>
+                    <a href="<?= htmlspecialchars($reviewManagementBasePath, ENT_QUOTES, 'UTF-8') ?>">Voir les avis</a>
                 </div>
 
                 <?php if ($reviewsToModerate === []): ?>

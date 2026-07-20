@@ -194,6 +194,8 @@ final class OrderController extends BaseController
             'ordersToProcess' => $orderModel->findDashboardOrders(),
             'reviewsToModerate' => $reviewModel->findPendingForDashboard(),
             'statusLabels' => $orderModel->statusLabels(),
+            'orderManagementBasePath' => '/employe/commandes',
+            'reviewManagementBasePath' => '/employe/avis',
         ]);
     }
 
@@ -217,18 +219,20 @@ final class OrderController extends BaseController
             'orders' => $orderModel->findAll($filters),
             'statusLabels' => $orderModel->statusLabels(),
             'filters' => $filters,
+            'orderManagementBasePath' => $this->backOfficeOrdersBasePath(),
         ]);
     }
 
     public function employeeStatus(string $id): void
     {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
         $userId = $this->authenticatedUserId();
         $status = Input::postString('statut');
         $comment = Input::postString('commentaire');
 
         if ($status === 'annulee') {
             Session::flash('error', 'Pour annuler une commande, utilisez le formulaire avec mode de contact et motif.');
-            $this->redirect('/employe/commandes');
+            $this->redirect($orderManagementBasePath);
         }
 
         if ($comment === '') {
@@ -244,11 +248,12 @@ final class OrderController extends BaseController
 
         Session::flash($updated ? 'success' : 'error', $updated ? 'Statut mis a jour.' : 'Le statut demande est invalide.');
 
-        $this->redirect('/employe/commandes');
+        $this->redirect($orderManagementBasePath);
     }
 
     public function employeeUpdateOrder(string $id): void
     {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
         $userId = $this->authenticatedUserId();
         $orderModel = new OrderModel();
         $order = $orderModel->findOneForEmployee((int) $id);
@@ -260,7 +265,7 @@ final class OrderController extends BaseController
 
         if ($order === null) {
             Session::flash('error', 'Commande introuvable.');
-            $this->redirect('/employe/commandes');
+            $this->redirect($orderManagementBasePath);
         }
 
         if (in_array($order['statut_actuel'], ['terminee', 'annulee'], true)) {
@@ -277,7 +282,7 @@ final class OrderController extends BaseController
 
         if ($errors !== []) {
             Session::flash('error', implode(' ', array_values($errors)));
-            $this->redirect('/employe/commandes');
+            $this->redirect($orderManagementBasePath);
         }
 
         $updated = $orderModel->updateByEmployeeAfterContact((int) $id, $userId, $data, $modeContact, $motif);
@@ -289,11 +294,12 @@ final class OrderController extends BaseController
                 : 'La commande n a pas pu etre modifiee.'
         );
 
-        $this->redirect('/employe/commandes');
+        $this->redirect($orderManagementBasePath);
     }
 
     public function employeeCancel(string $id): void
     {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
         $userId = $this->authenticatedUserId();
         $modeContact = Input::postString('mode_contact_modification');
         $motif = Input::postString('motif_annulation');
@@ -311,7 +317,7 @@ final class OrderController extends BaseController
                 : 'Mode de contact ou motif invalide.'
         );
 
-        $this->redirect('/employe/commandes');
+        $this->redirect($orderManagementBasePath);
     }
 
     /**
@@ -376,6 +382,13 @@ final class OrderController extends BaseController
         }
 
         return $userId;
+    }
+
+    private function backOfficeOrdersBasePath(): string
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+
+        return str_starts_with($path, '/admin') ? '/admin/commandes' : '/employe/commandes';
     }
 
     private function notifyOrderCreated(int $userId, int $orderId): void
