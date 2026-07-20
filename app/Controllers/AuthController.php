@@ -140,10 +140,12 @@ final class AuthController extends BaseController
             return;
         }
 
-        Session::login((int) $user['id_utilisateur'], $userModel->normalizeRole((string) $user['role']));
+        $role = $userModel->normalizeRole((string) $user['role']);
+
+        Session::login((int) $user['id_utilisateur'], $role);
         Session::flash('success', 'Vous etes connecte.');
 
-        $this->redirect('/mon-compte');
+        $this->redirect($this->redirectPathForRole($role));
     }
 
     public function logout(): void
@@ -256,5 +258,14 @@ final class AuthController extends BaseController
         }
 
         return $flattened;
+    }
+
+    private function redirectPathForRole(string $role): string
+    {
+        return match ($role) {
+            'administrateur' => '/admin',
+            'employe' => '/employe',
+            default => '/mon-compte',
+        };
     }
 }
