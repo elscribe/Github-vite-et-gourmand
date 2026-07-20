@@ -59,6 +59,7 @@ return static function (Router $router): void {
     $router->post('/avis', [ReviewController::class, 'store'], $authCsrf);
 
     $router->get('/mon-compte', [AccountController::class, 'show'], $auth);
+    $router->get('/mon-compte/profil', [AccountController::class, 'profile'], $auth);
     $router->get('/mon-compte/modifier', [AccountController::class, 'edit'], $auth);
     $router->post('/mon-compte/modifier', [AccountController::class, 'update'], $authCsrf);
 

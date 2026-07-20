@@ -56,7 +56,7 @@ $ordersCount = count($orders);
                             <span>Mes commandes</span>
                             <em><?= $ordersCount ?></em>
                         </a>
-                        <a href="#mes-informations" data-account-nav-link>
+                        <a href="/mon-compte/profil">
                             <i class="bi bi-person" aria-hidden="true"></i>
                             <span>Mes informations</span>
                         </a>
@@ -204,7 +204,7 @@ $ordersCount = count($orders);
                                 <dd><?= $this->e($fullAddress) ?></dd>
                             </div>
                         </dl>
-                        <a class="client-button client-button-secondary" href="/mon-compte/modifier">Modifier mes informations</a>
+                        <a class="client-button client-button-secondary" href="/mon-compte/profil">Voir / modifier mes informations</a>
                     </article>
                 </section>
 

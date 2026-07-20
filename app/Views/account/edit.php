@@ -8,7 +8,7 @@ $contactPreference = (string) ($user['canal_contact_prefere'] ?? 'email');
 ?>
 <section class="client-page client-profile-edit-page">
     <div class="container client-container">
-        <a class="client-back-link" href="/mon-compte">Retour à mon espace</a>
+        <a class="client-back-link" href="/mon-compte/profil">Retour à mon profil</a>
 
         <header class="client-hero client-profile-edit-hero">
             <p class="client-kicker">Mon espace personnel</p>
@@ -97,7 +97,7 @@ $contactPreference = (string) ($user['canal_contact_prefere'] ?? 'email');
 
                 <div class="client-form-actions">
                     <button class="client-button client-button-primary" type="submit">Enregistrer les modifications</button>
-                    <a class="client-button client-button-secondary" href="/mon-compte">Annuler</a>
+                    <a class="client-button client-button-secondary" href="/mon-compte/profil">Annuler</a>
                 </div>
             </form>
 

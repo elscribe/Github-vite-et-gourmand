@@ -3668,6 +3668,54 @@ body.filter-overlay-open {
     grid-column: 1 / -1;
 }
 
+.client-profile-hero {
+    max-width: 820px;
+}
+
+.client-profile-card,
+.client-profile-preferences-card {
+    padding: 40px;
+}
+
+.client-profile-preferences-card {
+    position: sticky;
+    top: 124px;
+}
+
+.client-profile-preferences-card h2 {
+    margin: 0 0 24px;
+}
+
+.client-profile-preferences-card p {
+    margin: 22px 0 0;
+    color: #667085;
+    line-height: 1.65;
+}
+
+.client-preference-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.client-preference-tags span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid #e3d6c2;
+    border-radius: 999px;
+    background: #fffaf0;
+    color: #6f7785;
+    font-weight: 800;
+}
+
+.client-preference-tags span.is-active {
+    border-color: var(--color-accent);
+    background: #f8ead0;
+    color: var(--color-primary);
+}
+
 .client-progress {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));

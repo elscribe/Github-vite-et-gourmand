@@ -18,6 +18,8 @@ final class AccountController extends BaseController
 {
     public function show(): void
     {
+        $this->redirectBackOfficeUser();
+
         $userId = Session::userId();
 
         if ($userId === null) {
@@ -28,7 +30,7 @@ final class AccountController extends BaseController
         $orderModel = new OrderModel();
 
         $this->view('account/show', [
-            'pageTitle' => 'Mon compte - Vite & Gourmand',
+            'pageTitle' => 'Mon espace gourmand - Vite & Gourmand',
             'bodyClass' => 'page-client page-client-account',
             'user' => $userModel->findById($userId),
             'currentOrder' => $orderModel->findCurrentForUser($userId),
@@ -39,8 +41,27 @@ final class AccountController extends BaseController
         ]);
     }
 
+    public function profile(): void
+    {
+        $this->redirectBackOfficeUser();
+
+        $userId = Session::userId();
+
+        if ($userId === null) {
+            $this->redirect('/connexion');
+        }
+
+        $this->view('account/profile', [
+            'pageTitle' => 'Mon profil - Vite & Gourmand',
+            'bodyClass' => 'page-client page-client-profile',
+            'user' => (new UserModel())->findById($userId),
+        ]);
+    }
+
     public function edit(): void
     {
+        $this->redirectBackOfficeUser();
+
         $userId = Session::userId();
 
         if ($userId === null) {
@@ -58,6 +79,8 @@ final class AccountController extends BaseController
 
     public function update(): void
     {
+        $this->redirectBackOfficeUser();
+
         $userId = Session::userId();
 
         if ($userId === null) {
@@ -99,8 +122,9 @@ final class AccountController extends BaseController
         }
 
         (new UserModel())->updateProfile($userId, $data);
+        Session::flash('success', 'Vos informations ont ete mises a jour.');
 
-        $this->redirect('/mon-compte/modifier?success=1');
+        $this->redirect('/mon-compte/profil');
     }
 
     /**
@@ -117,5 +141,16 @@ final class AccountController extends BaseController
         }
 
         return $flattened;
+    }
+
+    private function redirectBackOfficeUser(): void
+    {
+        if (Session::hasRole(['administrateur'])) {
+            $this->redirect('/admin');
+        }
+
+        if (Session::hasRole(['employe'])) {
+            $this->redirect('/employe');
+        }
     }
 }
