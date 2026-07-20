@@ -8,6 +8,7 @@ use App\Core\BaseController;
 use App\Core\Input;
 use App\Core\Response;
 use App\Core\Session;
+use App\Models\OrderModel;
 use App\Models\ReviewModel;
 
 /**
@@ -15,6 +16,21 @@ use App\Models\ReviewModel;
  */
 final class ReviewController extends BaseController
 {
+    public function index(): void
+    {
+        $userId = $this->authenticatedUserId();
+        $orderModel = new OrderModel();
+
+        $this->view('reviews/index', [
+            'pageTitle' => 'Mes avis - Vite & Gourmand',
+            'bodyClass' => 'page-client page-client-review',
+            'reviewableOrder' => $orderModel->findReviewableForUser($userId),
+            'reviews' => (new ReviewModel())->findForUser($userId),
+            'old' => [],
+            'errors' => [],
+        ]);
+    }
+
     public function create(string $orderId): void
     {
         $userId = $this->authenticatedUserId();
@@ -28,7 +44,8 @@ final class ReviewController extends BaseController
         }
 
         $this->view('reviews/create', [
-            'pageTitle' => 'Deposer un avis - Vite & Gourmand',
+            'pageTitle' => 'Laisser un avis gourmand - Vite & Gourmand',
+            'bodyClass' => 'page-client page-client-review',
             'order' => $order,
             'old' => [],
             'errors' => [],
@@ -59,7 +76,8 @@ final class ReviewController extends BaseController
 
         if ($errors !== []) {
             $this->view('reviews/create', [
-                'pageTitle' => 'Deposer un avis - Vite & Gourmand',
+                'pageTitle' => 'Laisser un avis gourmand - Vite & Gourmand',
+                'bodyClass' => 'page-client page-client-review',
                 'order' => $order ?? ['id_commande' => $orderId, 'menu_titre' => 'Commande'],
                 'old' => ['note' => $note, 'commentaire' => $commentaire],
                 'errors' => $errors,
@@ -71,7 +89,7 @@ final class ReviewController extends BaseController
         $reviewModel->create($userId, $orderId, $note, $commentaire);
         Session::flash('success', 'Votre avis a ete envoye et attend validation.');
 
-        $this->redirect('/commandes/' . $orderId);
+        $this->redirect('/avis');
     }
 
     public function employeeIndex(): void

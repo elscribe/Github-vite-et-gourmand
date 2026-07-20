@@ -41,6 +41,9 @@
                         <h2><?= $this->e($order['menu_titre']) ?></h2>
                         <p><?= $this->e($order['client_prenom']) ?> <?= $this->e($order['client_nom']) ?> - <?= $this->e($order['client_email']) ?></p>
                         <p><?= $this->e($order['date_prestation']) ?> a <?= $this->e(substr((string) $order['heure_livraison'], 0, 5)) ?> - <?= (int) $order['nombre_personnes'] ?> personnes</p>
+                        <?php if (!empty($order['commentaire_client'])): ?>
+                            <p><strong>Demande client :</strong> <?= nl2br($this->e($order['commentaire_client'])) ?></p>
+                        <?php endif; ?>
                     </div>
 
                     <form action="/employe/commandes/<?= (int) $order['id_commande'] ?>/statut" method="post" class="employee-action-form">

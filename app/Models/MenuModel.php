@@ -71,6 +71,7 @@ final class MenuModel extends BaseModel
                 m.id_theme,
                 m.titre,
                 m.description,
+                m.conditions,
                 m.nombre_personnes_minimum,
                 m.prix_minimum,
                 m.stock_disponible,

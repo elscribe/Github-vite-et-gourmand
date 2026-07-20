@@ -6,6 +6,9 @@ Objectif : tester uniquement ce qui est prioritaire pour le MVP et les
 livrables obligatoires de l'ECF. Chaque test doit pouvoir etre explique devant
 le jury avec la logique : action realisee, resultat attendu, preuve observee.
 
+Pour le detail des user stories client connecte, voir aussi :
+`docs/project-management/client-connected-user-stories-validation.md`.
+
 ## Comptes de test
 
 | Role | Email | Mot de passe |
@@ -31,15 +34,15 @@ le jury avec la logique : action realisee, resultat attendu, preuve observee.
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
 | B1 Inscription | Ouvrir `/inscription` et creer un compte test | Compte client cree, mot de passe hashe. | A tester |
-| B2 Connexion client | Se connecter comme client | Redirection vers l'espace compte ou menu client. | A tester |
-| B3 Profil | Ouvrir `/mon-compte` | Les informations client sont visibles et modifiables. | A tester |
-| B4 Creation commande | Ouvrir `/commandes/creation` | Formulaire de commande disponible. | A tester |
-| B5 Calcul prix | Saisir menu, personnes, ville, distance | Le recapitulatif de prix se met a jour. | A tester |
-| B6 Validation commande | Envoyer la commande | Commande creee et visible dans `/commandes`. | A tester |
-| B7 Detail commande | Ouvrir la commande | Timeline de statut visible. | A tester |
-| B8 Modification avant acceptation | Modifier une commande `en_attente` | Modification acceptee uniquement avant acceptation. | A tester |
-| B9 Annulation client | Annuler une commande `en_attente` | Statut annule et historique ajoute. | A tester |
-| B10 Avis apres commande terminee | Deposer un avis | Avis cree en attente de moderation. | A tester |
+| B2 Connexion client | Se connecter comme client | Redirection vers l'espace compte ou menu client. | Teste 15/07 |
+| B3 Profil | Ouvrir `/mon-compte` puis `/mon-compte/modifier` | Les informations client sont visibles et modifiables. | Teste 15/07 |
+| B4 Creation commande | Ouvrir `/commandes/creation` ou `/commandes/creation/{menuId}` | Formulaire de commande disponible. | Teste 15/07 |
+| B5 Calcul prix | Saisir menu, personnes, ville, distance | Le recapitulatif de prix se met a jour, le serveur recalcule au POST. | Serveur teste 15/07, visuel a rejouer |
+| B6 Validation commande | Envoyer la commande | Commande creee, statut `en_attente` et historique initial ajoute. | Teste 15/07 |
+| B7 Detail commande | Ouvrir la commande | Timeline de statut visible. | Teste 15/07 |
+| B8 Modification avant acceptation | Modifier une commande `en_attente` | Modification acceptee uniquement avant acceptation. | Teste 15/07 |
+| B9 Annulation client | Annuler une commande `en_attente` | Statut annule et historique ajoute. | Teste 15/07 |
+| B10 Avis apres commande terminee | Ouvrir `/avis` et deposer un avis eligible | Avis cree en attente de moderation. | Teste 15/07 |
 
 ## C. Parcours employe
 

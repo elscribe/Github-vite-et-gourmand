@@ -33,6 +33,7 @@ CREATE TABLE `utilisateurs` (
     `adresse_postale` VARCHAR(255) NOT NULL,
     `ville` VARCHAR(80) NOT NULL,
     `pays` VARCHAR(80) DEFAULT 'France',
+    `canal_contact_prefere` VARCHAR(20) NOT NULL DEFAULT 'email',
     `actif` BOOLEAN DEFAULT TRUE,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME NULL,
@@ -41,6 +42,8 @@ CREATE TABLE `utilisateurs` (
     CONSTRAINT `uq_utilisateurs_email`
         UNIQUE (`email`),
     INDEX `idx_utilisateurs_id_role` (`id_role`),
+    CONSTRAINT `chk_utilisateurs_canal_contact_prefere`
+        CHECK (`canal_contact_prefere` IN ('email', 'telephone')),
     CONSTRAINT `fk_utilisateurs_roles`
         FOREIGN KEY (`id_role`)
         REFERENCES `roles` (`id_role`)
@@ -221,8 +224,10 @@ CREATE TABLE `commandes` (
     `date_prestation` DATE NOT NULL,
     `heure_livraison` TIME NOT NULL,
     `adresse_livraison` VARCHAR(255) NOT NULL,
+    `code_postal_livraison` VARCHAR(10) NOT NULL DEFAULT '33000',
     `ville_livraison` VARCHAR(80) NOT NULL,
     `distance_km` DECIMAL(6,2) DEFAULT 0,
+    `commentaire_client` TEXT NULL,
     `nombre_personnes` INT UNSIGNED NOT NULL,
     `prix_menu` DECIMAL(10,2) NOT NULL,
     `remise` DECIMAL(10,2) DEFAULT 0,

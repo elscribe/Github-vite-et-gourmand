@@ -54,11 +54,14 @@ return static function (Router $router): void {
     $router->get('/commandes/{id}/modifier', [OrderController::class, 'edit'], $auth);
     $router->post('/commandes/{id}/modifier', [OrderController::class, 'update'], $authCsrf);
     $router->post('/commandes/{id}/annuler', [OrderController::class, 'cancel'], $authCsrf);
+    $router->get('/avis', [ReviewController::class, 'index'], $auth);
     $router->get('/avis/creation/{orderId}', [ReviewController::class, 'create'], $auth);
     $router->post('/avis', [ReviewController::class, 'store'], $authCsrf);
 
     $router->get('/mon-compte', [AccountController::class, 'show'], $auth);
-    $router->post('/mon-compte', [AccountController::class, 'update'], $authCsrf);
+    $router->get('/mon-compte/profil', [AccountController::class, 'profile'], $auth);
+    $router->get('/mon-compte/modifier', [AccountController::class, 'edit'], $auth);
+    $router->post('/mon-compte/modifier', [AccountController::class, 'update'], $authCsrf);
 
     $router->get('/employe', [OrderController::class, 'employeeDashboard'], $employeeAccess);
     $router->get('/employe/commandes', [OrderController::class, 'employeeIndex'], $employeeAccess);

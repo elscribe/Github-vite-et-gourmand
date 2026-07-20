@@ -79,6 +79,34 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+const accountNav = document.querySelector('[data-client-account-nav]');
+
+if (accountNav instanceof HTMLElement) {
+    const accountNavLinks = Array.from(accountNav.querySelectorAll('[data-account-nav-link]'));
+
+    const updateAccountNavState = () => {
+        const currentHash = window.location.hash || '#mes-commandes';
+
+        accountNavLinks.forEach((link) => {
+            if (!(link instanceof HTMLAnchorElement)) {
+                return;
+            }
+
+            const isActive = link.getAttribute('href') === currentHash;
+            link.classList.toggle('is-active', isActive);
+
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+    };
+
+    window.addEventListener('hashchange', updateAccountNavState);
+    updateAccountNavState();
+}
+
 const homeMenuFilters = document.querySelector('[data-home-menu-filters]');
 
 if (homeMenuFilters instanceof HTMLElement) {
@@ -505,18 +533,6 @@ if (menuFilterForm instanceof HTMLFormElement) {
     applyMenuFilters();
 }
 
-const authRoleButtons = Array.from(document.querySelectorAll('.auth-role-button'));
-
-authRoleButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        authRoleButtons.forEach((roleButton) => {
-            const isActive = roleButton === button;
-            roleButton.classList.toggle('is-active', isActive);
-            roleButton.setAttribute('aria-pressed', String(isActive));
-        });
-    });
-});
-
 const orderForm = document.querySelector('[data-order-form]');
 
 if (orderForm instanceof HTMLFormElement) {
@@ -524,14 +540,78 @@ if (orderForm instanceof HTMLFormElement) {
     const peopleInput = orderForm.querySelector('[data-order-people]');
     const cityInput = orderForm.querySelector('[data-order-city]');
     const distanceInput = orderForm.querySelector('[data-order-distance]');
-    const preview = orderForm.querySelector('[data-order-preview]');
+    const distanceField = orderForm.querySelector('[data-order-distance-field]');
+    const orderFormLayout = orderForm.closest('.client-order-form-layout') ?? orderForm.parentElement;
+    const preview = orderFormLayout?.querySelector('[data-order-preview]');
+    const previewMenu = orderFormLayout?.querySelector('[data-order-preview-menu]');
+    const previewDiscount = orderFormLayout?.querySelector('[data-order-preview-discount]');
+    const previewDelivery = orderFormLayout?.querySelector('[data-order-preview-delivery]');
+    const previewTotal = orderFormLayout?.querySelector('[data-order-preview-total]');
+    const previewMessage = orderFormLayout?.querySelector('[data-order-preview-message]');
+    const previewTitle = orderFormLayout?.querySelector('[data-order-preview-title]');
+    const previewDescription = orderFormLayout?.querySelector('[data-order-preview-description]');
+    const previewUnit = orderFormLayout?.querySelector('[data-order-preview-unit]');
+    const previewPeople = orderFormLayout?.querySelector('[data-order-preview-people]');
+    const previewMinimum = orderFormLayout?.querySelector('[data-order-preview-minimum]');
+    const previewStock = orderFormLayout?.querySelector('[data-order-preview-stock]');
+    const conditionsCard = orderForm.querySelector('[data-order-menu-conditions]');
+    const conditionsText = orderForm.querySelector('[data-order-menu-conditions-text]');
 
-    const formatCurrency = (value) => `${value.toFixed(2).replace('.', ',')} EUR`;
+    const formatCurrency = (value) => new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: Number.isInteger(value) ? 0 : 2,
+        maximumFractionDigits: 2,
+    }).format(value);
+
+    const pluralizePeople = (value) => `${value} personne${value > 1 ? 's' : ''}`;
+
+    const pluralizeStock = (value) => `${value} commande${value > 1 ? 's' : ''} restante${value > 1 ? 's' : ''}`;
+
+    const updatePreviewText = (element, value) => {
+        if (element instanceof HTMLElement) {
+            element.textContent = value;
+        }
+    };
+
+    const updatePreviewValue = (element, value) => {
+        if (element instanceof HTMLElement) {
+            element.textContent = formatCurrency(value);
+        }
+    };
+
+    const updatePreviewMessage = (message) => {
+        if (previewMessage instanceof HTMLElement) {
+            previewMessage.textContent = message;
+            return;
+        }
+
+        if (preview instanceof HTMLElement) {
+            preview.textContent = message;
+        }
+    };
+
+    const updateDistanceVisibility = () => {
+        if (!(cityInput instanceof HTMLInputElement) || !(distanceInput instanceof HTMLInputElement)) {
+            return;
+        }
+
+        const isBordeaux = cityInput.value.trim().toLowerCase() === 'bordeaux';
+
+        if (distanceField instanceof HTMLElement) {
+            distanceField.classList.toggle('is-hidden', isBordeaux);
+        }
+
+        distanceInput.disabled = isBordeaux;
+
+        if (isBordeaux) {
+            distanceInput.value = '0';
+        }
+    };
 
     const updateOrderPreview = () => {
         if (
-            !(menuSelect instanceof HTMLSelectElement)
-            || !(peopleInput instanceof HTMLInputElement)
+            !(peopleInput instanceof HTMLInputElement)
             || !(cityInput instanceof HTMLInputElement)
             || !(distanceInput instanceof HTMLInputElement)
             || !(preview instanceof HTMLElement)
@@ -539,27 +619,119 @@ if (orderForm instanceof HTMLFormElement) {
             return;
         }
 
-        const selectedOption = menuSelect.selectedOptions[0];
-        const minimumPeople = Number(selectedOption?.dataset.min || 0);
-        const minimumPrice = Number(selectedOption?.dataset.price || 0);
+        const selectedOption = menuSelect instanceof HTMLSelectElement ? menuSelect.selectedOptions[0] : null;
+        const minimumPeople = Number(selectedOption?.dataset.min || orderForm.dataset.orderFixedMin || 0);
+        const minimumPrice = Number(selectedOption?.dataset.price || orderForm.dataset.orderFixedPrice || 0);
+        const selectedTitle = selectedOption?.dataset.title || selectedOption?.textContent?.trim() || 'Choisir un menu';
+        const selectedDescription = selectedOption?.dataset.description || 'Le récapitulatif se mettra à jour selon votre sélection.';
+        const selectedConditions = selectedOption?.dataset.conditions || 'Aucune condition particulière renseignée pour ce menu.';
+        const stock = Number(selectedOption?.dataset.stock || 0);
         const people = Number(peopleInput.value || 0);
         const distance = Math.max(0, Number(distanceInput.value || 0));
         const city = cityInput.value.trim().toLowerCase();
+        const isBordeaux = city === 'bordeaux';
+        const hasSelectedMenu = selectedOption instanceof HTMLOptionElement && selectedOption.value !== '';
+
+        if (minimumPeople > 0) {
+            peopleInput.min = String(minimumPeople);
+        }
+
+        updatePreviewText(previewTitle, hasSelectedMenu ? selectedTitle : 'Choisir un menu');
+        updatePreviewText(previewDescription, hasSelectedMenu ? selectedDescription : 'Le récapitulatif se mettra à jour selon votre sélection.');
+        updatePreviewText(previewMinimum, minimumPeople > 0 ? pluralizePeople(minimumPeople) : '0 personne');
+        updatePreviewText(previewStock, hasSelectedMenu ? pluralizeStock(stock) : '0 commande restante');
+
+        if (conditionsCard instanceof HTMLElement) {
+            conditionsCard.classList.toggle('is-empty', !hasSelectedMenu);
+        }
+
+        updatePreviewText(
+            conditionsText,
+            hasSelectedMenu ? selectedConditions : 'Sélectionnez un menu pour afficher les conditions importantes de commande.'
+        );
 
         if (minimumPeople <= 0 || minimumPrice <= 0 || people <= 0) {
-            preview.textContent = 'Selectionnez un menu et un nombre de personnes pour afficher le prix estime.';
+            updatePreviewText(previewUnit, '0 € / pers.');
+            updatePreviewText(previewPeople, String(Math.max(0, people)));
+            updatePreviewValue(previewMenu, 0);
+            updatePreviewText(previewDiscount, '- 0 €');
+            updatePreviewValue(previewDelivery, 0);
+            updatePreviewValue(previewTotal, 0);
+            updatePreviewMessage('Sélectionnez un menu et un nombre de personnes pour afficher le prix estimé.');
             return;
         }
 
-        const menuPrice = (minimumPrice / minimumPeople) * people;
+        const pricePerPerson = minimumPrice / minimumPeople;
+        const menuPrice = pricePerPerson * people;
         const discount = people >= minimumPeople + 5 ? menuPrice * 0.10 : 0;
-        const delivery = city === 'bordeaux' ? 0 : 5 + (distance * 0.59);
+        const delivery = isBordeaux ? 0 : 5 + (distance * 0.59);
         const total = menuPrice - discount + delivery;
 
-        preview.textContent = `Menu ${formatCurrency(menuPrice)} - remise ${formatCurrency(discount)} - livraison ${formatCurrency(delivery)} - total estime ${formatCurrency(total)}`;
+        updatePreviewText(previewUnit, `${formatCurrency(pricePerPerson)} / pers.`);
+        updatePreviewText(previewPeople, String(people));
+        updatePreviewValue(previewMenu, menuPrice);
+        updatePreviewText(previewDiscount, `- ${formatCurrency(discount)}`);
+        updatePreviewValue(previewDelivery, delivery);
+        updatePreviewValue(previewTotal, total);
+        if (people < minimumPeople) {
+            updatePreviewMessage(`Le minimum requis pour ce menu est de ${pluralizePeople(minimumPeople)}.`);
+        } else if (!isBordeaux && distance <= 0) {
+            updatePreviewMessage('Hors Bordeaux, indiquez une distance approximative pour estimer la livraison. L’équipe vérifiera l’adresse avant validation.');
+        } else if (discount > 0) {
+            updatePreviewMessage('Une remise de 10 % est appliquée car le nombre de personnes dépasse le minimum du menu.');
+        } else {
+            updatePreviewMessage('Le total reste indicatif jusqu’à validation par l’équipe.');
+        }
     };
 
-    orderForm.addEventListener('input', updateOrderPreview);
-    orderForm.addEventListener('change', updateOrderPreview);
-    updateOrderPreview();
+    const refreshOrderForm = () => {
+        updateDistanceVisibility();
+        updateOrderPreview();
+    };
+
+    orderForm.addEventListener('input', refreshOrderForm);
+    orderForm.addEventListener('change', refreshOrderForm);
+    refreshOrderForm();
+}
+
+const clientRating = document.querySelector('[data-client-rating]');
+
+if (clientRating instanceof HTMLElement) {
+    const ratingInputs = Array.from(clientRating.querySelectorAll('input[type="radio"]'));
+    const ratingLabels = Array.from(clientRating.querySelectorAll('[data-rating-value]'));
+
+    const setRatingPreview = (value) => {
+        ratingLabels.forEach((label) => {
+            const ratingValue = Number(label.dataset.ratingValue || 0);
+            label.classList.toggle('is-selected', ratingValue > 0 && ratingValue <= value);
+        });
+    };
+
+    const checkedInput = ratingInputs.find((input) => input instanceof HTMLInputElement && input.checked);
+    setRatingPreview(checkedInput instanceof HTMLInputElement ? Number(checkedInput.value) : 0);
+
+    ratingInputs.forEach((input) => {
+        if (!(input instanceof HTMLInputElement)) {
+            return;
+        }
+
+        input.addEventListener('change', () => {
+            setRatingPreview(Number(input.value));
+        });
+    });
+
+    ratingLabels.forEach((label) => {
+        if (!(label instanceof HTMLElement)) {
+            return;
+        }
+
+        label.addEventListener('mouseenter', () => {
+            setRatingPreview(Number(label.dataset.ratingValue || 0));
+        });
+    });
+
+    clientRating.addEventListener('mouseleave', () => {
+        const currentInput = ratingInputs.find((input) => input instanceof HTMLInputElement && input.checked);
+        setRatingPreview(currentInput instanceof HTMLInputElement ? Number(currentInput.value) : 0);
+    });
 }
