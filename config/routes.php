@@ -83,7 +83,10 @@ return static function (Router $router): void {
     $router->post('/admin/horaires', [AdminController::class, 'updateSchedules'], $adminAccessCsrf);
     $router->get('/admin/menus', [AdminController::class, 'menus'], $adminAccess);
     $router->post('/admin/menus', [AdminController::class, 'storeMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/selection', [AdminController::class, 'updateMenuSelection'], $adminAccessCsrf);
     $router->post('/admin/menus/{id}', [AdminController::class, 'updateMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/{id}/plats', [AdminController::class, 'attachDishToMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/{id}/plats/{dishId}/retirer', [AdminController::class, 'detachDishFromMenu'], $adminAccessCsrf);
     $router->get('/admin/plats', [AdminController::class, 'dishes'], $adminAccess);
     $router->post('/admin/plats', [AdminController::class, 'storeDish'], $adminAccessCsrf);
     $router->post('/admin/plats/{id}', [AdminController::class, 'updateDish'], $adminAccessCsrf);

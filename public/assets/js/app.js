@@ -788,3 +788,105 @@ if (orderForm instanceof HTMLFormElement) {
     orderForm.addEventListener('change', updateOrderPreview);
     updateOrderPreview();
 }
+
+const bindAdminInlineSearch = (inputSelector, itemSelector) => {
+    const searchInput = document.querySelector(inputSelector);
+    const items = Array.from(document.querySelectorAll(itemSelector));
+
+    if (!(searchInput instanceof HTMLInputElement) || items.length === 0) {
+        return;
+    }
+
+    const filterItems = () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) {
+                return;
+            }
+
+            const haystack = (item.dataset.searchText || item.textContent || '').toLowerCase();
+            item.hidden = query !== '' && !haystack.includes(query);
+        });
+    };
+
+    searchInput.addEventListener('input', filterItems);
+    filterItems();
+};
+
+bindAdminInlineSearch('[data-admin-menu-search]', '[data-admin-menu-item]');
+
+const bindAdminMenuCards = () => {
+    document.querySelectorAll('[data-admin-menu-url]').forEach((card) => {
+        if (!(card instanceof HTMLElement)) {
+            return;
+        }
+
+        card.addEventListener('click', (event) => {
+            if (
+                event.target instanceof Element
+                && event.target.closest('a, button, input, label, select, textarea, summary')
+            ) {
+                return;
+            }
+
+            const url = card.dataset.adminMenuUrl;
+
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+};
+
+bindAdminMenuCards();
+
+const bindAdminDishFilters = () => {
+    const searchInput = document.querySelector('[data-admin-dish-search]');
+    const typeButtons = Array.from(document.querySelectorAll('[data-admin-dish-type-filter]'));
+    const items = Array.from(document.querySelectorAll('[data-admin-dish-item]'));
+
+    if (!(searchInput instanceof HTMLInputElement) || items.length === 0) {
+        return;
+    }
+
+    let selectedType = 'all';
+
+    const filterItems = () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) {
+                return;
+            }
+
+            const haystack = (item.dataset.searchText || item.textContent || '').toLowerCase();
+            const matchesSearch = query === '' || haystack.includes(query);
+            const matchesType = selectedType === 'all' || item.dataset.dishType === selectedType;
+            item.hidden = !matchesSearch || !matchesType;
+        });
+    };
+
+    typeButtons.forEach((button) => {
+        if (!(button instanceof HTMLElement)) {
+            return;
+        }
+
+        button.addEventListener('click', () => {
+            selectedType = button.dataset.adminDishTypeFilter || 'all';
+
+            typeButtons.forEach((currentButton) => {
+                const isActive = currentButton === button;
+                currentButton.classList.toggle('is-active', isActive);
+                currentButton.setAttribute('aria-pressed', String(isActive));
+            });
+
+            filterItems();
+        });
+    });
+
+    searchInput.addEventListener('input', filterItems);
+    filterItems();
+};
+
+bindAdminDishFilters();

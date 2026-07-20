@@ -132,9 +132,19 @@ final class AdminController extends BaseController
     public function toggleEmployee(string $id): void
     {
         $active = Input::postString('active') === '1';
-        $updated = (new UserModel())->setEmployeeActive((int) $id, $active);
+        $userModel = new UserModel();
+        $employee = $userModel->findById((int) $id);
+        $isEmployee = $employee !== null && $userModel->normalizeRole((string) $employee['role']) === 'employe';
+        $updated = $isEmployee && $userModel->setEmployeeActive((int) $id, $active);
 
-        Session::flash($updated ? 'success' : 'error', $updated ? 'Compte employe mis a jour.' : 'Compte employe introuvable.');
+        if ($updated) {
+            $employeeName = trim((string) $employee['prenom'] . ' ' . (string) $employee['nom']);
+            $status = $active ? 'reactive' : 'desactive';
+            Session::flash('success', "Compte de {$employeeName} {$status}.");
+            $this->redirect('/admin/employes');
+        }
+
+        Session::flash('error', 'Compte employe introuvable.');
         $this->redirect('/admin/employes');
     }
 
@@ -170,40 +180,22 @@ final class AdminController extends BaseController
 
     public function menus(): void
     {
-        $menuModel = new MenuModel();
-        $dishModel = new DishModel();
-
-        $this->view('admin/menus', [
-            'pageTitle' => 'Gestion menus - Vite & Gourmand',
-            'menus' => $menuModel->findAllForAdmin(),
-            'themes' => $menuModel->findThemes(),
-            'regimes' => $menuModel->findRegimes(),
-            'dishes' => $dishModel->findAll(),
-            'selectedDishIds' => $menuModel->findDishIdsByMenu(),
-            'old' => ['actif' => 1],
-            'errors' => [],
-        ]);
+        $this->view('admin/menus', $this->menuWorkspaceData());
     }
 
     public function storeMenu(): void
     {
         $menuModel = new MenuModel();
-        $dishModel = new DishModel();
         $data = $this->menuData();
         $dishIds = $this->selectedIds('dish_ids');
         $errors = $this->validateMenuData($data);
 
         if ($errors !== []) {
-            $this->view('admin/menus', [
-                'pageTitle' => 'Gestion menus - Vite & Gourmand',
-                'menus' => $menuModel->findAllForAdmin(),
-                'themes' => $menuModel->findThemes(),
-                'regimes' => $menuModel->findRegimes(),
-                'dishes' => $dishModel->findAll(),
+            $this->view('admin/menus', $this->menuWorkspaceData([
                 'selectedDishIds' => [0 => $dishIds] + $menuModel->findDishIdsByMenu(),
                 'old' => $data,
                 'errors' => $errors,
-            ]);
+            ]));
 
             return;
         }
@@ -212,7 +204,7 @@ final class AdminController extends BaseController
         $menuModel->syncDishes($menuId, $dishIds);
         Session::flash('success', 'Menu cree.');
 
-        $this->redirect('/admin/menus');
+        $this->redirect('/admin/menus?menu=' . $menuId);
     }
 
     public function updateMenu(string $id): void
@@ -231,21 +223,23 @@ final class AdminController extends BaseController
         $menuModel->syncDishes($menuId, $this->selectedIds('dish_ids'));
         Session::flash('success', 'Menu mis a jour.');
 
-        $this->redirect('/admin/menus');
+        $this->redirect('/admin/menus?menu=' . $menuId);
+    }
+
+    public function updateMenuSelection(): void
+    {
+        $selectedMenuId = (int) Input::postString('selected_menu_id');
+        $selectedDishId = (int) Input::postString('selected_dish_id');
+
+        (new MenuModel())->updateActiveSelection($this->selectedIds('public_menu_ids'));
+        Session::flash('success', 'Selection des menus publics mise a jour.');
+
+        $this->redirect($this->menuWorkspacePath($selectedMenuId, $selectedDishId));
     }
 
     public function dishes(): void
     {
-        $dishModel = new DishModel();
-
-        $this->view('admin/dishes', [
-            'pageTitle' => 'Gestion plats - Vite & Gourmand',
-            'dishes' => $dishModel->findAll(),
-            'allergens' => $dishModel->findAllergens(),
-            'selectedAllergenIds' => $dishModel->findAllergenIdsByDish(),
-            'old' => ['type_plat' => 'plat'],
-            'errors' => [],
-        ]);
+        $this->redirect('/admin/menus');
     }
 
     public function storeDish(): void
@@ -254,16 +248,14 @@ final class AdminController extends BaseController
         $data = $this->dishData();
         $allergenIds = $this->selectedIds('allergen_ids');
         $errors = $this->validateDishData($data);
+        $selectedMenuId = (int) Input::postString('selected_menu_id');
 
         if ($errors !== []) {
-            $this->view('admin/dishes', [
-                'pageTitle' => 'Gestion plats - Vite & Gourmand',
-                'dishes' => $dishModel->findAll(),
-                'allergens' => $dishModel->findAllergens(),
+            $this->view('admin/menus', $this->menuWorkspaceData([
                 'selectedAllergenIds' => [0 => $allergenIds] + $dishModel->findAllergenIdsByDish(),
-                'old' => $data,
-                'errors' => $errors,
-            ]);
+                'dishOld' => $data,
+                'dishErrors' => $errors,
+            ]));
 
             return;
         }
@@ -272,7 +264,7 @@ final class AdminController extends BaseController
         $dishModel->syncAllergens($dishId, $allergenIds);
         Session::flash('success', 'Plat cree.');
 
-        $this->redirect('/admin/plats');
+        $this->redirect($this->menuWorkspacePath($selectedMenuId, $dishId));
     }
 
     public function updateDish(string $id): void
@@ -280,18 +272,151 @@ final class AdminController extends BaseController
         $dishModel = new DishModel();
         $data = $this->dishData();
         $errors = $this->validateDishData($data);
+        $selectedMenuId = (int) Input::postString('selected_menu_id');
+        $dishId = (int) $id;
 
         if ($errors !== []) {
             Session::flash('error', 'Plat non mis a jour : verifiez le titre et le type.');
-            $this->redirect('/admin/plats');
+            $this->redirect($this->menuWorkspacePath($selectedMenuId, $dishId));
         }
 
-        $dishId = (int) $id;
         $dishModel->update($dishId, $data);
         $dishModel->syncAllergens($dishId, $this->selectedIds('allergen_ids'));
         Session::flash('success', 'Plat mis a jour.');
 
-        $this->redirect('/admin/plats');
+        $this->redirect($this->menuWorkspacePath($selectedMenuId, $dishId));
+    }
+
+    public function attachDishToMenu(string $id): void
+    {
+        $menuId = (int) $id;
+        $dishId = (int) Input::postString('id_plat');
+
+        if ($menuId <= 0 || $dishId <= 0) {
+            Session::flash('error', 'Menu ou plat invalide.');
+            $this->redirect('/admin/menus');
+        }
+
+        $dishIdsByMenu = (new MenuModel())->findDishIdsByMenu();
+        $dishIds = $dishIdsByMenu[$menuId] ?? [];
+        $dishIds[] = $dishId;
+
+        (new MenuModel())->syncDishes($menuId, $dishIds);
+        Session::flash('success', 'Plat ajoute au menu.');
+
+        $this->redirect($this->menuWorkspacePath($menuId, $dishId));
+    }
+
+    public function detachDishFromMenu(string $id, string $dishId): void
+    {
+        $menuId = (int) $id;
+        $removedDishId = (int) $dishId;
+
+        if ($menuId <= 0 || $removedDishId <= 0) {
+            Session::flash('error', 'Menu ou plat invalide.');
+            $this->redirect('/admin/menus');
+        }
+
+        $dishIdsByMenu = (new MenuModel())->findDishIdsByMenu();
+        $dishIds = array_values(array_filter(
+            $dishIdsByMenu[$menuId] ?? [],
+            static fn (int $currentDishId): bool => $currentDishId !== $removedDishId
+        ));
+
+        (new MenuModel())->syncDishes($menuId, $dishIds);
+        Session::flash('success', 'Plat retire du menu.');
+
+        $this->redirect($this->menuWorkspacePath($menuId));
+    }
+
+    /**
+     * @param array<string, mixed> $overrides
+     *
+     * @return array<string, mixed>
+     */
+    private function menuWorkspaceData(array $overrides = []): array
+    {
+        $menuModel = new MenuModel();
+        $dishModel = new DishModel();
+        $menus = $menuModel->findAllForAdmin();
+        $dishes = $dishModel->findAll();
+        $selectedDishIds = $menuModel->findDishIdsByMenu();
+        $selectedAllergenIds = $dishModel->findAllergenIdsByDish();
+
+        $selectedMenuId = (int) Input::getString('menu');
+        if ($selectedMenuId <= 0) {
+            $selectedMenuId = (int) Input::postString('selected_menu_id');
+        }
+        if ($selectedMenuId <= 0 && $menus !== []) {
+            $selectedMenuId = (int) $menus[0]['id_menu'];
+        }
+
+        $selectedMenu = null;
+        foreach ($menus as $menu) {
+            if ((int) $menu['id_menu'] === $selectedMenuId) {
+                $selectedMenu = $menu;
+                break;
+            }
+        }
+
+        if ($selectedMenu === null && $menus !== []) {
+            $selectedMenu = $menus[0];
+            $selectedMenuId = (int) $selectedMenu['id_menu'];
+        }
+
+        $selectedDishId = (int) Input::getString('dish');
+        if ($selectedDishId <= 0) {
+            $selectedDishId = (int) Input::postString('selected_dish_id');
+        }
+        if ($selectedDishId <= 0 && $dishes !== []) {
+            $selectedDishId = (int) $dishes[0]['id_plat'];
+        }
+
+        $selectedDish = null;
+        foreach ($dishes as $dish) {
+            if ((int) $dish['id_plat'] === $selectedDishId) {
+                $selectedDish = $dish;
+                break;
+            }
+        }
+
+        if ($selectedDish === null && $dishes !== []) {
+            $selectedDish = $dishes[0];
+            $selectedDishId = (int) $selectedDish['id_plat'];
+        }
+
+        return array_replace([
+            'pageTitle' => 'Menus, plats & composition - Vite & Gourmand',
+            'menus' => $menus,
+            'themes' => $menuModel->findThemes(),
+            'regimes' => $menuModel->findRegimes(),
+            'dishes' => $dishes,
+            'allergens' => $dishModel->findAllergens(),
+            'selectedDishIds' => $selectedDishIds,
+            'selectedAllergenIds' => $selectedAllergenIds,
+            'selectedMenu' => $selectedMenu,
+            'selectedMenuDishes' => $selectedMenuId > 0 ? $menuModel->findDishesByMenuId($selectedMenuId) : [],
+            'selectedDish' => $selectedDish,
+            'old' => ['actif' => 1],
+            'errors' => [],
+            'dishOld' => ['type_plat' => 'plat'],
+            'dishErrors' => [],
+        ], $overrides);
+    }
+
+    private function menuWorkspacePath(int $menuId = 0, int $dishId = 0): string
+    {
+        $query = [];
+
+        if ($menuId > 0) {
+            $query['menu'] = (string) $menuId;
+        }
+
+        if ($dishId > 0) {
+            $query['dish'] = (string) $dishId;
+        }
+
+        return '/admin/menus' . ($query === [] ? '' : '?' . http_build_query($query));
     }
 
     /**

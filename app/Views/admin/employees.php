@@ -66,13 +66,19 @@
                 <h2>Employ&eacute;s existants</h2>
                 <div class="compact-list">
                     <?php foreach ($employees as $employee): ?>
+                        <?php $isActive = (int) $employee['actif'] === 1; ?>
                         <div class="employee-row">
                             <strong><?= $this->e($employee['prenom']) ?> <?= $this->e($employee['nom']) ?></strong>
-                            <span><?= $this->e($employee['email']) ?> - <?= ((int) $employee['actif'] === 1) ? 'Actif' : 'D&eacute;sactiv&eacute;' ?></span>
+                            <span class="employee-row-meta">
+                                <span><?= $this->e($employee['email']) ?></span>
+                                <span class="employee-status-pill <?= $isActive ? 'is-active' : 'is-inactive' ?>"><?= $isActive ? 'Actif' : 'D&eacute;sactiv&eacute;' ?></span>
+                            </span>
                             <form action="/admin/employes/<?= (int) $employee['id_utilisateur'] ?>/activation" method="post">
                                 <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                                <input type="hidden" name="active" value="<?= ((int) $employee['actif'] === 1) ? '0' : '1' ?>">
-                                <button class="secondary-button" type="submit"><?= ((int) $employee['actif'] === 1) ? 'D&eacute;sactiver' : 'R&eacute;activer' ?></button>
+                                <input type="hidden" name="active" value="<?= $isActive ? '0' : '1' ?>">
+                                <button class="secondary-button" type="submit" aria-label="<?= $isActive ? 'Desactiver' : 'Reactiver' ?> le compte de <?= $this->e($employee['prenom']) ?> <?= $this->e($employee['nom']) ?>">
+                                    <?= $isActive ? 'D&eacute;sactiver' : 'R&eacute;activer' ?>
+                                </button>
                             </form>
                         </div>
                     <?php endforeach; ?>

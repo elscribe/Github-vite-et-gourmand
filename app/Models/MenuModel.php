@@ -273,6 +273,33 @@ final class MenuModel extends BaseModel
     }
 
     /**
+     * @param list<int> $menuIds
+     */
+    public function updateActiveSelection(array $menuIds): void
+    {
+        $menuIds = $this->normalizeIds($menuIds);
+
+        $this->pdo()->beginTransaction();
+
+        try {
+            $this->pdo()->exec('UPDATE menus SET actif = 0, updated_at = CURRENT_TIMESTAMP');
+
+            if ($menuIds !== []) {
+                $placeholders = implode(', ', array_fill(0, count($menuIds), '?'));
+                $statement = $this->pdo()->prepare(
+                    "UPDATE menus SET actif = 1, updated_at = CURRENT_TIMESTAMP WHERE id_menu IN ({$placeholders})"
+                );
+                $statement->execute($menuIds);
+            }
+
+            $this->pdo()->commit();
+        } catch (\Throwable $exception) {
+            $this->pdo()->rollBack();
+            throw $exception;
+        }
+    }
+
+    /**
      * @param list<int> $dishIds
      */
     public function syncDishes(int $menuId, array $dishIds): void

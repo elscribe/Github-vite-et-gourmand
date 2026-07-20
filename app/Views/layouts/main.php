@@ -66,8 +66,7 @@ $backOfficeNav = $isAdminArea
     ? [
         ['href' => '/admin', 'label' => 'Tableau de bord', 'icon' => 'bi-grid-1x2', 'active' => $currentPath === '/admin'],
         ['href' => '/admin/commandes', 'label' => 'Commandes', 'icon' => 'bi-inbox', 'active' => str_starts_with($currentPath, '/admin/commandes')],
-        ['href' => '/admin/menus', 'label' => 'Menus', 'icon' => 'bi-journal-bookmark', 'active' => str_starts_with($currentPath, '/admin/menus')],
-        ['href' => '/admin/plats', 'label' => 'Plats / Recettes', 'icon' => 'bi-clipboard2', 'active' => str_starts_with($currentPath, '/admin/plats')],
+        ['href' => '/admin/menus', 'label' => 'Menus / Plats', 'icon' => 'bi-journal-richtext', 'active' => str_starts_with($currentPath, '/admin/menus') || str_starts_with($currentPath, '/admin/plats')],
         ['href' => '/admin/horaires', 'label' => 'Horaires', 'icon' => 'bi-clock', 'active' => str_starts_with($currentPath, '/admin/horaires')],
         ['href' => '/admin/avis', 'label' => 'Avis clients', 'icon' => 'bi-chat-left', 'active' => str_starts_with($currentPath, '/admin/avis')],
         ['href' => '/admin/employes', 'label' => 'Employés', 'icon' => 'bi-person', 'active' => str_starts_with($currentPath, '/admin/employes')],
