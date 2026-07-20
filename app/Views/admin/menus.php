@@ -15,7 +15,6 @@ $newMenuDishIds = $selectedDishIds[0] ?? [];
         <a class="back-link" href="/admin">Retour admin</a>
 
         <div class="section-heading">
-            <p class="section-kicker">Administration</p>
             <h1>Gestion des menus</h1>
             <p class="muted-text">Creation, modification, activation et composition des menus.</p>
         </div>
@@ -99,10 +98,46 @@ $newMenuDishIds = $selectedDishIds[0] ?? [];
             <button class="primary-link" type="submit">Creer le menu</button>
         </form>
 
+        <section class="table-wrapper backoffice-table-card">
+            <h2>Menus actuellement en ligne</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Titre du menu</th>
+                        <th>Stock</th>
+                        <th>Theme</th>
+                        <th>Regime</th>
+                        <th>Prix min</th>
+                        <th>Plats lies</th>
+                        <th>Etat</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($menus as $menu): ?>
+                        <tr>
+                            <td><strong><?= $this->e($menu['titre']) ?></strong></td>
+                            <td><?= (int) $menu['stock_disponible'] ?> restants</td>
+                            <td><?= $this->e($menu['theme'] ?? '-') ?></td>
+                            <td><?= $this->e($menu['regime'] ?? '-') ?></td>
+                            <td><strong><?= number_format((float) $menu['prix_minimum'], 0, ',', ' ') ?> EUR</strong></td>
+                            <td><?= (int) $menu['plats_count'] ?> plats</td>
+                            <td>
+                                <span class="status-pill <?= (int) $menu['actif'] === 1 ? 'status-valide' : 'status-refuse' ?>">
+                                    <?= (int) $menu['actif'] === 1 ? 'Actif' : 'Inactif' ?>
+                                </span>
+                            </td>
+                            <td><a class="table-action-link" href="#menu-edit-<?= (int) $menu['id_menu'] ?>">Modifier</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+
         <div class="admin-edit-list">
             <?php foreach ($menus as $menu): ?>
                 <?php $menuDishIds = $selectedDishIds[(int) $menu['id_menu']] ?? []; ?>
-                <form class="admin-edit-card" action="/admin/menus/<?= (int) $menu['id_menu'] ?>" method="post">
+                <form class="admin-edit-card" id="menu-edit-<?= (int) $menu['id_menu'] ?>" action="/admin/menus/<?= (int) $menu['id_menu'] ?>" method="post">
                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                     <h2><?= $this->e($menu['titre']) ?></h2>
                     <p class="admin-card-meta">

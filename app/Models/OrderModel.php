@@ -18,14 +18,14 @@ final class OrderModel extends BaseModel
     public function statusLabels(): array
     {
         return [
-            'en_attente' => 'En attente',
-            'acceptee' => 'Acceptee',
-            'en_preparation' => 'En preparation',
-            'en_cours_de_livraison' => 'En cours de livraison',
-            'livre' => 'Livre',
-            'en_attente_retour_materiel' => 'En attente retour materiel',
-            'terminee' => 'Terminee',
-            'annulee' => 'Annulee',
+            'en_attente' => 'Reçue',
+            'acceptee' => 'Acceptée',
+            'en_preparation' => 'En préparation',
+            'en_cours_de_livraison' => 'En livraison',
+            'livre' => 'Livrée',
+            'en_attente_retour_materiel' => 'En attente du retour de matériel',
+            'terminee' => 'Terminée',
+            'annulee' => 'Annulée',
         ];
     }
 
@@ -83,7 +83,7 @@ final class OrderModel extends BaseModel
     }
 
     /**
-     * @param array{status?: string, customer?: string} $filters
+     * @param array{status?: string, customer?: string, id_commande?: string, nom?: string, prenom?: string, email?: string, telephone?: string, adresse?: string, ville?: string} $filters
      *
      * @return list<array<string, mixed>>
      */
@@ -97,9 +97,69 @@ final class OrderModel extends BaseModel
             $parameters['status'] = $filters['status'];
         }
 
-        if (($filters['customer'] ?? '') !== '') {
-            $conditions[] = '(u.email LIKE :customer OR u.nom LIKE :customer OR u.prenom LIKE :customer)';
-            $parameters['customer'] = '%' . $filters['customer'] . '%';
+        $orderIdSearch = trim((string) ($filters['id_commande'] ?? ''));
+
+        if ($orderIdSearch !== '') {
+            $digitsOnly = preg_replace('/\D+/', '', $orderIdSearch) ?? '';
+            $conditions[] = 'CAST(c.id_commande AS CHAR) LIKE :id_commande';
+            $parameters['id_commande'] = '%' . ($digitsOnly !== '' ? $digitsOnly : $orderIdSearch) . '%';
+        }
+
+        $textFilters = [
+            'nom' => 'u.nom',
+            'prenom' => 'u.prenom',
+            'email' => 'u.email',
+            'adresse' => 'c.adresse_livraison',
+            'ville' => 'c.ville_livraison',
+        ];
+
+        foreach ($textFilters as $key => $column) {
+            $value = trim((string) ($filters[$key] ?? ''));
+
+            if ($value === '') {
+                continue;
+            }
+
+            $conditions[] = $column . ' LIKE :' . $key;
+            $parameters[$key] = '%' . $value . '%';
+        }
+
+        $telephoneSearch = trim((string) ($filters['telephone'] ?? ''));
+
+        if ($telephoneSearch !== '') {
+            $conditions[] = "(
+                u.telephone LIKE :telephone
+                OR REPLACE(REPLACE(REPLACE(REPLACE(u.telephone, ' ', ''), '.', ''), '-', ''), '+', '') LIKE :telephone_compact
+            )";
+            $parameters['telephone'] = '%' . $telephoneSearch . '%';
+            $parameters['telephone_compact'] = '%' . str_replace([' ', '.', '-', '+'], '', $telephoneSearch) . '%';
+        }
+
+        $customerSearch = trim((string) ($filters['customer'] ?? ''));
+
+        if ($customerSearch !== '') {
+            $conditions[] = "(
+                CAST(c.id_commande AS CHAR) LIKE :customer_order
+                OR u.email LIKE :customer_email
+                OR u.nom LIKE :customer_nom
+                OR u.prenom LIKE :customer_prenom
+                OR u.telephone LIKE :customer_telephone
+                OR c.adresse_livraison LIKE :customer_address
+                OR c.ville_livraison LIKE :customer_city
+                OR REPLACE(REPLACE(REPLACE(REPLACE(u.telephone, ' ', ''), '.', ''), '-', ''), '+', '') LIKE :customer_phone
+            )";
+            $customerFilter = '%' . $customerSearch . '%';
+            $digitsOnly = preg_replace('/\D+/', '', $customerSearch) ?? '';
+            $compactPhone = str_replace([' ', '.', '-', '+'], '', $customerSearch);
+
+            $parameters['customer_email'] = $customerFilter;
+            $parameters['customer_nom'] = $customerFilter;
+            $parameters['customer_prenom'] = $customerFilter;
+            $parameters['customer_telephone'] = $customerFilter;
+            $parameters['customer_address'] = $customerFilter;
+            $parameters['customer_city'] = $customerFilter;
+            $parameters['customer_order'] = '%' . ($digitsOnly !== '' ? $digitsOnly : $customerSearch) . '%';
+            $parameters['customer_phone'] = '%' . $compactPhone . '%';
         }
 
         $whereClause = $conditions === [] ? '' : 'WHERE ' . implode(' AND ', $conditions);
@@ -116,11 +176,85 @@ final class OrderModel extends BaseModel
             INNER JOIN menus m ON m.id_menu = c.id_menu
             INNER JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur
             {$whereClause}
-            ORDER BY c.date_prestation ASC, c.heure_livraison ASC, c.id_commande ASC
+            ORDER BY
+                CASE WHEN c.statut_actuel IN ('terminee', 'annulee') THEN 1 ELSE 0 END ASC,
+                c.date_prestation ASC,
+                c.heure_livraison ASC,
+                c.id_commande ASC
         SQL;
 
         $statement = $this->pdo()->prepare($sql);
         $statement->execute($parameters);
+
+        return $statement->fetchAll();
+    }
+
+    /**
+     * @return array{orders_today: int, revenue_today: float, pending_orders: int, active_followups: int}
+     */
+    public function dashboardDailyStats(): array
+    {
+        $sql = <<<SQL
+            SELECT
+                COUNT(CASE WHEN c.date_prestation = CURRENT_DATE() AND c.statut_actuel <> 'annulee' THEN 1 END) AS orders_today,
+                COALESCE(SUM(CASE WHEN c.date_prestation = CURRENT_DATE() AND c.statut_actuel <> 'annulee' THEN c.prix_total ELSE 0 END), 0) AS revenue_today,
+                COUNT(CASE WHEN c.statut_actuel = 'en_attente' THEN 1 END) AS pending_orders,
+                COUNT(CASE WHEN c.statut_actuel IN ('acceptee', 'en_preparation', 'en_cours_de_livraison', 'livre', 'en_attente_retour_materiel') THEN 1 END) AS active_followups
+            FROM commandes c
+        SQL;
+
+        $stats = $this->pdo()->query($sql)->fetch();
+
+        return [
+            'orders_today' => (int) ($stats['orders_today'] ?? 0),
+            'revenue_today' => (float) ($stats['revenue_today'] ?? 0),
+            'pending_orders' => (int) ($stats['pending_orders'] ?? 0),
+            'active_followups' => (int) ($stats['active_followups'] ?? 0),
+        ];
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    public function findDashboardOrders(int $limit = 5): array
+    {
+        $sql = <<<SQL
+            SELECT
+                c.id_commande,
+                c.date_prestation,
+                c.heure_livraison,
+                c.ville_livraison,
+                c.nombre_personnes,
+                c.prix_total,
+                c.statut_actuel,
+                m.titre AS menu_titre,
+                u.email AS client_email,
+                u.nom AS client_nom,
+                u.prenom AS client_prenom
+            FROM commandes c
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            INNER JOIN utilisateurs u ON u.id_utilisateur = c.id_utilisateur
+            WHERE c.statut_actuel NOT IN ('terminee', 'annulee')
+            ORDER BY
+                CASE WHEN c.date_prestation = CURRENT_DATE() THEN 0 ELSE 1 END ASC,
+                CASE c.statut_actuel
+                    WHEN 'en_attente' THEN 0
+                    WHEN 'acceptee' THEN 1
+                    WHEN 'en_preparation' THEN 2
+                    WHEN 'en_cours_de_livraison' THEN 3
+                    WHEN 'livre' THEN 4
+                    WHEN 'en_attente_retour_materiel' THEN 5
+                    ELSE 6
+                END ASC,
+                c.date_prestation ASC,
+                c.heure_livraison ASC,
+                c.id_commande ASC
+            LIMIT :limit
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->bindValue('limit', $limit, PDO::PARAM_INT);
+        $statement->execute();
 
         return $statement->fetchAll();
     }

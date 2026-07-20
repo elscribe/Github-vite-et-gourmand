@@ -10,6 +10,8 @@ use App\Core\Session;
 use App\Core\Validator;
 use App\Models\DishModel;
 use App\Models\MenuModel;
+use App\Models\OrderModel;
+use App\Models\ReviewModel;
 use App\Models\ScheduleModel;
 use App\Models\StatisticsModel;
 use App\Models\UserModel;
@@ -22,15 +24,30 @@ final class AdminController extends BaseController
 {
     public function dashboard(): void
     {
-        $statisticsModel = new StatisticsModel();
-        $filters = $this->filters();
-        $dashboard = $statisticsModel->dashboard($filters);
+        $orderModel = new OrderModel();
+        $reviewModel = new ReviewModel();
+        $orders = $orderModel->findAll();
+        $dailyStats = $orderModel->dashboardDailyStats();
+        $pendingReviews = $reviewModel->countPending();
 
         $this->view('admin/dashboard', [
-            'pageTitle' => 'Administration - Vite & Gourmand',
-            'dashboard' => $dashboard,
-            'menus' => $statisticsModel->menus(),
-            'filters' => $filters,
+            'pageTitle' => 'Tableau de bord - Vite & Gourmand',
+            'adminStats' => [
+                'orders_to_process' => $dailyStats['active_followups'],
+                'revenue_today' => $dailyStats['revenue_today'],
+                'kitchen_delivery_followups' => count(array_filter(
+                    $orders,
+                    static fn (array $order): bool => in_array(
+                        $order['statut_actuel'],
+                        ['en_preparation', 'en_cours_de_livraison', 'livre', 'en_attente_retour_materiel'],
+                        true
+                    )
+                )),
+                'pending_reviews' => $pendingReviews,
+            ],
+            'ordersToProcess' => $orderModel->findDashboardOrders(),
+            'reviewsToModerate' => $reviewModel->findPendingForDashboard(),
+            'statusLabels' => $orderModel->statusLabels(),
         ]);
     }
 
@@ -51,7 +68,7 @@ final class AdminController extends BaseController
     public function employees(): void
     {
         $this->view('admin/employees', [
-            'pageTitle' => 'Comptes employes - Vite & Gourmand',
+            'pageTitle' => 'Comptes employés - Vite & Gourmand',
             'employees' => (new UserModel())->findEmployees(),
             'old' => ['pays' => 'France'],
             'errors' => [],
@@ -89,7 +106,7 @@ final class AdminController extends BaseController
 
         if ($errors !== []) {
             $this->view('admin/employees', [
-                'pageTitle' => 'Comptes employes - Vite & Gourmand',
+                'pageTitle' => 'Comptes employés - Vite & Gourmand',
                 'employees' => $userModel->findEmployees(),
                 'old' => $data,
                 'errors' => $errors,

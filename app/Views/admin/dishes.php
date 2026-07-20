@@ -14,7 +14,6 @@ $newDishAllergenIds = $selectedAllergenIds[0] ?? [];
         <a class="back-link" href="/admin">Retour admin</a>
 
         <div class="section-heading">
-            <p class="section-kicker">Administration</p>
             <h1>Gestion des plats</h1>
             <p class="muted-text">Les plats sont reutilisables dans plusieurs menus.</p>
         </div>
@@ -65,10 +64,34 @@ $newDishAllergenIds = $selectedAllergenIds[0] ?? [];
             <button class="primary-link" type="submit">Creer le plat</button>
         </form>
 
+        <section class="table-wrapper backoffice-table-card">
+            <h2>Plats et recettes</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th>Type</th>
+                        <th>Allergenes</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dishes as $dish): ?>
+                        <tr>
+                            <td><strong><?= $this->e($dish['titre_plat']) ?></strong></td>
+                            <td><?= $this->e($types[(string) $dish['type_plat']] ?? (string) $dish['type_plat']) ?></td>
+                            <td><?= $this->e($dish['allergenes'] ?: 'Aucun allergene renseigne') ?></td>
+                            <td><a class="table-action-link" href="#dish-edit-<?= (int) $dish['id_plat'] ?>">Modifier</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+
         <div class="admin-edit-list">
             <?php foreach ($dishes as $dish): ?>
                 <?php $dishAllergenIds = $selectedAllergenIds[(int) $dish['id_plat']] ?? []; ?>
-                <form class="admin-edit-card" action="/admin/plats/<?= (int) $dish['id_plat'] ?>" method="post">
+                <form class="admin-edit-card" id="dish-edit-<?= (int) $dish['id_plat'] ?>" action="/admin/plats/<?= (int) $dish['id_plat'] ?>" method="post">
                     <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                     <h2><?= $this->e($dish['titre_plat']) ?></h2>
                     <p class="admin-card-meta">

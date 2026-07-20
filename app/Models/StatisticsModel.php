@@ -227,7 +227,9 @@ final class StatisticsModel extends BaseModel
      */
     private function normalizeMongoDashboard(array $payload, string $database): ?array
     {
-        $menuStats = $this->normalizeMongoRows($payload['menuStats'] ?? []);
+        $menuStats = $this->applyCurrentMenuTitles(
+            $this->normalizeMongoRows($payload['menuStats'] ?? [])
+        );
         $monthlyStats = $this->normalizeMongoRows($payload['monthlyStats'] ?? []);
 
         if ($menuStats === [] && $monthlyStats === []) {
@@ -243,7 +245,7 @@ final class StatisticsModel extends BaseModel
                 'average_basket' => (float) ($summary['average_basket'] ?? 0),
                 'average_rating' => (float) ($summary['average_rating'] ?? 0),
                 'active_menus' => (int) ($summary['active_menus'] ?? 0),
-                'top_menu' => (string) ($summary['top_menu'] ?? 'Aucun menu'),
+                'top_menu' => (string) ($menuStats[0]['menu_title'] ?? $summary['top_menu'] ?? 'Aucun menu'),
             ],
             'menuStats' => $menuStats,
             'monthlyStats' => $monthlyStats,
@@ -277,6 +279,45 @@ final class StatisticsModel extends BaseModel
         }
 
         return $normalized;
+    }
+
+    /**
+     * @param list<array<string, mixed>> $rows
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function applyCurrentMenuTitles(array $rows): array
+    {
+        if ($rows === []) {
+            return [];
+        }
+
+        $titles = $this->currentMenuTitleIndex();
+
+        foreach ($rows as $index => $row) {
+            $menuId = (int) ($row['id_menu'] ?? 0);
+
+            if ($menuId > 0 && isset($titles[$menuId])) {
+                $rows[$index]['menu_title'] = $titles[$menuId];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function currentMenuTitleIndex(): array
+    {
+        $statement = $this->pdo()->query('SELECT id_menu, titre FROM menus ORDER BY id_menu ASC');
+        $titles = [];
+
+        foreach ($statement->fetchAll() as $row) {
+            $titles[(int) $row['id_menu']] = (string) $row['titre'];
+        }
+
+        return $titles;
     }
 
     private function monthFromDate(string $date): string
