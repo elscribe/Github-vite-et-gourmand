@@ -21,28 +21,28 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| A1 Accueil | Ouvrir `/` | La page d'accueil s'affiche avec la navigation publique. | A tester |
-| A2 Avis publics | Observer les avis sur l'accueil | Seuls les avis valides sont visibles. | A tester |
-| A3 Liste menus | Ouvrir `/menus` | Les menus actifs s'affichent en cartes. | A tester |
-| A4 Filtres menus | Choisir un theme ou regime | La liste se filtre sans casser la page. | A tester |
-| A5 Detail menu | Ouvrir un menu | Images, plats, allergenes, prix, stock et bouton commande visibles. | A tester |
-| A6 Contact | Ouvrir `/contact` | Le formulaire contact s'affiche. | A tester |
-| A7 Envoi contact | Envoyer un message valide | Redirection avec message de succes. | A tester |
+| A1 Accueil | Ouvrir `/` | La page d'accueil s'affiche avec la navigation publique. | Valide local |
+| A2 Avis publics | Observer les avis sur l'accueil | Seuls les avis valides sont visibles. | Valide local |
+| A3 Liste menus | Ouvrir `/menus` | Les menus actifs s'affichent en cartes. | Valide local |
+| A4 Filtres menus | Choisir un theme ou regime | La liste se filtre sans casser la page. | Valide local |
+| A5 Detail menu | Ouvrir un menu | Images, plats, allergenes, prix, stock et bouton commande visibles. | Valide local |
+| A6 Contact | Ouvrir `/contact` | Le formulaire contact s'affiche. | Valide local |
+| A7 Envoi contact | Envoyer un message valide | Redirection avec message de succes. | Valide local |
 
 ## B. Parcours compte client
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| B1 Inscription | Ouvrir `/inscription` et creer un compte test | Compte client cree, mot de passe hashe. | A tester |
-| B2 Connexion client | Se connecter comme client | Redirection vers l'espace compte ou menu client. | Teste 15/07 |
-| B3 Profil | Ouvrir `/mon-compte` puis `/mon-compte/modifier` | Les informations client sont visibles et modifiables. | Teste 15/07 |
-| B4 Creation commande | Ouvrir `/commandes/creation` ou `/commandes/creation/{menuId}` | Formulaire de commande disponible. | Teste 15/07 |
-| B5 Calcul prix | Saisir menu, personnes, ville, distance | Le recapitulatif de prix se met a jour, le serveur recalcule au POST. | Serveur teste 15/07, visuel a rejouer |
-| B6 Validation commande | Envoyer la commande | Commande creee, statut `en_attente` et historique initial ajoute. | Teste 15/07 |
-| B7 Detail commande | Ouvrir la commande | Timeline de statut visible. | Teste 15/07 |
-| B8 Modification avant acceptation | Modifier une commande `en_attente` | Modification acceptee uniquement avant acceptation. | Teste 15/07 |
-| B9 Annulation client | Annuler une commande `en_attente` | Statut annule et historique ajoute. | Teste 15/07 |
-| B10 Avis apres commande terminee | Ouvrir `/avis` et deposer un avis eligible | Avis cree en attente de moderation. | Teste 15/07 |
+| B1 Inscription | Ouvrir `/inscription` et creer un compte test | Compte client cree, mot de passe hashe. | Valide local |
+| B2 Connexion client | Se connecter comme client | Redirection vers l'espace compte ou menu client. | Valide local |
+| B3 Profil | Ouvrir `/mon-compte` puis `/mon-compte/modifier` | Les informations client sont visibles et modifiables. | Valide local |
+| B4 Creation commande | Ouvrir `/commandes/creation` ou `/commandes/creation/{menuId}` | Formulaire de commande disponible. | Valide local |
+| B5 Calcul prix | Saisir menu, personnes, ville, distance | Le recapitulatif de prix se met a jour, le serveur recalcule au POST. | Valide local |
+| B6 Validation commande | Envoyer la commande | Commande creee, statut `en_attente` et historique initial ajoute. | Valide local |
+| B7 Detail commande | Ouvrir la commande | Timeline de statut visible. | Valide local |
+| B8 Modification avant acceptation | Modifier une commande `en_attente` | Modification acceptee uniquement avant acceptation. | Valide local |
+| B9 Annulation client | Annuler une commande `en_attente` | Statut annule et historique ajoute. | Valide local |
+| B10 Avis apres commande terminee | Ouvrir `/avis` et deposer un avis eligible | Avis cree en attente de moderation. | Valide local |
 
 ## C. Parcours employe
 
@@ -72,10 +72,10 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| E1 Client bloque admin | Connecte client, ouvrir `/admin` | Acces refuse ou redirection. | A tester |
-| E2 Visiteur bloque commandes | Deconnecte, ouvrir `/commandes` | Redirection connexion. | A tester |
-| E3 CSRF | Verifier les formulaires POST | Champ `_csrf_token` present. | A tester |
-| E4 Mot de passe | Verifier en base | Mot de passe stocke en hash, pas en clair. | A tester |
+| E1 Client bloque admin | Connecte client, ouvrir `/admin` | Acces refuse ou redirection. | Valide local |
+| E2 Visiteur bloque commandes | Deconnecte, ouvrir `/commandes` | Redirection connexion. | Valide local |
+| E3 CSRF | Verifier les formulaires POST | Champ `_csrf_token` present. | Valide local |
+| E4 Mot de passe | Verifier en base | Mot de passe stocke en hash, pas en clair. | Valide local |
 
 ## F. Livrables obligatoires ECF
 
@@ -91,10 +91,10 @@ Pour le detail des user stories client connecte, voir aussi :
 | Choix techniques SQL/NoSQL | `docs/database/database-choices.md` | Present |
 | Maquettes / wireframes | `docs/deliverables/` + lien Figma README | Present, lien a verifier |
 | Charte graphique | `docs/deliverables/graphic-charter/` + Figma | Present |
-| Gestion projet / backlog | Notion + rapport user stories | Present, lien Notion a completer |
-| Manuel / revisions | `docs/manual/` | Present |
-| Deploiement | `docs/deployment/README.md` | Present, URL finale a completer |
-| Securite | `docs/security/README.md` + middlewares | Present |
+| Gestion projet / backlog | Notion + rapport user stories + matrice finale | Present, lien Notion a completer |
+| Manuel / revisions | `docs/manual/` | Present, PDF a regenerer si captures finales |
+| Deploiement | `docs/deployment/README.md` | Procedure presente, URL finale a completer |
+| Securite | `docs/security/README.md` + `docs/security/security-watch.md` + middlewares | Present |
 
 ## Notes pendant test
 

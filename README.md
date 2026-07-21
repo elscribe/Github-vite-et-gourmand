@@ -19,7 +19,7 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - collections MongoDB preparees pour les statistiques administrateur ;
 - documentation technique de base de donnees disponible ;
 - squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
-- infrastructure Sprint 0 disponible : routes de reservation, pages 404/500,
+- infrastructure technique disponible : routeur, pages 404/500,
   session, chargement `.env`, gestion d'erreurs, helpers HTTP/securite et base
   model ;
 - parcours MVC principaux implementes : menus, contact, authentification,
@@ -451,26 +451,30 @@ mot de passe.
 - [Generation documentation BDD](scripts/generate_database_docs.py)
 - [Organisation du depot GitHub](docs/repository.md)
 
-### Livrables A Completer
+### Documentation De Recette Et Rendu
 
 - [Gestion de projet](docs/project-management/README.md)
 - [Documentation de deploiement](docs/deployment/README.md)
 - [Manuel utilisateur](docs/manual/README.md)
 - [Documentation securite](docs/security/README.md)
+- [Veille securite](docs/security/security-watch.md)
+- [Recherche anglophone](docs/project-management/recherche-anglophone.md)
+- [Matrice finale de recette](docs/manual/final-user-story-test-matrix.md)
+- [Livrables finaux](docs/deliverables/final-deliverables.md)
 - [Wireframes](docs/deliverables/wireframes/README.md)
 - [Mockups](docs/deliverables/mockups/README.md)
 - [Charte graphique](docs/deliverables/graphic-charter/README.md)
 
-## Securite Prevue
+## Securite Mise En Place
 
-Les mecanismes suivants sont prevus dans la conception :
+Les mecanismes suivants sont implementes ou documentes :
 
 - mots de passe haches avec `password_hash` ;
 - verification des mots de passe avec `password_verify` ;
 - requetes preparees PDO ;
 - validation serveur des formulaires ;
 - validation client pour l'ergonomie ;
-- protection des routes selon les roles ;
+- protection des routes selon les roles avec middlewares ;
 - gestion des sessions ;
 - protection CSRF sur les actions sensibles ;
 - echappement des donnees affichees pour limiter le risque XSS ;
@@ -478,14 +482,20 @@ Les mecanismes suivants sont prevus dans la conception :
 - fichier `.env` non versionne ;
 - collecte limitee des donnees personnelles utiles au parcours de commande.
 
-Ces points devront etre verifies dans le code applicatif lorsqu'il sera
-implemente.
+La documentation detaillee se trouve dans
+[docs/security/README.md](docs/security/README.md).
 
 ## Qualite Et Tests
 
-Aucun test automatise n'est encore present.
+Les controles disponibles sont :
 
-Tests a prevoir :
+- `composer check` pour valider Composer et la syntaxe PHP ;
+- recette manuelle par role dans [docs/manual/mvp-test-checklist.md](docs/manual/mvp-test-checklist.md) ;
+- matrice finale US / Figma / route / test / preuve dans [docs/manual/final-user-story-test-matrix.md](docs/manual/final-user-story-test-matrix.md) ;
+- rapport d'implementation des user stories dans [docs/project-management/user-story-implementation-report.md](docs/project-management/user-story-implementation-report.md) ;
+- journal des problemes et solutions dans [docs/project-management/user-story-debug-log.md](docs/project-management/user-story-debug-log.md).
+
+Parcours couverts localement :
 
 - parcours visiteur, client, employe et administrateur ;
 - calcul du prix, de la reduction et des frais de livraison ;
@@ -494,6 +504,9 @@ Tests a prevoir :
 - formulaires et messages d'erreur ;
 - accessibilite : navigation clavier, contrastes, labels, textes alternatifs ;
 - dashboard administrateur alimente par MongoDB.
+
+Les tests automatises applicatifs restent une amelioration future. La priorite
+ECF est la recette manuelle documentee et reproductible.
 
 ## Roadmap
 
@@ -514,14 +527,17 @@ Tests a prevoir :
 
 ### En Cours
 
-- [ ] Nettoyage et harmonisation finale des maquettes Figma.
-- [ ] Export final des maquettes desktop/mobile et de la charte graphique.
-- [ ] Implementation de l'application PHP MVC.
-- [ ] Documentation securite.
-- [ ] Documentation de deploiement.
-- [ ] Manuel utilisateur.
-- [ ] Recherche anglophone.
-- [ ] Livrables finaux.
+- [x] Export final des maquettes desktop/mobile et de la charte graphique.
+- [x] Implementation du MVP PHP MVC local.
+- [x] Documentation securite.
+- [x] Recherche anglophone.
+- [x] Matrice finale de recette.
+- [x] Manuel utilisateur Markdown.
+- [ ] Deploiement public.
+- [ ] Documentation de deploiement avec URL reelle.
+- [ ] Manuel utilisateur PDF avec captures finales si necessaire.
+- [ ] Livrables finaux Notion et copie Studi.
+- [ ] Tests finaux sur URL deployee.
 
 ### Ameliorations Futures
 
@@ -569,9 +585,9 @@ version stable est prete pour presentation.
 - Exports PDF des maquettes desktop et mobile.
 - Charte graphique PDF.
 - Manuel utilisateur PDF.
-- Documentation de deploiement.
-- Recherche anglophone.
-- Veille securite.
+- Documentation de deploiement completee avec l'URL reelle.
+- Synchronisation Notion : securite, recherche anglophone, deploiement,
+  manuel utilisateur et livrables finaux.
 
 ## Notes Pour Le Jury
 
@@ -594,4 +610,4 @@ Points a expliquer a l'oral :
 - comment les roles structurent les acces ;
 - comment les commandes changent d'etat ;
 - comment les regles de prix, reduction et livraison seront controlees ;
-- comment la securite sera appliquee dans le code.
+- comment la securite est appliquee dans le code.

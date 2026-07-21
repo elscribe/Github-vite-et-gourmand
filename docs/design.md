@@ -1,6 +1,6 @@
-# UX/UI Et Charte Graphique
+# UX/UI et charte graphique
 
-Derniere verification Figma : 2026-07-06.
+Derniere consolidation documentaire : 21 juillet 2026.
 
 ## Acces Figma
 
@@ -8,95 +8,135 @@ Derniere verification Figma : 2026-07-06.
 - Fichier Figma : `Vite---Gourmand`
 - Cle Figma : `sMkvVuvOyBkMvlTIsq2eCY`
 
-Le lien global est le lien de reference pour suivre l'evolution du fichier. Pour
-une analyse precise d'un ecran, utiliser un lien Figma contenant un `node-id`.
+Le lien Figma doit etre teste avant rendu depuis un navigateur non connecte.
 
-## Pages Figma
+## Etat Figma
 
-| Page | Node ID | Etat |
-| --- | --- | --- |
-| Wireframes basse fidelite | `0:1` | 6 wireframes presents |
-| Maquettes haute qualite | `61:1437` | 15 frames directes presentes |
-| Components | `128:30939` | composants de base presents |
-| Charte graphique | `12:3` | logos, palette, typo, iconographie, CTA et visuels presents |
-| Exports PDF | `12:4` | export charte present |
+Inventaire controle le 21 juillet 2026 :
 
-## Wireframes Basse Fidelite
+| Element | Etat |
+|---|---|
+| Pages Figma | 8 pages principales. |
+| Styles texte | 15 styles locaux. |
+| Variables | 40 variables locales. |
+| Collections de variables | 3 collections. |
+| Composants / component sets | 51 composants ou ensembles de composants. |
+| Exports PDF locaux | 13 PDF : charte + 6 wireframes + 6 maquettes. |
 
-La page contient 6 wireframes principaux :
+Pages principales :
 
-- Mobile :
-  - `Espace-publique-mobile`
-  - `Mon-espace-gourmand-mobile`
-  - `Espace-employe-mobile`
-- Desktop :
-  - `Espace-publique-bureau`
-  - `Mon-espace-gourmand-bureau`
-  - `Espace-administrateur-bureau`
+- `00 - Design System`
+- `01 - Charte graphique`
+- `02 - Wireframes`
+- `03 - Maquettes test`
+- `03 - Maquettes 2`
+- `04 - Prototype`
+- `05 - Exports PDF`
+- `00 bis - Design System MVP ECF - Proposition`
 
-Point a nettoyer : un frame image isole reste present dans cette page
-(`ChatGPT Image 4 juil. 2026_ 19_37_12`).
+## Wireframes basse fidelite
 
-## Maquettes Haute Qualite
+Les exports locaux couvrent les 6 wireframes attendus :
 
-La page contient actuellement 15 frames directes.
+| Ecran | Format |
+|---|---|
+| Espace publique | Desktop |
+| Espace publique | Mobile |
+| Mon espace gourmand | Desktop |
+| Mon espace gourmand | Mobile |
+| Espace employe | Mobile |
+| Espace administrateur | Desktop |
 
-### Mobile
+Reserve a connaitre : au moment du controle, certains wireframes publics sont
+plus faciles a retrouver dans les exports PDF locaux que comme frames directs
+dans la page Figma `02 - Wireframes`. Les PDF locaux restent la preuve de rendu.
 
-- `public-homepage-mobile`
-- `mon-espace-gourmand-mobile`
-- `employee-orders-mobile`
-- `hero-mobile`
+## Maquettes haute fidelite
 
-### Desktop
+Les exports locaux couvrent les 6 maquettes finales attendues :
 
-- `public-homepage-desktop`
-- `mon-espace-gourmand-desktop`
-- `admin-dashboard-desktop`
-- `vite-gourmand-previews`
-- `overlay-filtres`
-- `test carroussel`
-- `nos-menus-desktop`
-- `contact-desktop`
-- `connexion-page`
-- `mes-informations-desktop`
-- `mes-avis-desktop`
+| Ecran | Format |
+|---|---|
+| Espace publique | Desktop |
+| Espace publique | Mobile |
+| Mon espace gourmand | Desktop |
+| Mon espace gourmand | Mobile |
+| Tableau de bord employe | Mobile |
+| Tableau de bord administrateur | Desktop |
 
-## Components
+Les maquettes couvrent les roles principaux :
 
-Composants reels detectes :
+- visiteur public ;
+- client connecte ;
+- employe ;
+- administrateur.
 
-- `header / desktop`
-- `Logo / Compact`
-- `header / mobile`
-- `footer`
-- `button`
-- `back-to-top`
+## Design system
 
-Les composants de base sont presents, mais le design system reste a completer
-pour le developpement : carte menu, badge de statut, champ de formulaire, alerte
-succes/erreur, tableau back-office et carte statistique.
+Le fichier Figma contient maintenant un socle de design system :
 
-## Charte Graphique
+- variables de couleurs ;
+- styles typographiques ;
+- composants de navigation ;
+- boutons ;
+- cartes ;
+- badges ;
+- elements de formulaire ;
+- tableaux et surfaces back-office ;
+- composants utiles aux dashboards.
 
-Elements presents :
+Ce design system sert de reference visuelle pour garder une coherence entre les
+pages publiques, l'espace client, l'espace employe et l'administration.
+
+## Charte graphique
+
+La charte graphique presente :
 
 - logos desktop, mobile et compact ;
 - palette de couleurs ;
-- typographie ;
+- typographies ;
 - iconographie ;
 - boutons et CTA ;
-- visuels `Accueil 1`, `Equipe 1`, `MJ 1`.
+- visuels de reference ;
+- exemples d'application sur les maquettes.
 
-Les styles et variables Figma ne sont pas encore formalises dans le fichier
-detecte. La charte est donc exploitable visuellement, mais pas encore comme
-design system automatise.
+Export local :
 
-## Points A Verrouiller Avant Rendu
+```text
+Maquettes/export pdf/Charte graphique complete - Vite & Gourmand - ECF.pdf
+```
 
-- Choisir l'identite narrative finale : Julie/Jose ou Marie/Jean.
-- Harmoniser l'anciennete : 2001, 2003, plus de 20 ans ou 25 ans.
-- Harmoniser les statuts de commande entre les maquettes et les regles metier.
-- Renommer les frames finales avec une nomenclature claire pour le jury.
-- Nettoyer ou ranger les frames de test et images isolees.
-- Exporter les maquettes finales et la charte graphique en PDF.
+## Correspondance Figma / code
+
+Le document `docs/project-management/public-figma-inventory.md` relie les pages
+publiques aux captures Figma et aux vues PHP.
+
+La matrice finale de recette se trouve dans :
+
+```text
+docs/manual/final-user-story-test-matrix.md
+```
+
+Elle relie chaque user story a :
+
+- une page Figma attendue ;
+- une route ou page code ;
+- un test de recette ;
+- un statut ;
+- une preuve a conserver.
+
+## Points de coherence a verifier avant rendu
+
+| Sujet | Controle |
+|---|---|
+| Identite narrative | Garder les memes noms dans Figma, Notion, SQL et code. |
+| Anciennete entreprise | Garder une formulation unique : entreprise familiale de Bordeaux, environ 25 ans d'activite si conserve. |
+| Statuts commande | Harmoniser Figma, SQL et interface : `en_attente`, `acceptee`, `en_preparation`, `en_livraison`, `livree`, `en_attente_retour_materiel`, `terminee`, `annulee`. |
+| Responsive | Verifier les pages principales mobile et desktop. |
+| Accessibilite | Verifier contrastes, labels, alt images et navigation clavier de base. |
+
+## Phrase pour le jury
+
+La conception UX/UI a ete realisee dans Figma avec wireframes, maquettes,
+charte graphique et design system. Les exports PDF prouvent les ecrans demandes,
+et la matrice de recette relie ces ecrans aux user stories et aux routes codees.

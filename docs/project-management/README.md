@@ -12,9 +12,11 @@ garder une trace versionnee dans GitHub pour le jury.
 |---|---|
 | `user-story-implementation-report.md` | Etat d'avancement des user stories et tests realises. |
 | `user-story-debug-log.md` | Journal des echecs, causes et solutions par user story. |
+| `audit-context.md` | Regle permanente des audits ECF : source locale, criteres de verification et decision push/main. |
 | `decision-avis-accueil-2026-07-22.md` | Decision de perimetre : les avis valides sont affiches automatiquement ; la selection editoriale manuelle est une evolution future. |
 | `decision-role-employe-menus-2026-07-22.md` | Decision de perimetre : l'employe traite commandes/avis, l'administrateur garde menus/plats/horaires. |
 | `../manual/final-user-story-test-matrix.md` | Matrice finale de recette : US, role, page Figma, route code, test, statut et preuve. |
+| `recherche-anglophone.md` | Recherche anglophone : source OWASP, traduction et apport au controle d'acces. |
 | `public-figma-inventory.md` | Correspondance entre pages publiques, Figma, code et captures. |
 | `public-layout-documentation.md` | Explication du layout public, des routes, vues, assets et interactions. |
 | `journal-de-bord-public-layout.md` | Entree de journal de bord pour l'integration publique et le premier commit. |

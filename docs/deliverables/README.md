@@ -2,5 +2,26 @@
 
 Ce dossier regroupe les emplacements des livrables attendus pour le rendu.
 
-Les contenus finaux ne doivent pas etre inventes. Ajouter ici les exports reels
-ou documenter clairement leur lien officiel avant la soumission.
+Les contenus finaux sont repartis entre le depot GitHub, Figma, Notion et le
+dossier `Maquettes/export pdf/`.
+
+## Entrees principales
+
+| Document | Role |
+|---|---|
+| `wireframes/README.md` | Reference les 6 wireframes basse fidelite. |
+| `mockups/README.md` | Reference les 6 maquettes haute fidelite. |
+| `graphic-charter/README.md` | Reference la charte graphique PDF. |
+| `final-deliverables.md` | Centralise les liens, comptes de demonstration et controles finaux. |
+
+## Controle final
+
+Avant depot Studi, verifier :
+
+- le lien GitHub public ;
+- le lien Notion partage au jury ;
+- le lien Figma ;
+- l'URL de l'application deployee ;
+- les identifiants de demonstration ;
+- les PDF de maquettes et de charte ;
+- le manuel utilisateur PDF.
