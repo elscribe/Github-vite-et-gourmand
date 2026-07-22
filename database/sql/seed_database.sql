@@ -1,5 +1,7 @@
 USE vite_gourmand;
 
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 INSERT INTO `roles` (`id_role`, `libelle`) VALUES
 (1, 'Administrator'),
 (2, 'Employee'),
