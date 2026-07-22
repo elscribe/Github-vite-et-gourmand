@@ -43,7 +43,7 @@ la user story.
 | P-MAIL | Trace email ou log d'envoi en mode demo/local. | Log reset password, commande creee, invitation avis, creation employe. |
 | P-SECURITE | Preuve de controle serveur ou acces refuse. | Redirection connexion, acces refuse, token CSRF, middleware role. |
 | P-RESPONSIVE | Capture ou verification desktop/mobile. | Page lisible en mobile et desktop, menu burger, formulaire non casse. |
-| P-RESERVE | Explication courte d'une limite connue. | MongoDB prepare par scripts, fallback SQL local faute d'extension PHP MongoDB. |
+| P-RESERVE | Explication courte d'une limite connue. | Secours SQL local si MongoDB ou `mongosh` sont indisponibles. |
 
 Format recommande pour une preuve finale :
 
@@ -85,8 +85,8 @@ Exemple :
 | US-022 | Admin | Administration employes | Gestion employes | `GET/POST /admin/employes` | Creer un compte employe, puis activer/desactiver le compte. | Valide | P-FIGMA, P-ROUTE, P-COMPTE, P-ACTION, P-RESULTAT, P-DONNEE, P-DB, P-MAIL, P-SECURITE. Capture creation employe + statut actif/inactif + log notification sans mot de passe. |
 | US-023 | Admin | Dashboard | Dashboard admin | `GET /admin` | Ouvrir le dashboard admin et verifier les indicateurs principaux. | Valide | P-FIGMA, P-ROUTE, P-COMPTE, P-RESULTAT. Capture dashboard avec indicateurs lisibles. |
 | US-024 | Admin | Statistiques | Graphique commandes par menu | `GET /admin/statistiques` | Comparer le nombre de commandes par menu via graphique. | Valide | P-FIGMA, P-ROUTE, P-COMPTE, P-RESULTAT, P-DONNEE. Capture graphique + valeurs par menu. |
-| US-025 | Admin | Statistiques | CA par menu / periode | `GET /admin/statistiques` | Filtrer par menu et periode, verifier le chiffre d'affaires par menu. | Valide avec reserve | P-FIGMA, P-ROUTE, P-COMPTE, P-ACTION, P-RESULTAT, P-DONNEE, P-RESERVE. Capture filtres + resultat ; reserve : fallback SQL local, MongoDB documente par scripts. |
-| US-026 | Tous | Transversal accessibilite | Toutes pages principales | Toutes vues principales | Verifier labels, contrastes, textes alternatifs, responsive et navigation clavier de base. | Partiel solide | P-FIGMA, P-ROUTE, P-RESULTAT, P-RESPONSIVE, P-RESERVE. Captures mobile/desktop + checklist RGAA de base ; audit final complet a realiser avant rendu. |
+| US-025 | Admin | Statistiques | CA par menu / periode | `GET /admin/statistiques` | Filtrer par menu et periode, verifier le chiffre d'affaires par menu. | Valide | P-FIGMA, P-ROUTE, P-COMPTE, P-ACTION, P-RESULTAT, P-DONNEE, P-RESERVE. Capture filtres + resultat ; source MongoDB affichee sur la page, secours SQL local si MongoDB est indisponible. |
+| US-026 | Tous | Transversal accessibilite | Toutes pages principales | Toutes vues principales | Verifier labels, contrastes, textes alternatifs, responsive et navigation clavier de base. | Valide avec reserve | P-FIGMA, P-ROUTE, P-RESULTAT, P-RESPONSIVE, P-RESERVE. Audit RGAA interne documente dans `docs/accessibility/rgaa-audit-2026-07-22.md` ; passe clavier/contrastes/lecteur d'ecran a refaire sur URL deployee. |
 | US-027 | Tous roles prives | Transversal securite | Acces refuses / navigation par role | Routes privees client, employe, admin | Tenter les acces avec mauvais role et verifier blocage serveur. | Valide | P-ROUTE, P-COMPTE, P-ACTION, P-RESULTAT, P-SECURITE. Capture client bloque sur admin, visiteur redirige connexion, employe bloque statistiques admin si applicable. |
 
 ## Parcours de recette a executer avant rendu
@@ -147,8 +147,8 @@ Exemple :
 | Sujet | Reserve | Argument jury |
 |---|---|---|
 | US-008 Mot de passe oublie | En local, l'envoi email reel est simule par log/lien de demonstration. | La logique securisee existe : token hash, expiration et reinitialisation. Le SMTP reel se branche au deploiement. |
-| US-025 MongoDB statistiques | L'environnement PHP local utilise une aggregation SQL de secours si l'extension MongoDB n'est pas installee. | MongoDB est prepare et documente par scripts ; le dashboard reste testable localement. |
-| US-026 Accessibilite | Les bases RGAA sont appliquees, mais un audit complet reste a finaliser. | Labels, contrastes, textes alternatifs et responsive sont en place ; l'audit final est identifie dans le plan de recette. |
+| US-025 MongoDB statistiques | Le dashboard lit MongoDB via `mongosh` quand la base est disponible, avec un secours SQL si MongoDB est indisponible. | MongoDB est seedable par scripts et la page affiche la source utilisee. |
+| US-026 Accessibilite | Audit RGAA interne realise sur 16 pages locales ; l'audit expert exhaustif reste hors perimetre ECF. | Les bases sont verifiees et documentees ; la passe finale sur URL deployee doit couvrir clavier, contrastes, zoom/reflow et lecteur d'ecran. |
 
 ## Fonctionnalites hors perimetre ou futures
 

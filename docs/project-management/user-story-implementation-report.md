@@ -44,8 +44,8 @@ Le detail des erreurs rencontrees et des solutions appliquees est conserve dans
 | US-022 | Comptes employes | Valide | `UserModel`, `AdminController`, `MailService`, `admin/employees.php` | Creation employe + notification email sans mot de passe + activation/desactivation. |
 | US-023 | Dashboard admin | Valide | `AdminController`, `StatisticsModel`, `admin/dashboard.php` | `GET /admin` avec compte admin. |
 | US-024 | Comparer commandes par menu | Valide | `StatisticsModel::menuStatistics` | Graphique barres par menu. |
-| US-025 | CA par menu/periode | Valide avec reserve | `admin/statistics.php`, scripts MongoDB | Filtre menu/periode OK. Actuel SQL local, MongoDB documente. |
-| US-026 | Accessibilite RGAA | Partiel solide | Toutes vues formulaires | Labels, contrastes, alt images, responsive. Audit final a faire. |
+| US-025 | CA par menu/periode | Valide | `StatisticsModel`, `admin/statistics.php`, scripts MongoDB | Filtre menu/periode OK. Lecture MongoDB via `mongosh`, source affichee, secours SQL si MongoDB indisponible. |
+| US-026 | Accessibilite RGAA | Valide avec reserve | `docs/accessibility/rgaa-audit-2026-07-22.md`, layout, vues formulaires | Audit interne sur 16 pages locales : labels, alt images, captions, focus, skip-link, reduced-motion. Passe clavier/contrastes/lecteur d'ecran a refaire sur URL deployee. |
 | US-027 | Securite par role | Valide | Middlewares, routes | Client bloque employe/admin, admin accede employe. |
 
 ## Tests deja realises
@@ -76,7 +76,7 @@ Le detail des erreurs rencontrees et des solutions appliquees est conserve dans
 - Les formulaires POST utilisent `_csrf_token`.
 - Les droits sont verifies cote serveur par middleware, pas seulement par l'affichage du menu.
 - Les statuts de commande sont historises dans `commande_statuts`.
-- MongoDB est prepare par scripts et documentation pour les statistiques ; dans l'environnement PHP local actuel, l'extension MongoDB n'est pas installee, donc l'ecran admin utilise une aggregation SQL locale transparente.
+- MongoDB est prepare par scripts et documentation pour les statistiques ; l'ecran admin lit les agregats via `mongosh` quand MongoDB est disponible et conserve un secours SQL local transparent si MongoDB est indisponible.
 
 ## Reste conseille avant rendu final
 

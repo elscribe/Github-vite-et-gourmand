@@ -267,9 +267,9 @@ Actions :
 2. Lire le chiffre d'affaires par menu.
 3. Filtrer par menu ou periode.
 
-Resultat attendu : les statistiques sont lisibles. MongoDB est prepare pour les
-agregats ; un fallback SQL peut etre explique si l'environnement local ne charge
-pas MongoDB directement.
+Resultat attendu : les statistiques sont lisibles. La page indique la source
+utilisee : MongoDB via `mongosh` quand les agregats sont disponibles, ou secours
+SQL local si MongoDB est indisponible.
 
 ### 3. Gerer les employes
 
@@ -277,11 +277,12 @@ Route : `/admin/employes`
 
 Actions :
 
-1. Creer un compte employe.
+1. Creer un compte employe avec email et mot de passe.
 2. Activer ou desactiver un compte.
 
 Resultat attendu : l'administrateur gere les comptes employes sans creer
-d'administrateur depuis l'application.
+d'administrateur depuis l'application. L'email de notification n'envoie pas le
+mot de passe.
 
 ### 4. Gerer les horaires
 

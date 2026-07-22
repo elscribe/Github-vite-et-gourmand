@@ -12,6 +12,7 @@ garder une trace versionnee dans GitHub pour le jury.
 |---|---|
 | `user-story-implementation-report.md` | Etat d'avancement des user stories et tests realises. |
 | `audit-page-08-espace-employe-2026-07-22.md` | Audit page 8 de l'enonce : espace employe, statuts, annulations, notifications retour materiel et moderation des avis. |
+| `audit-page-09-espace-admin-contact-deploiement-2026-07-22.md` | Audit page 9 de l'enonce : espace administrateur, creation employe, statistiques MongoDB, contact, deploiement et RGAA. |
 | `user-story-debug-log.md` | Journal des echecs, causes et solutions par user story. |
 | `audit-context.md` | Regle permanente des audits ECF : source locale, criteres de verification et decision push/main. |
 | `decision-avis-accueil-2026-07-22.md` | Decision de perimetre : les avis valides sont affiches automatiquement ; la selection editoriale manuelle est une evolution future. |
