@@ -179,6 +179,7 @@ vite-gourmand/
 ├── scripts/
 ├── storage/
 ├── tests/
+├── docker/
 ├── Dockerfile
 ├── fly.toml.example
 ├── .env.example
@@ -206,7 +207,8 @@ vite-gourmand/
 - `scripts/` : outils de generation ou maintenance de documentation.
 - `storage/` : logs et fichiers generes localement, non publics.
 - `tests/` : futurs tests automatises.
-- `Dockerfile` : image de preparation pour le futur deploiement Fly.io.
+- `docker/` : configuration Apache du conteneur de deploiement.
+- `Dockerfile` : image PHP 8.3 Apache pour le futur deploiement Fly.io.
 - `fly.toml.example` : modele de configuration Fly.io a copier au moment du deploiement.
 
 Chaque dossier important contient un fichier `README.md` pour expliquer son role

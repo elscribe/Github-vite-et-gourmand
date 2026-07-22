@@ -43,8 +43,9 @@ La cible de production doit fournir :
 
 Les fichiers de preparation sont presents dans le depot :
 
-- `Dockerfile` : construit l'image PHP 8.3, installe `pdo_mysql` et `mongosh`,
-  installe Composer en mode production et lance l'application sur le port 8080 ;
+- `Dockerfile` : construit l'image PHP 8.3 avec Apache, installe `pdo_mysql`
+  et `mongosh`, installe Composer en mode production et sert `public/` sur le
+  port 80 ;
 - `.dockerignore` : exclut les secrets, dependances locales, logs et fichiers
   temporaires de l'image ;
 - `fly.toml.example` : modele Fly.io a copier vers `fly.toml` au moment du
@@ -262,7 +263,7 @@ Resultat recette production :
 ## Phrase pour le jury
 
 L'application est prevue pour etre deployee sur Fly.io via Docker depuis la
-branche stable `main`. Le conteneur lance PHP 8.3 sur le dossier `public/`, les
-secrets sont stockes dans les variables d'environnement, la base SQL est
+branche stable `main`. Le conteneur lance PHP 8.3 avec Apache sur le dossier
+`public/`, les secrets sont stockes dans les variables d'environnement, la base SQL est
 initialisee par scripts, MongoDB fournit les statistiques et les parcours
 public, client, employe et administrateur seront testes apres deploiement.
