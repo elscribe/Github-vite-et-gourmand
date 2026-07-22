@@ -17,7 +17,7 @@ app/
 
 config/                    Fichiers de configuration PHP.
 database/sql/              Scripts et notes MySQL ou MariaDB.
-database/mongodb/          Zone MongoDB preparee, non connectee au PHP.
+database/mongodb/          Scripts et donnees MongoDB pour les agregats statistiques lus par le dashboard.
 docs/                      Documentation projet et technique.
 storage/                   Logs et fichiers generes localement.
 tests/                     Futurs tests automatises.

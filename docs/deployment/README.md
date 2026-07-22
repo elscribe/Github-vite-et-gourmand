@@ -1,16 +1,19 @@
-# Documentation de deploiement
+# Documentation de deploiement Fly.io via Docker
 
 Date de preparation : 21 juillet 2026.
 
-Cette documentation decrit la procedure de deploiement a appliquer pour rendre
-l'application Vite & Gourmand accessible au jury. Elle devra etre completee avec
-l'URL publique exacte apres le deploiement effectif.
+Cette documentation decrit la procedure de deploiement cible pour rendre
+l'application Vite & Gourmand accessible au jury. La cible retenue est Fly.io
+via Docker. Le deploiement public n'est pas encore effectue ; l'URL publique
+exacte devra etre completee apres publication.
 
 ## Etat actuel
 
 | Element | Etat |
 |---|---|
 | Application locale | Fonctionnelle en environnement PHP local. |
+| Cible de deploiement | Fly.io via Docker. |
+| Preparation Docker | `Dockerfile`, `.dockerignore` et `fly.toml.example` disponibles. |
 | Depot GitHub | A rendre public avant rendu. |
 | Branche a deployer | `main`, apres fusion de la version stable. |
 | URL publique | A renseigner apres deploiement. |
@@ -20,16 +23,42 @@ l'URL publique exacte apres le deploiement effectif.
 
 ## Pre-requis serveur
 
-L'hebergeur retenu doit fournir :
+L'application sera executee dans un conteneur Docker publie sur Fly.io. Les
+services SQL et MongoDB devront etre accessibles depuis ce conteneur via les
+variables d'environnement.
 
-- PHP 8.3 ou compatible ;
-- acces a un dossier public configure sur `public/` ;
-- Composer ;
-- MariaDB ou MySQL 8 ;
-- MongoDB ou service MongoDB accessible ;
+La cible de production doit fournir :
+
+- Fly.io et `flyctl` ;
+- Docker pour construire l'image ;
+- PHP 8.3 dans le conteneur ;
+- `mongosh` dans le conteneur pour lire les agregats MongoDB ;
+- MariaDB ou MySQL 8 accessible depuis Fly.io ;
+- MongoDB ou service MongoDB accessible depuis Fly.io ;
 - variables d'environnement ;
 - HTTPS ;
 - possibilite d'ecrire dans `storage/logs/`.
+
+## Preparation Docker et Fly.io
+
+Les fichiers de preparation sont presents dans le depot :
+
+- `Dockerfile` : construit l'image PHP 8.3, installe `pdo_mysql` et `mongosh`,
+  installe Composer en mode production et lance l'application sur le port 8080 ;
+- `.dockerignore` : exclut les secrets, dependances locales, logs et fichiers
+  temporaires de l'image ;
+- `fly.toml.example` : modele Fly.io a copier vers `fly.toml` au moment du
+  deploiement.
+
+Avant le deploiement effectif :
+
+1. Copier `fly.toml.example` vers `fly.toml`.
+2. Remplacer le nom d'application exemple par le vrai nom Fly.io.
+3. Renseigner `APP_URL` avec l'URL publique finale.
+4. Declarer les secrets Fly.io : `APP_KEY`, `DB_HOST`, `DB_NAME`, `DB_USER`,
+   `DB_PASSWORD`, `NOSQL_HOST` et les variables mail si un SMTP est utilise.
+5. Verifier que les services SQL et MongoDB acceptent les connexions depuis
+   l'application Fly.io.
 
 ## Version a deployer
 
@@ -46,7 +75,8 @@ composer check
 4. Fusionner la version stable vers `main`.
 5. Pousser `main` sur GitHub.
 6. Rendre le depot public.
-7. Tester le lien GitHub sans session connectee.
+7. Copier `fly.toml.example` vers `fly.toml` et renseigner le nom Fly.io reel.
+8. Tester le lien GitHub sans session connectee.
 
 Le jury doit voir la meme version sur GitHub et sur l'application deployee.
 
@@ -156,9 +186,10 @@ Collections attendues :
 - `menu_monthly_statistics`
 - `dashboard_statistics`
 
-Reserve : si MongoDB n'est pas disponible dans l'environnement PHP, le code
-prevoit un secours SQL local pour garder le dashboard lisible. Pour le rendu,
-MongoDB doit rester documente et seedable.
+Le conteneur Docker installe `mongosh` pour permettre au dashboard
+administrateur de lire les agregats MongoDB. Si MongoDB ou `mongosh` sont
+indisponibles, le code prevoit un secours SQL local pour garder le dashboard
+lisible, mais le rendu final doit conserver MongoDB configure et seedable.
 
 ## Permissions
 
@@ -201,11 +232,14 @@ Comptes de demonstration :
 |---|---|
 | Branche `main` a jour avec la version stable. | A faire avant deploiement. |
 | Depot GitHub public. | A faire avant rendu. |
+| Dockerfile de production present. | Pret. |
+| Modele Fly.io present. | Pret avec `fly.toml.example`. |
+| `fly.toml` cree avec le vrai nom d'application Fly.io. | A faire au moment du deploiement. |
 | URL publique renseignee dans README. | A faire apres deploiement. |
 | URL publique renseignee dans Notion. | A faire apres deploiement. |
 | URL publique testee sans session connectee. | A faire apres deploiement. |
 | Base SQL initialisee. | A faire sur l'hebergeur. |
-| MongoDB initialise ou reserve documentee. | A faire sur l'hebergeur. |
+| MongoDB initialise et seedable. | A faire sur l'hebergeur. |
 | Variables `.env` production renseignees. | A faire sur l'hebergeur. |
 | Identifiants demo testes en production. | A faire apres deploiement. |
 | Copie Studi completee avec GitHub, Notion, URL et admin. | A faire en dernier. |
@@ -214,6 +248,7 @@ Comptes de demonstration :
 
 ```text
 Hebergeur retenu :
+Mode de deploiement :
 URL publique :
 Date de deploiement :
 Branche / commit deploye :
@@ -226,8 +261,8 @@ Resultat recette production :
 
 ## Phrase pour le jury
 
-L'application est deployee depuis la branche stable `main`. Le web root pointe
-vers `public/`, les secrets sont stockes dans les variables d'environnement, la
-base SQL est initialisee par scripts, MongoDB fournit les statistiques et les
-parcours public, client, employe et administrateur sont testes apres
-deploiement.
+L'application est prevue pour etre deployee sur Fly.io via Docker depuis la
+branche stable `main`. Le conteneur lance PHP 8.3 sur le dossier `public/`, les
+secrets sont stockes dans les variables d'environnement, la base SQL est
+initialisee par scripts, MongoDB fournit les statistiques et les parcours
+public, client, employe et administrateur seront testes apres deploiement.

@@ -16,7 +16,7 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - modelisation Merise disponible : MCD, MLD et MPD ;
 - diagrammes UML disponibles en sources draw.io et exports PNG ;
 - scripts SQL de creation et d'insertion disponibles ;
-- collections MongoDB preparees pour les statistiques administrateur ;
+- collections MongoDB creees et alimentees pour les statistiques administrateur ;
 - documentation technique de base de donnees disponible ;
 - squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
 - infrastructure technique disponible : routeur, pages 404/500,
@@ -40,7 +40,7 @@ qualite, les composants de base, la charte graphique et une page d'exports PDF.
 - Depot GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
 - Maquettes et charte graphique Figma : <https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6>
 - Outil de gestion de projet : Notion, lien partage a completer avant rendu
-- Application deployee : a completer apres deploiement
+- Application deployee : a completer apres deploiement Fly.io via Docker
 
 Avant le rendu final, les liens GitHub, Figma, Notion et application deployee
 devront etre testes depuis une fenetre privee ou un navigateur non connecte.
@@ -138,15 +138,15 @@ annulations justifiees, changements de statuts et moderation des avis.
 | Architecture | MVC simple |
 | Autoload | Composer, PSR-4 |
 | Base relationnelle | MariaDB, compatible MySQL 8 pour les tests |
-| Base non relationnelle | MongoDB prepare pour les agregats statistiques |
+| Base non relationnelle | MongoDB pour les agregats statistiques du dashboard administrateur |
 | Gestion projet | Notion |
 | Depot | GitHub |
-| Deploiement pressenti | Fly.io, a confirmer apres implementation |
+| Deploiement prevu | Fly.io via Docker, non deploye a ce stade |
 
 La base SQL reste la source de verite pour les donnees metier. MongoDB sert les
 agregats statistiques utilises par le tableau de bord administrateur. Le code
 lit ces agregats avec `mongosh` quand MongoDB est disponible et conserve un
-secours SQL local pour afficher le dashboard en environnement incomplet.
+secours SQL local si MongoDB ou `mongosh` ne sont pas disponibles.
 
 ## Organisation Du Depot
 
@@ -179,7 +179,10 @@ vite-gourmand/
 ├── scripts/
 ├── storage/
 ├── tests/
+├── Dockerfile
+├── fly.toml.example
 ├── .env.example
+├── .dockerignore
 ├── .gitignore
 ├── composer.json
 └── README.md
@@ -203,6 +206,8 @@ vite-gourmand/
 - `scripts/` : outils de generation ou maintenance de documentation.
 - `storage/` : logs et fichiers generes localement, non publics.
 - `tests/` : futurs tests automatises.
+- `Dockerfile` : image de preparation pour le futur deploiement Fly.io.
+- `fly.toml.example` : modele de configuration Fly.io a copier au moment du deploiement.
 
 Chaque dossier important contient un fichier `README.md` pour expliquer son role
 a un developpeur junior ou au jury.
@@ -216,6 +221,7 @@ a un developpeur junior ou au jury.
 - Composer.
 - MariaDB ou MySQL 8.
 - MongoDB et `mongosh`, pour les statistiques administrateur.
+- Docker, seulement pour preparer ou tester le futur deploiement Fly.io.
 - Navigateur web moderne.
 
 Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN et le
@@ -539,6 +545,7 @@ ECF est la recette manuelle documentee et reproductible.
 - [x] Export final des maquettes desktop/mobile et de la charte graphique.
 - [x] Implementation du MVP PHP MVC local.
 - [x] Documentation securite.
+- [x] Preparation Docker/Fly.io sans deploiement public.
 - [x] Recherche anglophone.
 - [x] Matrice finale de recette.
 - [x] Manuel utilisateur Markdown.
