@@ -27,6 +27,11 @@ $featuredMenus = [
         'statusTone' => 'limited',
         'isAvailable' => false,
         'isParty' => true,
+        'themeId' => 1,
+        'regimeId' => 1,
+        'statusType' => 'limited',
+        'statusWeek' => false,
+        'allergens' => ['gluten', 'oeufs'],
         'url' => '/menus/1',
     ],
     [
@@ -43,6 +48,11 @@ $featuredMenus = [
         'statusTone' => 'available',
         'isAvailable' => true,
         'isParty' => false,
+        'themeId' => 6,
+        'regimeId' => 1,
+        'statusType' => 'available',
+        'statusWeek' => true,
+        'allergens' => ['gluten', 'lactose'],
         'url' => '/menus/6',
     ],
     [
@@ -59,6 +69,11 @@ $featuredMenus = [
         'statusTone' => 'available',
         'isAvailable' => true,
         'isParty' => false,
+        'themeId' => 4,
+        'regimeId' => 2,
+        'statusType' => 'available',
+        'statusWeek' => false,
+        'allergens' => ['gluten', 'oeufs'],
         'url' => '/menus/4',
     ],
     [
@@ -75,6 +90,11 @@ $featuredMenus = [
         'statusTone' => 'limited',
         'isAvailable' => false,
         'isParty' => false,
+        'themeId' => 3,
+        'regimeId' => 1,
+        'statusType' => 'limited',
+        'statusWeek' => false,
+        'allergens' => ['poisson', 'crustaces'],
         'url' => '/menus/3',
     ],
     [
@@ -91,6 +111,11 @@ $featuredMenus = [
         'statusTone' => 'limited',
         'isAvailable' => false,
         'isParty' => true,
+        'themeId' => 2,
+        'regimeId' => 1,
+        'statusType' => 'limited',
+        'statusWeek' => false,
+        'allergens' => ['gluten', 'lactose', 'oeufs'],
         'url' => '/menus/2',
     ],
     [
@@ -107,6 +132,11 @@ $featuredMenus = [
         'statusTone' => 'available',
         'isAvailable' => true,
         'isParty' => true,
+        'themeId' => 5,
+        'regimeId' => 1,
+        'statusType' => 'available',
+        'statusWeek' => true,
+        'allergens' => ['gluten', 'oeufs'],
         'url' => '/menus/5',
     ],
 ];
@@ -263,31 +293,55 @@ $testimonials = [
             <span aria-hidden="true"></span>
         </header>
 
-        <div class="home-menu-filter-row" aria-label="Filtres visuels des menus" data-home-menu-filters>
-            <button class="is-active" type="button" data-home-menu-filter="all" aria-pressed="true">Tous</button>
-            <button type="button" data-home-menu-filter="available" aria-pressed="false">Disponible</button>
-            <button type="button" data-home-menu-filter="party" aria-pressed="false">F&ecirc;tes</button>
-            <button type="button" data-home-menu-filter="large" aria-pressed="false">Plus de 6 gourmands</button>
-            <button type="button" data-home-menu-filter="budget" aria-pressed="false">Moins de 150 &euro;</button>
-            <button class="home-menu-filter-all" type="button" data-home-menu-filter="all" aria-pressed="false">
+        <div class="home-menu-filter-row" aria-label="Filtres visuels des menus" data-menu-filters>
+            <button class="is-active" type="button" data-quick-filter="all" aria-pressed="true">Tous</button>
+            <button type="button" data-quick-filter="available" aria-pressed="false">Disponible</button>
+            <button type="button" data-quick-filter="party" aria-pressed="false">F&ecirc;tes</button>
+            <button type="button" data-quick-filter="large" aria-pressed="false">Plus de 6 gourmands</button>
+            <button type="button" data-quick-filter="budget" aria-pressed="false">Moins de 150 &euro;</button>
+            <button
+                class="home-menu-filter-all"
+                type="button"
+                data-filter-overlay-open
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="menu-filter-overlay"
+            >
                 <i class="bi bi-sliders2-vertical" aria-hidden="true"></i>
                 Tous les filtres
             </button>
         </div>
         <p class="home-menu-filter-note">Les r&eacute;sultats se mettent &agrave; jour automatiquement.</p>
 
+        <?php require dirname(__DIR__) . '/partials/menu-filter-overlay.php'; ?>
+
         <div class="home-featured-menu-grid">
             <?php foreach ($featuredMenus as $menu): ?>
                 <article
                     class="home-featured-menu-card"
+                    data-menu-card
                     data-home-menu-card
+                    data-theme-id="<?= (int) $menu['themeId'] ?>"
+                    data-regime-id="<?= (int) $menu['regimeId'] ?>"
                     data-available="<?= $menu['isAvailable'] ? '1' : '0' ?>"
                     data-party="<?= $menu['isParty'] ? '1' : '0' ?>"
                     data-people="<?= (int) $menu['peopleCount'] ?>"
                     data-price="<?= (int) $menu['priceValue'] ?>"
+                    data-status-type="<?= $this->e($menu['statusType']) ?>"
+                    data-status-week="<?= $menu['statusWeek'] ? '1' : '0' ?>"
+                    data-allergens="<?= $this->e(implode(' ', $menu['allergens'])) ?>"
                 >
                     <div class="home-featured-menu-image">
-                        <img src="<?= $this->e($menu['image']) ?>" alt="<?= $text($menu['title']) ?>">
+                        <button
+                            class="image-preview-button"
+                            type="button"
+                            data-image-preview
+                            data-image-src="<?= $this->e($menu['image']) ?>"
+                            data-image-alt="<?= $text($menu['title']) ?>"
+                            aria-label="Agrandir l'image : <?= $text($menu['title']) ?>"
+                        >
+                            <img src="<?= $this->e($menu['image']) ?>" alt="<?= $text($menu['title']) ?>">
+                        </button>
                         <span><?= $text($menu['tag']) ?></span>
                     </div>
 

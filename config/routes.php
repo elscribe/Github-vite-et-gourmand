@@ -65,12 +65,19 @@ return static function (Router $router): void {
 
     $router->get('/employe', [OrderController::class, 'employeeDashboard'], $employeeAccess);
     $router->get('/employe/commandes', [OrderController::class, 'employeeIndex'], $employeeAccess);
+    $router->post('/employe/commandes/{id}/modifier', [OrderController::class, 'employeeUpdateOrder'], $employeeAccessCsrf);
     $router->post('/employe/commandes/{id}/statut', [OrderController::class, 'employeeStatus'], $employeeAccessCsrf);
     $router->post('/employe/commandes/{id}/annuler', [OrderController::class, 'employeeCancel'], $employeeAccessCsrf);
     $router->get('/employe/avis', [ReviewController::class, 'employeeIndex'], $employeeAccess);
     $router->post('/employe/avis/{id}/moderation', [ReviewController::class, 'moderate'], $employeeAccessCsrf);
 
     $router->get('/admin', [AdminController::class, 'dashboard'], $adminAccess);
+    $router->get('/admin/commandes', [OrderController::class, 'employeeIndex'], $adminAccess);
+    $router->post('/admin/commandes/{id}/modifier', [OrderController::class, 'employeeUpdateOrder'], $adminAccessCsrf);
+    $router->post('/admin/commandes/{id}/statut', [OrderController::class, 'employeeStatus'], $adminAccessCsrf);
+    $router->post('/admin/commandes/{id}/annuler', [OrderController::class, 'employeeCancel'], $adminAccessCsrf);
+    $router->get('/admin/avis', [ReviewController::class, 'employeeIndex'], $adminAccess);
+    $router->post('/admin/avis/{id}/moderation', [ReviewController::class, 'moderate'], $adminAccessCsrf);
     $router->get('/admin/statistiques', [AdminController::class, 'statistics'], $adminAccess);
     $router->get('/admin/employes', [AdminController::class, 'employees'], $adminAccess);
     $router->post('/admin/employes', [AdminController::class, 'storeEmployee'], $adminAccessCsrf);
@@ -79,7 +86,10 @@ return static function (Router $router): void {
     $router->post('/admin/horaires', [AdminController::class, 'updateSchedules'], $adminAccessCsrf);
     $router->get('/admin/menus', [AdminController::class, 'menus'], $adminAccess);
     $router->post('/admin/menus', [AdminController::class, 'storeMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/selection', [AdminController::class, 'updateMenuSelection'], $adminAccessCsrf);
     $router->post('/admin/menus/{id}', [AdminController::class, 'updateMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/{id}/plats', [AdminController::class, 'attachDishToMenu'], $adminAccessCsrf);
+    $router->post('/admin/menus/{id}/plats/{dishId}/retirer', [AdminController::class, 'detachDishFromMenu'], $adminAccessCsrf);
     $router->get('/admin/plats', [AdminController::class, 'dishes'], $adminAccess);
     $router->post('/admin/plats', [AdminController::class, 'storeDish'], $adminAccessCsrf);
     $router->post('/admin/plats/{id}', [AdminController::class, 'updateDish'], $adminAccessCsrf);

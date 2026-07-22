@@ -5,9 +5,9 @@ declare(strict_types=1);
 /**
  * Configuration de la base de donnees SQL.
  *
- * Le squelette prepare une connexion PDO vers MySQL/MariaDB. MongoDB reste un
- * dossier prepare pour la suite du projet et n'est pas encore connecte au code
- * PHP.
+ * Les donnees metier restent dans MySQL/MariaDB via PDO. Les statistiques
+ * administrateur peuvent lire les agregats MongoDB avec mongosh, avec SQL en
+ * secours quand MongoDB est indisponible en local.
  */
 
 return [

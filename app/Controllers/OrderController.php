@@ -10,6 +10,7 @@ use App\Core\Response;
 use App\Core\Session;
 use App\Models\MenuModel;
 use App\Models\OrderModel;
+use App\Models\ReviewModel;
 use App\Models\UserModel;
 use App\Services\MailService;
 
@@ -182,12 +183,30 @@ final class OrderController extends BaseController
     public function employeeDashboard(): void
     {
         $orderModel = new OrderModel();
+        $reviewModel = new ReviewModel();
         $orders = $orderModel->findAll();
+        $dailyStats = $orderModel->dashboardDailyStats();
 
         $this->view('employee/dashboard', [
-            'pageTitle' => 'Espace employe - Vite & Gourmand',
-            'orders' => $orders,
+            'pageTitle' => 'Tableau de bord - Vite & Gourmand',
+            'employeeStats' => [
+                'orders_to_process' => $dailyStats['active_followups'],
+                'revenue_today' => $dailyStats['revenue_today'],
+                'kitchen_delivery_followups' => count(array_filter(
+                    $orders,
+                    static fn (array $order): bool => in_array(
+                        $order['statut_actuel'],
+                        ['en_preparation', 'en_cours_de_livraison', 'livre', 'en_attente_retour_materiel'],
+                        true
+                    )
+                )),
+                'pending_reviews' => $reviewModel->countPending(),
+            ],
+            'ordersToProcess' => $orderModel->findDashboardOrders(),
+            'reviewsToModerate' => $reviewModel->findPendingForDashboard(),
             'statusLabels' => $orderModel->statusLabels(),
+            'orderManagementBasePath' => '/employe/commandes',
+            'reviewManagementBasePath' => '/employe/avis',
         ]);
     }
 
@@ -197,21 +216,35 @@ final class OrderController extends BaseController
         $filters = [
             'status' => Input::getString('status'),
             'customer' => Input::getString('customer'),
+            'id_commande' => Input::getString('id_commande'),
+            'nom' => Input::getString('nom'),
+            'prenom' => Input::getString('prenom'),
+            'email' => Input::getString('email'),
+            'telephone' => Input::getString('telephone'),
+            'adresse' => Input::getString('adresse'),
+            'ville' => Input::getString('ville'),
         ];
 
         $this->view('employee/orders', [
-            'pageTitle' => 'Commandes employe - Vite & Gourmand',
+            'pageTitle' => 'Gestion des commandes - Vite & Gourmand',
             'orders' => $orderModel->findAll($filters),
             'statusLabels' => $orderModel->statusLabels(),
             'filters' => $filters,
+            'orderManagementBasePath' => $this->backOfficeOrdersBasePath(),
         ]);
     }
 
     public function employeeStatus(string $id): void
     {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
         $userId = $this->authenticatedUserId();
         $status = Input::postString('statut');
         $comment = Input::postString('commentaire');
+
+        if ($status === 'annulee') {
+            Session::flash('error', 'Pour annuler une commande, utilisez le formulaire avec mode de contact et motif.');
+            $this->redirect($orderManagementBasePath);
+        }
 
         if ($comment === '') {
             $comment = 'Statut mis a jour par un employe.';
@@ -226,11 +259,58 @@ final class OrderController extends BaseController
 
         Session::flash($updated ? 'success' : 'error', $updated ? 'Statut mis a jour.' : 'Le statut demande est invalide.');
 
-        $this->redirect('/employe/commandes');
+        $this->redirect($orderManagementBasePath);
+    }
+
+    public function employeeUpdateOrder(string $id): void
+    {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
+        $userId = $this->authenticatedUserId();
+        $orderModel = new OrderModel();
+        $order = $orderModel->findOneForEmployee((int) $id);
+        $data = $this->orderFormData();
+        $modeContact = Input::postString('mode_contact_modification');
+        $motif = Input::postString('motif_modification');
+        $menu = $order === null ? null : $orderModel->findMenuForExistingOrder((int) $order['id_menu']);
+        $errors = $this->validateOrderData($data, $menu);
+
+        if ($order === null) {
+            Session::flash('error', 'Commande introuvable.');
+            $this->redirect($orderManagementBasePath);
+        }
+
+        if (in_array($order['statut_actuel'], ['terminee', 'annulee'], true)) {
+            $errors['statut'] = 'Cette commande est cloturee et ne peut plus etre modifiee.';
+        }
+
+        if (!in_array($modeContact, ['gsm', 'email'], true)) {
+            $errors['mode_contact'] = 'Le mode de contact client est obligatoire.';
+        }
+
+        if ($motif === '') {
+            $errors['motif'] = 'Le motif de modification apres contact client est obligatoire.';
+        }
+
+        if ($errors !== []) {
+            Session::flash('error', implode(' ', array_values($errors)));
+            $this->redirect($orderManagementBasePath);
+        }
+
+        $updated = $orderModel->updateByEmployeeAfterContact((int) $id, $userId, $data, $modeContact, $motif);
+
+        Session::flash(
+            $updated ? 'success' : 'error',
+            $updated
+                ? 'Commande modifiee apres contact client.'
+                : 'La commande n a pas pu etre modifiee.'
+        );
+
+        $this->redirect($orderManagementBasePath);
     }
 
     public function employeeCancel(string $id): void
     {
+        $orderManagementBasePath = $this->backOfficeOrdersBasePath();
         $userId = $this->authenticatedUserId();
         $modeContact = Input::postString('mode_contact_modification');
         $motif = Input::postString('motif_annulation');
@@ -248,7 +328,7 @@ final class OrderController extends BaseController
                 : 'Mode de contact ou motif invalide.'
         );
 
-        $this->redirect('/employe/commandes');
+        $this->redirect($orderManagementBasePath);
     }
 
     /**
@@ -334,6 +414,13 @@ final class OrderController extends BaseController
         }
 
         return $userId;
+    }
+
+    private function backOfficeOrdersBasePath(): string
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+
+        return str_starts_with($path, '/admin') ? '/admin/commandes' : '/employe/commandes';
     }
 
     private function notifyOrderCreated(int $userId, int $orderId): void

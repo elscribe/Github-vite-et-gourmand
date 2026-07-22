@@ -93,7 +93,7 @@ final class PlaceholderController extends BaseController
     {
         $this->showPublicPage(
             'Mentions légales',
-            'Informations légales principales de Vite & Gourmand, présentées simplement pour le livrable UX/UI.',
+            'Informations légales principales de Vite & Gourmand, présentées simplement pour les visiteurs.',
             'Éditeur du site',
             [
                 'Vite & Gourmand',
@@ -103,8 +103,7 @@ final class PlaceholderController extends BaseController
                 'Responsable de publication : Julie Martin',
                 'Hébergement : information à compléter au moment de la mise en production.',
                 'Données personnelles : les informations collectées servent uniquement à la gestion des commandes, des contacts et des avis clients.',
-            ],
-            'Point clé UX : ces pages secondaires complètent le footer et sécurisent le parcours public.'
+            ]
         );
     }
 
@@ -120,8 +119,7 @@ final class PlaceholderController extends BaseController
                 '3. Après acceptation, toute modification interne nécessite un contact client préalable par appel ou email.',
                 '4. Les statuts affichés au client suivent les étapes : reçue, acceptée, en préparation, en livraison, livrée.',
                 '5. Les avis clients sont publiés après validation par l’équipe.',
-            ],
-            'Point clé UX : rendre visibles les règles d’annulation, de modification et de contact client.'
+            ]
         );
     }
 
@@ -136,8 +134,7 @@ final class PlaceholderController extends BaseController
                 'Les informations de contact permettent à l’équipe de confirmer une prestation ou de répondre à une question.',
                 'Les accès internes sont réservés au personnel autorisé.',
                 'Aucune donnée de paiement n’est stockée dans cette version du projet.',
-            ],
-            'Point clé UX : expliquer simplement pourquoi les informations sont demandées.'
+            ]
         );
     }
 
@@ -165,7 +162,7 @@ final class PlaceholderController extends BaseController
         string $sectionDescription,
         string $contentTitle,
         array $contentLines,
-        string $keyPoint
+        ?string $keyPoint = null
     ): void {
         $this->view('placeholder/show', [
             'pageTitle' => $sectionTitle . ' - Vite & Gourmand',

@@ -199,7 +199,7 @@ final class UserModel extends BaseModel
     /**
      * @param array{email: string, nom: string, prenom: string, telephone: string, adresse_postale: string, ville: string, pays: string} $data
      */
-    public function createEmployee(array $data, string $temporaryPassword): int
+    public function createEmployee(array $data, string $password): int
     {
         $roleId = $this->employeeRoleId();
 
@@ -210,7 +210,7 @@ final class UserModel extends BaseModel
         $statement->execute([
             'id_role' => $roleId,
             'email' => $data['email'],
-            'password_hash' => password_hash($temporaryPassword, PASSWORD_DEFAULT),
+            'password_hash' => password_hash($password, PASSWORD_DEFAULT),
             'nom' => $data['nom'],
             'prenom' => $data['prenom'],
             'telephone' => $data['telephone'],

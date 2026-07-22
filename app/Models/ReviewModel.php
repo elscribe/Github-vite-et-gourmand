@@ -66,6 +66,44 @@ final class ReviewModel extends BaseModel
         return $statement->fetchAll();
     }
 
+    public function countPending(): int
+    {
+        $statement = $this->pdo()->query("SELECT COUNT(*) FROM avis WHERE statut = 'en_attente'");
+
+        return (int) $statement->fetchColumn();
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    public function findPendingForDashboard(int $limit = 3): array
+    {
+        $sql = <<<SQL
+            SELECT
+                a.id_avis,
+                a.note,
+                a.commentaire,
+                a.created_at,
+                u.prenom,
+                u.nom,
+                u.email,
+                m.titre AS menu_titre
+            FROM avis a
+            INNER JOIN utilisateurs u ON u.id_utilisateur = a.id_utilisateur
+            INNER JOIN commandes c ON c.id_commande = a.id_commande
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            WHERE a.statut = 'en_attente'
+            ORDER BY a.created_at DESC, a.id_avis DESC
+            LIMIT :limit
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     /**
      * @return list<array<string, mixed>>
      */

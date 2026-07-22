@@ -48,7 +48,7 @@ Date : 2026-07-15.
 - `/mot-de-passe/oublie` mobile affiche la carte `Besoin d'aide ?` visible dans la frame Figma.
 - `/mot-de-passe/reinitialisation` est harmonisee avec la meme structure visuelle.
 - Test POST mot de passe oublie invalide effectue avec token CSRF : retour `200` et erreur email visible.
-- `/mentions-legales` et `/cgv` reprennent le composant legal Figma : kicker, titre Playfair, intro, carte blanche bordee, contenu et encadre `Point cle UX`.
+- `/mentions-legales` et `/cgv` reprennent le composant legal Figma : kicker, titre Playfair, intro, carte blanche bordee et contenu public finalise.
 
 ## Etat verifie - espace client prive
 

@@ -38,18 +38,36 @@ $detailSections = $presentation['detail_sections'] ?? [];
 
         <div class="menu-detail-layout">
             <div class="menu-detail-left">
-                <img
-                    class="menu-detail-hero-image"
-                    src="<?= $this->e($mainImage['src']) ?>"
-                    alt="<?= $this->e($mainImage['alt']) ?>"
+                <button
+                    class="menu-detail-hero-preview"
+                    type="button"
+                    data-image-preview
+                    data-image-src="<?= $this->e($mainImage['src']) ?>"
+                    data-image-alt="<?= $this->e($mainImage['alt']) ?>"
+                    aria-label="Agrandir l'image principale : <?= $this->e($presentation['title']) ?>"
                 >
+                    <img
+                        class="menu-detail-hero-image"
+                        src="<?= $this->e($mainImage['src']) ?>"
+                        alt="<?= $this->e($mainImage['alt']) ?>"
+                    >
+                </button>
 
                 <?php if ($galleryImages !== []): ?>
                     <section class="menu-detail-gallery" aria-labelledby="menu-gallery-title">
                         <h2 id="menu-gallery-title">Galerie des plats</h2>
                         <div class="menu-detail-thumbs">
                             <?php foreach ($galleryImages as $image): ?>
-                                <img src="<?= $this->e($image['src']) ?>" alt="<?= $this->e($image['alt']) ?>">
+                                <button
+                                    class="menu-detail-thumb-button"
+                                    type="button"
+                                    data-image-preview
+                                    data-image-src="<?= $this->e($image['src']) ?>"
+                                    data-image-alt="<?= $this->e($image['alt']) ?>"
+                                    aria-label="Agrandir l'image : <?= $this->e($image['alt']) ?>"
+                                >
+                                    <img src="<?= $this->e($image['src']) ?>" alt="<?= $this->e($image['alt']) ?>">
+                                </button>
                             <?php endforeach; ?>
                         </div>
                     </section>

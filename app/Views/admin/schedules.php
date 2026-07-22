@@ -17,7 +17,6 @@ $dayLabels = [
         <a class="back-link" href="/admin">Retour admin</a>
 
         <div class="section-heading">
-            <p class="section-kicker">Administration</p>
             <h1>Horaires</h1>
             <p class="muted-text">Ces horaires servent de referentiel pour l'affichage public.</p>
         </div>

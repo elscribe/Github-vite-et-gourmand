@@ -48,25 +48,25 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| C1 Connexion employe | Se connecter comme employe | Acces a l'espace employe. | A tester |
-| C2 Liste commandes | Ouvrir `/employe/commandes` | Liste des commandes visible. | A tester |
-| C3 Filtre commandes | Filtrer par statut ou client | Liste reduite selon le filtre. | A tester |
-| C4 Changement statut | Passer une commande a un autre statut | Statut mis a jour et historique ajoute. | A tester |
-| C5 Annulation employe | Annuler avec mode contact + motif | Annulation enregistree avec justification. | A tester |
-| C6 Moderation avis | Ouvrir `/employe/avis` | Avis en attente visibles. | A tester |
-| C7 Valider/refuser avis | Moderer un avis | L'avis change de statut. | A tester |
+| C1 Connexion employe | Se connecter comme employe | Acces a l'espace employe. | Valide local |
+| C2 Liste commandes | Ouvrir `/employe/commandes` | Liste des commandes visible. | Valide local |
+| C3 Filtre commandes | Filtrer par statut ou client | Liste reduite selon le filtre. | Valide local |
+| C4 Changement statut | Passer une commande a un autre statut | Statut mis a jour et historique ajoute. | Valide local |
+| C5 Annulation employe | Annuler avec mode contact + motif | Annulation enregistree avec justification. | Valide local |
+| C6 Moderation avis | Ouvrir `/employe/avis` | Avis en attente visibles. | Valide local |
+| C7 Valider/refuser avis | Moderer un avis | L'avis change de statut. | Valide local |
 
 ## D. Parcours administrateur
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| D1 Connexion admin | Se connecter comme administrateur | Acces au dashboard admin. | A tester |
-| D2 Dashboard | Ouvrir `/admin` | Indicateurs principaux visibles. | A tester |
-| D3 Statistiques | Ouvrir `/admin/statistiques` | Commandes et CA par menu visibles, filtres disponibles. | A tester |
-| D4 Employes | Ouvrir `/admin/employes` | Creation et activation/desactivation employe possibles. | A tester |
-| D5 Horaires | Ouvrir `/admin/horaires` | Gestion simple des horaires possible. | A tester |
-| D6 Menus admin | Ouvrir `/admin/menus` | Creation/modification des champs principaux menu possible. | A tester |
-| D7 Plats admin | Ouvrir `/admin/plats` | Creation/modification des plats possible. | A tester |
+| D1 Connexion admin | Se connecter comme administrateur | Acces au dashboard admin. | Valide local |
+| D2 Dashboard | Ouvrir `/admin` | Indicateurs principaux visibles. | Valide local |
+| D3 Statistiques | Ouvrir `/admin/statistiques` | Commandes et CA par menu visibles, filtres disponibles. | Valide local |
+| D4 Employes | Ouvrir `/admin/employes` | Creation et activation/desactivation employe possibles. | Valide local |
+| D5 Horaires | Ouvrir `/admin/horaires` | Gestion simple des horaires possible. | Valide local |
+| D6 Menus admin | Ouvrir `/admin/menus` | Creation/modification des champs principaux menu possible. | Valide local |
+| D7 Plats admin | Ouvrir `/admin/plats` | Creation/modification des plats possible. | Valide local |
 
 ## E. Securite minimale
 

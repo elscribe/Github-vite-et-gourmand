@@ -17,12 +17,44 @@ const updateBackToTop = () => {
     document.body.classList.toggle('show-back-to-top', window.scrollY > 360);
 };
 
-window.addEventListener('scroll', () => {
+const refreshPageChrome = () => {
     updateHomeHeader();
     updateBackToTop();
-});
-updateHomeHeader();
-updateBackToTop();
+};
+
+window.addEventListener('scroll', refreshPageChrome, { passive: true });
+window.addEventListener('load', refreshPageChrome);
+window.addEventListener('pageshow', refreshPageChrome);
+document.addEventListener('DOMContentLoaded', refreshPageChrome);
+requestAnimationFrame(refreshPageChrome);
+refreshPageChrome();
+
+const initFlashMessages = () => {
+    document.querySelectorAll('.flash-container .success-message').forEach((message) => {
+        if (!(message instanceof HTMLElement) || message.dataset.autoDismiss === 'true') {
+            return;
+        }
+
+        message.dataset.autoDismiss = 'true';
+
+        window.setTimeout(() => {
+            message.classList.add('is-hiding');
+
+            window.setTimeout(() => {
+                const container = message.closest('.flash-container');
+
+                message.remove();
+
+                if (container instanceof HTMLElement && container.querySelector('.alert-message') === null) {
+                    container.remove();
+                }
+            }, 260);
+        }, 2500);
+    });
+};
+
+window.addEventListener('pageshow', initFlashMessages);
+initFlashMessages();
 
 const mobileMenu = document.querySelector('[data-mobile-menu]');
 const mobileMenuOpenButton = document.querySelector('[data-mobile-menu-open]');
@@ -73,9 +105,106 @@ if (mobileMenu instanceof HTMLElement) {
     });
 }
 
+const backofficeMobileNav = document.querySelector('[data-backoffice-mobile-nav]');
+const backofficeMobileNavToggle = document.querySelector('[data-backoffice-mobile-menu-toggle]');
+const backofficeMobileNavCloseButtons = backofficeMobileNav instanceof HTMLElement
+    ? Array.from(backofficeMobileNav.querySelectorAll('[data-backoffice-mobile-nav-close]'))
+    : [];
+
+const setBackofficeMobileNavOpen = (isOpen) => {
+    if (!(backofficeMobileNav instanceof HTMLElement)) {
+        return;
+    }
+
+    backofficeMobileNav.hidden = !isOpen;
+    document.body.classList.toggle('backoffice-mobile-nav-open', isOpen);
+
+    if (backofficeMobileNavToggle instanceof HTMLElement) {
+        backofficeMobileNavToggle.setAttribute('aria-expanded', String(isOpen));
+    }
+};
+
+const closeBackofficeMobileNav = () => {
+    setBackofficeMobileNavOpen(false);
+};
+
+if (backofficeMobileNavToggle instanceof HTMLElement && backofficeMobileNav instanceof HTMLElement) {
+    backofficeMobileNavToggle.addEventListener('click', () => {
+        const isOpen = !document.body.classList.contains('backoffice-mobile-nav-open');
+
+        setBackofficeMobileNavOpen(isOpen);
+    });
+
+    backofficeMobileNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeBackofficeMobileNav);
+    });
+
+    backofficeMobileNavCloseButtons.forEach((button) => {
+        button.addEventListener('click', closeBackofficeMobileNav);
+    });
+}
+
+const backofficeNotifications = document.querySelector('[data-backoffice-notifications]');
+
+if (backofficeNotifications instanceof HTMLElement) {
+    const notificationToggle = backofficeNotifications.querySelector('[data-backoffice-notification-toggle]');
+    const notificationPanel = backofficeNotifications.querySelector('[data-backoffice-notification-panel]');
+
+    const closeNotifications = () => {
+        if (!(notificationPanel instanceof HTMLElement) || !(notificationToggle instanceof HTMLElement)) {
+            return;
+        }
+
+        notificationPanel.hidden = true;
+        notificationToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    const openNotifications = () => {
+        if (!(notificationPanel instanceof HTMLElement) || !(notificationToggle instanceof HTMLElement)) {
+            return;
+        }
+
+        notificationPanel.hidden = false;
+        notificationToggle.setAttribute('aria-expanded', 'true');
+    };
+
+    if (notificationToggle instanceof HTMLElement && notificationPanel instanceof HTMLElement) {
+        notificationToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            if (notificationPanel.hidden) {
+                openNotifications();
+                return;
+            }
+
+            closeNotifications();
+        });
+
+        notificationPanel.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (event.target instanceof Node && !backofficeNotifications.contains(event.target)) {
+                closeNotifications();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeNotifications();
+            }
+        });
+    }
+}
+
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && mobileMenu instanceof HTMLElement && !mobileMenu.hidden) {
         closeMobileMenu();
+    }
+
+    if (event.key === 'Escape' && backofficeMobileNav instanceof HTMLElement && !backofficeMobileNav.hidden) {
+        closeBackofficeMobileNav();
     }
 });
 
@@ -160,7 +289,7 @@ if (homeMenuFilters instanceof HTMLElement) {
 
 const menuFilterForm = document.querySelector('[data-menu-filters]');
 
-if (menuFilterForm instanceof HTMLFormElement) {
+if (menuFilterForm instanceof HTMLElement) {
     const menuCards = Array.from(document.querySelectorAll('[data-menu-card]'));
     const resultCount = document.querySelector('[data-menu-results-count]');
     const emptyState = document.querySelector('[data-menu-empty-state]');
@@ -359,6 +488,19 @@ if (menuFilterForm instanceof HTMLFormElement) {
         setAdvancedFieldValue('allergens', selectedAllergens.join(','));
     };
 
+    const clearAdvancedAvailability = () => {
+        setAdvancedFieldValue('availability', '');
+
+        filterChips
+            .filter((chip) => chip.dataset.filterChip === 'availability')
+            .forEach((chip) => {
+                chip.classList.remove('is-selected');
+                chip.setAttribute('aria-pressed', 'false');
+            });
+
+        advancedFilters.availability = '';
+    };
+
     const activateQuickButton = (buttonToActivate) => {
         quickButtons.forEach((quickButton) => {
             const isActive = quickButton === buttonToActivate;
@@ -437,14 +579,21 @@ if (menuFilterForm instanceof HTMLFormElement) {
         }
     };
 
-    menuFilterForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        applyMenuFilters();
-    });
+    if (menuFilterForm instanceof HTMLFormElement) {
+        menuFilterForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            applyMenuFilters();
+        });
+    }
 
     quickButtons.forEach((button) => {
         button.addEventListener('click', () => {
             selectedQuickFilter = button.dataset.quickFilter || 'all';
+
+            if (selectedQuickFilter === 'available') {
+                clearAdvancedAvailability();
+            }
+
             activateQuickButton(button);
 
             applyMenuFilters();
@@ -484,6 +633,10 @@ if (menuFilterForm instanceof HTMLFormElement) {
                 setAdvancedFieldValue(filterName, isSelected ? button.dataset.value || '' : '');
             }
 
+            if (filterName === 'availability' && isSelected && selectedQuickFilter === 'available') {
+                resetQuickFilter();
+            }
+
             syncAdvancedFiltersFromFields();
             updateOverlayButtonState();
         });
@@ -507,6 +660,7 @@ if (menuFilterForm instanceof HTMLFormElement) {
             resetAdvancedFields();
             resetQuickFilter();
             applyMenuFilters();
+            closeFilterOverlay();
         });
     }
 
@@ -532,6 +686,89 @@ if (menuFilterForm instanceof HTMLFormElement) {
 
     applyMenuFilters();
 }
+
+const imageLightbox = document.querySelector('[data-image-lightbox]');
+const imageLightboxImage = imageLightbox?.querySelector('[data-image-lightbox-image]');
+const imageLightboxCaption = imageLightbox?.querySelector('[data-image-lightbox-caption]');
+const imageLightboxCloseButtons = imageLightbox instanceof HTMLElement
+    ? Array.from(imageLightbox.querySelectorAll('[data-image-lightbox-close]'))
+    : [];
+let imageLightboxReturnFocus = null;
+
+const closeImageLightbox = () => {
+    if (!(imageLightbox instanceof HTMLElement)) {
+        return;
+    }
+
+    imageLightbox.hidden = true;
+    document.body.classList.remove('image-lightbox-open');
+
+    if (imageLightboxImage instanceof HTMLImageElement) {
+        imageLightboxImage.src = '';
+        imageLightboxImage.alt = '';
+    }
+
+    if (imageLightboxCaption instanceof HTMLElement) {
+        imageLightboxCaption.textContent = '';
+    }
+
+    if (imageLightboxReturnFocus instanceof HTMLElement) {
+        imageLightboxReturnFocus.focus();
+    }
+
+    imageLightboxReturnFocus = null;
+};
+
+const openImageLightbox = (button) => {
+    if (
+        !(imageLightbox instanceof HTMLElement)
+        || !(imageLightboxImage instanceof HTMLImageElement)
+    ) {
+        return;
+    }
+
+    const src = button.dataset.imageSrc || '';
+    const alt = button.dataset.imageAlt || '';
+
+    if (src === '') {
+        return;
+    }
+
+    imageLightboxReturnFocus = button;
+    imageLightboxImage.src = src;
+    imageLightboxImage.alt = alt;
+
+    if (imageLightboxCaption instanceof HTMLElement) {
+        imageLightboxCaption.textContent = alt;
+    }
+
+    imageLightbox.hidden = false;
+    document.body.classList.add('image-lightbox-open');
+
+    const closeButton = imageLightbox.querySelector('.image-lightbox-close');
+
+    if (closeButton instanceof HTMLElement) {
+        closeButton.focus();
+    }
+};
+
+document.querySelectorAll('[data-image-preview]').forEach((button) => {
+    if (button instanceof HTMLElement) {
+        button.addEventListener('click', () => {
+            openImageLightbox(button);
+        });
+    }
+});
+
+imageLightboxCloseButtons.forEach((button) => {
+    button.addEventListener('click', closeImageLightbox);
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && imageLightbox instanceof HTMLElement && !imageLightbox.hidden) {
+        closeImageLightbox();
+    }
+});
 
 const orderForm = document.querySelector('[data-order-form]');
 
@@ -735,3 +972,105 @@ if (clientRating instanceof HTMLElement) {
         setRatingPreview(currentInput instanceof HTMLInputElement ? Number(currentInput.value) : 0);
     });
 }
+
+const bindAdminInlineSearch = (inputSelector, itemSelector) => {
+    const searchInput = document.querySelector(inputSelector);
+    const items = Array.from(document.querySelectorAll(itemSelector));
+
+    if (!(searchInput instanceof HTMLInputElement) || items.length === 0) {
+        return;
+    }
+
+    const filterItems = () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) {
+                return;
+            }
+
+            const haystack = (item.dataset.searchText || item.textContent || '').toLowerCase();
+            item.hidden = query !== '' && !haystack.includes(query);
+        });
+    };
+
+    searchInput.addEventListener('input', filterItems);
+    filterItems();
+};
+
+bindAdminInlineSearch('[data-admin-menu-search]', '[data-admin-menu-item]');
+
+const bindAdminMenuCards = () => {
+    document.querySelectorAll('[data-admin-menu-url]').forEach((card) => {
+        if (!(card instanceof HTMLElement)) {
+            return;
+        }
+
+        card.addEventListener('click', (event) => {
+            if (
+                event.target instanceof Element
+                && event.target.closest('a, button, input, label, select, textarea, summary')
+            ) {
+                return;
+            }
+
+            const url = card.dataset.adminMenuUrl;
+
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+};
+
+bindAdminMenuCards();
+
+const bindAdminDishFilters = () => {
+    const searchInput = document.querySelector('[data-admin-dish-search]');
+    const typeButtons = Array.from(document.querySelectorAll('[data-admin-dish-type-filter]'));
+    const items = Array.from(document.querySelectorAll('[data-admin-dish-item]'));
+
+    if (!(searchInput instanceof HTMLInputElement) || items.length === 0) {
+        return;
+    }
+
+    let selectedType = 'all';
+
+    const filterItems = () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) {
+                return;
+            }
+
+            const haystack = (item.dataset.searchText || item.textContent || '').toLowerCase();
+            const matchesSearch = query === '' || haystack.includes(query);
+            const matchesType = selectedType === 'all' || item.dataset.dishType === selectedType;
+            item.hidden = !matchesSearch || !matchesType;
+        });
+    };
+
+    typeButtons.forEach((button) => {
+        if (!(button instanceof HTMLElement)) {
+            return;
+        }
+
+        button.addEventListener('click', () => {
+            selectedType = button.dataset.adminDishTypeFilter || 'all';
+
+            typeButtons.forEach((currentButton) => {
+                const isActive = currentButton === button;
+                currentButton.classList.toggle('is-active', isActive);
+                currentButton.setAttribute('aria-pressed', String(isActive));
+            });
+
+            filterItems();
+        });
+    });
+
+    searchInput.addEventListener('input', filterItems);
+    filterItems();
+};
+
+bindAdminDishFilters();

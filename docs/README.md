@@ -10,6 +10,7 @@ le manuel utilisateur pour le jury.
 
 - [Structure projet](project-structure.md)
 - [Depot Git](repository.md)
+- [Rapport Sprint 0](sprint-0-report.md)
 - [Suivi UX/UI](design.md)
 - [Base de donnees](database/README.md)
 - [Gestion de projet](project-management/README.md)

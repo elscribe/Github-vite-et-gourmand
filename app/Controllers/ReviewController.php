@@ -97,6 +97,7 @@ final class ReviewController extends BaseController
         $this->view('employee/reviews', [
             'pageTitle' => 'Moderation des avis - Vite & Gourmand',
             'reviews' => (new ReviewModel())->findAllForModeration(),
+            'reviewManagementBasePath' => $this->backOfficeReviewsBasePath(),
         ]);
     }
 
@@ -107,7 +108,7 @@ final class ReviewController extends BaseController
         $updated = (new ReviewModel())->moderate((int) $id, $userId, $status);
 
         Session::flash($updated ? 'success' : 'error', $updated ? 'Avis modere.' : 'Statut d avis invalide.');
-        $this->redirect('/employe/avis');
+        $this->redirect($this->backOfficeReviewsBasePath());
     }
 
     private function authenticatedUserId(): int
@@ -119,5 +120,12 @@ final class ReviewController extends BaseController
         }
 
         return $userId;
+    }
+
+    private function backOfficeReviewsBasePath(): string
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+
+        return str_starts_with($path, '/admin') ? '/admin/avis' : '/employe/avis';
     }
 }

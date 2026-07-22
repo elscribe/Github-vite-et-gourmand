@@ -43,24 +43,32 @@ final class MenuPresentation
                         'alt' => 'Table de Noël avec volaille festive, chandeliers et décorations',
                     ],
                     [
-                        'src' => '/images/menu-details/noel/thumb-1.png',
-                        'alt' => 'Assiette festive dressée',
+                        'src' => '/images/menu-details/noel/dish-foie-gras.png',
+                        'alt' => 'Foie gras maison mi-cuit avec chutney de figues',
                     ],
                     [
-                        'src' => '/images/menu-details/noel/thumb-2.png',
-                        'alt' => 'Volaille de Noël servie entière',
+                        'src' => '/images/menu-details/noel/dish-veloute-chataignes.png',
+                        'alt' => 'Velouté de châtaignes aux éclats de truffe',
                     ],
                     [
-                        'src' => '/images/menu-details/noel/thumb-3.png',
-                        'alt' => 'Velouté de fête',
+                        'src' => '/images/menu-details/noel/dish-volaille-marrons.png',
+                        'alt' => 'Volaille festive farcie aux marrons et herbes fines',
                     ],
                     [
-                        'src' => '/images/menu-details/noel/thumb-4.png',
-                        'alt' => 'Bûche pâtissière chocolatée',
+                        'src' => '/images/menu-details/noel/dish-legumes-antan.png',
+                        'alt' => "Légumes d'antan rôtis au thym frais",
                     ],
                     [
-                        'src' => '/images/menu-details/noel/thumb-5.png',
-                        'alt' => 'Mignardises et desserts de fête',
+                        'src' => '/images/menu-details/noel/dish-gratin-dauphinois.png',
+                        'alt' => 'Gratin dauphinois traditionnel à la crème',
+                    ],
+                    [
+                        'src' => '/images/menu-details/noel/dish-buche-chocolat.png',
+                        'alt' => "Bûche pâtissière au chocolat noir d'origine",
+                    ],
+                    [
+                        'src' => '/images/menu-details/noel/dish-mignardises-macarons.png',
+                        'alt' => 'Assiette de mignardises et macarons de fête',
                     ],
                 ],
                 'important_conditions' => [
@@ -118,24 +126,28 @@ final class MenuPresentation
                         'alt' => 'Plateaux cocktail avec bouchées salées et verrines',
                     ],
                     [
-                        'src' => '/images/menu-details/cocktail/thumb-1.png',
-                        'alt' => 'Mini bouchées cocktail colorées',
+                        'src' => '/images/menu-details/cocktail/dish-bouchees-salees.png',
+                        'alt' => 'Bouchées salées assorties de saison',
                     ],
                     [
-                        'src' => '/images/menu-details/cocktail/thumb-2.png',
-                        'alt' => 'Verrines fraîches pour réception',
+                        'src' => '/images/menu-details/cocktail/dish-verrines-terre-mer.png',
+                        'alt' => 'Verrines fraîcheur terre-mer',
                     ],
                     [
-                        'src' => '/images/menu-details/cocktail/thumb-3.png',
-                        'alt' => 'Plateau de mini tartines',
+                        'src' => '/images/menu-details/cocktail/dish-mini-tartines-foie-gras.png',
+                        'alt' => 'Mini tartines croustillantes au foie gras du Sud-Ouest',
                     ],
                     [
-                        'src' => '/images/menu-details/cocktail/thumb-4.png',
-                        'alt' => 'Mignardises cocktail dressées',
+                        'src' => '/images/menu-details/cocktail/dish-canneles-sales.png',
+                        'alt' => 'Cannelés salés authentiques façon bordelaise',
                     ],
                     [
-                        'src' => '/images/menu-details/cocktail/thumb-5.png',
-                        'alt' => 'Assortiment cocktail prêt à servir',
+                        'src' => '/images/menu-details/cocktail/dish-mignardises-sucrees.png',
+                        'alt' => 'Sélection de mignardises sucrées fines',
+                    ],
+                    [
+                        'src' => '/images/menu-details/cocktail/dish-verrines-fruits.png',
+                        'alt' => 'Verrines gourmandes aux fruits de saison',
                     ],
                 ],
                 'important_conditions' => [
@@ -191,23 +203,27 @@ final class MenuPresentation
                         'alt' => 'Table végétarienne colorée avec légumes et tartes',
                     ],
                     [
-                        'src' => '/images/menu-details/vege/thumb-1.png',
+                        'src' => '/images/menu-details/vege/dish-tarte-legumes.png',
                         'alt' => 'Tarte fine aux légumes de saison',
                     ],
                     [
-                        'src' => '/images/menu-details/vege/thumb-2.png',
+                        'src' => '/images/menu-details/vege/dish-salade-croquante.png',
                         'alt' => 'Salade végétarienne croquante',
                     ],
                     [
-                        'src' => '/images/menu-details/vege/thumb-3.png',
+                        'src' => '/images/menu-details/vege/dish-quiche-epinards.png',
                         'alt' => 'Quiche végétarienne généreuse',
                     ],
                     [
-                        'src' => '/images/menu-details/vege/thumb-4.png',
-                        'alt' => 'Dessert végétarien chocolaté',
+                        'src' => '/images/menu-details/vege/dish-legumes-rotis.png',
+                        'alt' => 'Légumes glacés rôtis au miel de pays et romarin',
                     ],
                     [
-                        'src' => '/images/menu-details/vege/thumb-5.png',
+                        'src' => '/images/menu-details/vege/dish-fondant-chocolat.png',
+                        'alt' => 'Fondant intense au chocolat noir végétarien',
+                    ],
+                    [
+                        'src' => '/images/menu-details/vege/dish-fruits-saison.png',
                         'alt' => 'Fruits frais dressés',
                     ],
                 ],
@@ -264,23 +280,31 @@ final class MenuPresentation
                         'alt' => 'Assiette raffinée terre et mer avec poisson et légumes',
                     ],
                     [
-                        'src' => '/images/menu-details/terre-mer/thumb-1.png',
+                        'src' => '/images/menu-details/terre-mer/dish-carpaccio-saint-jacques.png',
                         'alt' => 'Carpaccio de Saint-Jacques',
                     ],
                     [
-                        'src' => '/images/menu-details/terre-mer/thumb-2.png',
+                        'src' => '/images/menu-details/terre-mer/dish-veloute-homard.png',
                         'alt' => 'Velouté de homard',
                     ],
                     [
-                        'src' => '/images/menu-details/terre-mer/thumb-3.png',
+                        'src' => '/images/menu-details/terre-mer/dish-filet-bar.png',
                         'alt' => 'Filet de bar rôti aux herbes',
                     ],
                     [
-                        'src' => '/images/menu-details/terre-mer/thumb-4.png',
+                        'src' => '/images/menu-details/terre-mer/dish-volaille-morilles.png',
+                        'alt' => 'Suprême de volaille aux morilles',
+                    ],
+                    [
+                        'src' => '/images/menu-details/terre-mer/dish-accompagnements-saison.png',
+                        'alt' => 'Accompagnements traditionnels de saison',
+                    ],
+                    [
+                        'src' => '/images/menu-details/terre-mer/dish-tarte-poires-amandes.png',
                         'alt' => 'Tarte fine aux poires',
                     ],
                     [
-                        'src' => '/images/menu-details/terre-mer/thumb-5.png',
+                        'src' => '/images/menu-details/terre-mer/dish-mousse-chocolat-fleur-sel.png',
                         'alt' => 'Dessert au chocolat et fleur de sel',
                     ],
                 ],
@@ -340,23 +364,27 @@ final class MenuPresentation
                         'alt' => 'Dîner romantique avec dessert et bougies',
                     ],
                     [
-                        'src' => '/images/menu-details/saint-valentin/thumb-1.png',
+                        'src' => '/images/menu-details/saint-valentin/dish-duo-verrines.png',
                         'alt' => 'Verrines romantiques',
                     ],
                     [
-                        'src' => '/images/menu-details/saint-valentin/thumb-2.png',
+                        'src' => '/images/menu-details/saint-valentin/dish-salade-chevre-miel.png',
                         'alt' => 'Salade tiède de chèvre et miel',
                     ],
                     [
-                        'src' => '/images/menu-details/saint-valentin/thumb-3.png',
-                        'alt' => 'Plat Saint-Valentin dressé',
+                        'src' => '/images/menu-details/saint-valentin/dish-tournedos-rossini.png',
+                        'alt' => 'Tournedos Rossini traditionnel',
                     ],
                     [
-                        'src' => '/images/menu-details/saint-valentin/thumb-4.png',
+                        'src' => '/images/menu-details/saint-valentin/dish-risotto-saint-jacques.png',
+                        'alt' => 'Risotto aux Saint-Jacques',
+                    ],
+                    [
+                        'src' => '/images/menu-details/saint-valentin/dish-coeur-fondant-chocolat.png',
                         'alt' => 'Cœur fondant au chocolat',
                     ],
                     [
-                        'src' => '/images/menu-details/saint-valentin/thumb-5.png',
+                        'src' => '/images/menu-details/saint-valentin/dish-mignardises-petits-fours.png',
                         'alt' => 'Mignardises assorties',
                     ],
                 ],
@@ -415,23 +443,31 @@ final class MenuPresentation
                         'alt' => 'Buffet de Pâques avec gâteau, fleurs et mignardises',
                     ],
                     [
-                        'src' => '/images/menu-details/paques/thumb-1.png',
+                        'src' => '/images/menu-details/paques/dish-terrine-printemps.png',
                         'alt' => 'Terrine printanière aux légumes',
                     ],
                     [
-                        'src' => '/images/menu-details/paques/thumb-2.png',
+                        'src' => '/images/menu-details/paques/dish-veloute-asperges.png',
                         'alt' => "Velouté d'asperges vertes",
                     ],
                     [
-                        'src' => '/images/menu-details/paques/thumb-3.png',
+                        'src' => '/images/menu-details/paques/dish-gigot-agneau.png',
                         'alt' => "Gigot d'agneau pascal",
                     ],
                     [
-                        'src' => '/images/menu-details/paques/thumb-4.png',
+                        'src' => '/images/menu-details/paques/dish-gratin-legumes-printaniers.png',
+                        'alt' => 'Gratin de légumes printaniers au fromage',
+                    ],
+                    [
+                        'src' => '/images/menu-details/paques/dish-accompagnements-maraicher.png',
+                        'alt' => 'Accompagnements de saison du maraîcher',
+                    ],
+                    [
+                        'src' => '/images/menu-details/paques/dish-nid-paques-chocolat.png',
                         'alt' => 'Nid de Pâques au chocolat',
                     ],
                     [
-                        'src' => '/images/menu-details/paques/thumb-5.png',
+                        'src' => '/images/menu-details/paques/dish-mignardises-printanieres.png',
                         'alt' => 'Mignardises printanières',
                     ],
                 ],

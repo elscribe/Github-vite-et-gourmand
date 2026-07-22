@@ -1,23 +1,15 @@
-# Manuel et revisions
+# Manuel utilisateur
 
-Ce dossier sert a preparer la recette MVP, les revisions techniques et la
-demonstration orale du projet Vite & Gourmand.
+Ce dossier regroupe les documents utiles pour tester et presenter les parcours
+utilisateur du projet Vite & Gourmand.
 
 ## Documents
 
 | Fichier | Role |
 |---|---|
-| `mvp-test-checklist.md` | Checklist de test des parcours prioritaires et des livrables ECF. |
-| `revision-sheets.md` | Fiches de revision pour expliquer le MVC, la securite, les commandes et les tests. |
+| `mvp-test-checklist.md` | Checklist de recette par role : visiteur, client, employe, administrateur. |
+| `final-user-story-test-matrix.md` | Matrice finale reliant chaque user story a sa page Figma, sa route code, son test, son statut et sa preuve. |
+| `revision-sheets.md` | Fiches de revision pour expliquer le projet a l'oral. |
 
-## Parcours client connecte
-
-La validation detaillee des user stories client connecte se trouve dans :
-
-```text
-docs/project-management/client-connected-user-stories-validation.md
-```
-
-Elle couvre `/mon-compte`, `/mon-compte/modifier`, `/commandes`,
-`/commandes/creation`, `/commandes/{id}`, les actions modifier/annuler et la
-page `/avis`.
+Le manuel utilisateur final devra presenter les parcours reels, les
+identifiants de demonstration et les captures des ecrans stabilises.

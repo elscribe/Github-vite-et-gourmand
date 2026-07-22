@@ -9,7 +9,7 @@
             <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
             <h2>Se connecter</h2>
-            <p class="auth-card-lead">Renseignez vos identifiants pour vous connecter.</p>
+            <p class="auth-card-lead">Renseignez vos identifiants pour accéder à votre espace.</p>
 
             <?php if (!empty($errors['credentials'])): ?>
                 <p class="alert-message error-message"><?= htmlspecialchars($errors['credentials'], ENT_QUOTES, 'UTF-8') ?></p>
