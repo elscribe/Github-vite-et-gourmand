@@ -161,9 +161,13 @@ Les formulaires principaux utilisent :
 - une validation serveur ;
 - une aide visuelle pour l'utilisateur.
 
-L'audit RGAA complet reste une passe finale a effectuer avant le rendu. Les
-bases sont toutefois presentes : contrastes, labels, textes alternatifs et
-responsive.
+Une recette accessibilite RGAA interne est documentee dans
+`docs/accessibility/rgaa-audit-2026-07-22.md`. Elle confirme les bases sur un
+echantillon representatif : langue, titres, labels, textes alternatifs,
+captions de tableaux, focus, lien d'evitement et reduction de mouvement.
+
+Reserve restante : la passe finale sur l'URL deployee doit encore verifier
+clavier, contrastes, zoom/reflow et lecteur d'ecran.
 
 ## Veille securite
 
@@ -208,7 +212,7 @@ responsive.
 | Pas de MFA | Non demande dans le MVP ECF. | Ajouter une double authentification admin. |
 | Email SMTP non finalise localement | Depend du deploiement. | Brancher SMTP ou service transactionnel. |
 | Pas de tests automatises de securite | Perimetre ECF centre sur recette manuelle. | Ajouter tests integration et scans OWASP ZAP. |
-| Audit RGAA complet restant | Les bases sont presentes, mais un audit dedie prend du temps. | Faire une passe clavier/lecteur et corriger les ecarts. |
+| Audit RGAA expert non realise | Une recette interne est documentee, mais pas un audit exhaustif des 106 criteres. | Refaire clavier, contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee. |
 
 ## Phrase de presentation jury
 

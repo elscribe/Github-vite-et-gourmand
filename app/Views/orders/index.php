@@ -25,7 +25,7 @@ $formatDate = static fn (mixed $value): string => $value === null || $value === 
                 <a class="client-button client-button-primary" href="/menus">Choisir un menu</a>
             </article>
         <?php else: ?>
-            <div class="client-orders-list">
+            <div class="client-orders-list" aria-label="Liste des commandes du compte client">
                 <?php foreach ($orders as $order): ?>
                     <?php $status = (string) $order['statut_actuel']; ?>
                     <article class="client-order-row">

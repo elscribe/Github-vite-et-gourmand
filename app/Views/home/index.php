@@ -134,7 +134,7 @@ $reviewDate = static function (array $review) use ($monthLabels): string {
     return ($monthLabels[$date->format('m')] ?? $date->format('m')) . ' ' . $date->format('Y');
 };
 ?>
-<section class="hero-section home-hero" id="top">
+<section class="hero-section home-hero">
     <div class="container hero-content">
         <h1>
             <span class="hero-title-intro">Bienvenue chez</span>

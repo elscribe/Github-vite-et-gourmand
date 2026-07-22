@@ -24,6 +24,7 @@ $dayLabels = [
         <form class="table-wrapper schedule-form" action="/admin/horaires" method="post">
             <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
             <table class="data-table">
+                <caption class="visually-hidden">Horaires d'ouverture par jour avec creneaux matin, apres-midi et fermeture</caption>
                 <thead>
                     <tr>
                         <th>Jour</th>

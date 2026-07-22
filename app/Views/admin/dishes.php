@@ -67,6 +67,7 @@ $newDishAllergenIds = $selectedAllergenIds[0] ?? [];
         <section class="table-wrapper backoffice-table-card">
             <h2>Plats et recettes</h2>
             <table class="data-table">
+                <caption class="visually-hidden">Liste des plats, types, allergenes et actions de modification</caption>
                 <thead>
                     <tr>
                         <th>Plat</th>

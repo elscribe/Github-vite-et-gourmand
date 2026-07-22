@@ -63,7 +63,7 @@ Le cycle de travail a ete le meme pour chaque user story.
 | US-006 Inscription | Codee avec role client impose. |
 | US-007 Connexion | Codee avec session et role serveur. |
 | US-008 Mot de passe oublie | Codee en mode local avec token de reinitialisation. |
-| US-026 Accessibilite | Bases en place, audit final restant. |
+| US-026 Accessibilite | Bases en place et audit interne documente ; passe finale a refaire sur URL deployee. |
 | US-027 Securite roles | Middlewares et routes protegees. |
 
 ## Echecs rencontres et solutions

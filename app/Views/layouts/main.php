@@ -111,8 +111,9 @@ $assetVersion = static function (string $assetPath): string {
     <link href="/assets/css/style.css?v=<?= $assetVersion('/assets/css/style.css') ?>" rel="stylesheet">
 </head>
 <body id="top" class="<?= htmlspecialchars($bodyClass, ENT_QUOTES, 'UTF-8') ?>">
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
     <?php if ($isBackOffice): ?>
-        <main class="backoffice-shell">
+        <main id="main-content" class="backoffice-shell">
             <aside class="backoffice-sidebar" aria-label="Navigation interne">
                 <a class="backoffice-brand" href="<?= $isAdminArea ? '/admin' : '/employe' ?>" aria-label="Vite & Gourmand">
                     <span class="backoffice-brand-mark" aria-hidden="true">VG</span>
@@ -359,7 +360,7 @@ $assetVersion = static function (string $assetPath): string {
             </div>
         </aside>
 
-        <main class="site-main">
+        <main id="main-content" class="site-main">
             <?php if ($successFlash !== null || $errorFlash !== null): ?>
                 <div class="container flash-container">
                     <?php if ($successFlash !== null): ?>

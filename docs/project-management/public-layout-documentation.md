@@ -31,7 +31,7 @@ Cette documentation couvre le socle public et visiteur :
 | US-006 | Creer un compte | Codee avec role client impose cote serveur. |
 | US-007 | Se connecter | Codee avec session et redirection selon le role. |
 | US-008 | Mot de passe oublie | Codee en mode local avec token hash et expiration. |
-| US-026 | Accessibilite RGAA | Bases appliquees : labels, alt, contrastes, responsive. Audit final restant. |
+| US-026 | Accessibilite RGAA | Audit interne documente : labels, alt, captions, skip-link, focus, reduced-motion ; reserves clavier/contrastes/lecteur d'ecran sur URL deployee. |
 | US-027 | Securite par role | Routes protegees par middlewares cote serveur. |
 
 ## Structure technique
