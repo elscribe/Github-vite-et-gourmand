@@ -1,123 +1,124 @@
-<mxfile host="Electron"><diagram name="MLD" id="mld">
+<mxfile host="Electron">
+  <diagram name="MLD" id="mld">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2600" pageHeight="1800" math="0" shadow="0">
       <root>
-        <mxCell id="0"></mxCell>
-        <mxCell id="1" parent="0"></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
         <mxCell id="mld_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#111827;" value="MLD - Modèle logique des données" vertex="1">
-          <mxGeometry height="40" width="900" x="40" y="20" as="geometry"></mxGeometry>
+          <mxGeometry height="40" width="900" x="40" y="20" as="geometry" />
         </mxCell>
         <mxCell id="mld_sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#475569;" value="Relations logiques issues du MCD et alignées avec le SQL actuel. Les tables d'association portent les clés primaires composées." vertex="1">
-          <mxGeometry height="35" width="1500" x="40" y="60" as="geometry"></mxGeometry>
+          <mxGeometry height="35" width="1500" x="40" y="60" as="geometry" />
         </mxCell>
         <mxCell id="t_roles" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;roles&lt;/b&gt;&lt;br&gt;PK id_role&lt;br&gt;libelle UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="60" width="140" x="70" y="140" as="geometry"></mxGeometry>
+          <mxGeometry height="60" width="140" x="70" y="140" as="geometry" />
         </mxCell>
         <mxCell id="t_users" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;utilisateurs&lt;/b&gt;&lt;br&gt;PK id_utilisateur&lt;br&gt;FK id_role&lt;br&gt;email UNIQUE NOT NULL&lt;br&gt;password_hash NOT NULL&lt;br&gt;nom, prenom, telephone&lt;br&gt;adresse_postale, ville, pays&lt;br&gt;actif, created_at, updated_at" vertex="1">
-          <mxGeometry height="120" width="150" x="70" y="330" as="geometry"></mxGeometry>
+          <mxGeometry height="120" width="150" x="70" y="330" as="geometry" />
         </mxCell>
         <mxCell id="t_contacts" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;contact_messages&lt;/b&gt;&lt;br&gt;PK id_contact_message&lt;br&gt;titre&lt;br&gt;email&lt;br&gt;description&lt;br&gt;created_at&lt;br&gt;traite" vertex="1">
-          <mxGeometry height="110" width="190" x="1240" y="360" as="geometry"></mxGeometry>
+          <mxGeometry height="110" width="190" x="1240" y="360" as="geometry" />
         </mxCell>
         <mxCell id="t_avis" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;avis&lt;/b&gt;&lt;br&gt;PK id_avis&lt;br&gt;FK id_utilisateur&lt;br&gt;FK id_commande UNIQUE&lt;br&gt;note&lt;br&gt;commentaire&lt;br&gt;statut&lt;br&gt;moderated_at&lt;br&gt;FK moderated_by" vertex="1">
-          <mxGeometry height="130" width="140" x="30" y="620" as="geometry"></mxGeometry>
+          <mxGeometry height="130" width="140" x="30" y="620" as="geometry" />
         </mxCell>
         <mxCell id="t_menus" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;menus&lt;/b&gt;&lt;br&gt;PK id_menu&lt;br&gt;FK id_regime&lt;br&gt;FK id_theme&lt;br&gt;titre&lt;br&gt;description&lt;br&gt;conditions&lt;br&gt;nombre_personnes_minimum&lt;br&gt;prix_minimum&lt;br&gt;stock_disponible&lt;br&gt;actif" vertex="1">
-          <mxGeometry height="160" width="150" x="520" y="350" as="geometry"></mxGeometry>
+          <mxGeometry height="160" width="150" x="520" y="350" as="geometry" />
         </mxCell>
         <mxCell id="t_images" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;menu_images&lt;/b&gt;&lt;br&gt;PK id_image&lt;br&gt;FK id_menu&lt;br&gt;url&lt;br&gt;texte_alternatif&lt;br&gt;position" vertex="1">
-          <mxGeometry height="100" width="90" x="360" y="210" as="geometry"></mxGeometry>
+          <mxGeometry height="100" width="90" x="360" y="210" as="geometry" />
         </mxCell>
         <mxCell id="t_orders" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;commandes&lt;/b&gt;&lt;br&gt;PK id_commande&lt;br&gt;FK id_utilisateur&lt;br&gt;FK id_menu&lt;br&gt;date_commande&lt;br&gt;date_prestation&lt;br&gt;heure_livraison&lt;br&gt;adresse_livraison&lt;br&gt;ville_livraison&lt;br&gt;distance_km&lt;br&gt;nombre_personnes&lt;br&gt;prix_menu, remise&lt;br&gt;prix_livraison, prix_total&lt;br&gt;statut_actuel&lt;br&gt;materiel_prete, materiel_retourne&lt;br&gt;mode_contact_modification&lt;br&gt;motif_annulation" vertex="1">
-          <mxGeometry height="245" width="190" x="450" y="750" as="geometry"></mxGeometry>
+          <mxGeometry height="245" width="190" x="450" y="750" as="geometry" />
         </mxCell>
         <mxCell id="t_status" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;commande_statuts&lt;/b&gt;&lt;br&gt;PK id_statut&lt;br&gt;FK id_commande&lt;br&gt;FK id_utilisateur NULL&lt;br&gt;statut&lt;br&gt;commentaire&lt;br&gt;created_at" vertex="1">
-          <mxGeometry height="110" width="120" x="720" y="650" as="geometry"></mxGeometry>
+          <mxGeometry height="110" width="120" x="720" y="650" as="geometry" />
         </mxCell>
         <mxCell id="t_regimes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;regimes&lt;/b&gt;&lt;br&gt;PK id_regime&lt;br&gt;libelle UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="60" width="140" x="620" y="150" as="geometry"></mxGeometry>
+          <mxGeometry height="60" width="140" x="620" y="150" as="geometry" />
         </mxCell>
         <mxCell id="t_themes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;themes&lt;/b&gt;&lt;br&gt;PK id_theme&lt;br&gt;libelle UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="60" width="140" x="850" y="450" as="geometry"></mxGeometry>
+          <mxGeometry height="60" width="140" x="850" y="450" as="geometry" />
         </mxCell>
         <mxCell id="t_horaires" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;horaires&lt;/b&gt;&lt;br&gt;PK id_horaire&lt;br&gt;jour_semaine UNIQUE&lt;br&gt;ouverture_matin&lt;br&gt;fermeture_matin&lt;br&gt;ouverture_apres_midi&lt;br&gt;fermeture_apres_midi&lt;br&gt;ferme" vertex="1">
-          <mxGeometry height="120" width="120" x="1140" y="510" as="geometry"></mxGeometry>
+          <mxGeometry height="120" width="120" x="1140" y="510" as="geometry" />
         </mxCell>
         <mxCell id="t_menu_plats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;menu_plats&lt;/b&gt;&lt;br&gt;PK FK id_menu&lt;br&gt;PK FK id_plat&lt;br&gt;position" vertex="1">
-          <mxGeometry height="70" width="90" x="830" y="240" as="geometry"></mxGeometry>
+          <mxGeometry height="70" width="90" x="830" y="240" as="geometry" />
         </mxCell>
         <mxCell id="t_plats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;plats&lt;/b&gt;&lt;br&gt;PK id_plat&lt;br&gt;titre_plat&lt;br&gt;type_plat&lt;br&gt;description" vertex="1">
-          <mxGeometry height="80" width="70" x="1035" y="110" as="geometry"></mxGeometry>
+          <mxGeometry height="80" width="70" x="1035" y="110" as="geometry" />
         </mxCell>
         <mxCell id="t_plat_allergenes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;plat_allergenes&lt;/b&gt;&lt;br&gt;PK FK id_plat&lt;br&gt;PK FK id_allergene" vertex="1">
-          <mxGeometry height="70" width="110" x="1010" y="340" as="geometry"></mxGeometry>
+          <mxGeometry height="70" width="110" x="1010" y="340" as="geometry" />
         </mxCell>
         <mxCell id="t_allergenes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;allergenes&lt;/b&gt;&lt;br&gt;PK id_allergene&lt;br&gt;libelle UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="60" width="140" x="1250" y="190" as="geometry"></mxGeometry>
+          <mxGeometry height="60" width="140" x="1250" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="t_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB: menu_statistics&lt;/b&gt;&lt;br&gt;_id ObjectId&lt;br&gt;menuId&lt;br&gt;menuTitle&lt;br&gt;orders&lt;br&gt;revenue&lt;br&gt;averageBasket&lt;br&gt;averageRating&lt;br&gt;lastOrder&lt;br&gt;updatedAt" vertex="1">
-          <mxGeometry height="170" width="160" x="990" y="720" as="geometry"></mxGeometry>
+        <mxCell id="t_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Documents MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Agregats statistiques&lt;/b&gt;&lt;br&gt;menu_statistics&lt;br&gt;monthly_statistics&lt;br&gt;menu_monthly_statistics&lt;br&gt;dashboard_statistics&lt;br&gt;&lt;br&gt;Lecture dashboard via StatisticsModel" vertex="1">
+          <mxGeometry height="190" width="210" x="990" y="720" as="geometry" />
         </mxCell>
         <mxCell id="mld_r1" edge="1" parent="1" source="t_roles" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_users" value="Role 1 / 0..* Utilisateur">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r2" edge="1" parent="1" source="t_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_orders" value="Utilisateur 1 / 0..* Commande : passe">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r3" edge="1" parent="1" source="t_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_orders" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r4" edge="1" parent="1" source="t_orders" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_status" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r5" edge="1" parent="1" source="t_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_status" value="0..1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r6" edge="1" parent="1" source="t_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_avis" value="auteur : 1 / 0..* dépose">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r7" edge="1" parent="1" source="t_orders" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_avis" value="Commande 1 / 0..1 Avis">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r8" edge="1" parent="1" source="t_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_avis" value="modérateur : 0..1 / 0..* modère">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r9" edge="1" parent="1" source="t_regimes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_menus" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r10" edge="1" parent="1" source="t_themes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_menus" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r11" edge="1" parent="1" source="t_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_images" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r12" edge="1" parent="1" source="t_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_menu_plats" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r13" edge="1" parent="1" source="t_plats" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_menu_plats" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r14" edge="1" parent="1" source="t_plats" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_plat_allergenes" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r15" edge="1" parent="1" source="t_allergenes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_plat_allergenes" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r17" edge="1" parent="1" source="t_menus" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="t_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mld_r18" edge="1" parent="1" source="t_orders" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="t_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mld_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;" value="&lt;b&gt;Règles MLD notables&lt;/b&gt;&lt;br&gt;menu_plats et plat_allergenes matérialisent les associations n-n.&lt;br&gt;avis.id_commande est UNIQUE : une commande terminée donne au plus un avis.&lt;br&gt;commande_statuts conserve la date/heure de chaque changement de statut.&lt;br&gt;commandes.distance_km conserve la distance de livraison hors Bordeaux pour justifier le prix_livraison.&lt;br&gt;password_resets permet la réinitialisation sécurisée du mot de passe." vertex="1">
-          <mxGeometry height="195" width="900" x="810" y="1070" as="geometry"></mxGeometry>
+        <mxCell id="mld_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;" value="&lt;b&gt;Règles MLD notables&lt;/b&gt;&lt;br&gt;menu_plats et plat_allergenes matérialisent les associations n-n.&lt;br&gt;avis.id_commande est UNIQUE : une commande terminée donne au plus un avis.&lt;br&gt;menus.prix_minimum stocke le prix demandé pour le minimum ; le prix/personne est calculé à la commande.&lt;br&gt;commande_statuts conserve la date/heure de chaque changement de statut.&lt;br&gt;commandes.distance_km conserve la distance de livraison hors Bordeaux pour justifier le prix_livraison.&lt;br&gt;password_resets permet la réinitialisation sécurisée du mot de passe." vertex="1">
+          <mxGeometry height="220" width="900" x="810" y="1070" as="geometry" />
         </mxCell>
         <mxCell id="t_password_resets" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#9a3412;fontSize=10;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;password_resets&lt;/b&gt;&lt;br&gt;PK id_reset&lt;br&gt;FK id_utilisateur&lt;br&gt;token_hash UNIQUE NOT NULL&lt;br&gt;expires_at NOT NULL&lt;br&gt;used_at NULL&lt;br&gt;created_at NOT NULL" vertex="1">
-          <mxGeometry height="110" width="170" x="220" y="930" as="geometry"></mxGeometry>
+          <mxGeometry height="110" width="170" x="220" y="930" as="geometry" />
         </mxCell>
         <mxCell id="mld_r19" edge="1" parent="1" source="t_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="t_password_resets" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
-  </mxfile>
+</mxfile>

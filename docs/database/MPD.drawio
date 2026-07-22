@@ -1,127 +1,128 @@
-<mxfile host="Electron"><diagram name="MPD" id="mpd">
+<mxfile host="Electron">
+  <diagram name="MPD" id="mpd">
     <mxGraphModel dx="4564" dy="2827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2200" math="0" shadow="0">
       <root>
-        <mxCell id="0"></mxCell>
-        <mxCell id="1" parent="0"></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
         <mxCell id="mpd_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#111827;" value="MPD - Modèle physique MariaDB/MySQL" vertex="1">
-          <mxGeometry height="40" width="1000" x="40" y="20" as="geometry"></mxGeometry>
+          <mxGeometry height="40" width="1000" x="40" y="20" as="geometry" />
         </mxCell>
         <mxCell id="mpd_sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#475569;" value="Version physique cible : types, clés, contraintes CHECK, valeurs de statuts et séparation MongoDB pour les statistiques." vertex="1">
-          <mxGeometry height="35" width="1700" x="40" y="60" as="geometry"></mxGeometry>
+          <mxGeometry height="35" width="1700" x="40" y="60" as="geometry" />
         </mxCell>
         <mxCell id="p_roles" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;roles&lt;/b&gt;&lt;br&gt;id_role INT UNSIGNED PK AI&lt;br&gt;libelle VARCHAR(80) UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="100" width="340" x="60" y="140" as="geometry"></mxGeometry>
+          <mxGeometry height="100" width="340" x="60" y="140" as="geometry" />
         </mxCell>
         <mxCell id="p_users" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;utilisateurs&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_utilisateur INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_role INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;email VARCHAR(120) UNIQUE NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;password_hash VARCHAR(255) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;nom VARCHAR(80) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;prenom VARCHAR(80) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;telephone VARCHAR(30) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;adresse_postale VARCHAR(255) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ville VARCHAR(80) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;pays VARCHAR(80) DEFAULT 'France'&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;actif BOOLEAN DEFAULT TRUE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;updated_at DATETIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_role REFERENCES roles(id_role) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="300" width="420" x="60" y="320" as="geometry"></mxGeometry>
+          <mxGeometry height="300" width="420" x="60" y="320" as="geometry" />
         </mxCell>
         <mxCell id="p_contacts" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;contact_messages&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_contact_message INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;titre VARCHAR(160) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;email VARCHAR(120) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;description TEXT NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;traite BOOLEAN DEFAULT FALSE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (email LIKE '%@%')&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="170" width="400" x="2600" y="760" as="geometry"></mxGeometry>
+          <mxGeometry height="170" width="400" x="2600" y="760" as="geometry" />
         </mxCell>
         <mxCell id="p_avis" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;avis&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_avis INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_utilisateur INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_commande INT UNSIGNED FK UNIQUE NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;note TINYINT UNSIGNED NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;commentaire TEXT NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;statut VARCHAR(30) NOT NULL DEFAULT 'en_attente'&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;moderated_at DATETIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;moderated_by INT UNSIGNED NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_utilisateur REFERENCES utilisateurs(id_utilisateur) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_commande REFERENCES commandes(id_commande) ON DELETE CASCADE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK moderated_by REFERENCES utilisateurs(id_utilisateur) ON DELETE SET NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (note BETWEEN 1 AND 5)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (statut IN ('en_attente', 'valide', 'refuse'))&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="260" width="510" x="50" y="1060" as="geometry"></mxGeometry>
+          <mxGeometry height="260" width="510" x="50" y="1060" as="geometry" />
         </mxCell>
         <mxCell id="p_menus" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;menus&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_menu INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_regime INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_theme INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;titre VARCHAR(120) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;description TEXT NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;conditions TEXT NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;nombre_personnes_minimum INT UNSIGNED NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;prix_minimum DECIMAL(10,2) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;stock_disponible INT UNSIGNED DEFAULT 0&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;actif BOOLEAN DEFAULT TRUE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;updated_at DATETIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_regime REFERENCES regimes(id_regime) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_theme REFERENCES themes(id_theme) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (nombre_personnes_minimum &amp;gt; 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (prix_minimum &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (stock_disponible &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="310" width="470" x="570" y="120" as="geometry"></mxGeometry>
+          <mxGeometry height="310" width="470" x="570" y="120" as="geometry" />
         </mxCell>
         <mxCell id="p_images" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;menu_images&lt;/b&gt;&lt;br&gt;id_image INT UNSIGNED PK AI&lt;br&gt;id_menu INT UNSIGNED FK NOT NULL&lt;br&gt;url VARCHAR(255) NOT NULL&lt;br&gt;texte_alternatif VARCHAR(180) NOT NULL&lt;br&gt;position INT UNSIGNED DEFAULT 1&lt;br&gt;id_menu → menus : ON DELETE CASCADE" vertex="1">
-          <mxGeometry height="180" width="420" x="900" y="650" as="geometry"></mxGeometry>
+          <mxGeometry height="180" width="420" x="900" y="650" as="geometry" />
         </mxCell>
         <mxCell id="p_orders" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;commandes&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_commande INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_utilisateur INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_menu INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;date_commande DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;date_prestation DATE NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;heure_livraison TIME NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;adresse_livraison VARCHAR(255) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ville_livraison VARCHAR(80) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;distance_km DECIMAL(6,2) DEFAULT 0&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;nombre_personnes INT UNSIGNED NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;prix_menu DECIMAL(10,2) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;remise DECIMAL(10,2) DEFAULT 0&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;prix_livraison DECIMAL(10,2) DEFAULT 0&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;prix_total DECIMAL(10,2) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;statut_actuel VARCHAR(40) NOT NULL DEFAULT 'en_attente'&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;materiel_prete BOOLEAN DEFAULT FALSE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;materiel_retourne BOOLEAN DEFAULT FALSE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;mode_contact_modification VARCHAR(20) NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;motif_annulation TEXT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_utilisateur REFERENCES utilisateurs(id_utilisateur) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_menu REFERENCES menus(id_menu) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (distance_km &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (nombre_personnes &amp;gt; 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (prix_menu &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (remise &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (prix_livraison &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (prix_total &amp;gt;= 0)&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (mode_contact_modification IS NULL OR mode_contact_modification IN ('gsm', 'email'))&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; statut_actuel IN (&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_attente',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'acceptee',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_preparation',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_cours_de_livraison',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'livre',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_attente_retour_materiel',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'terminee',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'annulee'&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; )&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;)&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="670" width="520" x="660" y="1010" as="geometry"></mxGeometry>
+          <mxGeometry height="670" width="520" x="660" y="1010" as="geometry" />
         </mxCell>
         <mxCell id="p_status" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;commande_statuts&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_statut INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_commande INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_utilisateur INT UNSIGNED FK NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;statut VARCHAR(40) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;commentaire TEXT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_commande REFERENCES commandes(id_commande) ON DELETE CASCADE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_utilisateur REFERENCES utilisateurs(id_utilisateur) ON DELETE SET NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; statut IN (&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_attente',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'acceptee',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_preparation',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_cours_de_livraison',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'livre',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'en_attente_retour_materiel',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'terminee',&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; 'annulee'&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&amp;nbsp; )&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;)&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="340" width="470" x="1580" y="1150" as="geometry"></mxGeometry>
+          <mxGeometry height="340" width="470" x="1580" y="1150" as="geometry" />
         </mxCell>
         <mxCell id="p_regimes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;regimes&lt;/b&gt;&lt;br&gt;id_regime INT UNSIGNED PK AI&lt;br&gt;libelle VARCHAR(80) UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="100" width="360" x="1280" y="95" as="geometry"></mxGeometry>
+          <mxGeometry height="100" width="360" x="1280" y="95" as="geometry" />
         </mxCell>
         <mxCell id="p_themes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;themes&lt;/b&gt;&lt;br&gt;id_theme INT UNSIGNED PK AI&lt;br&gt;libelle VARCHAR(80) UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="100" width="360" x="1280" y="370" as="geometry"></mxGeometry>
+          <mxGeometry height="100" width="360" x="1280" y="370" as="geometry" />
         </mxCell>
         <mxCell id="p_horaires" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;horaires&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_horaire INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;jour_semaine TINYINT UNIQUE NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ouverture_matin TIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;fermeture_matin TIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ouverture_apres_midi TIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;fermeture_apres_midi TIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ferme BOOLEAN DEFAULT FALSE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (jour_semaine BETWEEN 1 AND 7)&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="210" width="420" x="1590" y="520" as="geometry"></mxGeometry>
+          <mxGeometry height="210" width="420" x="1590" y="520" as="geometry" />
         </mxCell>
         <mxCell id="p_menu_plats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;menu_plats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_menu INT UNSIGNED PK FK&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_plat INT UNSIGNED PK FK&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;position INT UNSIGNED DEFAULT 1&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_menu REFERENCES menus(id_menu) ON DELETE CASCADE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_plat REFERENCES plats(id_plat) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="130" width="380" x="1730" y="240" as="geometry"></mxGeometry>
+          <mxGeometry height="130" width="380" x="1730" y="240" as="geometry" />
         </mxCell>
         <mxCell id="p_plats" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;plats&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_plat INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;titre_plat VARCHAR(120) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;type_plat VARCHAR(30) NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;description TEXT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;CHECK (type_plat IN ('entree', 'plat', 'dessert'))&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="140" width="430" x="2360" y="220" as="geometry"></mxGeometry>
+          <mxGeometry height="140" width="430" x="2360" y="220" as="geometry" />
         </mxCell>
         <mxCell id="p_plat_allergenes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;plat_allergenes&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_plat INT UNSIGNED PK FK&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_allergene INT UNSIGNED PK FK&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_plat REFERENCES plats(id_plat) ON DELETE CASCADE&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_allergene REFERENCES allergenes(id_allergene) ON DELETE RESTRICT&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="130" width="420" x="2210" y="610" as="geometry"></mxGeometry>
+          <mxGeometry height="130" width="420" x="2210" y="610" as="geometry" />
         </mxCell>
         <mxCell id="p_allergenes" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;b&gt;allergenes&lt;/b&gt;&lt;br&gt;id_allergene INT UNSIGNED PK AI&lt;br&gt;libelle VARCHAR(80) UNIQUE NOT NULL" vertex="1">
-          <mxGeometry height="100" width="340" x="2880" y="430" as="geometry"></mxGeometry>
+          <mxGeometry height="100" width="340" x="2880" y="430" as="geometry" />
         </mxCell>
-        <mxCell id="p_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Document MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;MongoDB menu_statistics&lt;/b&gt;&lt;br&gt;_id ObjectId&lt;br&gt;menuId Number&lt;br&gt;menuTitle String&lt;br&gt;orders Number&lt;br&gt;revenue Number&lt;br&gt;averageBasket Number&lt;br&gt;averageRating Number&lt;br&gt;lastOrder Date&lt;br&gt;updatedAt Date" vertex="1">
-          <mxGeometry height="260" width="450" x="1600" y="800" as="geometry"></mxGeometry>
+        <mxCell id="p_mongo" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#60a917;strokeColor=#2D7600;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#ffffff;" value="&amp;lt;&amp;lt;Documents MongoDB&amp;gt;&amp;gt;&lt;br&gt;&lt;b&gt;Agregats statistiques&lt;/b&gt;&lt;br&gt;menu_statistics&lt;br&gt;monthly_statistics&lt;br&gt;menu_monthly_statistics&lt;br&gt;dashboard_statistics&lt;br&gt;&lt;br&gt;Collection principale lue avec filtres : menu_monthly_statistics&lt;br&gt;Comptage menus actifs : menu_statistics&lt;br&gt;Acces applicatif : StatisticsModel via mongosh" vertex="1">
+          <mxGeometry height="280" width="470" x="1600" y="800" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r1" edge="1" parent="1" source="p_roles" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_users" value="Role 1 / 0..* Utilisateur">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r2" edge="1" parent="1" source="p_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_orders" value="Utilisateur 1 / 0..* Commande : passe">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r3" edge="1" parent="1" source="p_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_orders" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r4" edge="1" parent="1" source="p_orders" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_status" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r5" edge="1" parent="1" source="p_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_status" value="0..1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r6" edge="1" parent="1" source="p_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_avis" value="auteur : 1 / 0..* dépose">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r7" edge="1" parent="1" source="p_orders" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_avis" value="Commande 1 / 0..1 Avis">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r8" edge="1" parent="1" source="p_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_avis" value="modérateur : 0..1 / 0..* modère">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r9" edge="1" parent="1" source="p_regimes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_menus" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r10" edge="1" parent="1" source="p_themes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_menus" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r11" edge="1" parent="1" source="p_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_images" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r12" edge="1" parent="1" source="p_menus" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_menu_plats" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r13" edge="1" parent="1" source="p_plats" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_menu_plats" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r17" edge="1" parent="1" source="p_menus" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="p_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r18" edge="1" parent="1" source="p_orders" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="p_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_mongo_menu" edge="1" parent="1" source="p_menus" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="p_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_mongo_order" edge="1" parent="1" source="p_orders" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#64748b;fontSize=10;" target="p_mongo" value="agrégat">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mpd_checks" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;" value="&lt;b&gt;Statuts autorisés&lt;/b&gt;&lt;br&gt;en_attente, acceptee, en_preparation, en_cours_de_livraison, livre, en_attente_retour_materiel, terminee, annulee.&lt;br&gt;&lt;br&gt;&lt;b&gt;Règles physiques clés&lt;/b&gt;&lt;br&gt;FK InnoDB, email unique, prix positifs, note 1..5, avis unique par commande, contact modification gsm/email, token reset unique et expiré.&lt;br&gt;distance_km vaut 0 pour Bordeaux ou la distance utilisée pour calculer 5 EUR + 0,59 EUR/km hors Bordeaux." vertex="1">
-          <mxGeometry height="270" width="980" x="1450" y="1600" as="geometry"></mxGeometry>
+        <mxCell id="mpd_checks" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=11;align=left;verticalAlign=top;spacing=8;arcSize=8;" value="&lt;b&gt;Statuts autorisés&lt;/b&gt;&lt;br&gt;en_attente, acceptee, en_preparation, en_cours_de_livraison, livre, en_attente_retour_materiel, terminee, annulee.&lt;br&gt;&lt;br&gt;&lt;b&gt;Règles physiques clés&lt;/b&gt;&lt;br&gt;FK InnoDB, email unique, prix positifs, note 1..5, avis unique par commande, contact modification gsm/email, token reset unique et expiré.&lt;br&gt;prix_minimum est stocké dans menus ; prix_menu est capturé dans commandes après calcul par personne.&lt;br&gt;distance_km vaut 0 pour Bordeaux ou la distance utilisée pour calculer 5 EUR + 0,59 EUR/km hors Bordeaux." vertex="1">
+          <mxGeometry height="270" width="980" x="1450" y="1600" as="geometry" />
         </mxCell>
         <mxCell id="p_password_resets" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#92400e;fontSize=11;align=left;verticalAlign=top;spacing=8;fontColor=#111827;" value="&lt;div&gt;&lt;b&gt;password_resets&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_reset INT UNSIGNED PK AI&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;id_utilisateur INT UNSIGNED FK NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;token_hash VARCHAR(255) UNIQUE NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;expires_at DATETIME NOT NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;used_at DATETIME NULL&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;created_at DATETIME DEFAULT CURRENT_TIMESTAMP&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;FK id_utilisateur REFERENCES utilisateurs(id_utilisateur) ON DELETE CASCADE&lt;/b&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="210" width="430" x="60" y="700" as="geometry"></mxGeometry>
+          <mxGeometry height="210" width="430" x="60" y="700" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r19" edge="1" parent="1" source="p_users" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_password_resets" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r14" edge="1" parent="1" source="p_plats" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_plat_allergenes" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="mpd_r15" edge="1" parent="1" source="p_allergenes" style="endArrow=none;html=1;rounded=0;strokeColor=#475569;fontSize=10;" target="p_plat_allergenes" value="1 / n">
-          <mxGeometry relative="1" as="geometry"></mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

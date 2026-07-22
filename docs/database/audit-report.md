@@ -41,9 +41,13 @@ Statut : conforme.
 
 Statut : conforme.
 
-- Les collections principales sont `menu_statistics`, `monthly_statistics` et `dashboard_statistics`.
+- Les collections principales sont `menu_statistics`, `monthly_statistics`,
+  `menu_monthly_statistics` et `dashboard_statistics`.
 - `menu_statistics` contient notamment `menuId`, `menuTitle`, `orders`, `revenue`, `averageBasket`, `averageRating`, `lastOrder` et `updatedAt`.
-- `monthly_statistics` et `dashboard_statistics` fournissent les donnees deja agregees pour les graphiques administrateur.
+- `menu_monthly_statistics` fournit les donnees filtrees par menu et par periode
+  lues par `StatisticsModel` via `mongosh`.
+- `monthly_statistics` et `dashboard_statistics` documentent les agregats
+  mensuels et les snapshots de demonstration.
 - MongoDB est limite aux agregats statistiques ; la source de verite reste SQL.
 
 ## Conformite avec l'enonce ECF
@@ -57,7 +61,8 @@ Statut : conforme avec points a surveiller.
 - Horaires : couverts par `horaires`.
 - Contact : couvert par `contact_messages`.
 - Reinitialisation de mot de passe : couverte par `password_resets`.
-- Tableau de bord administrateur : couvert par `menu_statistics`.
+- Tableau de bord administrateur : couvert par `menu_monthly_statistics` et
+  `menu_statistics`, avec secours SQL local si MongoDB est indisponible.
 
 ## Incoherences ou risques restants
 

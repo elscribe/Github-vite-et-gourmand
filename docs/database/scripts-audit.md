@@ -99,6 +99,7 @@ Collections creees :
 
 - `menu_statistics`
 - `monthly_statistics`
+- `menu_monthly_statistics`
 - `dashboard_statistics`
 
 Chaque collection possede un validateur `$jsonSchema`. Les champs numeriques acceptent les types BSON produits naturellement par MongoDB Playground : `int`, `long`, `double` et `decimal` selon le champ.
@@ -109,6 +110,7 @@ Statut : conforme.
 
 - `menu_statistics.menuId` unique.
 - `monthly_statistics.month` unique.
+- `menu_monthly_statistics.menuId` + `month` unique.
 - Index de lecture sur `revenue`, `updatedAt`, `generatedAt` et `topMenu`.
 
 ### Validation du seed MongoDB
@@ -119,11 +121,14 @@ Resultats controles :
 
 - `menu_statistics` : 6 documents.
 - `monthly_statistics` : 12 documents.
+- `menu_monthly_statistics` : 72 documents.
 - `dashboard_statistics` : 12 documents.
-- Total : 30 documents.
+- Total : 102 documents.
 - Somme des commandes par menu = somme des commandes mensuelles : 191.
 - Somme des revenus par menu = somme des revenus mensuels : 184981.79.
 - Les snapshots `dashboard_statistics` correspondent aux valeurs mensuelles.
+- `menu_monthly_statistics` sert au dashboard code pour filtrer les statistiques
+  par menu et par periode via `StatisticsModel`.
 
 ## Points de vigilance pour l'ECF
 

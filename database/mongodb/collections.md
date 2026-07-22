@@ -89,6 +89,17 @@ Index :
 - `generatedAt` descendant.
 - `topMenu`.
 
-## Regle de synchronisation
+## Regle d'utilisation dans le MVP code
 
-MariaDB/MySQL reste la source de verite. MongoDB ne doit pas etre modifie directement par les parcours metier : les collections sont alimentees par un service d'agregation apres creation, modification ou validation de commandes, ou par une tache planifiee.
+MariaDB/MySQL reste la source de verite metier. Dans le MVP code, les
+collections MongoDB sont initialisees par les scripts `create_collections.js` et
+`seed_mongodb.js`, puis lues par `StatisticsModel` via `mongosh`.
+
+Le tableau de bord administrateur lit principalement
+`menu_monthly_statistics` pour appliquer les filtres par menu et par periode.
+`menu_statistics` sert notamment au comptage des menus actifs dans le resume.
+
+Si MongoDB ou `mongosh` ne sont pas disponibles, `StatisticsModel` utilise un
+secours SQL local pour garder le dashboard lisible. Un service d'agregation
+dedie pourrait etre ajoute plus tard pour recalculer et ecrire automatiquement
+les collections MongoDB apres chaque changement de commande.

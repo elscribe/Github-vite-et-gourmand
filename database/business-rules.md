@@ -171,6 +171,7 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - Un plat peut appartenir a plusieurs menus.
 - Un plat peut posseder plusieurs allergenes ; la table `plat_allergenes` conserve uniquement l'association plat/allergene.
 - Le nombre de personnes commande doit etre superieur ou egal au minimum du menu.
+- `prix_minimum` est stocke comme prix pour ce minimum ; le prix par personne est calcule a la commande avec `prix_minimum / nombre_personnes_minimum`.
 - Une reduction de 10 % s'applique lorsque la commande contient au moins 5 personnes de plus que le minimum du menu.
 - La livraison dans Bordeaux n'ajoute pas la majoration hors Bordeaux ; hors Bordeaux, l'enonce indique 5 EUR plus 0,59 EUR par kilometre parcouru. En version MVP, aucune API de geolocalisation n'est branchee : le client saisit une distance approximative depuis Bordeaux, puis l'equipe verifie l'adresse et la distance avant validation. Une evolution possible consisterait a brancher une API d'adresses/geocodage.
 - Un client peut modifier ou annuler une commande tant qu'elle n'est pas acceptee. Le choix du menu n'est pas modifiable.

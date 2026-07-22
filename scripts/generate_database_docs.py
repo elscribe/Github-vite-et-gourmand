@@ -245,13 +245,14 @@ def make_markdown_docs() -> None:
         - Un plat peut appartenir a plusieurs menus.
         - Un plat peut posseder plusieurs allergenes ; la table `plat_allergenes` conserve uniquement l'association plat/allergene.
         - Le nombre de personnes commande doit etre superieur ou egal au minimum du menu.
+        - `prix_minimum` est stocke comme prix pour ce minimum ; le prix par personne est calcule a la commande avec `prix_minimum / nombre_personnes_minimum`.
         - Une reduction de 10 % s'applique lorsque la commande contient au moins 5 personnes de plus que le minimum du menu.
         - La livraison dans Bordeaux n'ajoute pas la majoration hors Bordeaux ; hors Bordeaux, l'enonce indique 5 EUR plus 0,59 EUR par kilometre parcouru. La methode de calcul de distance reste a implementer et doit etre documentee dans le code.
         - Un client peut modifier ou annuler une commande tant qu'elle n'est pas acceptee. Le choix du menu n'est pas modifiable.
         - Un employe ne peut modifier ou annuler une commande qu'apres contact client par appel GSM ou mail ; le mode de contact et le motif doivent etre conserves.
         - Les statuts de commande doivent etre historises avec une date et une heure.
         - Les avis ne sont possibles qu'apres une commande terminee et ne sont publics qu'apres validation par un employe.
-        - Les horaires doivent etre visibles dans le pied de page et modifiables par l'espace employe/administrateur.
+        - Les horaires doivent etre visibles dans le pied de page et modifiables par l'espace administrateur.
         - Les statistiques administrateur doivent provenir d'une base NoSQL : nombre de commandes par menu, comparaison entre menus, chiffre d'affaires par menu et filtres temporels.
 
         ## Justification des choix
@@ -259,7 +260,7 @@ def make_markdown_docs() -> None:
         - Le MCD de l'enonce sert de socle : `utilisateur`, `role`, `commande`, `menu`, `plat`, `avis`, `regime`, `theme`, `allergene`.
         - `menu_images` est ajoute car l'enonce demande une galerie d'images par menu. Ce besoin n'est pas visible dans le MCD fourni mais il est explicite dans le texte.
         - `commande_statuts` est ajoute car l'enonce demande un suivi de commande listant tous les etats avec date et heure de modification.
-        - `horaires` est ajoute car les horaires doivent etre visibles dans le pied de page et modifiables par les employes.
+        - `horaires` est ajoute car les horaires doivent etre visibles dans le pied de page et modifiables par l'administrateur.
         - `contact_messages` est ajoute car l'enonce demande un formulaire de contact avec titre, description et email.
         - `password_resets` est ajoute pour couvrir le parcours de recuperation d'acces sans stocker de jeton en clair.
         - `avis.id_commande` est ajoute pour garantir qu'un avis correspond bien a une commande terminee.
@@ -315,9 +316,19 @@ def make_markdown_docs() -> None:
 
         Une base graphe est utile quand la valeur principale vient de parcours complexes entre entites, par exemple reseaux sociaux, recommandations ou dependances profondes. Vite & Gourmand a surtout besoin de transactions, de contraintes relationnelles et de statistiques simples par periode. Une base graphe ajouterait de la complexite sans benefice clair pour le MVP.
 
+        ## Prix minimum ou prix par personne ?
+
+        Le modele stocke `prix_minimum`, car l'enonce demande un prix pour le nombre minimum de personnes d'un menu. Le prix par personne n'est pas une donnee persistante : il est calcule au moment de la commande avec `prix_minimum / nombre_personnes_minimum`, puis le resultat de la commande est fige dans `commandes.prix_menu` et `commandes.prix_total`. Ce choix evite de dupliquer une information calculable tout en gardant une trace exacte du prix applique a chaque commande.
+
+        ## StatisticsModel ou AggregationService ?
+
+        Dans le code actuel, `StatisticsModel` est le meilleur choix parce qu'il correspond au besoin livre : lire les agregats MongoDB du dashboard administrateur, appliquer les filtres menu/periode, normaliser les donnees pour la vue et basculer sur SQL si MongoDB ou `mongosh` ne sont pas disponibles.
+
+        Un `AggregationService` serait utile dans une etape plus avancee : son role serait de recalculer puis ecrire les agregats MongoDB apres creation, modification ou validation d'une commande. Ce service separerait mieux la lecture du dashboard et l'alimentation des collections. Pour le MVP ECF, il ajouterait toutefois une couche non codee et plus difficile a prouver. Les diagrammes sont donc alignes sur `StatisticsModel`, qui existe vraiment dans l'application.
+
         ## Formulation courte pour l'oral
 
-        J'ai separe la base SQL et la base MongoDB par responsabilite. SQL conserve les donnees metier fiables et normalisees. MongoDB conserve des statistiques denormalisees pour le tableau de bord administrateur, comme l'exige l'enonce. Merise me sert a prouver la coherence des donnees, UML me sert a expliquer les usages et les interactions applicatives.
+        J'ai separe la base SQL et la base MongoDB par responsabilite. SQL conserve les donnees metier fiables et normalisees. MongoDB conserve des statistiques denormalisees pour le tableau de bord administrateur, comme l'exige l'enonce. Dans le MVP, `StatisticsModel` lit ces agregats avec `mongosh` et garde un secours SQL pour la demo. Merise me sert a prouver la coherence des donnees, UML me sert a expliquer les usages et les interactions applicatives.
         """,
     )
 
@@ -362,8 +373,9 @@ def make_markdown_docs() -> None:
 
         Statut : conforme.
 
-        - La collection principale `menu_statistics` contient `menuId`, `menuTitle`, `orders`, `revenue`, `averageBasket`, `period` et `updatedAt`.
-        - Les documents sont filtres par periode et exploitables pour comparer les menus.
+        - Les collections principales sont `menu_statistics`, `monthly_statistics`, `menu_monthly_statistics` et `dashboard_statistics`.
+        - `menu_monthly_statistics` fournit les donnees filtrees par menu et par periode pour le tableau de bord.
+        - `menu_statistics` sert notamment au comptage et a la synthese des menus actifs.
         - MongoDB est limite aux agregats statistiques ; la source de verite reste SQL.
 
         ## Conformite avec l'enonce ECF
@@ -377,7 +389,7 @@ def make_markdown_docs() -> None:
         - Horaires : couverts par `horaires`.
         - Contact : couvert par `contact_messages`.
         - Reinitialisation de mot de passe : couverte par `password_resets`.
-        - Tableau de bord administrateur : couvert par `menu_statistics`.
+        - Tableau de bord administrateur : couvert par `menu_monthly_statistics` et `menu_statistics`, avec secours SQL local si MongoDB est indisponible.
 
         ## Incoherences ou risques restants
 
@@ -459,9 +471,18 @@ def make_mongodb() -> None:
 
         MongoDB est utilise uniquement pour les statistiques du tableau de bord administrateur. Les donnees metier restent dans la base SQL afin de conserver les cles etrangeres, les contraintes et les transactions.
 
-        ## Collection `menu_statistics`
+        ## Collections utilisees
 
-        Objectif : fournir des donnees deja agregees pour les graphiques administrateur.
+        Le MVP code utilise quatre collections statistiques :
+
+        - `menu_statistics` : synthese par menu et comptage des menus actifs.
+        - `monthly_statistics` : synthese mensuelle globale.
+        - `menu_monthly_statistics` : statistiques par menu et par mois, utilisees par les filtres du dashboard.
+        - `dashboard_statistics` : snapshot global de synthese.
+
+        ## Collection principale lue par le dashboard
+
+        La page administrateur lit surtout `menu_monthly_statistics`, puis complete le resume avec `menu_statistics`.
 
         Exemple de structure :
 
@@ -470,55 +491,70 @@ def make_mongodb() -> None:
         | `_id` | ObjectId | Identifiant du document. |
         | `menuId` | Number | Identifiant SQL du menu. |
         | `menuTitle` | String | Nom du menu au moment de l'agregation. |
+        | `month` | String | Mois statistique au format `YYYY-MM`. |
         | `orders` | Number | Nombre de commandes sur la periode. |
         | `revenue` | Number | Chiffre d'affaires sur la periode. |
         | `averageBasket` | Number | Nombre moyen de personnes par commande. |
         | `averageRating` | Number | Note moyenne des avis valides. |
         | `lastOrder` | Date/String ISO | Derniere commande du menu. |
-                | `updatedAt` | Date/String ISO | Date de recalcul. |
+        | `updatedAt` | Date/String ISO | Date de recalcul. |
 
         ## Pourquoi MongoDB plutot que SQL pour ces donnees ?
 
         L'enonce demande explicitement que les statistiques administrateur viennent d'une base non relationnelle. Les statistiques sont des donnees de lecture, agregees et recalculables depuis SQL. Les stocker en documents MongoDB permet de servir rapidement un tableau de bord et de conserver des snapshots par periode sans alourdir le modele transactionnel SQL.
 
-        ## Regle de synchronisation
+        ## Regle d'utilisation dans le MVP code
 
-        La source de verite reste SQL. Les documents `menu_statistics` sont recalcules apres validation, modification ou annulation d'une commande, ou par une tache planifiee. En cas d'ecart, SQL est prioritaire et MongoDB doit etre regenere.
+        Les collections MongoDB sont initialisees par les scripts du dossier `database/mongodb/`.
+        Dans l'application actuelle, `StatisticsModel` lit MongoDB via `mongosh`, normalise les resultats et fournit un secours SQL si MongoDB est indisponible.
+
+        Un `AggregationService` dedie serait une evolution possible pour recalculer et ecrire automatiquement les agregats apres chaque commande. Il n'est pas represente comme composant actif dans les diagrammes, car ce service n'est pas code dans le MVP actuel.
         """,
     )
 
-    sample = [
-        {
-            "menuId": 1,
-            "menuTitle": "Menu Terroir Bordelais",
-            "orders": 12,
-            "revenue": 2280.0,
-            "averageBasket": 7.5,
-            "period": {"start": "2026-06-01", "end": "2026-06-30", "granularity": "month"},
-            "filters": {"theme": "classique", "regime": "classique"},
-            "updatedAt": "2026-06-30T23:00:00Z",
-        },
-        {
-            "menuId": 2,
-            "menuTitle": "Menu Jardin de Saison",
-            "orders": 8,
-            "revenue": 1080.0,
-            "averageBasket": 5.25,
-            "period": {"start": "2026-06-01", "end": "2026-06-30", "granularity": "month"},
-            "filters": {"theme": "anniversaire", "regime": "vegetarien"},
-            "updatedAt": "2026-06-30T23:00:00Z",
-        },
-        {
-            "menuId": 3,
-            "menuTitle": "Menu Noel Gourmand",
-            "orders": 18,
-            "revenue": 9360.0,
-            "averageBasket": 14.2,
-            "period": {"start": "2026-12-01", "end": "2026-12-31", "granularity": "month"},
-            "filters": {"theme": "noel", "regime": "classique"},
-            "updatedAt": "2026-12-31T23:00:00Z",
-        },
-    ]
+    sample = {
+        "menu_statistics": [
+            {
+                "menuId": 1,
+                "menuTitle": "Menu Terroir Bordelais",
+                "orders": 12,
+                "revenue": 2280.0,
+                "averageBasket": 7.5,
+                "averageRating": 4.6,
+                "updatedAt": "2026-06-30T23:00:00Z",
+            }
+        ],
+        "monthly_statistics": [
+            {
+                "month": "2026-06",
+                "orders": 34,
+                "revenue": 6420.0,
+                "averageBasket": 7.1,
+                "updatedAt": "2026-06-30T23:00:00Z",
+            }
+        ],
+        "menu_monthly_statistics": [
+            {
+                "menuId": 1,
+                "menuTitle": "Menu Terroir Bordelais",
+                "month": "2026-06",
+                "orders": 12,
+                "revenue": 2280.0,
+                "averageBasket": 7.5,
+                "averageRating": 4.6,
+                "updatedAt": "2026-06-30T23:00:00Z",
+            }
+        ],
+        "dashboard_statistics": [
+            {
+                "key": "global",
+                "orders": 34,
+                "revenue": 6420.0,
+                "averageBasket": 7.1,
+                "updatedAt": "2026-06-30T23:00:00Z",
+            }
+        ],
+    }
     (ROOT / "database/mongodb/sample-data.json").write_text(
         json.dumps(sample, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -800,7 +836,7 @@ def use_case_diagram() -> None:
     edges = [
         ("visiteur", "uc_menus"), ("visiteur", "uc_contact"), ("visiteur", "uc_register"),
         ("utilisateur", "uc_order"), ("utilisateur", "uc_follow"), ("utilisateur", "uc_review"),
-        ("employe", "uc_manage_menus"), ("employe", "uc_manage_orders"), ("employe", "uc_moderate"),
+        ("employe", "uc_manage_orders"), ("employe", "uc_moderate"),
         ("admin", "uc_manage_menus"), ("admin", "uc_manage_orders"), ("admin", "uc_moderate"), ("admin", "uc_employees"), ("admin", "uc_stats"),
     ]
     edge_objs = [{"source": a, "target": b, "label": ""} for a, b in edges]
@@ -899,7 +935,7 @@ def make_uml() -> None:
         ("Controleur","SQL","Controle commande, role et transitions autorisees"),
         ("Controleur","Service","Applique le statut et conserve le contact client si besoin"),
         ("Service","SQL","Met a jour commande et historique"),
-        ("Service","MongoDB","Declenche la synchronisation des statistiques si besoin"),
+        ("Controleur","Service","Garde les statistiques separees du flux de gestion"),
         ("Service","Mail","Notifie le client"),
         ("Controleur","Navigateur","Confirme la mise a jour"),
     ])
@@ -914,14 +950,13 @@ def make_uml() -> None:
         ("Controleur","Navigateur","Avis valide visible sur accueil"),
     ])
     sequence("sequence-dashboard-admin-mongodb", "SEQ - Dashboard administrateur MongoDB", [
-        ("Acteur","Navigateur","Administrateur consulte le dashboard"),
-        ("Navigateur","Controleur","Demande statistiques filtrees"),
+        ("Acteur","Navigateur","Administrateur consulte /admin/statistiques"),
+        ("Navigateur","Controleur","Demande statistiques avec filtres"),
         ("Controleur","Service","Controle role administrateur"),
-        ("Service","MongoDB","Lit menu_statistics"),
-        ("MongoDB","Service","Retourne orders, revenue, averageBasket, period"),
-        ("Service","Navigateur","Construit le graphique depuis MongoDB"),
-        ("Service","SQL","Synchronisation separee : lit commandes validees"),
-        ("Service","MongoDB","Met a jour les agregats menu_statistics"),
+        ("Service","MongoDB","Lit menu_monthly_statistics via mongosh"),
+        ("MongoDB","Service","Retourne summary, menuStats et monthlyStats"),
+        ("Service","SQL","Secours SQL si MongoDB ou mongosh indisponible"),
+        ("Service","Navigateur","Construit le graphique et affiche la source"),
     ])
 
 
