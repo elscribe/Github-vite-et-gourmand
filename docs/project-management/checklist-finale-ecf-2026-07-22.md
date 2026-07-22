@@ -74,10 +74,13 @@ documentation synchronisee et recette production.
 - [ ] Ajouter ou finaliser les fichiers de deploiement Docker/Fly.io.
 - [ ] Configurer les variables de production :
   `APP_ENV`, `APP_DEBUG`, `APP_URL`, `APP_KEY`, sessions, SQL, MongoDB et email.
-- [ ] Choisir et configurer la base SQL de production.
-- [ ] Initialiser la base SQL avec les scripts de creation et de donnees.
-- [ ] Choisir et configurer MongoDB pour les statistiques.
-- [ ] Initialiser les collections MongoDB et les donnees de demonstration.
+- [ ] Choisir et configurer la base SQL utilisee par l'application deployee.
+- [ ] Initialiser cette base SQL de production avec les scripts de creation et
+  de donnees, une fois l'environnement Fly.io pret.
+- [ ] Choisir et configurer MongoDB pour les statistiques de l'application
+  deployee.
+- [ ] Initialiser les collections MongoDB et les donnees de demonstration sur
+  l'environnement de production, une fois le service MongoDB accessible.
 - [ ] Verifier que le dossier de logs est accessible en ecriture.
 - [ ] Verifier que le serveur pointe bien vers `public/`.
 - [ ] Lancer la recette post-deploiement sur l'URL Fly.io.
