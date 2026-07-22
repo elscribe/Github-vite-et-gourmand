@@ -177,7 +177,8 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - Un employe ne peut modifier ou annuler une commande qu'apres contact client par appel GSM ou mail ; le mode de contact et le motif doivent etre conserves.
 - Les statuts de commande doivent etre historises avec une date et une heure.
 - Les avis ne sont possibles qu'apres une commande terminee et ne sont publics qu'apres validation par un employe.
-- Les horaires doivent etre visibles dans le pied de page et modifiables par l'espace employe/administrateur.
+- Les horaires doivent etre visibles dans le pied de page et modifiables par l'espace administrateur.
+- Le role employe ne modifie pas les menus, les plats ou les horaires dans cette version : ces actions sont reservees a l'administrateur pour proteger le catalogue public, les prix et les informations publiees.
 - Les statistiques administrateur doivent provenir d'une base NoSQL : nombre de commandes par menu, comparaison entre menus, chiffre d'affaires par menu et filtres temporels.
 
 ## Justification des choix
@@ -185,7 +186,7 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - Le MCD de l'enonce sert de socle : `utilisateur`, `role`, `commande`, `menu`, `plat`, `avis`, `regime`, `theme`, `allergene`.
 - `menu_images` est ajoute car l'enonce demande une galerie d'images par menu. Ce besoin n'est pas visible dans le MCD fourni mais il est explicite dans le texte.
 - `commande_statuts` est ajoute car l'enonce demande un suivi de commande listant tous les etats avec date et heure de modification.
-- `horaires` est ajoute car les horaires doivent etre visibles dans le pied de page et modifiables par les employes.
+- `horaires` est ajoute car les horaires doivent etre visibles dans le pied de page et modifiables depuis l'espace administrateur.
 - `contact_messages` est ajoute car l'enonce demande un formulaire de contact avec titre, description et email.
 - `password_resets` est ajoute pour couvrir le parcours de recuperation d'acces sans stocker de jeton en clair.
 - `avis.id_commande` est ajoute pour garantir qu'un avis correspond bien a une commande terminee.

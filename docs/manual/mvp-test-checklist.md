@@ -48,13 +48,14 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| C1 Connexion employe | Se connecter comme employe | Acces a l'espace employe. | Valide local |
-| C2 Liste commandes | Ouvrir `/employe/commandes` | Liste des commandes visible. | Valide local |
-| C3 Filtre commandes | Filtrer par statut ou client | Liste reduite selon le filtre. | Valide local |
-| C4 Changement statut | Passer une commande a un autre statut | Statut mis a jour et historique ajoute. | Valide local |
-| C5 Annulation employe | Annuler avec mode contact + motif | Annulation enregistree avec justification. | Valide local |
-| C6 Moderation avis | Ouvrir `/employe/avis` | Avis en attente visibles. | Valide local |
-| C7 Valider/refuser avis | Moderer un avis | L'avis change de statut. | Valide local |
+| C1 Connexion employe | Se connecter comme employe | Acces a l'espace employe. | Teste 22/07 audit employe |
+| C2 Liste commandes | Ouvrir `/employe/commandes` | Liste des commandes visible. | Teste 22/07 audit employe |
+| C3 Filtre commandes | Filtrer par statut ou client | Liste reduite selon le filtre. | Teste 22/07 audit employe |
+| C4 Changement statut | Passer une commande a un autre statut | Statut mis a jour et historique ajoute. | Teste 22/07 audit employe |
+| C5 Notification retour materiel | Passer une commande en `en_attente_retour_materiel` | Email client avec 10 jours ouvres, 600 EUR et lien CGV. | Teste 22/07 audit employe |
+| C6 Annulation employe | Annuler avec mode contact + motif | Annulation enregistree avec justification. | Teste 22/07 audit employe |
+| C7 Moderation avis | Ouvrir `/employe/avis` | Avis en attente visibles. | Teste 22/07 audit employe |
+| C8 Valider/refuser avis | Moderer un avis | L'avis change de statut et un avis valide peut apparaitre sur l'accueil. | Teste 22/07 audit employe |
 
 ## D. Parcours administrateur
 
@@ -73,6 +74,7 @@ Pour le detail des user stories client connecte, voir aussi :
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
 | E1 Client bloque admin | Connecte client, ouvrir `/admin` | Acces refuse ou redirection. | Valide local |
+| E1b Employe bloque catalogue admin | Connecte employe, ouvrir `/admin/menus`, `/admin/plats`, `/admin/horaires` | Acces refuse car catalogue et horaires reserves admin. | Teste 22/07 audit employe |
 | E2 Visiteur bloque commandes | Deconnecte, ouvrir `/commandes` | Redirection connexion. | Valide local |
 | E3 CSRF | Verifier les formulaires POST | Champ `_csrf_token` present. | Valide local |
 | E4 Mot de passe | Verifier en base | Mot de passe stocke en hash, pas en clair. | Valide local |

@@ -120,6 +120,15 @@ documentee, deployee et appuyee par :
 - Consulter le chiffre d'affaires par menu.
 - Filtrer les statistiques par menu et par periode.
 
+### Choix De Perimetre Des Roles
+
+L'enonce place la gestion des menus, des plats et des horaires dans l'espace
+employe. Dans cette implementation, ces actions sont volontairement reservees
+au role `administrateur`, car elles modifient directement le catalogue public,
+les prix, la composition des menus et les horaires affiches aux clients.
+L'espace `employe` reste centre sur le traitement operationnel : commandes,
+annulations justifiees, changements de statuts et moderation des avis.
+
 ## Stack Technique Cible
 
 | Couche | Choix |
