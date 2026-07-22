@@ -20,6 +20,7 @@ garder une trace versionnee dans GitHub pour le jury.
 | `public-figma-inventory.md` | Correspondance entre pages publiques, Figma, code et captures. |
 | `public-layout-documentation.md` | Explication du layout public, des routes, vues, assets et interactions. |
 | `journal-de-bord-public-layout.md` | Entree de journal de bord pour l'integration publique et le premier commit. |
+| `audit-page-06-visiteur-commande-conditions-2026-07-22.md` | Audit page 6 de l'enonce : visiteur bloque avant commande, reprise apres authentification et conditions menu visibles. |
 
 ## Utilisation pour l'oral
 
