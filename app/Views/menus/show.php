@@ -7,17 +7,11 @@ use App\Services\MenuPresentation;
  * @var list<array<string, mixed>> $images
  * @var list<array<string, mixed>> $dishes
  * @var list<array<string, mixed>> $allergens
+ * @var array<string, mixed> $presentation
  */
 
-$presentation = MenuPresentation::forMenu($menu);
-$databaseImages = array_map(
-    static fn (array $image): array => [
-        'src' => (string) $image['url'],
-        'alt' => (string) $image['texte_alternatif'],
-    ],
-    $images
-);
-$detailImages = $databaseImages !== [] ? $databaseImages : ($presentation['detail_images'] ?? []);
+$presentation = $presentation ?? MenuPresentation::forMenu($menu, $images);
+$detailImages = $presentation['detail_images'] ?? [];
 
 if (!is_array($detailImages) || $detailImages === []) {
     $detailImages = [[

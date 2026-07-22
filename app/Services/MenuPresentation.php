@@ -507,23 +507,94 @@ final class MenuPresentation
 
     /**
      * @param array<string, mixed> $menu
+     * @param list<array<string, mixed>> $images
      *
      * @return array<string, mixed>
      */
-    public static function forMenu(array $menu): array
+    public static function forMenu(array $menu, array $images = []): array
     {
         $menuId = (int) ($menu['id_menu'] ?? 0);
-
-        return self::all()[$menuId] ?? [
+        $presentation = self::all()[$menuId] ?? [
+            'order' => 100 + $menuId,
             'title' => (string) ($menu['titre'] ?? ''),
             'description' => (string) ($menu['description'] ?? ''),
+            'image' => '/images/home/menu-noel-tradition.png',
+            'image_alt' => (string) ($menu['titre'] ?? 'Menu Vite et Gourmand'),
+            'badge' => (string) ($menu['theme'] ?? 'Menu'),
             'people' => (int) ($menu['nombre_personnes_minimum'] ?? 0),
             'price' => (float) ($menu['prix_minimum'] ?? 0),
             'regime_label' => self::regimeLabel((string) ($menu['regime'] ?? '')),
             'theme_label' => self::themeLabel((string) ($menu['theme'] ?? '')),
             'status' => ((int) ($menu['stock_disponible'] ?? 0)) . ' commandes disponibles',
+            'status_type' => 'available',
+            'available' => ((int) ($menu['stock_disponible'] ?? 0)) > 0,
+            'party' => false,
+            'allergens' => [],
             'conditions' => (string) ($menu['conditions'] ?? ''),
         ];
+
+        $presentation += [
+            'order' => 100 + $menuId,
+            'image' => '/images/home/menu-noel-tradition.png',
+            'image_alt' => (string) ($menu['titre'] ?? 'Menu Vite et Gourmand'),
+            'badge' => (string) ($menu['theme'] ?? 'Menu'),
+            'theme_label' => self::themeLabel((string) ($menu['theme'] ?? '')),
+            'status_type' => 'available',
+            'available' => ((int) ($menu['stock_disponible'] ?? 0)) > 0,
+            'party' => false,
+            'allergens' => [],
+            'conditions' => (string) ($menu['conditions'] ?? ''),
+        ];
+
+        $presentation['title'] = (string) ($menu['titre'] ?? $presentation['title']);
+        $presentation['description'] = (string) ($menu['description'] ?? $presentation['description']);
+        $presentation['people'] = (int) ($menu['nombre_personnes_minimum'] ?? $presentation['people']);
+        $presentation['price'] = (float) ($menu['prix_minimum'] ?? $presentation['price']);
+        $presentation['regime_label'] = self::regimeLabel((string) ($menu['regime'] ?? $presentation['regime_label']));
+        $presentation['theme_label'] = self::themeLabel((string) ($menu['theme'] ?? $presentation['theme_label']));
+        $presentation['conditions'] = (string) ($menu['conditions'] ?? $presentation['conditions']);
+
+        if (isset($menu['stock_disponible'])) {
+            $stock = (int) $menu['stock_disponible'];
+            $presentation['status'] = $stock > 0 ? $stock . ' commandes disponibles' : 'Stock indisponible';
+            $presentation['status_type'] = $stock > 5 ? 'available' : 'limited';
+            $presentation['available'] = $stock > 0;
+        }
+
+        $databaseDetailImages = [];
+
+        foreach ($images as $image) {
+            $imageUrl = trim((string) ($image['url'] ?? ''));
+
+            if ($imageUrl === '') {
+                continue;
+            }
+
+            $databaseDetailImages[] = [
+                'src' => $imageUrl,
+                'alt' => (string) ($image['texte_alternatif'] ?? $presentation['title']),
+            ];
+        }
+
+        if ($databaseDetailImages !== []) {
+            $presentation['detail_images'] = $databaseDetailImages;
+            $presentation['image'] = $databaseDetailImages[0]['src'];
+            $presentation['image_alt'] = $databaseDetailImages[0]['alt'];
+        } else {
+            $imageUrl = trim((string) ($menu['image_url'] ?? ''));
+
+            if ($imageUrl !== '') {
+                $presentation['image'] = $imageUrl;
+                $presentation['image_alt'] = (string) ($menu['image_alt'] ?? $presentation['title']);
+
+                if (isset($presentation['detail_images'][0]) && is_array($presentation['detail_images'][0])) {
+                    $presentation['detail_images'][0]['src'] = $presentation['image'];
+                    $presentation['detail_images'][0]['alt'] = $presentation['image_alt'];
+                }
+            }
+        }
+
+        return $presentation;
     }
 
     /**

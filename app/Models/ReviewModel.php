@@ -66,6 +66,34 @@ final class ReviewModel extends BaseModel
         return $statement->fetchAll();
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
+    public function findForUser(int $userId): array
+    {
+        $sql = <<<SQL
+            SELECT
+                a.id_avis,
+                a.note,
+                a.commentaire,
+                a.statut,
+                a.created_at,
+                c.id_commande,
+                c.date_prestation,
+                m.titre AS menu_titre
+            FROM avis a
+            INNER JOIN commandes c ON c.id_commande = a.id_commande
+            INNER JOIN menus m ON m.id_menu = c.id_menu
+            WHERE a.id_utilisateur = :user_id
+            ORDER BY a.created_at DESC, a.id_avis DESC
+        SQL;
+
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(['user_id' => $userId]);
+
+        return $statement->fetchAll();
+    }
+
     public function countPending(): int
     {
         $statement = $this->pdo()->query("SELECT COUNT(*) FROM avis WHERE statut = 'en_attente'");

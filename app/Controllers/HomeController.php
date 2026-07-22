@@ -29,6 +29,8 @@ final class HomeController extends BaseController
             'pageTitle' => 'Accueil - Vite & Gourmand',
             'bodyClass' => 'page-home',
             'menus' => $menuModel->findActiveMenus(),
+            'themes' => $menuModel->findThemes(),
+            'regimes' => $menuModel->findRegimes(),
             'validatedReviews' => $reviewModel->findValidated(),
         ]);
     }

@@ -14,7 +14,6 @@ $contactPreference = (string) ($user['canal_contact_prefere'] ?? 'email');
             <p class="client-kicker">Mon espace personnel</p>
             <h1>Modifier mes informations</h1>
             <span>Mettez à jour vos coordonnées personnelles et préférences pour simplifier la planification de vos prochaines réceptions.</span>
-            <em>Cette page est accessible uniquement lorsque l'utilisateur est connecté.</em>
         </header>
 
         <div class="client-profile-alerts" aria-live="polite">

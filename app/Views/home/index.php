@@ -53,6 +53,46 @@ usort(
     static fn (array $first, array $second): int => $first['order'] <=> $second['order']
 );
 
+if (isset($menus) && is_array($menus) && $menus !== []) {
+    $featuredMenus = [];
+
+    foreach ($menus as $menu) {
+        $presentation = MenuPresentation::forMenu($menu);
+        $menuId = (int) ($menu['id_menu'] ?? 0);
+        $people = (int) ($presentation['people'] ?? 0);
+        $price = (float) ($presentation['price'] ?? 0);
+
+        $featuredMenus[] = [
+            'order' => (int) ($presentation['order'] ?? (100 + $menuId)),
+            'title' => (string) ($presentation['title'] ?? $menu['titre'] ?? ''),
+            'description' => (string) ($presentation['description'] ?? $menu['description'] ?? ''),
+            'image' => (string) ($presentation['image'] ?? '/images/home/menu-noel-tradition.png'),
+            'image_alt' => (string) ($presentation['image_alt'] ?? $presentation['title'] ?? $menu['titre'] ?? ''),
+            'tag' => (string) ($presentation['badge'] ?? $menu['theme'] ?? 'Menu'),
+            'people' => '&Agrave; partir de ' . $people . ' personnes',
+            'peopleCount' => $people,
+            'price' => number_format($price, 0, ',', ' ') . ' &euro;',
+            'priceValue' => $price,
+            'regime' => (string) ($presentation['regime_label'] ?? $menu['regime'] ?? ''),
+            'status' => (string) ($presentation['status'] ?? 'Disponible'),
+            'statusTone' => (string) ($presentation['status_type'] ?? 'available'),
+            'isAvailable' => (bool) ($presentation['available'] ?? true),
+            'isParty' => (bool) ($presentation['party'] ?? false),
+            'themeId' => (int) ($menu['id_theme'] ?? 0),
+            'regimeId' => (int) ($menu['id_regime'] ?? 0),
+            'statusType' => (string) ($presentation['status_type'] ?? 'available'),
+            'statusWeek' => str_contains((string) ($presentation['status'] ?? ''), 'semaine'),
+            'allergens' => is_array($presentation['allergens'] ?? null) ? $presentation['allergens'] : [],
+            'url' => '/menus/' . $menuId,
+        ];
+    }
+
+    usort(
+        $featuredMenus,
+        static fn (array $first, array $second): int => $first['order'] <=> $second['order']
+    );
+}
+
 $commitments = [
     [
         'title' => '25 ans d&apos;expertise',

@@ -8578,3 +8578,676 @@ body.backoffice-body {
         height: 210px;
     }
 }
+
+/* Client connected workspace - restored from the Figma client flow. */
+body.page-client {
+    background: #f2e8d4;
+}
+
+.page-client .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.page-client-account .site-nav-logout,
+.page-client-profile-edit .site-nav-logout {
+    display: none;
+}
+
+.client-page {
+    padding: 64px 0 88px;
+}
+
+.client-container {
+    max-width: 1240px;
+}
+
+.client-hero {
+    margin-bottom: 40px;
+}
+
+.client-kicker {
+    margin: 0 0 10px;
+    color: #8a5f00;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.client-hero h1,
+.client-section-heading h2 {
+    margin: 0;
+    color: #241913;
+    font-family: var(--font-title);
+    font-size: clamp(2.15rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.08;
+}
+
+.client-hero span,
+.client-section-heading span {
+    display: block;
+    max-width: 980px;
+    margin-top: 14px;
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.55;
+}
+
+.client-account-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+}
+
+.client-account-sidebar {
+    position: sticky;
+    top: 124px;
+}
+
+.client-account-sidebar-card,
+.client-card,
+.client-form-card {
+    border: 1px solid #ead7b2;
+    border-radius: 8px;
+    background: #fffdf8;
+    box-shadow: 0 16px 34px rgba(36, 25, 19, 0.08);
+}
+
+.client-account-sidebar-card {
+    display: grid;
+    gap: 22px;
+    padding: 18px;
+}
+
+.client-account-user-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+}
+
+.client-account-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.client-account-user-card strong,
+.client-account-user-card small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.client-account-user-card small {
+    color: #667085;
+    font-size: 0.82rem;
+}
+
+.client-account-nav {
+    display: grid;
+    gap: 8px;
+}
+
+.client-account-nav a {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 7px;
+    color: #241913;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.client-account-nav a:hover,
+.client-account-nav a:focus-visible,
+.client-account-nav a.is-active {
+    background: #f3e7cf;
+    color: var(--color-primary);
+}
+
+.client-account-nav em {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-style: normal;
+}
+
+.client-account-nav-logout {
+    margin-top: 20px;
+}
+
+.client-account-content {
+    display: grid;
+    gap: 32px;
+}
+
+.client-card,
+.client-form-card {
+    padding: 28px;
+}
+
+.client-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.client-card-heading h2,
+.client-card h2,
+.client-form-card h2 {
+    margin: 0;
+    color: #241913;
+    font-family: var(--font-title);
+    font-size: clamp(1.45rem, 2.5vw, 2rem);
+    line-height: 1.1;
+}
+
+.client-card-heading h2 span {
+    color: var(--color-primary);
+}
+
+.client-current-summary,
+.client-account-info-list,
+.client-info-list,
+.client-order-row-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 0;
+}
+
+.client-current-summary div,
+.client-account-info-list div,
+.client-info-list div {
+    display: grid;
+    gap: 6px;
+}
+
+.client-current-address,
+.client-info-wide {
+    grid-column: 1 / -1;
+}
+
+.client-current-summary dt,
+.client-account-info-list dt,
+.client-info-list dt {
+    color: #667085;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.client-current-summary dd,
+.client-account-info-list dd,
+.client-info-list dd {
+    margin: 0;
+    color: #241913;
+    font-weight: 800;
+}
+
+.client-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    min-height: 24px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.client-status-badge.status-terminee,
+.client-status-badge.status-livre,
+.client-status-badge.status-valide {
+    background: #e7f7ee;
+    color: #087443;
+}
+
+.client-status-badge.status-annulee,
+.client-status-badge.status-refuse {
+    background: #fee4e2;
+    color: #b42318;
+}
+
+.client-progress {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: 34px 0 24px;
+}
+
+.client-progress-step {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 9px;
+    color: #98a2b3;
+    text-align: center;
+}
+
+.client-progress-step::before {
+    position: absolute;
+    top: 11px;
+    right: 50%;
+    width: 100%;
+    height: 2px;
+    background: #d0d5dd;
+    content: "";
+}
+
+.client-progress-step:first-child::before {
+    display: none;
+}
+
+.client-progress-step span {
+    position: relative;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #d0d5dd;
+    border-radius: 999px;
+    background: #fffdf8;
+}
+
+.client-progress-step.is-done span,
+.client-progress-step.is-current span {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+}
+
+.client-progress-step.is-done::before,
+.client-progress-step.is-current::before {
+    background: var(--color-primary);
+}
+
+.client-progress-step.is-current small {
+    color: var(--color-primary);
+    font-weight: 900;
+}
+
+.client-card-actions,
+.client-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.client-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 18px;
+    border: 1px solid var(--color-primary);
+    border-radius: 7px;
+    color: var(--color-primary);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.client-button-primary {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.client-button-disabled {
+    border-color: #e4e7ec;
+    background: #f2f4f7;
+    color: #98a2b3;
+}
+
+.client-current-note,
+.client-muted {
+    color: #667085;
+}
+
+.client-history-table {
+    display: grid;
+    gap: 0;
+}
+
+.client-history-table-head,
+.client-history-table-row {
+    display: grid;
+    grid-template-columns: 1.15fr 1.6fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #ead7b2;
+}
+
+.client-history-table-head {
+    color: #667085;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.client-history-table-row {
+    color: #241913;
+    text-decoration: none;
+}
+
+.client-history-detail {
+    color: var(--color-primary);
+    font-weight: 900;
+    text-decoration: underline;
+}
+
+.client-review-action-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 18px;
+    align-items: center;
+    padding: 18px;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.client-stars {
+    color: #d8a84e;
+    letter-spacing: 2px;
+}
+
+.client-profile-grid,
+.client-profile-edit-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.client-form-grid,
+.client-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.client-field-wide {
+    grid-column: 1 / -1;
+}
+
+.client-back-link {
+    display: inline-flex;
+    margin-bottom: 26px;
+    color: var(--color-primary);
+    font-weight: 900;
+}
+
+.client-contact-preference {
+    display: grid;
+    gap: 12px;
+    margin: 22px 0;
+    padding: 18px;
+    border: 1px solid #ead7b2;
+    border-radius: 8px;
+}
+
+.client-contact-preference label,
+.client-preference-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.client-preference-tags span {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #f2e8d4;
+    color: #667085;
+    font-weight: 800;
+}
+
+.client-preference-tags span.is-active {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.client-review-history {
+    display: grid;
+    gap: 18px;
+    margin-top: 34px;
+}
+
+.client-review-history-list {
+    display: grid;
+    gap: 16px;
+}
+
+.client-review-empty-card {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Admin menu gallery and horizontal composition workspace. */
+.admin-menu-workspace {
+    width: 100%;
+    max-width: 1220px;
+}
+
+.admin-menu-lower-grid {
+    grid-template-columns: 1fr;
+}
+
+.admin-menu-detail-panel,
+.admin-dish-management-panel {
+    min-width: 0;
+}
+
+.admin-menu-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.85fr) minmax(520px, 1.15fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.admin-menu-gallery-admin {
+    display: grid;
+    gap: 14px;
+}
+
+.admin-menu-subheading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.admin-menu-subheading h3 {
+    margin: 0;
+    color: #241913;
+    font-family: var(--font-title);
+    font-size: 1.35rem;
+}
+
+.admin-menu-subheading p,
+.admin-menu-gallery-hint,
+.admin-menu-gallery-help {
+    color: #667085;
+}
+
+.admin-menu-gallery-grid {
+    display: grid;
+    gap: 14px;
+    max-height: 640px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.admin-menu-gallery-card,
+.admin-menu-gallery-add-form {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #e1cda8;
+    border-radius: 8px;
+    background: #fffdf8;
+}
+
+.admin-menu-gallery-card {
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+    align-items: start;
+}
+
+.admin-menu-gallery-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+.admin-menu-gallery-form,
+.admin-menu-gallery-delete {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-menu-gallery-delete {
+    grid-column: 2;
+}
+
+.admin-menu-gallery-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px;
+    gap: 12px;
+    align-items: end;
+}
+
+.admin-menu-gallery-alt-field {
+    grid-column: 1 / -1;
+}
+
+.admin-menu-button-danger {
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.admin-menu-button-danger:hover,
+.admin-menu-button-danger:focus {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.admin-menu-composition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.admin-dish-management-layout {
+    display: grid;
+    grid-template-columns: minmax(380px, 0.92fr) minmax(0, 1.08fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.admin-dish-browser,
+.admin-dish-editor-panel {
+    min-width: 0;
+}
+
+.admin-dish-browser {
+    display: grid;
+    gap: 14px;
+}
+
+.admin-dish-list {
+    max-height: 620px;
+}
+
+.admin-dish-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.admin-dish-actions {
+    grid-column: auto;
+    justify-content: flex-end;
+}
+
+@media (max-width: 1080px) {
+    .client-account-layout,
+    .client-profile-grid,
+    .client-profile-edit-layout,
+    .admin-menu-detail-layout,
+    .admin-menu-composition-grid,
+    .admin-dish-management-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .client-account-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 760px) {
+    .client-page {
+        padding: 32px 0 52px;
+    }
+
+    .client-card,
+    .client-form-card,
+    .client-account-sidebar-card {
+        padding: 18px 16px;
+    }
+
+    .client-current-summary,
+    .client-account-info-list,
+    .client-info-list,
+    .client-form-grid,
+    .client-history-table-head,
+    .client-history-table-row,
+    .client-review-action-row,
+    .admin-menu-gallery-card,
+    .admin-menu-gallery-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-menu-gallery-delete {
+        grid-column: 1;
+    }
+
+    .client-card-heading,
+    .admin-menu-subheading {
+        display: grid;
+    }
+
+    .client-progress {
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+    .client-progress-step {
+        min-width: 82px;
+    }
+}

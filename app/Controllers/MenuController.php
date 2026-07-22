@@ -43,15 +43,17 @@ final class MenuController extends BaseController
             return;
         }
 
-        $presentation = MenuPresentation::forMenu($menu);
+        $images = $menuModel->findImagesByMenuId($menuId);
+        $presentation = MenuPresentation::forMenu($menu, $images);
 
         $this->view('menus/show', [
             'pageTitle' => $presentation['title'] . ' - Vite & Gourmand',
             'bodyClass' => 'page-menu-detail',
             'menu' => $menu,
-            'images' => $menuModel->findImagesByMenuId($menuId),
+            'images' => $images,
             'dishes' => $menuModel->findDishesByMenuId($menuId),
             'allergens' => $menuModel->findAllergensByMenuId($menuId),
+            'presentation' => $presentation,
         ]);
     }
 }
