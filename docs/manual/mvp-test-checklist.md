@@ -61,13 +61,13 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Test | Action | Resultat attendu | Statut |
 |---|---|---|---|
-| D1 Connexion admin | Se connecter comme administrateur | Acces au dashboard admin. | Valide local |
-| D2 Dashboard | Ouvrir `/admin` | Indicateurs principaux visibles. | Valide local |
-| D3 Statistiques | Ouvrir `/admin/statistiques` | Commandes et CA par menu visibles, filtres disponibles. | Valide local |
-| D4 Employes | Ouvrir `/admin/employes` | Creation et activation/desactivation employe possibles. | Valide local |
-| D5 Horaires | Ouvrir `/admin/horaires` | Gestion simple des horaires possible. | Valide local |
-| D6 Menus admin | Ouvrir `/admin/menus` | Creation/modification des champs principaux menu possible. | Valide local |
-| D7 Plats admin | Ouvrir `/admin/plats` | Creation/modification des plats possible. | Valide local |
+| D1 Connexion admin | Se connecter comme administrateur | Acces au dashboard admin. | Teste 22/07 audit admin |
+| D2 Dashboard | Ouvrir `/admin` | Indicateurs principaux visibles. | Teste 22/07 audit admin |
+| D3 Statistiques | Ouvrir `/admin/statistiques` | Commandes et CA par menu visibles, filtres disponibles. | Teste 22/07 audit admin |
+| D4 Employes | Ouvrir `/admin/employes` | Creation et activation/desactivation employe possibles. | Teste 22/07 audit admin |
+| D5 Horaires | Ouvrir `/admin/horaires` | Gestion simple des horaires possible. | Teste 22/07 audit admin |
+| D6 Menus admin | Ouvrir `/admin/menus` | Creation/modification des champs principaux menu possible. | Teste 22/07 audit admin |
+| D7 Plats admin | Ouvrir `/admin/plats` | Creation/modification des plats possible. | Teste 22/07 audit admin |
 
 ## E. Securite minimale
 
@@ -95,8 +95,8 @@ Pour le detail des user stories client connecte, voir aussi :
 | Charte graphique | `docs/deliverables/graphic-charter/` + Figma | Present |
 | Gestion projet / backlog | Notion + rapport user stories + matrice finale | Present, lien Notion a completer |
 | Manuel / revisions | `docs/manual/` | Present, PDF a regenerer si captures finales |
-| Deploiement | `docs/deployment/README.md` | Procedure presente, URL finale a completer |
-| Securite | `docs/security/README.md` + `docs/security/security-watch.md` + middlewares | Present |
+| Deploiement | `docs/deployment/README.md` | Present, URL finale a completer |
+| Securite | `docs/security/README.md` + middlewares | Present |
 
 ## Notes pendant test
 

@@ -11,8 +11,10 @@ garder une trace versionnee dans GitHub pour le jury.
 | Fichier | Role |
 |---|---|
 | `user-story-implementation-report.md` | Etat d'avancement des user stories et tests realises. |
+| `audit-page-07-commande-espace-client-2026-07-22.md` | Audit page 7 de l'enonce : commande, espace client, suivi, emails et avis. |
 | `audit-page-08-espace-employe-2026-07-22.md` | Audit page 8 de l'enonce : espace employe, statuts, annulations, notifications retour materiel et moderation des avis. |
 | `audit-page-09-espace-admin-contact-deploiement-2026-07-22.md` | Audit page 9 de l'enonce : espace administrateur, creation employe, statistiques MongoDB, contact, deploiement et RGAA. |
+| `client-connected-user-stories-validation.md` | Validation detaillee des user stories client connecte : compte, commandes, suivi, modification, annulation et avis. |
 | `user-story-debug-log.md` | Journal des echecs, causes et solutions par user story. |
 | `audit-context.md` | Regle permanente des audits ECF : source locale, criteres de verification et decision push/main. |
 | `decision-avis-accueil-2026-07-22.md` | Decision de perimetre : les avis valides sont affiches automatiquement ; la selection editoriale manuelle est une evolution future. |
@@ -31,7 +33,7 @@ Avant une demonstration, relire dans cet ordre :
 
 ```text
 1. user-story-implementation-report.md
-2. ../manual/final-user-story-test-matrix.md
+2. client-connected-user-stories-validation.md
 3. public-layout-documentation.md
 4. user-story-debug-log.md
 5. journal-de-bord-public-layout.md
