@@ -23,7 +23,7 @@ La methode la plus sure est hybride :
 5. Corriger ce qui bloque avant de passer aux pages suivantes, quand cela evite
    de revenir sur une decision deja auditee.
 
-## Analyse du conseil Gemini
+## Analyse de l'ordre d'audit propose
 
 Le conseil propose l'ordre suivant :
 

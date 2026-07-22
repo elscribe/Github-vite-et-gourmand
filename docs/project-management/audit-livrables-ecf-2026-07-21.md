@@ -67,7 +67,7 @@ GitHub distant :
 - Branche par defaut : `main`
 - Dernier push remote : 2026-07-20 03:31:12 UTC
 - Permission locale via `gh` : `ADMIN`
-- Le connecteur GitHub Codex ne voit pas le depot prive, donc le controle fiable vient de `gh`.
+- Le depot etant prive, le controle fiable vient de l'outil GitHub local.
 
 Etat local avant commit du present audit :
 

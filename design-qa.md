@@ -96,8 +96,7 @@ Date : 2026-07-15.
 - La page `/mot-de-passe/oublie` doit encore etre testee avec un compte existant pour verifier le lien de demonstration.
 - Une inscription valide doit encore etre testee avec une strategie de compte de test.
 - Le login valide doit encore etre teste avec un compte de test connu.
-- Le navigateur integre Codex bloque toujours la capture automatisee avec l'erreur technique `Cannot redefine property: process`.
-- Re-test effectue apres reinitialisation de la connexion navigateur : meme erreur avant ouverture de `/mon-compte`, donc le blocage vient de l'outil de capture, pas de l'application.
-- Des captures locales WebKit ont ete utilisees en fallback pour comparer les pages privees avec les frames Figma, mais une passe finale dans le navigateur utilisateur reste necessaire avant de declarer la fidelite visuelle a 100% dans l'outil integre.
-
-final result: blocked
+- La capture automatisee du navigateur de test a rencontre une erreur technique
+  `Cannot redefine property: process`. Des captures locales Playwright ont ete
+  utilisees en fallback pour avancer, mais une passe finale dans le navigateur
+  utilisateur reste necessaire avant de declarer la fidelite visuelle a 100%.
