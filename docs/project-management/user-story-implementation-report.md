@@ -20,7 +20,7 @@ Le detail des erreurs rencontrees et des solutions appliquees est conserve dans
 
 | US | Fonctionnalite | Etat | Fichiers principaux | Test manuel |
 |---|---|---|---|---|
-| US-001 | Accueil avec avis valides | Valide | `HomeController`, `ReviewModel`, `home/index.php` | `GET /` affiche seulement les avis `valide`. |
+| US-001 | Accueil avec avis valides | Valide renforce | `HomeController`, `ReviewModel`, `home/index.php`, `seed_database.sql` | `GET /` affiche les avis issus de `ReviewModel::findValidated(3)` et seulement les statuts `valide`. |
 | US-002 | Liste publique des menus | Valide | `MenuController`, `MenuModel`, `menus/index.php` | `GET /menus` sans connexion. |
 | US-003 | Filtres menus dynamiques | Valide | `MenuModel`, `menus/index.php`, `app.js` | Filtrer par theme/regime/prix/personnes sans rechargement. |
 | US-004 | Detail complet d'un menu | Valide | `MenuModel`, `MenuController`, `menus/show.php` | `GET /menus/1` affiche images, plats, allergenes, conditions, stock. |

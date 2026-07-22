@@ -12,6 +12,7 @@ garder une trace versionnee dans GitHub pour le jury.
 |---|---|
 | `user-story-implementation-report.md` | Etat d'avancement des user stories et tests realises. |
 | `user-story-debug-log.md` | Journal des echecs, causes et solutions par user story. |
+| `decision-avis-accueil-2026-07-22.md` | Decision de perimetre : les avis valides sont affiches automatiquement ; la selection editoriale manuelle est une evolution future. |
 | `../manual/final-user-story-test-matrix.md` | Matrice finale de recette : US, role, page Figma, route code, test, statut et preuve. |
 | `public-figma-inventory.md` | Correspondance entre pages publiques, Figma, code et captures. |
 | `public-layout-documentation.md` | Explication du layout public, des routes, vues, assets et interactions. |

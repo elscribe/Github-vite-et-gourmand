@@ -32,7 +32,10 @@ INSERT INTO `utilisateurs` (
 (10, 3, 'camille.fournier@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Fournier', 'Camille', '0603000005', '18 avenue Jean Jaures', 'Talence', 'France', TRUE, '2025-03-18 16:25:00', NULL),
 (11, 3, 'hugo.lambert@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Lambert', 'Hugo', '0603000006', '2 rue des Remparts', 'Bordeaux', 'France', TRUE, '2025-03-20 13:10:00', NULL),
 (12, 3, 'julie.faure@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Faure', 'Julie', '0603000007', '27 rue Judaique', 'Bordeaux', 'France', TRUE, '2025-03-22 12:35:00', NULL),
-(13, 3, 'maxime.girard@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Girard', 'Maxime', '0603000008', '3 place Pey-Berland', 'Bordeaux', 'France', TRUE, '2025-03-24 18:05:00', NULL);
+(13, 3, 'maxime.girard@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Girard', 'Maxime', '0603000008', '3 place Pey-Berland', 'Bordeaux', 'France', TRUE, '2025-03-24 18:05:00', NULL),
+(14, 3, 'sophie.renaud@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Renaud', 'Sophie', '0603000009', '10 rue du Mirail', 'Bordeaux', 'France', TRUE, '2025-12-01 10:00:00', NULL),
+(15, 3, 'marc.lemoine@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Lemoine', 'Marc', '0603000010', '5 cours Pasteur', 'Bordeaux', 'France', TRUE, '2026-02-20 09:30:00', NULL),
+(16, 3, 'helene.bernard@example.test', '$2y$12$RvOIXchpoHZaHZdI1j4he.lxPL0eqRUNy/2sNyxnZhZVp5Kl4nkre', 'Bernard', 'Hélène', '0603000011', '19 rue Bouffard', 'Bordeaux', 'France', TRUE, '2026-03-15 16:45:00', NULL);
 
 INSERT INTO `regimes` (`id_regime`, `libelle`) VALUES
 (1, 'Classique'),
@@ -271,7 +274,10 @@ INSERT INTO `commandes` (
 (17, 6, 5, '2026-06-01 14:05:00', '2026-06-15', '13:00:00', '7 avenue Pasteur', 'Pessac', 10.00, 9, 360.00, 36.00, 10.90, 334.90, 'terminee', FALSE, FALSE, NULL, NULL),
 (18, 7, 6, '2026-06-02 16:15:00', '2026-06-25', '18:00:00', '4 avenue Thiers', 'Bordeaux', 0.00, 22, 1045.00, 0.00, 0.00, 1045.00, 'en_preparation', TRUE, FALSE, NULL, NULL),
 (19, 8, 2, '2026-06-04 11:20:00', '2026-06-30', '17:30:00', '22 quai Richelieu', 'Bordeaux', 0.00, 30, 1800.00, 0.00, 0.00, 1800.00, 'acceptee', TRUE, FALSE, NULL, NULL),
-(20, 9, 3, '2026-06-06 10:55:00', '2026-07-18', '20:00:00', '18 avenue de la Liberation', 'Le Bouscat', 4.00, 14, 1190.00, 119.00, 7.36, 1078.36, 'en_attente', FALSE, FALSE, NULL, NULL);
+(20, 9, 3, '2026-06-06 10:55:00', '2026-07-18', '20:00:00', '18 avenue de la Liberation', 'Le Bouscat', 4.00, 14, 1190.00, 119.00, 7.36, 1078.36, 'en_attente', FALSE, FALSE, NULL, NULL),
+(21, 14, 1, '2025-12-10 09:30:00', '2025-12-24', '18:30:00', '10 rue du Mirail', 'Bordeaux', 0.00, 12, 540.00, 0.00, 0.00, 540.00, 'terminee', TRUE, TRUE, NULL, NULL),
+(22, 15, 6, '2026-03-01 11:20:00', '2026-03-21', '17:30:00', '5 cours Pasteur', 'Bordeaux', 0.00, 24, 1140.00, 0.00, 0.00, 1140.00, 'terminee', TRUE, TRUE, NULL, NULL),
+(23, 16, 5, '2026-04-02 14:10:00', '2026-04-18', '12:30:00', '19 rue Bouffard', 'Bordeaux', 0.00, 10, 400.00, 40.00, 0.00, 360.00, 'terminee', FALSE, FALSE, NULL, NULL);
 
 INSERT INTO `commande_statuts` (`id_commande`, `id_utilisateur`, `statut`, `commentaire`, `created_at`) VALUES
 (1, 6, 'en_attente', 'Order submitted by customer.', '2025-11-10 10:30:00'),
@@ -363,7 +369,27 @@ INSERT INTO `commande_statuts` (`id_commande`, `id_utilisateur`, `statut`, `comm
 (18, 5, 'en_preparation', 'Cocktail trays currently in preparation.', '2026-06-25 12:30:00'),
 (19, 8, 'en_attente', 'Menu Saint-Valentin order submitted.', '2026-06-04 11:20:00'),
 (19, 3, 'acceptee', 'Commande Menu Saint-Valentin acceptee.', '2026-06-05 09:45:00'),
-(20, 9, 'en_attente', 'Menu Terre & Mer order submitted.', '2026-06-06 10:55:00');
+(20, 9, 'en_attente', 'Menu Terre & Mer order submitted.', '2026-06-06 10:55:00'),
+(21, 14, 'en_attente', 'Commande Menu Noël Tradition enregistree.', '2025-12-10 09:30:00'),
+(21, 3, 'acceptee', 'Commande acceptee apres verification des stocks.', '2025-12-10 14:00:00'),
+(21, 4, 'en_preparation', 'Preparation du repas de Noel en cours.', '2025-12-24 08:00:00'),
+(21, 4, 'en_cours_de_livraison', 'Livraison du repas de Noel demarree.', '2025-12-24 17:45:00'),
+(21, 4, 'livre', 'Commande livree a la famille.', '2025-12-24 18:30:00'),
+(21, 5, 'en_attente_retour_materiel', 'Plateaux de service en attente de retour.', '2025-12-24 20:00:00'),
+(21, 5, 'terminee', 'Materiel retourne et commande cloturee.', '2025-12-27 10:00:00'),
+(22, 15, 'en_attente', 'Commande cocktail entreprise enregistree.', '2026-03-01 11:20:00'),
+(22, 3, 'acceptee', 'Nombre d invites et lieu confirmes.', '2026-03-01 15:30:00'),
+(22, 4, 'en_preparation', 'Plateaux cocktail en preparation.', '2026-03-21 12:00:00'),
+(22, 4, 'en_cours_de_livraison', 'Livraison du cocktail entreprise demarree.', '2026-03-21 16:45:00'),
+(22, 4, 'livre', 'Cocktail livre au client.', '2026-03-21 17:30:00'),
+(22, 5, 'en_attente_retour_materiel', 'Plateaux cocktail en attente de retour.', '2026-03-21 21:00:00'),
+(22, 5, 'terminee', 'Plateaux retournes et verifies.', '2026-03-23 09:15:00'),
+(23, 16, 'en_attente', 'Commande anniversaire familial enregistree.', '2026-04-02 14:10:00'),
+(23, 3, 'acceptee', 'Commande acceptee avec remise appliquee.', '2026-04-02 17:00:00'),
+(23, 4, 'en_preparation', 'Preparation du menu familial demarree.', '2026-04-18 08:30:00'),
+(23, 4, 'en_cours_de_livraison', 'Livraison anniversaire demarree.', '2026-04-18 12:00:00'),
+(23, 4, 'livre', 'Commande livree au client.', '2026-04-18 12:30:00'),
+(23, 4, 'terminee', 'Commande cloturee sans materiel a retourner.', '2026-04-18 13:00:00');
 
 INSERT INTO `avis` (
     `id_avis`,
@@ -385,7 +411,10 @@ INSERT INTO `avis` (
 (7, 8, 11, 3, 'Good food but a few dishes were colder than expected.', 'refuse', '2026-06-02 14:00:00', '2026-06-02 16:10:00', 3),
 (8, 10, 13, 5, 'Very smooth experience from order to delivery.', 'valide', '2026-05-31 10:25:00', '2026-05-31 12:00:00', 5),
 (9, 13, 16, 4, 'Le Menu Végé-Gourmand etait colore et bien equilibre.', 'valide', '2026-06-11 09:10:00', '2026-06-11 11:40:00', 4),
-(10, 6, 17, 5, 'Parfait pour un anniversaire en famille, tout le monde a apprecie.', 'valide', '2026-06-16 20:30:00', '2026-06-17 09:30:00', 3);
+(10, 6, 17, 5, 'Parfait pour un anniversaire en famille, tout le monde a apprecie.', 'valide', '2026-06-16 20:30:00', '2026-06-17 09:30:00', 3),
+(11, 14, 21, 5, 'Nous avions commandé pour un repas de Noël en famille. Les quantités étaient généreuses, les plats bien présentés et la livraison parfaitement à l''heure. On a vraiment senti le fait maison.', 'valide', '2026-07-03 10:15:00', '2026-07-03 11:00:00', 3),
+(12, 15, 22, 5, 'Très bon contact dès le départ. L''équipe nous a aidés à adapter le menu au nombre d''invités et aux contraintes de la salle. Tout était prêt dans les temps.', 'valide', '2026-07-02 14:30:00', '2026-07-02 15:10:00', 4),
+(13, 16, 23, 4, 'Les conditions du menu étaient claires avant la commande, notamment pour le délai de préparation. Les invités ont beaucoup apprécié les entrées et les desserts.', 'valide', '2026-07-01 09:40:00', '2026-07-01 10:20:00', 5);
 
 INSERT INTO `horaires` (
     `id_horaire`,

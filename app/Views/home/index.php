@@ -2,6 +2,8 @@
 
 /**
  * Vue publique de la page d'accueil.
+ *
+ * @var list<array<string, mixed>> $validatedReviews
  */
 
 $text = static function (string $value): string {
@@ -164,32 +166,63 @@ $commitments = [
     ],
 ];
 
-$testimonials = [
-    [
-        'name' => 'Sophie R.',
-        'event' => 'Repas de No&euml;l',
-        'date' => 'D&eacute;cembre 2025',
-        'avatar' => '/images/home/avatar-sophie.png',
-        'rating' => 5,
-        'quote' => '&laquo; Nous avions command&eacute; pour un repas de No&euml;l en famille. Les quantit&eacute;s &eacute;taient g&eacute;n&eacute;reuses, les plats bien pr&eacute;sent&eacute;s et la livraison parfaitement &agrave; l&apos;heure. On a vraiment senti le fait maison. &raquo;',
-    ],
-    [
-        'name' => 'Marc L.',
-        'event' => 'Cocktail entreprise',
-        'date' => 'Mars 2026',
-        'avatar' => '/images/home/avatar-marc.png',
-        'rating' => 5,
-        'quote' => '&laquo; Tr&egrave;s bon contact d&egrave;s le d&eacute;part. L&apos;&eacute;quipe nous a aid&eacute;s &agrave; adapter le menu au nombre d&apos;invit&eacute;s et aux contraintes de la salle. Tout &eacute;tait pr&ecirc;t dans les temps. &raquo;',
-    ],
-    [
-        'name' => 'H&eacute;l&egrave;ne B.',
-        'event' => 'Anniversaire familial',
-        'date' => 'Avril 2026',
-        'avatar' => '/images/home/avatar-helene.png',
-        'rating' => 4,
-        'quote' => '&laquo; Les conditions du menu &eacute;taient claires avant la commande, notamment pour le d&eacute;lai de pr&eacute;paration. Les invit&eacute;s ont beaucoup appr&eacute;ci&eacute; les entr&eacute;es et les desserts. &raquo;',
-    ],
+$validatedReviews ??= [];
+
+$reviewAvatars = [
+    '/images/home/avatar-sophie.png',
+    '/images/home/avatar-marc.png',
+    '/images/home/avatar-helene.png',
 ];
+
+$reviewEventLabels = [
+    'Menu Noël Tradition' => 'Repas de Noël',
+    'Menu Cocktail Bordelais' => 'Cocktail entreprise',
+    'Menu Pâques en Famille' => 'Anniversaire familial',
+];
+
+$monthLabels = [
+    '01' => 'Janvier',
+    '02' => 'Février',
+    '03' => 'Mars',
+    '04' => 'Avril',
+    '05' => 'Mai',
+    '06' => 'Juin',
+    '07' => 'Juillet',
+    '08' => 'Août',
+    '09' => 'Septembre',
+    '10' => 'Octobre',
+    '11' => 'Novembre',
+    '12' => 'Décembre',
+];
+
+$reviewName = static function (array $review): string {
+    $firstName = trim((string) ($review['prenom'] ?? 'Client'));
+    $lastName = trim((string) ($review['nom'] ?? ''));
+    $lastInitial = '';
+
+    if ($lastName !== '') {
+        $initial = function_exists('mb_substr') ? mb_substr($lastName, 0, 1, 'UTF-8') : substr($lastName, 0, 1);
+        $lastInitial = $initial . '.';
+    }
+
+    return trim($firstName . ' ' . $lastInitial);
+};
+
+$reviewDate = static function (array $review) use ($monthLabels): string {
+    $dateValue = (string) ($review['event_date'] ?? $review['created_at'] ?? '');
+
+    if ($dateValue === '') {
+        return '';
+    }
+
+    try {
+        $date = new DateTimeImmutable($dateValue);
+    } catch (Throwable) {
+        return '';
+    }
+
+    return ($monthLabels[$date->format('m')] ?? $date->format('m')) . ' ' . $date->format('Y');
+};
 ?>
 <section class="hero-section home-hero" id="top">
     <div class="container hero-content">
@@ -385,28 +418,43 @@ $testimonials = [
             <span aria-hidden="true"></span>
         </header>
 
-        <div class="home-testimonial-grid">
-            <?php foreach ($testimonials as $testimonial): ?>
+        <?php if ($validatedReviews === []): ?>
+            <div class="home-testimonial-grid">
+                <article class="home-testimonial-card">
+                    <p class="home-testimonial-empty">
+                        Aucun avis client valid&eacute; n&apos;est publi&eacute; pour le moment.
+                    </p>
+                </article>
+            </div>
+        <?php else: ?>
+            <div class="home-testimonial-grid">
+            <?php foreach ($validatedReviews as $index => $testimonial): ?>
+                <?php
+                $menuTitle = (string) ($testimonial['menu_titre'] ?? '');
+                $eventLabel = $reviewEventLabels[$menuTitle] ?? ($menuTitle !== '' ? $menuTitle : 'Prestation traiteur');
+                $rating = (int) ($testimonial['note'] ?? 0);
+                $rating = max(1, min(5, $rating));
+                ?>
                 <article class="home-testimonial-card">
                     <div class="home-testimonial-person">
-                        <img src="<?= $this->e($testimonial['avatar']) ?>" alt="<?= $text($testimonial['name']) ?>">
+                        <img src="<?= $this->e($reviewAvatars[$index % count($reviewAvatars)]) ?>" alt="<?= $text($reviewName($testimonial)) ?>">
                         <div>
-                            <strong><?= $text($testimonial['name']) ?></strong>
-                            <span><?= $text($testimonial['event']) ?></span>
-                            <small><?= $text($testimonial['date']) ?></small>
+                            <strong><?= $text($reviewName($testimonial)) ?></strong>
+                            <span><?= $text($eventLabel) ?></span>
+                            <small><?= $text($reviewDate($testimonial)) ?></small>
                         </div>
                     </div>
 
-                    <div class="home-testimonial-rating" aria-label="Note <?= (int) $testimonial['rating'] ?> sur 5">
+                    <div class="home-testimonial-rating" aria-label="Note <?= $rating ?> sur 5">
                         <?php for ($star = 1; $star <= 5; $star++): ?>
                             <img
-                                src="<?= $star <= (int) $testimonial['rating'] ? '/images/home/icon-star.svg' : '/images/home/icon-star-muted.svg' ?>"
+                                src="<?= $star <= $rating ? '/images/home/icon-star.svg' : '/images/home/icon-star-muted.svg' ?>"
                                 alt=""
                             >
                         <?php endfor; ?>
                     </div>
 
-                    <blockquote><?= $text($testimonial['quote']) ?></blockquote>
+                    <blockquote>&laquo; <?= $text((string) ($testimonial['commentaire'] ?? '')) ?> &raquo;</blockquote>
 
                     <p class="home-verified-badge">
                         <img src="/images/home/icon-check.svg" alt="">
@@ -414,6 +462,7 @@ $testimonials = [
                     </p>
                 </article>
             <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
