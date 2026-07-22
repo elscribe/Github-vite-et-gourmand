@@ -1,132 +1,17 @@
 <?php
 
+use App\Services\MenuPresentation;
+
 /**
  * @var list<array<string, mixed>> $menus
  * @var list<array<string, mixed>> $themes
  * @var list<array<string, mixed>> $regimes
  */
 
-$menuPresentation = [
-    1 => [
-        'order' => 1,
-        'title' => 'Menu Noël Tradition',
-        'description' => "Foie gras maison, volaille festive, légumes rôtis et dessert gourmand pour vos repas de fin d'année.",
-        'image' => '/images/home/menu-noel-tradition.png',
-        'image_alt' => 'Table de fête avec volaille et chandeliers',
-        'badge' => 'NOËL',
-        'people' => 8,
-        'price' => 190,
-        'regime_label' => 'Classique',
-        'status' => 'Stock limité : 5 commandes restantes',
-        'status_type' => 'limited',
-        'available' => false,
-        'party' => true,
-        'allergens' => ['gluten', 'oeufs', 'lactose', 'fruits-a-coque'],
-    ],
-    6 => [
-        'order' => 2,
-        'title' => 'Menu Cocktail Bordelais',
-        'description' => 'Bouchées salées, verrines, mini tartines et mignardises pour vos réceptions privées ou professionnelles.',
-        'image' => '/images/home/menu-cocktail-bordelais.png',
-        'image_alt' => 'Buffet de verrines et bouchées apéritives',
-        'badge' => 'BUFFET',
-        'people' => 10,
-        'price' => 220,
-        'regime_label' => 'Classique',
-        'status' => 'Disponible cette semaine',
-        'status_type' => 'available',
-        'available' => true,
-        'party' => false,
-        'allergens' => ['gluten', 'lactose', 'oeufs', 'fruits-a-coque'],
-    ],
-    4 => [
-        'order' => 3,
-        'title' => 'Menu Végé-Gourmand',
-        'description' => 'Tartes, légumes rôtis, quiches et desserts végétariens pour un repas complet et savoureux.',
-        'image' => '/images/home/menu-vege-gourmand.png',
-        'image_alt' => 'Plat végétarien généreux servi sur une table claire',
-        'badge' => '100 % VÉGÉTAL',
-        'people' => 6,
-        'price' => 120,
-        'regime_label' => 'Végétarien',
-        'status' => 'Disponible',
-        'status_type' => 'available',
-        'available' => true,
-        'party' => false,
-        'allergens' => ['gluten', 'lactose', 'oeufs', 'fruits-a-coque'],
-    ],
-    3 => [
-        'order' => 4,
-        'title' => 'Menu Terre & Mer',
-        'description' => 'Produits marins et saveurs traditionnelles pour une prestation complète et raffinée.',
-        'image' => '/images/home/menu-terre-mer.png',
-        'image_alt' => 'Assiette raffinée de poisson avec légumes colorés',
-        'badge' => 'ÉVÉNEMENT',
-        'people' => 6,
-        'price' => 150,
-        'regime_label' => 'Classique',
-        'status' => '4 commandes restantes',
-        'status_type' => 'limited',
-        'available' => false,
-        'party' => false,
-        'allergens' => ['gluten', 'lactose', 'oeufs', 'fruits-a-coque', 'crustaces', 'poisson'],
-    ],
-    2 => [
-        'order' => 5,
-        'title' => 'Menu Saint-Valentin',
-        'description' => 'Entrées, plats et desserts gourmands pour un dîner en amoureux, à partager à la maison.',
-        'image' => '/images/home/menu-saint-valentin.png',
-        'image_alt' => 'Dessert aux fraises et chocolats sur une table aux bougies',
-        'badge' => 'SAINT-VALENTIN',
-        'people' => 2,
-        'price' => 80,
-        'regime_label' => 'Saint-Valentin',
-        'status' => 'Stock limité : 3 commandes restantes',
-        'status_type' => 'limited',
-        'available' => false,
-        'party' => true,
-        'allergens' => ['gluten', 'lactose', 'oeufs', 'crustaces'],
-    ],
-    5 => [
-        'order' => 6,
-        'title' => 'Menu Pâques en Famille',
-        'description' => 'Plats printaniers, desserts colorés et mignardises pour un repas de fête convivial.',
-        'image' => '/images/home/menu-paques-famille.png',
-        'image_alt' => 'Buffet de Pâques familial avec gâteau et fleurs',
-        'badge' => 'PÂQUES',
-        'people' => 8,
-        'price' => 170,
-        'regime_label' => 'Pâques',
-        'status' => 'Disponible cette semaine',
-        'status_type' => 'available',
-        'available' => true,
-        'party' => true,
-        'allergens' => ['gluten', 'lactose', 'oeufs', 'fruits-a-coque'],
-    ],
-];
-
 $menuCards = [];
 
 foreach ($menus as $menu) {
-    $menuId = (int) $menu['id_menu'];
-    $presentation = $menuPresentation[$menuId] ?? [
-        'order' => 100 + $menuId,
-        'title' => (string) $menu['titre'],
-        'description' => (string) $menu['description'],
-        'image' => '/images/home/menu-noel-tradition.png',
-        'image_alt' => (string) $menu['titre'],
-        'badge' => (string) $menu['theme'],
-        'people' => (int) $menu['nombre_personnes_minimum'],
-        'price' => (int) $menu['prix_minimum'],
-        'regime_label' => (string) $menu['regime'],
-        'status' => 'Disponible',
-        'status_type' => 'available',
-        'available' => true,
-        'party' => false,
-        'allergens' => [],
-    ];
-
-    $menuCards[] = array_merge($menu, $presentation);
+    $menuCards[] = array_merge($menu, MenuPresentation::forListing($menu));
 }
 
 usort(

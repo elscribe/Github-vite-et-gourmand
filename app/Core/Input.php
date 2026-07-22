@@ -49,4 +49,14 @@ final class Input
 
         return is_array($value) ? array_values($value) : [];
     }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public static function file(string $key): ?array
+    {
+        $value = $_FILES[$key] ?? null;
+
+        return is_array($value) ? $value : null;
+    }
 }

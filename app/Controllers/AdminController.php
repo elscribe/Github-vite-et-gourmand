@@ -22,6 +22,15 @@ use App\Services\MailService;
  */
 final class AdminController extends BaseController
 {
+    private const MENU_IMAGE_UPLOAD_FIELD = 'image_file';
+    private const MENU_IMAGE_UPLOAD_PUBLIC_DIR = '/images/menu-details/uploads';
+    private const MENU_IMAGE_UPLOAD_MAX_BYTES = 4194304;
+    private const MENU_IMAGE_UPLOAD_EXTENSIONS = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+    ];
+
     public function dashboard(): void
     {
         $orderModel = new OrderModel();
@@ -345,6 +354,74 @@ final class AdminController extends BaseController
         $this->redirect($this->menuWorkspacePath($menuId));
     }
 
+    public function storeMenuImage(string $id): void
+    {
+        $menuId = (int) $id;
+        $selectedDishId = (int) Input::postString('selected_dish_id');
+
+        if ($menuId <= 0) {
+            Session::flash('error', 'Menu invalide.');
+            $this->redirect('/admin/menus');
+        }
+
+        $preparedImage = $this->prepareMenuImageData($menuId);
+        $data = $preparedImage['data'];
+        $errors = $preparedImage['errors'];
+
+        if ($errors !== []) {
+            Session::flash('error', reset($errors) ?: 'Image non ajoutée : vérifiez les champs.');
+            $this->redirect($this->menuWorkspacePath($menuId, $selectedDishId));
+        }
+
+        (new MenuModel())->createImage($menuId, $data);
+        Session::flash('success', 'Image ajoutée à la galerie.');
+
+        $this->redirect($this->menuWorkspacePath($menuId, $selectedDishId));
+    }
+
+    public function updateMenuImage(string $id, string $imageId): void
+    {
+        $menuId = (int) $id;
+        $imageId = (int) $imageId;
+        $selectedDishId = (int) Input::postString('selected_dish_id');
+
+        if ($menuId <= 0 || $imageId <= 0) {
+            Session::flash('error', 'Menu ou image invalide.');
+            $this->redirect('/admin/menus');
+        }
+
+        $preparedImage = $this->prepareMenuImageData($menuId);
+        $data = $preparedImage['data'];
+        $errors = $preparedImage['errors'];
+
+        if ($errors !== []) {
+            Session::flash('error', reset($errors) ?: 'Image non mise à jour : vérifiez les champs.');
+            $this->redirect($this->menuWorkspacePath($menuId, $selectedDishId));
+        }
+
+        (new MenuModel())->updateImage($menuId, $imageId, $data);
+        Session::flash('success', 'Image de galerie mise à jour.');
+
+        $this->redirect($this->menuWorkspacePath($menuId, $selectedDishId));
+    }
+
+    public function deleteMenuImage(string $id, string $imageId): void
+    {
+        $menuId = (int) $id;
+        $imageId = (int) $imageId;
+        $selectedDishId = (int) Input::postString('selected_dish_id');
+
+        if ($menuId <= 0 || $imageId <= 0) {
+            Session::flash('error', 'Menu ou image invalide.');
+            $this->redirect('/admin/menus');
+        }
+
+        (new MenuModel())->deleteImage($menuId, $imageId);
+        Session::flash('success', 'Image retirée de la galerie.');
+
+        $this->redirect($this->menuWorkspacePath($menuId, $selectedDishId));
+    }
+
     /**
      * @param array<string, mixed> $overrides
      *
@@ -412,6 +489,7 @@ final class AdminController extends BaseController
             'selectedAllergenIds' => $selectedAllergenIds,
             'selectedMenu' => $selectedMenu,
             'selectedMenuDishes' => $selectedMenuId > 0 ? $menuModel->findDishesByMenuId($selectedMenuId) : [],
+            'selectedMenuImages' => $selectedMenuId > 0 ? $menuModel->findImagesByMenuId($selectedMenuId) : [],
             'selectedDish' => $selectedDish,
             'old' => ['actif' => 1],
             'errors' => [],
@@ -538,6 +616,187 @@ final class AdminController extends BaseController
         }
 
         return $errors;
+    }
+
+    /**
+     * @return array{url: string, texte_alternatif: string, position: int}
+     */
+    private function menuImageData(): array
+    {
+        return [
+            'url' => Input::postString('url'),
+            'texte_alternatif' => Input::postString('texte_alternatif'),
+            'position' => max(1, (int) Input::postString('position', '1')),
+        ];
+    }
+
+    /**
+     * @return array{data: array{url: string, texte_alternatif: string, position: int}, errors: array<string, string>}
+     */
+    private function prepareMenuImageData(int $menuId): array
+    {
+        $data = $this->menuImageData();
+        $errors = $this->validateMenuImageAlternativeText($data);
+
+        if ($errors !== []) {
+            return [
+                'data' => $data,
+                'errors' => $errors,
+            ];
+        }
+
+        $uploadError = $this->applyMenuImageUpload($data, $menuId);
+        if ($uploadError !== null) {
+            $errors['image_file'] = $uploadError;
+        }
+
+        if ($errors === []) {
+            $errors = $this->validateMenuImageData($data);
+        }
+
+        return [
+            'data' => $data,
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * @param array{url: string, texte_alternatif: string, position: int} $data
+     */
+    private function applyMenuImageUpload(array &$data, int $menuId): ?string
+    {
+        $file = Input::file(self::MENU_IMAGE_UPLOAD_FIELD);
+
+        if ($file === null) {
+            return null;
+        }
+
+        $error = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+        if (is_array($error)) {
+            return 'Un seul fichier image peut être envoyé.';
+        }
+
+        $error = (int) $error;
+        if ($error === UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+
+        if ($error !== UPLOAD_ERR_OK) {
+            return $this->menuImageUploadErrorMessage($error);
+        }
+
+        $tmpName = $file['tmp_name'] ?? '';
+        $originalName = $file['name'] ?? 'image-menu';
+        $size = (int) ($file['size'] ?? 0);
+
+        if (!is_string($tmpName) || !is_uploaded_file($tmpName)) {
+            return 'Le fichier image envoyé est invalide.';
+        }
+
+        if ($size <= 0 || $size > self::MENU_IMAGE_UPLOAD_MAX_BYTES) {
+            return 'Le fichier image doit peser 4 Mo maximum.';
+        }
+
+        $mimeType = (new \finfo(FILEINFO_MIME_TYPE))->file($tmpName);
+
+        if (!is_string($mimeType) || !isset(self::MENU_IMAGE_UPLOAD_EXTENSIONS[$mimeType])) {
+            return 'Format image non autorisé. Utilisez PNG, JPG ou WebP.';
+        }
+
+        $extension = self::MENU_IMAGE_UPLOAD_EXTENSIONS[$mimeType];
+        $publicDirectory = self::MENU_IMAGE_UPLOAD_PUBLIC_DIR . '/menu-' . $menuId;
+        $targetDirectory = dirname(__DIR__, 2) . '/public' . $publicDirectory;
+
+        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, 0755, true) && !is_dir($targetDirectory)) {
+            return 'Le dossier de stockage des images est indisponible.';
+        }
+
+        $filename = $this->menuImageUploadFilename((string) $originalName, $extension);
+        $targetPath = $targetDirectory . '/' . $filename;
+
+        if (!move_uploaded_file($tmpName, $targetPath)) {
+            return 'Le fichier image n’a pas pu être enregistré.';
+        }
+
+        $data['url'] = $publicDirectory . '/' . $filename;
+
+        return null;
+    }
+
+    private function menuImageUploadFilename(string $originalName, string $extension): string
+    {
+        $basename = pathinfo($originalName, PATHINFO_FILENAME);
+        $asciiBasename = function_exists('iconv') ? iconv('UTF-8', 'ASCII//TRANSLIT', $basename) : false;
+
+        if (is_string($asciiBasename) && $asciiBasename !== '') {
+            $basename = $asciiBasename;
+        }
+
+        $slug = strtolower((string) preg_replace('/[^a-zA-Z0-9]+/', '-', $basename));
+        $slug = trim($slug, '-');
+
+        if ($slug === '') {
+            $slug = 'image-menu';
+        }
+
+        $slug = substr($slug, 0, 72);
+
+        return $slug . '-' . date('YmdHis') . '-' . bin2hex(random_bytes(5)) . '.' . $extension;
+    }
+
+    private function menuImageUploadErrorMessage(int $error): string
+    {
+        return match ($error) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Le fichier image est trop lourd.',
+            UPLOAD_ERR_PARTIAL => 'Le fichier image n’a été envoyé que partiellement.',
+            default => 'Le fichier image n’a pas pu être envoyé.',
+        };
+    }
+
+    /**
+     * @param array{url: string, texte_alternatif: string, position: int} $data
+     *
+     * @return array<string, string>
+     */
+    private function validateMenuImageAlternativeText(array $data): array
+    {
+        if ($data['texte_alternatif'] === '') {
+            return ['texte_alternatif' => 'Le texte alternatif est obligatoire.'];
+        }
+
+        if (strlen($data['texte_alternatif']) > 180) {
+            return ['texte_alternatif' => 'Le texte alternatif ne doit pas dépasser 180 caractères.'];
+        }
+
+        return [];
+    }
+
+    /**
+     * @param array{url: string, texte_alternatif: string, position: int} $data
+     *
+     * @return array<string, string>
+     */
+    private function validateMenuImageData(array $data): array
+    {
+        $errors = [];
+
+        if ($data['url'] === '') {
+            $errors['url'] = 'Sélectionnez un fichier local.';
+        } elseif (strlen($data['url']) > 255) {
+            $errors['url'] = 'Le chemin de l’image ne doit pas dépasser 255 caractères.';
+        } elseif (!$this->isValidMenuImageUrl($data['url'])) {
+            $errors['url'] = 'Utilisez un chemin /images/... ou une URL http(s).';
+        }
+
+        $errors += $this->validateMenuImageAlternativeText($data);
+
+        return $errors;
+    }
+
+    private function isValidMenuImageUrl(string $url): bool
+    {
+        return str_starts_with($url, '/images/')
+            || preg_match('#^https?://#i', $url) === 1;
     }
 
     /**

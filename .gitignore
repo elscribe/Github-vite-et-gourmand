@@ -122,3 +122,5 @@ $RECYCLE.BIN/
 *.tmp
 *.swp
 *.swo
+public/images/menu-details/uploads/*
+!public/images/menu-details/uploads/.gitkeep

@@ -13,6 +13,19 @@ $errorFlash = \App\Core\Session::pullFlash('error');
 $isAuthenticated = \App\Core\Session::isAuthenticated();
 $currentRole = \App\Core\Session::role();
 $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$footerScheduleLines = is_array($footerScheduleLines ?? null) ? $footerScheduleLines : [];
+
+if ($footerScheduleLines === []) {
+    $footerScheduleLines = [
+        'Lundi : 9h - 12h30 / 14h - 18h30',
+        'Mardi : 9h - 12h30 / 14h - 18h30',
+        'Mercredi : 9h - 12h30 / 14h - 18h30',
+        'Jeudi : 9h - 12h30 / 14h - 18h30',
+        'Vendredi : 9h - 12h30 / 14h - 19h',
+        'Samedi : 9h - 13h',
+        'Dimanche : Fermé',
+    ];
+}
 
 $isHomeActive = $currentPath === '/';
 $isMenusActive = str_starts_with($currentPath, '/menus');
@@ -337,7 +350,11 @@ $assetVersion = static function (string $assetPath): string {
                         <a href="/cgv">CGV</a>
                         <a href="/confidentialite">Confidentialit&eacute;</a>
                     </div>
-                    <p>Lun - Ven : 8h - 18h &middot; Sam : 9h - 16h &middot; Dim : ferm&eacute;</p>
+                    <div class="mobile-public-menu-hours" aria-label="Horaires">
+                        <?php foreach ($footerScheduleLines as $scheduleLine): ?>
+                            <p><?= htmlspecialchars((string) $scheduleLine, ENT_QUOTES, 'UTF-8') ?></p>
+                        <?php endforeach; ?>
+                    </div>
                 </footer>
             </div>
         </aside>
@@ -367,9 +384,11 @@ $assetVersion = static function (string $assetPath): string {
                 </div>
                 <div class="site-footer-column">
                     <p class="footer-title">Horaires</p>
-                    <p>Lundi &ndash; Vendredi : 8h &ndash; 18h</p>
-                    <p>Samedi : 9h &ndash; 16h</p>
-                    <p>Dimanche : Ferm&eacute;</p>
+                    <div class="footer-schedule-list">
+                        <?php foreach ($footerScheduleLines as $scheduleLine): ?>
+                            <p><?= htmlspecialchars((string) $scheduleLine, ENT_QUOTES, 'UTF-8') ?></p>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
                 <div class="site-footer-column">
                     <p class="footer-title">Contact</p>

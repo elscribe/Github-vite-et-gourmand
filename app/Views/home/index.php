@@ -1,8 +1,11 @@
 <?php
 
+use App\Services\MenuPresentation;
+
 /**
  * Vue publique de la page d'accueil.
  *
+ * @var list<array<string, mixed>> $menus
  * @var list<array<string, mixed>> $validatedReviews
  */
 
@@ -14,134 +17,41 @@ $text = static function (string $value): string {
     );
 };
 
-$featuredMenus = [
-    [
-        'title' => 'Menu No&euml;l Tradition',
-        'description' => 'Foie gras maison, volaille festive, l&eacute;gumes r&ocirc;tis et dessert gourmand pour vos repas de fin d&apos;ann&eacute;e.',
-        'image' => '/images/home/menu-noel-tradition.png',
-        'tag' => 'No&euml;l',
-        'people' => '&Agrave; partir de 8 personnes',
-        'peopleCount' => 8,
-        'price' => '190 &euro;',
-        'priceValue' => 190,
-        'regime' => 'Classique',
-        'status' => 'Stock limit&eacute; : 5 commandes restantes',
-        'statusTone' => 'limited',
-        'isAvailable' => false,
-        'isParty' => true,
-        'themeId' => 1,
-        'regimeId' => 1,
-        'statusType' => 'limited',
-        'statusWeek' => false,
-        'allergens' => ['gluten', 'oeufs'],
-        'url' => '/menus/1',
-    ],
-    [
-        'title' => 'Menu Cocktail Bordelais',
-        'description' => 'Bouch&eacute;es sal&eacute;es, verrines, mini tartines et mignardises pour vos r&eacute;ceptions priv&eacute;es ou professionnelles.',
-        'image' => '/images/home/menu-cocktail-bordelais.png',
-        'tag' => 'Buffet',
-        'people' => '&Agrave; partir de 10 personnes',
-        'peopleCount' => 10,
-        'price' => '220 &euro;',
-        'priceValue' => 220,
-        'regime' => 'Classique',
-        'status' => 'Disponible cette semaine',
-        'statusTone' => 'available',
-        'isAvailable' => true,
-        'isParty' => false,
-        'themeId' => 6,
-        'regimeId' => 1,
-        'statusType' => 'available',
-        'statusWeek' => true,
-        'allergens' => ['gluten', 'lactose'],
-        'url' => '/menus/6',
-    ],
-    [
-        'title' => 'Menu V&eacute;g&eacute;-Gourmand',
-        'description' => 'Tartes, l&eacute;gumes r&ocirc;tis, quiches et desserts v&eacute;g&eacute;tariens pour un repas complet et savoureux.',
-        'image' => '/images/home/menu-vege-gourmand.png',
-        'tag' => '100 % vegetal',
-        'people' => '&Agrave; partir de 6 personnes',
-        'peopleCount' => 6,
-        'price' => '120 &euro;',
-        'priceValue' => 120,
-        'regime' => 'V&eacute;g&eacute;tarien',
-        'status' => 'Disponible',
-        'statusTone' => 'available',
-        'isAvailable' => true,
-        'isParty' => false,
-        'themeId' => 4,
-        'regimeId' => 2,
-        'statusType' => 'available',
-        'statusWeek' => false,
-        'allergens' => ['gluten', 'oeufs'],
-        'url' => '/menus/4',
-    ],
-    [
-        'title' => 'Menu Terre &amp; Mer',
-        'description' => 'Produits marins et saveurs traditionnelles pour une prestation compl&egrave;te et raffin&eacute;e.',
-        'image' => '/images/home/menu-terre-mer.png',
-        'tag' => '&Eacute;v&eacute;nement',
-        'people' => '&Agrave; partir de 6 personnes',
-        'peopleCount' => 6,
-        'price' => '150 &euro;',
-        'priceValue' => 150,
-        'regime' => 'Classique',
-        'status' => '4 commandes restantes',
-        'statusTone' => 'limited',
-        'isAvailable' => false,
-        'isParty' => false,
-        'themeId' => 3,
-        'regimeId' => 1,
-        'statusType' => 'limited',
-        'statusWeek' => false,
-        'allergens' => ['poisson', 'crustaces'],
-        'url' => '/menus/3',
-    ],
-    [
-        'title' => 'Menu Saint-Valentin',
-        'description' => 'Entr&eacute;es, plats et desserts gourmands pour un d&icirc;ner en amoureux, &agrave; partager &agrave; la maison.',
-        'image' => '/images/home/menu-saint-valentin.png',
-        'tag' => 'Saint-Valentin',
-        'people' => '&Agrave; partir de 2 personnes',
-        'peopleCount' => 2,
-        'price' => '80 &euro;',
-        'priceValue' => 80,
-        'regime' => 'Saint-Valentin',
-        'status' => 'Stock limit&eacute; : 3 commandes restantes',
-        'statusTone' => 'limited',
-        'isAvailable' => false,
-        'isParty' => true,
-        'themeId' => 2,
-        'regimeId' => 1,
-        'statusType' => 'limited',
-        'statusWeek' => false,
-        'allergens' => ['gluten', 'lactose', 'oeufs'],
-        'url' => '/menus/2',
-    ],
-    [
-        'title' => 'Menu P&acirc;ques en Famille',
-        'description' => 'Plats printaniers, desserts color&eacute;s et mignardises pour un repas de f&ecirc;te convivial.',
-        'image' => '/images/home/menu-paques-famille.png',
-        'tag' => 'Paques',
-        'people' => '&Agrave; partir de 8 personnes',
-        'peopleCount' => 8,
-        'price' => '170 &euro;',
-        'priceValue' => 170,
-        'regime' => 'P&acirc;ques',
-        'status' => 'Disponible cette semaine',
-        'statusTone' => 'available',
-        'isAvailable' => true,
-        'isParty' => true,
-        'themeId' => 5,
-        'regimeId' => 1,
-        'statusType' => 'available',
-        'statusWeek' => true,
-        'allergens' => ['gluten', 'oeufs'],
-        'url' => '/menus/5',
-    ],
-];
+$featuredMenus = array_map(
+    static function (array $menu): array {
+        $card = MenuPresentation::forListing($menu);
+
+        return [
+            'title' => $card['title'],
+            'description' => $card['description'],
+            'image' => $card['image'],
+            'image_alt' => $card['image_alt'],
+            'tag' => $card['badge'],
+            'people' => 'À partir de ' . (int) $card['people'] . ' personnes',
+            'peopleCount' => (int) $card['people'],
+            'price' => number_format((float) $card['price'], 0, ',', ' ') . ' €',
+            'priceValue' => (float) $card['price'],
+            'regime' => $card['regime_label'],
+            'status' => $card['status'],
+            'statusTone' => $card['status_type'],
+            'isAvailable' => (bool) $card['available'],
+            'isParty' => (bool) $card['party'],
+            'themeId' => (int) $menu['id_theme'],
+            'regimeId' => (int) $menu['id_regime'],
+            'statusType' => $card['status_type'],
+            'statusWeek' => str_contains((string) $card['status'], 'semaine'),
+            'allergens' => $card['allergens'],
+            'url' => $card['url'],
+            'order' => $card['order'],
+        ];
+    },
+    $menus
+);
+
+usort(
+    $featuredMenus,
+    static fn (array $first, array $second): int => $first['order'] <=> $second['order']
+);
 
 $commitments = [
     [
@@ -370,10 +280,10 @@ $reviewDate = static function (array $review) use ($monthLabels): string {
                             type="button"
                             data-image-preview
                             data-image-src="<?= $this->e($menu['image']) ?>"
-                            data-image-alt="<?= $text($menu['title']) ?>"
+                            data-image-alt="<?= $text($menu['image_alt']) ?>"
                             aria-label="Agrandir l'image : <?= $text($menu['title']) ?>"
                         >
-                            <img src="<?= $this->e($menu['image']) ?>" alt="<?= $text($menu['title']) ?>">
+                            <img src="<?= $this->e($menu['image']) ?>" alt="<?= $text($menu['image_alt']) ?>">
                         </button>
                         <span><?= $text($menu['tag']) ?></span>
                     </div>

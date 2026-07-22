@@ -106,7 +106,21 @@ final class MenuModel extends BaseModel
                 m.prix_minimum,
                 m.stock_disponible,
                 r.libelle AS regime,
-                t.libelle AS theme
+                t.libelle AS theme,
+                (
+                    SELECT mi.url
+                    FROM menu_images mi
+                    WHERE mi.id_menu = m.id_menu
+                    ORDER BY mi.position ASC, mi.id_image ASC
+                    LIMIT 1
+                ) AS image_url,
+                (
+                    SELECT mi.texte_alternatif
+                    FROM menu_images mi
+                    WHERE mi.id_menu = m.id_menu
+                    ORDER BY mi.position ASC, mi.id_image ASC
+                    LIMIT 1
+                ) AS image_alt
             FROM menus m
             INNER JOIN regimes r ON r.id_regime = m.id_regime
             INNER JOIN themes t ON t.id_theme = m.id_theme
@@ -160,7 +174,21 @@ final class MenuModel extends BaseModel
                 m.prix_minimum,
                 m.stock_disponible,
                 r.libelle AS regime,
-                t.libelle AS theme
+                t.libelle AS theme,
+                (
+                    SELECT mi.url
+                    FROM menu_images mi
+                    WHERE mi.id_menu = m.id_menu
+                    ORDER BY mi.position ASC, mi.id_image ASC
+                    LIMIT 1
+                ) AS image_url,
+                (
+                    SELECT mi.texte_alternatif
+                    FROM menu_images mi
+                    WHERE mi.id_menu = m.id_menu
+                    ORDER BY mi.position ASC, mi.id_image ASC
+                    LIMIT 1
+                ) AS image_alt
             FROM menus m
             INNER JOIN regimes r ON r.id_regime = m.id_regime
             INNER JOIN themes t ON t.id_theme = m.id_theme
@@ -183,7 +211,10 @@ final class MenuModel extends BaseModel
     public function findImagesByMenuId(int $menuId): array
     {
         $statement = $this->pdo()->prepare(
-            'SELECT url, texte_alternatif FROM menu_images WHERE id_menu = :menu_id ORDER BY position ASC, id_image ASC'
+            'SELECT id_image, id_menu, url, texte_alternatif, position
+             FROM menu_images
+             WHERE id_menu = :menu_id
+             ORDER BY position ASC, id_image ASC'
         );
         $statement->execute(['menu_id' => $menuId]);
 
@@ -301,6 +332,61 @@ final class MenuModel extends BaseModel
     }
 
     /**
+     * @param array{url: string, texte_alternatif: string, position: int} $data
+     */
+    public function createImage(int $menuId, array $data): int
+    {
+        $statement = $this->pdo()->prepare(
+            'INSERT INTO menu_images (id_menu, url, texte_alternatif, position)
+             VALUES (:id_menu, :url, :texte_alternatif, :position)'
+        );
+        $statement->execute($data + ['id_menu' => $menuId]);
+        $this->touch($menuId);
+
+        return (int) $this->pdo()->lastInsertId();
+    }
+
+    /**
+     * @param array{url: string, texte_alternatif: string, position: int} $data
+     */
+    public function updateImage(int $menuId, int $imageId, array $data): bool
+    {
+        $statement = $this->pdo()->prepare(
+            'UPDATE menu_images
+             SET url = :url,
+                 texte_alternatif = :texte_alternatif,
+                 position = :position
+             WHERE id_menu = :id_menu
+               AND id_image = :id_image'
+        );
+        $statement->execute($data + [
+            'id_menu' => $menuId,
+            'id_image' => $imageId,
+        ]);
+
+        $this->touch($menuId);
+
+        return $statement->rowCount() === 1;
+    }
+
+    public function deleteImage(int $menuId, int $imageId): bool
+    {
+        $statement = $this->pdo()->prepare(
+            'DELETE FROM menu_images
+             WHERE id_menu = :id_menu
+               AND id_image = :id_image'
+        );
+        $statement->execute([
+            'id_menu' => $menuId,
+            'id_image' => $imageId,
+        ]);
+
+        $this->touch($menuId);
+
+        return $statement->rowCount() === 1;
+    }
+
+    /**
      * @param list<int> $dishIds
      */
     public function syncDishes(int $menuId, array $dishIds): void
@@ -350,5 +436,13 @@ final class MenuModel extends BaseModel
         }
 
         return $normalized;
+    }
+
+    private function touch(int $menuId): void
+    {
+        $statement = $this->pdo()->prepare(
+            'UPDATE menus SET updated_at = CURRENT_TIMESTAMP WHERE id_menu = :id_menu'
+        );
+        $statement->execute(['id_menu' => $menuId]);
     }
 }

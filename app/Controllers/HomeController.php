@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\BaseController;
+use App\Models\MenuModel;
 use App\Models\ReviewModel;
 
 /**
@@ -21,11 +22,13 @@ final class HomeController extends BaseController
      */
     public function index(): void
     {
+        $menuModel = new MenuModel();
         $reviewModel = new ReviewModel();
 
         $this->view('home/index', [
             'pageTitle' => 'Accueil - Vite & Gourmand',
             'bodyClass' => 'page-home',
+            'menus' => $menuModel->findActiveMenus(),
             'validatedReviews' => $reviewModel->findValidated(),
         ]);
     }

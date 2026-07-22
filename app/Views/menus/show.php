@@ -10,7 +10,14 @@ use App\Services\MenuPresentation;
  */
 
 $presentation = MenuPresentation::forMenu($menu);
-$detailImages = $presentation['detail_images'] ?? [];
+$databaseImages = array_map(
+    static fn (array $image): array => [
+        'src' => (string) $image['url'],
+        'alt' => (string) $image['texte_alternatif'],
+    ],
+    $images
+);
+$detailImages = $databaseImages !== [] ? $databaseImages : ($presentation['detail_images'] ?? []);
 
 if (!is_array($detailImages) || $detailImages === []) {
     $detailImages = [[
@@ -21,7 +28,17 @@ if (!is_array($detailImages) || $detailImages === []) {
 
 $mainImage = $detailImages[0];
 $galleryImages = array_slice($detailImages, 1);
-$importantConditions = $presentation['important_conditions'] ?? [];
+$menuConditions = trim((string) ($menu['conditions'] ?? $presentation['conditions'] ?? ''));
+$importantConditions = [];
+
+foreach (($presentation['important_conditions'] ?? []) as $condition) {
+    $conditionText = is_string($condition) ? trim($condition) : '';
+
+    if ($conditionText !== '' && $conditionText !== $menuConditions && !in_array($conditionText, $importantConditions, true)) {
+        $importantConditions[] = $conditionText;
+    }
+}
+
 $detailSections = $presentation['detail_sections'] ?? [];
 ?>
 <section class="menu-detail-page">
@@ -137,17 +154,33 @@ $detailSections = $presentation['detail_sections'] ?? [];
                     </div>
                 </dl>
 
-                <?php if (is_array($importantConditions) && $importantConditions !== []): ?>
+                <?php if ($allergens !== []): ?>
+                    <section class="menu-detail-allergens" aria-labelledby="menu-allergens-title">
+                        <h2 id="menu-allergens-title">Allergènes</h2>
+                        <div class="tag-list">
+                            <?php foreach ($allergens as $allergen): ?>
+                                <span><?= $this->e(MenuPresentation::allergenLabel((string) $allergen['libelle'])) ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </section>
+                <?php endif; ?>
+
+                <?php if ($menuConditions !== '' || (is_array($importantConditions) && $importantConditions !== [])): ?>
                     <section class="menu-detail-warning" aria-labelledby="menu-conditions-title">
                         <h2 id="menu-conditions-title">
                             <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
                             Conditions importantes
                         </h2>
-                        <ul>
-                            <?php foreach ($importantConditions as $condition): ?>
-                                <li><?= $this->e($condition) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <?php if ($menuConditions !== ''): ?>
+                            <p><?= $this->e($menuConditions) ?></p>
+                        <?php endif; ?>
+                        <?php if (is_array($importantConditions) && $importantConditions !== []): ?>
+                            <ul>
+                                <?php foreach ($importantConditions as $condition): ?>
+                                    <li><?= $this->e($condition) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
                     </section>
                 <?php endif; ?>
 

@@ -526,6 +526,81 @@ final class MenuPresentation
         ];
     }
 
+    /**
+     * @param array<string, mixed> $menu
+     *
+     * @return array<string, mixed>
+     */
+    public static function forListing(array $menu): array
+    {
+        $menuId = (int) ($menu['id_menu'] ?? 0);
+        $presentation = self::forMenu($menu);
+        $title = (string) ($presentation['title'] ?? $menu['titre'] ?? '');
+        $mainImage = self::mainImageFromMenu($menu, $presentation, $title);
+
+        return [
+            'order' => (int) ($presentation['order'] ?? 100 + $menuId),
+            'title' => $title,
+            'description' => (string) ($presentation['description'] ?? $menu['description'] ?? ''),
+            'image' => $mainImage['src'],
+            'image_alt' => $mainImage['alt'],
+            'badge' => (string) ($presentation['badge'] ?? $menu['theme'] ?? ''),
+            'people' => (int) ($presentation['people'] ?? $menu['nombre_personnes_minimum'] ?? 0),
+            'price' => (float) ($presentation['price'] ?? $menu['prix_minimum'] ?? 0),
+            'regime_label' => (string) ($presentation['regime_label'] ?? $menu['regime'] ?? ''),
+            'theme_label' => (string) ($presentation['theme_label'] ?? $menu['theme'] ?? ''),
+            'status' => (string) ($presentation['status'] ?? self::stockStatus((int) ($menu['stock_disponible'] ?? 0))),
+            'status_type' => (string) ($presentation['status_type'] ?? self::stockStatusType((int) ($menu['stock_disponible'] ?? 0))),
+            'available' => (bool) ($presentation['available'] ?? ((int) ($menu['stock_disponible'] ?? 0) > 5)),
+            'party' => (bool) ($presentation['party'] ?? false),
+            'allergens' => $presentation['allergens'] ?? [],
+            'url' => '/menus/' . $menuId,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $menu
+     * @param array<string, mixed> $presentation
+     *
+     * @return array{src: string, alt: string}
+     */
+    public static function mainImageFromMenu(array $menu, array $presentation, string $title = ''): array
+    {
+        $src = trim((string) ($menu['image_url'] ?? ''));
+        $alt = trim((string) ($menu['image_alt'] ?? ''));
+
+        if ($src === '') {
+            $src = (string) ($presentation['image'] ?? '/images/home/menu-noel-tradition.png');
+        }
+
+        if ($alt === '') {
+            $alt = (string) ($presentation['image_alt'] ?? $title);
+        }
+
+        return [
+            'src' => $src,
+            'alt' => $alt,
+        ];
+    }
+
+    private static function stockStatus(int $stock): string
+    {
+        if ($stock <= 0) {
+            return 'Indisponible';
+        }
+
+        if ($stock <= 5) {
+            return 'Stock limité : ' . $stock . ' commandes restantes';
+        }
+
+        return 'Disponible';
+    }
+
+    private static function stockStatusType(int $stock): string
+    {
+        return $stock <= 5 ? 'limited' : 'available';
+    }
+
     public static function themeLabel(string $label): string
     {
         return $label;
