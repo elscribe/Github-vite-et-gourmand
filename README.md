@@ -474,7 +474,7 @@ mot de passe.
 - [Documentation de deploiement](docs/deployment/README.md)
 - [Manuel utilisateur](docs/manual/README.md)
 - [Documentation securite](docs/security/README.md)
-- [Audit accessibilite RGAA interne](docs/accessibility/rgaa-audit-2026-07-22.md)
+- [Accessibilite : bases et reserve RGAA](docs/security/README.md#accessibilite-et-securite-des-formulaires)
 - [Veille securite](docs/security/security-watch.md)
 - [Recherche anglophone](docs/project-management/recherche-anglophone.md)
 - [Matrice finale de recette](docs/manual/final-user-story-test-matrix.md)
@@ -551,6 +551,7 @@ ECF est la recette manuelle documentee et reproductible.
 - [x] Documentation securite.
 - [x] Preparation Docker/Fly.io sans deploiement public.
 - [x] Audit accessibilite RGAA interne.
+- [ ] Audit RGAA complet final.
 - [x] Recherche anglophone.
 - [x] Matrice finale de recette.
 - [x] Manuel utilisateur Markdown.

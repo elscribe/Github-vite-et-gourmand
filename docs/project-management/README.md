@@ -26,6 +26,9 @@ garder une trace versionnee dans GitHub pour le jury.
 | `journal-de-bord-public-layout.md` | Entree de journal de bord pour l'integration publique et le premier commit. |
 | `audit-page-05-catalogue-auth-detail-2026-07-22.md` | Audit page 5 de l'enonce : catalogue, filtres dynamiques, inscription, connexion, reset, detail menu et commande preselectionnee. |
 | `audit-page-06-visiteur-commande-conditions-2026-07-22.md` | Audit page 6 de l'enonce : visiteur bloque avant commande, reprise apres authentification et conditions menu visibles. |
+| `audit-page-11-livrables-ecf-2026-07-22.md` | Audit des livrables obligatoires page 11 : liens publics, Git, SQL, manuel PDF, charte et maquettes. |
+| `audit-page-12-documentation-ecf-2026-07-22.md` | Audit de la documentation gestion projet et technique demandee en page 12. |
+| `checklist-finale-ecf-2026-07-22.md` | Checklist finale des actions restantes avant rendu Studi. |
 
 ## Utilisation pour l'oral
 

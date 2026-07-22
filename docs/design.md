@@ -1,6 +1,6 @@
 # UX/UI et charte graphique
 
-Derniere consolidation documentaire : 21 juillet 2026.
+Derniere consolidation documentaire : 22 juillet 2026.
 
 ## Acces Figma
 
@@ -63,6 +63,26 @@ Les exports locaux couvrent les 6 maquettes finales attendues :
 | Mon espace gourmand | Mobile |
 | Tableau de bord employe | Mobile |
 | Tableau de bord administrateur | Desktop |
+
+Correction appliquee le 22 juillet 2026 : la section Figma
+`03 - Maquettes 2 > Desktop - Administration` etait vide/incomplete. Les frames
+admin desktop existantes ont ete recopiees depuis `03 - Maquettes test >
+Section 1` vers cette section :
+
+- `Admin - Dashboard - Desktop` ;
+- `Admin - Dishes - Desktop` ;
+- `Admin - Employees - Desktop` ;
+- `Admin - Employee Create - Desktop` ;
+- `Admin - Employee Edit - Desktop` ;
+- `Admin - Menus - Desktop` ;
+- `Admin - Menus Recettes Plats - Desktop` ;
+- `Admin - Horaires - Desktop` ;
+- `Admin - Statistics - Desktop` ;
+- `Admin - Statistics Filters - Desktop`.
+
+Reserve restante : recontroler la correspondance exacte de la frame
+`Admin - Menus Recettes Plats - Desktop` avec le dernier code de la page admin
+`/admin/menus`, puis reexporter le PDF final si cette page est presentee au jury.
 
 Les maquettes couvrent les roles principaux :
 
@@ -134,6 +154,7 @@ Elle relie chaque user story a :
 | Statuts commande | Harmoniser Figma, SQL et interface : `en_attente`, `acceptee`, `en_preparation`, `en_livraison`, `livree`, `en_attente_retour_materiel`, `terminee`, `annulee`. |
 | Responsive | Verifier les pages principales mobile et desktop. |
 | Accessibilite | Verifier contrastes, labels, alt images et navigation clavier de base. |
+| Source Figma admin desktop | Section `03 - Maquettes 2 > Desktop - Administration` completee le 22 juillet 2026 ; recontroler l'ecran Menus/Plats avec le dernier code avant export final. |
 
 ## Phrase pour le jury
 
