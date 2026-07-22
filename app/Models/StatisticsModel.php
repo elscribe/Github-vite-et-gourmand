@@ -191,7 +191,7 @@ final class StatisticsModel extends BaseModel
         }
 
         $process = @proc_open(
-            ['mongosh', '--quiet', $database, '--eval', $script],
+            ['mongosh', '--quiet', $this->mongoConnectionTarget($database), '--eval', $script],
             [
                 1 => ['pipe', 'w'],
                 2 => ['pipe', 'w'],
@@ -218,6 +218,24 @@ final class StatisticsModel extends BaseModel
         $decoded = json_decode(trim((string) $output), true);
 
         return is_array($decoded) ? $decoded : null;
+    }
+
+    private function mongoConnectionTarget(string $database): string
+    {
+        $uri = getenv('NOSQL_URI') ?: getenv('MONGODB_URI') ?: '';
+
+        if ($uri !== '') {
+            return rtrim((string) $uri, '/') . '/' . rawurlencode($database);
+        }
+
+        $host = getenv('NOSQL_HOST') ?: 'localhost';
+        $port = getenv('NOSQL_PORT') ?: '27017';
+
+        if (in_array($host, ['localhost', '127.0.0.1'], true)) {
+            return $database;
+        }
+
+        return 'mongodb://' . $host . ':' . $port . '/' . rawurlencode($database);
     }
 
     /**
