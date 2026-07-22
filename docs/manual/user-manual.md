@@ -20,7 +20,7 @@ visiteur, client, employe et administrateur.
 | Role | Email | Mot de passe | Usage |
 |---|---|---|---|
 | Client | `claire.martin@example.test` | `ClientVite2026!` | Commander, suivre, modifier profil, deposer avis. |
-| Employe | `lucas.employee@vitegourmand.test` | `EmployeVite2026!` | Traiter les commandes et moderer les avis. |
+| Employe | `lucas.employee@vitegourmand.test` | `EmployeVite2026!` | Traiter les commandes et moderer les avis ; ne modifie pas l'offre menus/plats/horaires. |
 | Administrateur | `admin.jose@vitegourmand.test` | `AdminVite2026!` | Dashboard, statistiques, menus, plats, horaires, employes. |
 
 Ces mots de passe sont des identifiants de demonstration. Ils ne doivent pas
@@ -76,12 +76,14 @@ Route : `/menus/{id}`
 Actions :
 
 1. Ouvrir un menu.
-2. Verifier les images.
+2. Verifier que l'image principale correspond a celle visible sur l'accueil et la liste des menus.
 3. Lire la composition.
 4. Controler les allergenes, conditions, prix et stock.
 5. Cliquer sur le bouton de commande.
 
-Resultat attendu : le visiteur comprend le contenu du menu avant de commander.
+Resultat attendu : le visiteur comprend le contenu du menu avant de commander ;
+la galerie affiche l'image principale puis les visuels des plats, avec apercu
+agrandissable.
 
 ### 5. Contacter l'entreprise
 
@@ -290,8 +292,8 @@ Actions :
 1. Modifier les horaires.
 2. Verifier leur affichage cote public.
 
-Resultat attendu : les horaires sont mis a jour et restent accessibles dans
-l'interface.
+Resultat attendu : les horaires sont mis a jour et visibles dans le footer
+public.
 
 ### 5. Gerer les menus et plats
 
@@ -301,11 +303,19 @@ Actions :
 
 1. Creer ou modifier un menu.
 2. Associer des plats au menu.
-3. Creer ou modifier un plat.
-4. Associer des allergenes a un plat.
+3. Ajouter, modifier, ordonner ou supprimer les images de galerie.
+4. Creer ou modifier un plat.
+5. Associer des allergenes a un plat.
 
 Resultat attendu : l'administrateur peut maintenir l'offre visible par les
 clients.
+
+Regle image : dans la galerie d'un menu, l'image en position 1 est l'image
+principale synchronisee sur l'accueil, la liste des menus et la page detail.
+Les images suivantes alimentent la galerie agrandissable des plats.
+L'administrateur selectionne un fichier local PNG, JPG ou WebP. L'application
+copie ensuite l'image dans les fichiers publics du projet et met a jour la
+galerie du menu.
 
 ## Securite a verifier pendant la demonstration
 
@@ -314,7 +324,7 @@ clients.
 | Visiteur ouvre `/commandes` | Redirection vers `/connexion`. |
 | Client ouvre `/admin` | Acces refuse. |
 | Client ouvre `/employe` | Acces refuse. |
-| Employe ouvre route admin stricte | Acces refuse. |
+| Employe ouvre route admin stricte | Acces refuse ; separation volontaire documentee dans `docs/project-management/decision-role-employe-menus-2026-07-22.md`. |
 | Admin ouvre `/admin` | Acces autorise. |
 | Formulaire POST | Token CSRF present. |
 
@@ -338,4 +348,5 @@ Pour le PDF final, conserver au minimum :
 Le manuel suit les quatre roles du sujet : le visiteur consulte les menus, le
 client commande et suit ses commandes, l'employe traite les commandes et les
 avis, et l'administrateur pilote les menus, les employes, les horaires et les
-statistiques.
+statistiques. La gestion de l'offre par l'administrateur uniquement est un choix
+documente de separation des responsabilites.
