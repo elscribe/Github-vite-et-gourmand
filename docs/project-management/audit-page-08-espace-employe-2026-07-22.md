@@ -40,7 +40,7 @@ clients. Ce choix est documente dans le `README.md` et
 | Envoyer un email au statut retour materiel | Correction verifiee : email journalise avec sujet retour materiel, 10 jours ouvres, 600 EUR et lien `/cgv`. | Conforme apres correction |
 | Envoyer un email de demande d'avis a la commande terminee | Test mail log : `SUBJECT: Votre avis nous interesse`. | Conforme |
 | Valider ou refuser les avis | Test avis temporaire #17 : moderation par employe, statut `valide`, `moderated_by = 3`, `moderated_at` renseigne. | Conforme |
-| Afficher uniquement les avis valides sur l'accueil | Correction : `HomeController` transmet `ReviewModel::findValidated(3)` a la vue. Test HTTP : avis valide `AUDIT_PAGE8_REVIEW_VISIBLE_HOME` retrouve sur `/`. | Conforme apres correction |
+| Afficher uniquement les avis valides sur l'accueil | Correction : `HomeController` transmet `ReviewModel::findValidated(3)` a la vue. Test HTTP : avis valide temporaire retrouve sur `/`, puis retest final avec avis valides du seed. Les avis decoratifs ont ete retires de la source. | Conforme apres correction |
 
 ## Corrections realisees
 
@@ -96,6 +96,8 @@ PASS SQL annulation: annulee / email / motif conserve
 PASS SQL moderation: valide par l'employe #3
 PASS email retour materiel : sujet, 10 jours ouvres, 600 EUR, lien CGV
 PASS email avis : sujet present
+PASS retest final #50/#51 : avis valide visible accueil et emails conformes
+PASS retest final accueil : avis valides du seed visibles, aucun ancien avis decoratif dans la source
 ```
 
 Donnees temporaires utilisees puis supprimees :
@@ -103,6 +105,7 @@ Donnees temporaires utilisees puis supprimees :
 ```text
 commandes #47, #48, #49
 avis #17
+retest final : commandes #50, #51 et avis #18
 verification finale : commandes temporaires restantes = 0
 ```
 
