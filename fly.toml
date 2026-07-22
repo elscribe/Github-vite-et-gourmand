@@ -1,0 +1,44 @@
+app = "vite-gourmand-ecf-jmf"
+primary_region = "cdg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  APP_NAME = "ViteEtGourmand"
+  APP_ENV = "production"
+  APP_DEBUG = "false"
+  APP_DISPLAY_ERRORS = "false"
+  APP_LOG_ERRORS = "true"
+  APP_LOG_PATH = "storage/logs/app.log"
+  APP_TIMEZONE = "Europe/Paris"
+  APP_URL = "https://vite-gourmand-ecf-jmf.fly.dev"
+  SESSION_SECURE = "true"
+  SESSION_HTTP_ONLY = "true"
+  SESSION_SAME_SITE = "Lax"
+  DB_CONNECTION = "mysql"
+  DB_HOST = "vite-gourmand-ecf-jmf-mysql.internal"
+  DB_PORT = "3306"
+  DB_NAME = "vite_gourmand"
+  DB_USER = "vite_gourmand"
+  NOSQL_CONNECTION = "mongodb"
+  NOSQL_HOST = "vite-gourmand-ecf-jmf-mongo.internal"
+  NOSQL_PORT = "27017"
+  NOSQL_DATABASE = "vite_gourmand"
+  MAIL_MAILER = "log"
+  MAIL_FROM_ADDRESS = "no-reply@example.test"
+  MAIL_FROM_NAME = "Vite et Gourmand"
+  MAIL_CONTACT_TO = "contact@vitegourmand.test"
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

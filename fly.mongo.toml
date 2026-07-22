@@ -1,0 +1,20 @@
+app = "vite-gourmand-ecf-jmf-mongo"
+primary_region = "cdg"
+
+[build]
+  dockerfile = "docker/mongo/Dockerfile"
+
+[env]
+  MONGO_INITDB_DATABASE = "vite_gourmand"
+
+[processes]
+  app = "mongod --bind_ip_all --ipv6"
+
+[mounts]
+  source = "mongodata"
+  destination = "/data/db"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

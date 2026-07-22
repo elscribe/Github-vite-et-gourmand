@@ -10,6 +10,7 @@
 vendor/
 tmp/
 temp/
+docs/
 logs/
 storage/logs/*
 !storage/logs/.gitkeep
@@ -18,6 +19,7 @@ node_modules/
 coverage/
 dist/
 build/
+design-qa.md
 
 .idea/
 .vscode/

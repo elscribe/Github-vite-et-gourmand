@@ -191,13 +191,14 @@ final class StatisticsModel extends BaseModel
         }
 
         $process = @proc_open(
-            ['mongosh', '--quiet', $this->mongoConnectionTarget($database), '--eval', $script],
+            [$this->mongoShellBinary(), '--quiet', $this->mongoConnectionTarget($database), '--eval', $script],
             [
                 1 => ['pipe', 'w'],
                 2 => ['pipe', 'w'],
             ],
             $pipes,
-            dirname(__DIR__, 2)
+            dirname(__DIR__, 2),
+            $this->mongoShellEnvironment()
         );
 
         if (!is_resource($process)) {
@@ -236,6 +237,26 @@ final class StatisticsModel extends BaseModel
         }
 
         return 'mongodb://' . $host . ':' . $port . '/' . rawurlencode($database);
+    }
+
+    private function mongoShellBinary(): string
+    {
+        return is_executable('/usr/bin/mongosh') ? '/usr/bin/mongosh' : 'mongosh';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function mongoShellEnvironment(): array
+    {
+        $environment = getenv();
+        $temporaryDirectory = sys_get_temp_dir();
+
+        return array_replace(is_array($environment) ? $environment : [], [
+            'HOME' => $temporaryDirectory,
+            'XDG_CACHE_HOME' => $temporaryDirectory,
+            'XDG_CONFIG_HOME' => $temporaryDirectory,
+        ]);
     }
 
     /**

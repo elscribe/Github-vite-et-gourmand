@@ -1,0 +1,21 @@
+app = "vite-gourmand-ecf-jmf-mysql"
+primary_region = "cdg"
+
+[build]
+  dockerfile = "docker/mysql/Dockerfile"
+
+[env]
+  MYSQL_DATABASE = "vite_gourmand"
+  MYSQL_USER = "vite_gourmand"
+
+[processes]
+  app = "--datadir /data/mysql --mysql-native-password=ON"
+
+[mounts]
+  source = "mysqldata"
+  destination = "/data"
+
+[[vm]]
+  memory = "1024mb"
+  cpu_kind = "shared"
+  cpus = 1
