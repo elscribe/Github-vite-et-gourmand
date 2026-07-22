@@ -140,33 +140,26 @@ if ($status === 'terminee') {
                 <article class="client-card client-help-card">
                     <h2>Besoin d'aide ?</h2>
                     <p>Notre service client est à votre écoute pour adapter votre formule ou répondre à vos questions.</p>
-                    <p>Téléphone : 05 57 00 00 00</p>
-                    <p>Email : contact@viteetgourmand.fr</p>
-                </article>
-
-                <article class="client-card client-actions-card">
-                    <h2>Actions</h2>
                     <a class="client-button client-button-secondary" href="/contact">Contacter l'équipe</a>
-
-                    <?php if ($status === 'en_attente'): ?>
-                        <a class="client-button client-button-primary" href="/commandes/<?= (int) $order['id_commande'] ?>/modifier">Modifier la commande</a>
-                        <form class="client-cancel-form" action="/commandes/<?= (int) $order['id_commande'] ?>/annuler" method="post">
-                            <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
-                            <label for="motif_annulation">Motif d'annulation</label>
-                            <textarea id="motif_annulation" name="motif_annulation" rows="3">Annulation demandée par le client.</textarea>
-                            <button class="client-button client-button-danger" type="submit">Annuler la commande</button>
-                        </form>
-                    <?php elseif ($status === 'terminee' && empty($order['avis_id'])): ?>
-                        <a class="client-button client-button-primary" href="/avis/creation/<?= (int) $order['id_commande'] ?>">Déposer un avis</a>
-                    <?php elseif (!empty($order['avis_id'])): ?>
-                        <p class="client-muted">Avis : <?= $this->e($order['avis_statut']) ?></p>
-                    <?php else: ?>
-                        <div class="client-locked-note">
-                            <i class="bi bi-info-circle" aria-hidden="true"></i>
-                            <p>La modification et l'annulation ne sont possibles que tant que la commande n'a pas été acceptée.</p>
-                        </div>
-                    <?php endif; ?>
                 </article>
+
+                <?php if ($status === 'en_attente' || ($status === 'terminee' && empty($order['avis_id']))): ?>
+                    <article class="client-card client-actions-card">
+                        <h2>Actions</h2>
+
+                        <?php if ($status === 'en_attente'): ?>
+                            <a class="client-button client-button-primary" href="/commandes/<?= (int) $order['id_commande'] ?>/modifier">Modifier la commande</a>
+                            <form class="client-cancel-form" action="/commandes/<?= (int) $order['id_commande'] ?>/annuler" method="post">
+                                <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                <label for="motif_annulation">Motif d'annulation</label>
+                                <textarea id="motif_annulation" name="motif_annulation" rows="3">Annulation demandée par le client.</textarea>
+                                <button class="client-button client-button-danger" type="submit">Annuler la commande</button>
+                            </form>
+                        <?php else: ?>
+                            <a class="client-button client-button-primary" href="/avis/creation/<?= (int) $order['id_commande'] ?>">Déposer un avis</a>
+                        <?php endif; ?>
+                    </article>
+                <?php endif; ?>
             </aside>
         </div>
     </div>

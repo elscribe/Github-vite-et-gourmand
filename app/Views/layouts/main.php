@@ -130,7 +130,7 @@ $assetVersion = static function (string $assetPath): string {
 
                 <a class="backoffice-logout" href="/deconnexion">
                     <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
-                    <span>Deconnexion</span>
+                    <span>Déconnexion</span>
                 </a>
             </aside>
 
@@ -146,9 +146,6 @@ $assetVersion = static function (string $assetPath): string {
                     >
                         <i class="bi bi-list" aria-hidden="true"></i>
                     </button>
-                    <a class="backoffice-mobile-logo" href="<?= $isAdminArea ? '/admin' : '/employe' ?>" aria-label="Vite & Gourmand">
-                        <img src="/images/brand/logo-mobile-vg.png" alt="Vite & Gourmand">
-                    </a>
                     <div class="backoffice-user">
                         <div class="backoffice-notification-wrapper" data-backoffice-notifications>
                             <button
@@ -239,7 +236,7 @@ $assetVersion = static function (string $assetPath): string {
 
                         <a class="backoffice-logout" href="/deconnexion">
                             <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
-                            <span>Deconnexion</span>
+                            <span>Déconnexion</span>
                         </a>
                     </div>
                 </aside>
@@ -265,7 +262,7 @@ $assetVersion = static function (string $assetPath): string {
                 <div class="container">
                     <a class="navbar-brand site-logo" href="/" aria-label="Vite & Gourmand - Accueil">
                         <img class="site-logo-primary" src="/images/brand/logo-primary.png" alt="Vite & Gourmand">
-                        <img class="site-logo-compact" src="/images/brand/logo-mobile-vg.png" alt="Vite & Gourmand">
+                        <img class="site-logo-compact" src="/images/brand/logo-mobile-vg.png?v=<?= $assetVersion('/images/brand/logo-mobile-vg.png') ?>" alt="Vite & Gourmand">
                     </a>
                     <button
                         class="mobile-menu-button"
@@ -289,7 +286,7 @@ $assetVersion = static function (string $assetPath): string {
                             <?php else: ?>
                                 <a class="nav-link<?= $isClientActive ? ' is-active' : '' ?>" href="/mon-compte">Mon espace</a>
                             <?php endif; ?>
-                            <a class="nav-link site-nav-logout" href="/deconnexion">Deconnexion</a>
+                            <a class="nav-link site-nav-logout" href="/deconnexion">Déconnexion</a>
                         <?php else: ?>
                             <a class="nav-link<?= $isAuthActive ? ' is-active' : '' ?>" href="/connexion">Mon espace</a>
                         <?php endif; ?>
@@ -332,7 +329,7 @@ $assetVersion = static function (string $assetPath): string {
                         <?php else: ?>
                             <a href="/mon-compte">Mon espace</a>
                         <?php endif; ?>
-                        <a href="/deconnexion">Deconnexion</a>
+                        <a href="/deconnexion">Déconnexion</a>
                     <?php else: ?>
                         <a href="/"<?= $isHomeActive ? ' aria-current="page"' : '' ?>>Accueil</a>
                         <a href="/menus"<?= $isMenusActive ? ' aria-current="page"' : '' ?>>Nos menus</a>

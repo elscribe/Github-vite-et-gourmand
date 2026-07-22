@@ -841,40 +841,9 @@ h3 {
     line-height: 1.45;
 }
 
-.auth-role-card {
-    grid-area: role;
-    margin-top: 54px;
-    min-height: 140px;
-    padding: 32px;
-    background: #f2e8d4;
-    border-radius: 8px;
-    box-shadow: 0 20px 42px rgba(43, 26, 20, 0.06);
-}
-
-.auth-role-card h2 {
-    margin: 0 0 18px;
-    color: #000000;
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.auth-role-card p {
-    margin: 0;
-    color: var(--color-muted);
-    font-size: 0.98rem;
-    line-height: 1.45;
-    font-style: italic;
-}
-
-.auth-role-card em {
-    display: block;
-    margin-top: 36px;
-    color: var(--color-muted);
-    font-size: 0.94rem;
-}
-
 .auth-card {
     grid-area: form;
+    width: 100%;
     max-width: none;
     min-height: 640px;
     padding: 48px;
@@ -955,6 +924,24 @@ h3 {
 .auth-links a:hover,
 .auth-links a:focus {
     text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+    .auth-container {
+        grid-template-areas:
+            "intro"
+            "form";
+        grid-template-columns: minmax(0, 560px);
+        justify-content: center;
+        gap: 34px;
+    }
+
+    .auth-intro,
+    .auth-card {
+        justify-self: center;
+        width: 100%;
+        max-width: 560px;
+    }
 }
 
 .register-page {
@@ -1640,6 +1627,7 @@ h3 {
 
 .home-commitment-card {
     display: flex;
+    min-width: 0;
     min-height: 236px;
     flex-direction: column;
     gap: 12px;
@@ -1672,6 +1660,7 @@ h3 {
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.1;
+    overflow-wrap: break-word;
 }
 
 .home-commitment-card p {
@@ -1679,6 +1668,16 @@ h3 {
     color: #000000;
     font-size: 1.125rem;
     line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+    .home-commitment-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-commitment-card {
+        min-height: auto;
+    }
 }
 
 .back-to-top-link {
@@ -2711,14 +2710,6 @@ body.filter-overlay-open {
     text-decoration: none;
 }
 
-.menu-custom-link {
-    color: #000000;
-    font-size: 0.87rem;
-    font-weight: 800;
-    line-height: 1.2;
-    text-decoration: underline;
-}
-
 .back-link {
     display: inline-block;
     margin-bottom: 24px;
@@ -3384,11 +3375,6 @@ body.image-lightbox-open {
 .page-client .site-header {
     position: sticky;
     top: 0;
-}
-
-.page-client-account .site-nav-logout,
-.page-client-profile-edit .site-nav-logout {
-    display: none;
 }
 
 .client-page {
@@ -4895,23 +4881,6 @@ body.image-lightbox-open {
     resize: vertical;
 }
 
-.client-locked-note {
-    display: grid;
-    grid-template-columns: 18px minmax(0, 1fr);
-    gap: 10px;
-    align-items: start;
-    margin-top: 18px;
-    padding: 14px;
-    border: 1px solid #f1e7d5;
-    border-radius: 8px;
-    background: #fffaf0;
-    color: #667085;
-}
-
-.client-locked-note p {
-    margin: 0;
-}
-
 .client-review-container {
     max-width: 790px;
 }
@@ -5464,7 +5433,6 @@ body.backoffice-body {
 }
 
 .backoffice-mobile-menu-toggle,
-.backoffice-mobile-logo,
 .backoffice-mobile-nav {
     display: none;
 }
@@ -6926,7 +6894,7 @@ body.backoffice-body {
         top: 0;
         z-index: 900;
         display: grid;
-        grid-template-columns: 48px minmax(0, 1fr) auto;
+        grid-template-columns: 48px minmax(0, 1fr);
         align-items: center;
         min-height: 72px;
         padding: 0 22px;
@@ -6945,22 +6913,6 @@ body.backoffice-body {
         cursor: pointer;
         font-size: 1.6rem;
         line-height: 1;
-    }
-
-    .backoffice-mobile-logo {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        justify-self: center;
-        width: 54px;
-        height: 46px;
-    }
-
-    .backoffice-mobile-logo img {
-        display: block;
-        width: 54px;
-        height: 46px;
-        object-fit: contain;
     }
 
     .backoffice-user {
@@ -7412,6 +7364,11 @@ body.backoffice-body {
         align-items: start;
     }
 
+    .site-footer-brand img {
+        align-self: center;
+        margin-inline: auto;
+    }
+
     .site-footer-brand p {
         font-size: 0.9rem;
     }
@@ -7789,10 +7746,6 @@ body.backoffice-body {
 
     .auth-card {
         padding: 28px 24px;
-    }
-
-    .auth-role-card {
-        margin-top: 0;
     }
 
     .auth-links {
@@ -8501,8 +8454,8 @@ body.backoffice-body {
     }
 
     .site-logo {
-        width: 38px;
-        flex-basis: 38px;
+        width: 47px;
+        flex-basis: 47px;
     }
 
     .site-logo .site-logo-primary {
@@ -8511,6 +8464,9 @@ body.backoffice-body {
 
     .site-logo .site-logo-compact {
         display: block;
+        width: 47px;
+        height: 40px;
+        object-fit: contain;
     }
 
     .site-nav-links {
@@ -8588,11 +8544,6 @@ body.page-client {
     position: sticky;
     top: 0;
     z-index: 30;
-}
-
-.page-client-account .site-nav-logout,
-.page-client-profile-edit .site-nav-logout {
-    display: none;
 }
 
 .client-page {
@@ -8769,12 +8720,23 @@ body.page-client {
     color: var(--color-primary);
 }
 
+.client-account-info-card > .client-button {
+    max-width: 100%;
+    white-space: normal;
+}
+
 .client-current-summary,
-.client-account-info-list,
 .client-info-list,
 .client-order-row-meta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 0;
+}
+
+.client-account-info-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
     gap: 22px;
     margin: 0;
 }
@@ -8784,6 +8746,7 @@ body.page-client {
 .client-info-list div {
     display: grid;
     gap: 6px;
+    min-width: 0;
 }
 
 .client-current-address,
@@ -8806,6 +8769,7 @@ body.page-client {
     margin: 0;
     color: #241913;
     font-weight: 800;
+    overflow-wrap: anywhere;
 }
 
 .client-status-badge {

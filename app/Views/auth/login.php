@@ -48,9 +48,5 @@
             </div>
         </form>
 
-        <aside class="auth-role-card" aria-label="Accès selon votre rôle">
-            <h2>Un seul accès sécurisé</h2>
-            <p>Connectez-vous avec votre adresse email. Votre espace s'ouvre automatiquement selon votre profil.</p>
-        </aside>
     </div>
 </section>

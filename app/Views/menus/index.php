@@ -132,7 +132,6 @@ usort(
 
         <div class="menu-custom-cta">
             <a class="menu-custom-button" href="/contact">Demander un menu sur mesure</a>
-            <a class="menu-custom-link" href="/contact">Besoin d'un menu sur mesure ? Contactez-nous</a>
         </div>
     </div>
 </section>
