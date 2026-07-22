@@ -1,0 +1,5 @@
+©Studi Reproduction interdite Page 6 sur 12
+Si la personne est un visiteur (personne non authentifié) alors il lui sera demander de se
+connecter ou de concevoir un compte avant d’accéder à la page de commande.
+Attention : il doit être mis bien en évidence les conditions de ce menu, afin d’éviter que le
+client puisse se plaindre qu’il n’a pas vu l’information.
