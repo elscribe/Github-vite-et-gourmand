@@ -36,6 +36,7 @@ dans le document Studi.
 | Manuel utilisateur | `docs/manual/user-manual.md` | Present. |
 | Manuel utilisateur PDF | `docs/manual/user-manual.pdf` | A generer/mettre a jour. |
 | Documentation securite | `docs/security/README.md` | Presente. |
+| Audit accessibilite RGAA interne | `docs/accessibility/rgaa-audit-2026-07-22.md` | Present, avec reserve de passe finale sur URL deployee. |
 | Veille securite | `docs/security/security-watch.md` | Presente. |
 | Recherche anglophone | `docs/project-management/recherche-anglophone.md` | Presente. |
 | Documentation de deploiement | `docs/deployment/README.md` | Presente, URL finale a completer. |

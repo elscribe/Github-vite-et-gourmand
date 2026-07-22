@@ -474,6 +474,7 @@ mot de passe.
 - [Documentation de deploiement](docs/deployment/README.md)
 - [Manuel utilisateur](docs/manual/README.md)
 - [Documentation securite](docs/security/README.md)
+- [Audit accessibilite RGAA interne](docs/accessibility/rgaa-audit-2026-07-22.md)
 - [Veille securite](docs/security/security-watch.md)
 - [Recherche anglophone](docs/project-management/recherche-anglophone.md)
 - [Matrice finale de recette](docs/manual/final-user-story-test-matrix.md)
@@ -520,6 +521,7 @@ Parcours couverts localement :
 - transitions de statuts de commande ;
 - formulaires et messages d'erreur ;
 - accessibilite : navigation clavier, contrastes, labels, textes alternatifs ;
+- audit accessibilite RGAA interne sur un echantillon representatif ;
 - dashboard administrateur alimente par MongoDB.
 
 Les tests automatises applicatifs restent une amelioration future. La priorite
@@ -548,6 +550,7 @@ ECF est la recette manuelle documentee et reproductible.
 - [x] Implementation du MVP PHP MVC local.
 - [x] Documentation securite.
 - [x] Preparation Docker/Fly.io sans deploiement public.
+- [x] Audit accessibilite RGAA interne.
 - [x] Recherche anglophone.
 - [x] Matrice finale de recette.
 - [x] Manuel utilisateur Markdown.
