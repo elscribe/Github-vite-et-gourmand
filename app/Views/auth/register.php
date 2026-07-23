@@ -102,7 +102,7 @@
                         name="password"
                         type="password"
                         autocomplete="new-password"
-                        placeholder="8 caractères minimum"
+                        placeholder="10 caractères minimum"
                         required
                     >
                     <?php if (!empty($errors['password'])): ?>

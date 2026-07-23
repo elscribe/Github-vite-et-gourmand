@@ -10,7 +10,7 @@ espace interne.
 
 ## Etat Actuel
 
-Ce depot contient actuellement la phase de cadrage technique du projet :
+Ce depot contient la version finale ECF du projet :
 
 - analyse fonctionnelle et gestion de projet centralisees dans Notion ;
 - modelisation Merise disponible : MCD, MLD et MPD ;
@@ -18,13 +18,13 @@ Ce depot contient actuellement la phase de cadrage technique du projet :
 - scripts SQL de creation et d'insertion disponibles ;
 - collections MongoDB creees et alimentees pour les statistiques administrateur ;
 - documentation technique de base de donnees disponible ;
-- squelette PHP 8.3 MVC prepare avec Composer et autoload PSR-4 ;
+- application PHP 8.3 MVC preparee avec Composer et autoload PSR-4 ;
 - infrastructure technique disponible : routeur, pages 404/500,
   session, chargement `.env`, gestion d'erreurs, helpers HTTP/securite et base
   model ;
 - parcours MVC principaux implementes : menus, contact, authentification,
   commandes, suivi client, espace employe, avis et statistiques admin ;
-- branches Git `develop` et `feature/*` initialisees pour le developpement ;
+- branches Git `main`, `develop` et `feature/*` utilisees pour le developpement ;
 - lien Figma global synchronise pour les wireframes, maquettes, composants,
   charte graphique et exports ;
 - fichier `.env.example` disponible pour documenter la configuration.
@@ -39,13 +39,11 @@ qualite, les composants de base, la charte graphique et une page d'exports PDF.
 
 - Depot GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
 - Maquettes et charte graphique Figma : <https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6>
-- Outil de gestion de projet : Notion, lien partage a completer avant rendu
-- Application deployee : a completer apres deploiement Fly.io via Docker
+- Outil de gestion de projet : <https://app.notion.com/p/3794ea958e18801aba79dc472cbe9fb7>
+- Application deployee : <https://vite-gourmand-ecf-jmf.fly.dev>
 
-Avant le rendu final, les liens GitHub, Figma, Notion et application deployee
-devront etre testes depuis une fenetre privee ou un navigateur non connecte.
-Le depot GitHub peut rester prive pendant le developpement, mais il devra etre
-rendu public et reverifie avant transmission au jury.
+Avant le depot Studi, les liens GitHub, Figma, Notion et application deployee
+doivent etre testes depuis une fenetre privee ou un navigateur non connecte.
 
 ## Comptes De Demonstration
 
@@ -141,7 +139,7 @@ annulations justifiees, changements de statuts et moderation des avis.
 | Base non relationnelle | MongoDB pour les agregats statistiques du dashboard administrateur |
 | Gestion projet | Notion |
 | Depot | GitHub |
-| Deploiement prevu | Fly.io via Docker, non deploye a ce stade |
+| Deploiement | Fly.io via Docker : <https://vite-gourmand-ecf-jmf.fly.dev> |
 
 La base SQL reste la source de verite pour les donnees metier. MongoDB sert les
 agregats statistiques utilises par le tableau de bord administrateur. Le code
@@ -208,8 +206,8 @@ vite-gourmand/
 - `storage/` : logs et fichiers generes localement, non publics.
 - `tests/` : futurs tests automatises.
 - `docker/` : configuration Apache du conteneur de deploiement.
-- `Dockerfile` : image PHP 8.3 Apache pour le futur deploiement Fly.io.
-- `fly.toml.example` : modele de configuration Fly.io a copier au moment du deploiement.
+- `Dockerfile` : image PHP 8.3 Apache pour le deploiement Fly.io.
+- `fly.toml` / `fly.toml.example` : configuration Fly.io et modele de reference.
 
 Chaque dossier important contient un fichier `README.md` pour expliquer son role
 a un developpeur junior ou au jury.
@@ -223,7 +221,7 @@ a un developpeur junior ou au jury.
 - Composer.
 - MariaDB ou MySQL 8.
 - MongoDB et `mongosh`, pour les statistiques administrateur.
-- Docker, seulement pour preparer ou tester le futur deploiement Fly.io.
+- Docker, pour tester ou reproduire le deploiement Fly.io.
 - Navigateur web moderne.
 
 Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN et le
@@ -544,22 +542,22 @@ ECF est la recette manuelle documentee et reproductible.
 - [x] Lien Figma global synchronise.
 - [x] Fichier `.env.example`.
 
-### En Cours
+### Finalise Pour Le Rendu
 
 - [x] Export final des maquettes desktop/mobile et de la charte graphique.
 - [x] Implementation du MVP PHP MVC local.
 - [x] Documentation securite.
-- [x] Preparation Docker/Fly.io sans deploiement public.
+- [x] Preparation Docker/Fly.io.
+- [x] Deploiement public Fly.io.
 - [x] Audit accessibilite RGAA interne.
 - [ ] Audit RGAA complet final.
 - [x] Recherche anglophone.
 - [x] Matrice finale de recette.
 - [x] Manuel utilisateur Markdown.
-- [ ] Deploiement public.
-- [ ] Documentation de deploiement avec URL reelle.
-- [ ] Manuel utilisateur PDF avec captures finales si necessaire.
-- [ ] Livrables finaux Notion et copie Studi.
-- [ ] Tests finaux sur URL deployee.
+- [x] Documentation de deploiement avec URL reelle.
+- [x] Manuel utilisateur PDF.
+- [x] Livrables finaux locaux.
+- [x] Tests principaux sur URL deployee.
 
 ### Ameliorations Futures
 
@@ -597,19 +595,16 @@ Workflow prevu : les fonctionnalites partent de `develop`, sont fusionnees dans
 `develop` apres verification, puis `develop` est fusionnee dans `main` quand une
 version stable est prete pour presentation.
 
-## Points A Completer Avant Rendu
+## Verification Finale Avant Depot Studi
 
-- Verification de l'acces public au depot GitHub.
-- Verification de l'acces public au fichier Figma.
-- Lien de l'application deployee.
-- Identifiants administrateur de demonstration.
-- Informations candidat dans la copie finale Studi.
-- Exports PDF des maquettes desktop et mobile.
-- Charte graphique PDF.
-- Manuel utilisateur PDF.
-- Documentation de deploiement completee avec l'URL reelle.
-- Synchronisation Notion : securite, recherche anglophone, deploiement,
-  manuel utilisateur et livrables finaux.
+- Verifier l'acces public au depot GitHub.
+- Verifier l'acces public au fichier Figma.
+- Verifier le lien Notion partage au jury.
+- Verifier l'application deployee : <https://vite-gourmand-ecf-jmf.fly.dev>.
+- Verifier les identifiants administrateur de demonstration.
+- Verifier les informations candidat dans la copie finale Studi.
+- Joindre les exports PDF des maquettes desktop/mobile et la charte graphique.
+- Joindre le manuel utilisateur PDF.
 
 ## Notes Pour Le Jury
 
@@ -622,7 +617,7 @@ Le depot montre deja :
 - la justification SQL / MongoDB ;
 - la preparation d'une architecture MVC ;
 - la production de diagrammes UML ;
-- l'anticipation des enjeux de securite, accessibilite et deploiement.
+- la prise en compte des enjeux de securite, accessibilite et deploiement.
 
 Points a expliquer a l'oral :
 
@@ -632,4 +627,5 @@ Points a expliquer a l'oral :
 - comment les roles structurent les acces ;
 - comment les commandes changent d'etat ;
 - comment les regles de prix, reduction et livraison seront controlees ;
-- comment la securite est appliquee dans le code.
+- comment la securite est appliquee dans le code ;
+- comment le deploiement Fly.io relie l'application PHP, MySQL et MongoDB.

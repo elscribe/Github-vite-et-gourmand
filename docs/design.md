@@ -1,6 +1,6 @@
 # UX/UI et charte graphique
 
-Derniere consolidation documentaire : 22 juillet 2026.
+Derniere consolidation documentaire : 23 juillet 2026.
 
 ## Acces Figma
 
@@ -80,7 +80,7 @@ Section 1` vers cette section :
 - `Admin - Statistics - Desktop` ;
 - `Admin - Statistics Filters - Desktop`.
 
-Reserve restante : recontroler la correspondance exacte de la frame
+Controle final conseille : recontroler la correspondance exacte de la frame
 `Admin - Menus Recettes Plats - Desktop` avec le dernier code de la page admin
 `/admin/menus`, puis reexporter le PDF final si cette page est presentee au jury.
 
@@ -145,7 +145,7 @@ Elle relie chaque user story a :
 - un statut ;
 - une preuve a conserver.
 
-## Points de coherence a verifier avant rendu
+## Checklist Figma et UX/UI avant rendu
 
 | Sujet | Controle |
 |---|---|
@@ -155,6 +155,12 @@ Elle relie chaque user story a :
 | Responsive | Verifier les pages principales mobile et desktop. |
 | Accessibilite | Verifier contrastes, labels, alt images et navigation clavier de base. |
 | Source Figma admin desktop | Section `03 - Maquettes 2 > Desktop - Administration` completee le 22 juillet 2026 ; recontroler l'ecran Menus/Plats avec le dernier code avant export final. |
+| Partage | Ouvrir le lien Figma depuis une fenetre privee ou un navigateur non connecte. |
+| Exports PDF | Ouvrir la charte, les 6 wireframes et les 6 maquettes haute fidelite. |
+| Couverture roles | Confirmer que visiteur, client, employe et administrateur sont tous representes. |
+| Correspondance code | Comparer les routes principales au design final : `/`, `/menus`, `/menus/{id}`, `/mon-compte`, `/commandes`, `/employe`, `/admin`. |
+| Formulaires | Verifier labels, champs requis, messages d'erreur et coherence des libelles. |
+| Navigation | Verifier header, footer, menus de role et retours vers les espaces principaux. |
 
 ## Phrase pour le jury
 

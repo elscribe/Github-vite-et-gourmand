@@ -1,6 +1,6 @@
 # Manuel utilisateur - Vite & Gourmand
 
-Date de consolidation : 21 juillet 2026.
+Date de consolidation : 23 juillet 2026.
 
 Ce manuel presente les parcours principaux de l'application Vite & Gourmand. Il
 sert de support pour la demonstration devant le jury et pour tester les roles :
@@ -11,7 +11,7 @@ visiteur, client, employe et administrateur.
 | Element | Valeur |
 |---|---|
 | URL locale | `http://localhost:8000` apres `composer serve` |
-| URL deployee | A renseigner apres deploiement |
+| URL deployee | <https://vite-gourmand-ecf-jmf.fly.dev> |
 | Depot GitHub | <https://github.com/elscribe/Github-vite-et-gourmand> |
 | Figma | <https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6> |
 
@@ -329,9 +329,11 @@ galerie du menu.
 | Admin ouvre `/admin` | Acces autorise. |
 | Formulaire POST | Token CSRF present. |
 
-## Captures a ajouter apres deploiement
+## Captures de reference
 
-Pour le PDF final, conserver au minimum :
+Les captures de recette locale sont conservees dans
+`docs/manual/recette-finale-2026-07-21/captures/`. Pour la soutenance,
+conserver au minimum :
 
 - accueil public ;
 - liste des menus ;

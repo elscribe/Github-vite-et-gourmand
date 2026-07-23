@@ -83,7 +83,7 @@ Pour le detail des user stories client connecte, voir aussi :
 
 | Livrable | Fichier ou emplacement | Statut actuel |
 |---|---|---|
-| Depot GitHub | README, lien GitHub a verifier avant rendu | Present, lien public a confirmer |
+| Depot GitHub | README, lien GitHub public | Present |
 | Application PHP MVC | `app/`, `public/`, `config/` | Present |
 | Base SQL | `database/sql/create_database.sql`, `seed_database.sql` | Present |
 | Base NoSQL | `database/mongodb/` | Present et documentee |
@@ -93,9 +93,9 @@ Pour le detail des user stories client connecte, voir aussi :
 | Choix techniques SQL/NoSQL | `docs/database/database-choices.md` | Present |
 | Maquettes / wireframes | `docs/deliverables/` + lien Figma README | Present, lien a verifier |
 | Charte graphique | `docs/deliverables/graphic-charter/` + Figma | Present |
-| Gestion projet / backlog | Notion + rapport user stories + matrice finale | Present, lien Notion a completer |
+| Gestion projet / backlog | Notion + rapport user stories + matrice finale | Present |
 | Manuel / revisions | `docs/manual/` | Present, PDF a regenerer si captures finales |
-| Deploiement | `docs/deployment/README.md` | Present, URL finale a completer |
+| Deploiement | `docs/deployment/README.md` | Present, URL Fly.io renseignee |
 | Securite | `docs/security/README.md` + middlewares | Present |
 
 ## Notes pendant test

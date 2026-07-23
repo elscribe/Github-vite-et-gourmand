@@ -1,11 +1,17 @@
 # Documentation de deploiement Fly.io via Docker
 
 Date de preparation : 21 juillet 2026.
+Date de mise a jour finale : 23 juillet 2026.
 
-Cette documentation decrit la procedure de deploiement cible pour rendre
+Cette documentation decrit la procedure de deploiement appliquee pour rendre
 l'application Vite & Gourmand accessible au jury. La cible retenue est Fly.io
-via Docker. Le deploiement public n'est pas encore effectue ; l'URL publique
-exacte devra etre completee apres publication.
+via Docker.
+
+URL publique :
+
+```text
+https://vite-gourmand-ecf-jmf.fly.dev
+```
 
 ## Etat actuel
 
@@ -13,12 +19,12 @@ exacte devra etre completee apres publication.
 |---|---|
 | Application locale | Fonctionnelle en environnement PHP local. |
 | Cible de deploiement | Fly.io via Docker. |
-| Preparation Docker | `Dockerfile`, `.dockerignore` et `fly.toml.example` disponibles. |
-| Depot GitHub | A rendre public avant rendu. |
+| Preparation Docker | `Dockerfile`, `.dockerignore`, `fly.toml`, `fly.mysql.toml` et `fly.mongo.toml` disponibles. |
+| Depot GitHub | Public : <https://github.com/elscribe/Github-vite-et-gourmand>. |
 | Branche a deployer | `main`, apres fusion de la version stable. |
-| URL publique | A renseigner apres deploiement. |
-| Base SQL | Scripts disponibles dans `database/sql/`. |
-| Base MongoDB | Scripts disponibles dans `database/mongodb/`. |
+| URL publique | <https://vite-gourmand-ecf-jmf.fly.dev>. |
+| Base SQL | Service Fly.io `vite-gourmand-ecf-jmf-mysql`, initialise avec les scripts du depot. |
+| Base MongoDB | Service Fly.io `vite-gourmand-ecf-jmf-mongo`, initialise avec les scripts du depot. |
 | Emails | Mode `log` en local, SMTP a configurer en production si disponible. |
 
 ## Pre-requis serveur
@@ -48,22 +54,24 @@ Les fichiers de preparation sont presents dans le depot :
   port 80 ;
 - `.dockerignore` : exclut les secrets, dependances locales, logs et fichiers
   temporaires de l'image ;
-- `fly.toml.example` : modele Fly.io a copier vers `fly.toml` au moment du
-  deploiement.
+- `fly.toml` : configuration Fly.io de l'application PHP ;
+- `fly.mysql.toml` : configuration Fly.io du service MySQL ;
+- `fly.mongo.toml` : configuration Fly.io du service MongoDB ;
+- `fly.toml.example` : modele de reference.
 
-Avant le deploiement effectif :
+Configuration appliquee :
 
-1. Copier `fly.toml.example` vers `fly.toml`.
-2. Remplacer le nom d'application exemple par le vrai nom Fly.io.
-3. Renseigner `APP_URL` avec l'URL publique finale.
-4. Declarer les secrets Fly.io : `APP_KEY`, `DB_HOST`, `DB_NAME`, `DB_USER`,
-   `DB_PASSWORD`, `NOSQL_HOST` et les variables mail si un SMTP est utilise.
-5. Verifier que les services SQL et MongoDB acceptent les connexions depuis
-   l'application Fly.io.
+1. Application Fly.io : `vite-gourmand-ecf-jmf`.
+2. URL publique : `https://vite-gourmand-ecf-jmf.fly.dev`.
+3. Region : `cdg`.
+4. SQL : `vite-gourmand-ecf-jmf-mysql.internal`.
+5. MongoDB : `vite-gourmand-ecf-jmf-mongo.internal`.
+6. Secrets Fly.io deployes pour les valeurs sensibles, notamment `APP_KEY` et
+   `DB_PASSWORD`.
 
 ## Version a deployer
 
-Avant de deployer :
+Avant chaque deploiement :
 
 1. Verifier que le code local est stable.
 2. Lancer les checks :
@@ -75,8 +83,8 @@ composer check
 3. Committer les changements.
 4. Fusionner la version stable vers `main`.
 5. Pousser `main` sur GitHub.
-6. Rendre le depot public.
-7. Copier `fly.toml.example` vers `fly.toml` et renseigner le nom Fly.io reel.
+6. Verifier que le depot public contient la meme version stable.
+7. Deployer avec Fly.io.
 8. Tester le lien GitHub sans session connectee.
 
 Le jury doit voir la meme version sur GitHub et sur l'application deployee.
@@ -93,7 +101,7 @@ APP_ENV=production
 APP_DEBUG=false
 APP_DISPLAY_ERRORS=false
 APP_LOG_ERRORS=true
-APP_URL=<URL publique>
+APP_URL=https://vite-gourmand-ecf-jmf.fly.dev
 APP_KEY=<cle secrete unique>
 
 SESSION_SECURE=true
@@ -101,14 +109,14 @@ SESSION_HTTP_ONLY=true
 SESSION_SAME_SITE=Lax
 
 DB_CONNECTION=mysql
-DB_HOST=<hote SQL>
+DB_HOST=vite-gourmand-ecf-jmf-mysql.internal
 DB_PORT=3306
 DB_NAME=vite_gourmand
-DB_USER=<utilisateur SQL>
-DB_PASSWORD=<mot de passe SQL>
+DB_USER=vite_gourmand
+DB_PASSWORD=<secret Fly.io>
 
 NOSQL_CONNECTION=mongodb
-NOSQL_HOST=<hote MongoDB>
+NOSQL_HOST=vite-gourmand-ecf-jmf-mongo.internal
 NOSQL_PORT=27017
 NOSQL_DATABASE=vite_gourmand
 
@@ -126,7 +134,8 @@ Important : le fichier `.env` ne doit jamais etre commite.
 
 ## Installation du code
 
-Sur l'environnement de production ou de preproduction :
+Le deploiement Fly.io construit l'image depuis le depot et le `Dockerfile`.
+Pour une installation manuelle equivalente :
 
 ```bash
 git clone https://github.com/elscribe/Github-vite-et-gourmand.git
@@ -136,7 +145,8 @@ composer install --no-dev --optimize-autoloader
 cp .env.example .env
 ```
 
-Ensuite, renseigner les variables reelles dans `.env`.
+En production Fly.io, les valeurs sensibles sont gerees par les secrets Fly.io
+plutot que par un fichier `.env` versionne.
 
 ## Configuration du serveur web
 
@@ -231,39 +241,39 @@ Comptes de demonstration :
 
 | Verification | Statut |
 |---|---|
-| Branche `main` a jour avec la version stable. | A faire avant deploiement. |
-| Depot GitHub public. | A faire avant rendu. |
+| Branche `main` a jour avec la version stable. | A verifier apres fusion finale. |
+| Depot GitHub public. | Public au 23/07/2026. |
 | Dockerfile de production present. | Pret. |
-| Modele Fly.io present. | Pret avec `fly.toml.example`. |
-| `fly.toml` cree avec le vrai nom d'application Fly.io. | A faire au moment du deploiement. |
-| URL publique renseignee dans README. | A faire apres deploiement. |
-| URL publique renseignee dans Notion. | A faire apres deploiement. |
-| URL publique testee sans session connectee. | A faire apres deploiement. |
-| Base SQL initialisee. | A faire sur l'hebergeur. |
-| MongoDB initialise et seedable. | A faire sur l'hebergeur. |
-| Variables `.env` production renseignees. | A faire sur l'hebergeur. |
-| Identifiants demo testes en production. | A faire apres deploiement. |
-| Copie Studi completee avec GitHub, Notion, URL et admin. | A faire en dernier. |
+| Configuration Fly.io presente. | `fly.toml`, `fly.mysql.toml`, `fly.mongo.toml`. |
+| `fly.toml` cree avec le vrai nom d'application Fly.io. | Pret. |
+| URL publique renseignee dans README. | Pret. |
+| URL publique renseignee dans Notion. | A verifier apres mise a jour Notion. |
+| URL publique testee sans session connectee. | OK au 23/07/2026. |
+| Base SQL initialisee. | OK sur le service Fly.io MySQL. |
+| MongoDB initialise et seedable. | OK sur le service Fly.io MongoDB. |
+| Variables de production renseignees. | Variables et secrets Fly.io en place. |
+| Identifiants demo testes en production. | OK au 23/07/2026. |
+| Copie Studi completee avec GitHub, Notion, URL et admin. | A verifier avant depot. |
 
-## Informations finales a renseigner
+## Informations finales
 
 ```text
-Hebergeur retenu :
-Mode de deploiement :
-URL publique :
-Date de deploiement :
-Branche / commit deploye :
-Base SQL :
-Base MongoDB :
-Mode email :
-Compte admin teste :
-Resultat recette production :
+Hebergeur retenu : Fly.io
+Mode de deploiement : Docker
+URL publique : https://vite-gourmand-ecf-jmf.fly.dev
+Date de verification : 23 juillet 2026
+Branche de reference : main
+Base SQL : vite-gourmand-ecf-jmf-mysql
+Base MongoDB : vite-gourmand-ecf-jmf-mongo
+Mode email : log
+Compte admin teste : admin.jose@vitegourmand.test
+Resultat recette production : parcours publics, client, employe, admin et statistiques MongoDB OK
 ```
 
 ## Phrase pour le jury
 
-L'application est prevue pour etre deployee sur Fly.io via Docker depuis la
-branche stable `main`. Le conteneur lance PHP 8.3 avec Apache sur le dossier
-`public/`, les secrets sont stockes dans les variables d'environnement, la base SQL est
+L'application est deployee sur Fly.io via Docker depuis la branche stable
+`main`. Le conteneur lance PHP 8.3 avec Apache sur le dossier `public/`, les
+secrets sont stockes dans les variables d'environnement Fly.io, la base SQL est
 initialisee par scripts, MongoDB fournit les statistiques et les parcours
-public, client, employe et administrateur seront testes apres deploiement.
+public, client, employe et administrateur ont ete verifies sur l'URL publique.

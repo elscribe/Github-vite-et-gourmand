@@ -13,6 +13,7 @@ dossier `Maquettes/export pdf/`.
 | `mockups/README.md` | Reference les 6 maquettes haute fidelite. |
 | `graphic-charter/README.md` | Reference la charte graphique PDF. |
 | `final-deliverables.md` | Centralise les liens, comptes de demonstration et controles finaux. |
+| `checklist-rendu-final-2026-07-23.md` | Liste finale des controles avant depot Studi. |
 
 ## Controle final
 

@@ -86,5 +86,5 @@ personnelles des clients.
 |---|---|---|
 | Pas de double authentification | Non imposee dans le perimetre ECF. | Ajouter MFA pour les administrateurs. |
 | Pas de scan OWASP ZAP automatise | Recette manuelle privilegiee pour l'ECF. | Ajouter un scan avant mise en production. |
-| SMTP reel non configure localement | Depend de l'hebergeur. | Brancher SMTP apres deploiement. |
+| SMTP reel non branche | Le MVP conserve les preuves via le mode log. | Brancher SMTP ou un service transactionnel. |
 | Audit RGAA expert non realise | L'ECF documente une recette interne, pas une certification exhaustive. | Refaire clavier, contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee. |

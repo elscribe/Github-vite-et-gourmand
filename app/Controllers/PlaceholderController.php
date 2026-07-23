@@ -101,7 +101,7 @@ final class PlaceholderController extends BaseController
                 '12 rue des Vignes, 33000 Bordeaux',
                 'contact@viteetgourmand.fr',
                 'Responsable de publication : Julie Martin',
-                'Hébergement : information à compléter au moment de la mise en production.',
+                'Hébergement : Fly.io, application publiée à l’adresse https://vite-gourmand-ecf-jmf.fly.dev.',
                 'Données personnelles : les informations collectées servent uniquement à la gestion des commandes, des contacts et des avis clients.',
             ]
         );

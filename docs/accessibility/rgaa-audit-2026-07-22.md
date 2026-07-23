@@ -130,13 +130,13 @@ Interpretation :
 | Thematique | Etat | Preuve locale | Reserve |
 |---|---|---|---|
 | Images | Conforme sur echantillon | `missing_alt_total=0`; images decoratives avec `alt=""`, images informatives avec alt. | Pertinence fine des textes alternatifs a relire visuellement. |
-| Cadres | Non applicable observe | Aucun iframe detecte dans l'echantillon. | Recontroler si un service tiers est ajoute au deploiement. |
+| Cadres | Non applicable observe | Aucun iframe detecte dans l'echantillon. | Recontroler si un service tiers est ajoute. |
 | Couleurs | Partiel | Focus visible, information importante souvent doublee par texte. | Contrastes non mesures avec un outil dedie ; passe manuelle a faire. |
 | Multimedia | Non applicable observe | Pas de video/audio dans l'echantillon. | Recontroler si media ajoute. |
 | Tableaux | Conforme sur echantillon apres correction | `tables_without_th=0`, `tables_without_caption=0`. | Les tableaux complexes doivent etre retestes si colonnes ajoutees. |
 | Liens | Conforme sur echantillon | `links_missing_names_total=0`. | Pertinence contextuelle des libelles a verifier manuellement. |
 | Scripts | Partiel solide | `aria-controls` valides, boutons nommes, `aria-expanded` present sur menus/overlays. | Tests clavier complets des overlays a faire sur navigateur. |
-| Elements obligatoires | Conforme sur echantillon | `lang="fr"`, `<title>`, un H1 par page. | Verifier la future page de declaration d'accessibilite apres deploiement. |
+| Elements obligatoires | Conforme sur echantillon | `lang="fr"`, `<title>`, un H1 par page. | Une declaration d'accessibilite officielle n'est pas fournie dans le MVP. |
 | Structuration | Conforme sur echantillon | Sections, titres, nav/aside/main ; un H1 par page. | Ordre des titres a verifier visuellement page par page si contenu evolue. |
 | Presentation | Partiel | Responsive deja teste dans les audits de pages ; captions et skip-link ajoutes. | Zoom 200 %, reflow et contrastes a tester manuellement. |
 | Formulaires | Conforme sur echantillon | `controls_missing_labels_total=0`; erreurs de formulaire liees aux champs sur les vues principales. | Valider au clavier les erreurs dynamiques et focus apres soumission. |
@@ -145,8 +145,8 @@ Interpretation :
 
 ## Tests manuels a faire avant rendu
 
-Ces tests restent a realiser sur l'URL deployee, idealement dans Chrome ou
-Firefox :
+Ces tests sont les derniers controles manuels conseilles sur l'URL deployee,
+idealement dans Chrome ou Firefox :
 
 1. Navigation clavier complete :
    - `Tab` et `Shift+Tab` sur pages publiques, commande, employe, admin ;
@@ -187,6 +187,6 @@ hors perimetre de l'ECF ; les tests clavier, contrastes et lecteur d'ecran sont
 identifies comme passe finale avant livraison.
 ```
 
-Si une page de declaration d'accessibilite est ajoutee apres deploiement, elle
-devra s'appuyer sur l'audit final de l'URL publique et ne pas reprendre tel quel
-ce document local comme une declaration officielle.
+Si une page de declaration d'accessibilite est ajoutee plus tard, elle devra
+s'appuyer sur un audit officiel de l'URL publique et ne pas reprendre tel quel
+ce document local comme une declaration reglementaire.

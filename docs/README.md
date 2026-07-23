@@ -10,7 +10,6 @@ manuel utilisateur pour le jury.
 
 - [Structure projet](project-structure.md)
 - [Depot Git](repository.md)
-- [Rapport de socle technique](sprint-0-report.md)
 - [Suivi UX/UI](design.md)
 - [Base de donnees](database/README.md)
 - [Gestion de projet](project-management/README.md)
@@ -20,3 +19,4 @@ manuel utilisateur pour le jury.
 - [Livrables ECF](deliverables/README.md)
 - [Recherche anglophone](project-management/recherche-anglophone.md)
 - [Livrables finaux](deliverables/final-deliverables.md)
+- [Checklist finale de rendu](deliverables/checklist-rendu-final-2026-07-23.md)

@@ -1,7 +1,7 @@
 # Etat du projet
 
-Date de mise a jour : 22 juillet 2026.
-Branche d'integration : `develop`.
+Date de mise a jour : 23 juillet 2026.
+Branche finale : `main` apres fusion de `develop`.
 
 ## Synthese
 
@@ -10,14 +10,15 @@ bordelais. Le MVP local couvre les parcours visiteur, client, employe et
 administrateur, avec une base SQL comme source de verite metier et MongoDB pour
 les agregats statistiques du tableau de bord.
 
-Le projet est en phase de finalisation avant fusion vers `main` :
+Le projet est en phase de cloture de rendu :
 
-- code applicatif principal integre sur `develop` ;
+- code applicatif principal integre et pret a etre presente sur `main` ;
 - audits par pages de l'enonce documentes dans `docs/project-management/` ;
 - livrables techniques consolides dans `docs/` ;
-- preparation Docker/Fly.io disponible ;
-- deploiement public non encore effectue ;
-- URL finale, depot public et copie Studi a completer apres tests.
+- deploiement Docker/Fly.io operationnel ;
+- URL publique : <https://vite-gourmand-ecf-jmf.fly.dev> ;
+- depot GitHub public : <https://github.com/elscribe/Github-vite-et-gourmand> ;
+- copie Studi et liens jury a verifier une derniere fois avant depot.
 
 ## Perimetre fonctionnel
 
@@ -123,19 +124,19 @@ Etat actuel :
 
 - Dockerfile de production present.
 - Configuration Apache du conteneur dans `docker/apache-vhost.conf`.
-- Exemple Fly.io present dans `fly.toml.example`.
-- Variables a renseigner via `.env` ou secrets Fly.io.
-- URL publique non encore renseignee.
+- Configuration Fly.io presente dans `fly.toml`.
+- Secrets Fly.io utilises pour les valeurs sensibles.
+- URL publique : <https://vite-gourmand-ecf-jmf.fly.dev>.
+- Services SQL et MongoDB demarres sur Fly.io.
 
-Avant rendu final :
+Avant depot final :
 
-1. Tester `develop` localement.
-2. Fusionner `develop` vers `main` uniquement apres validation.
-3. Pousser `main`.
-4. Rendre le depot GitHub public.
-5. Deployer sur Fly.io.
-6. Renseigner l'URL publique dans README, Notion et copie Studi.
-7. Rejouer la recette sur l'URL publique.
+1. Fusionner `develop` vers `main`.
+2. Pousser `main`.
+3. Verifier GitHub en navigation non connectee.
+4. Verifier Notion et Figma en navigation non connectee.
+5. Verifier l'application Fly.io et les comptes de demonstration.
+6. Renseigner la copie Studi definitive.
 
 ## Tests et controles
 
@@ -149,10 +150,10 @@ Controles disponibles :
 
 Points restants :
 
-- Test final complet sur `develop`.
-- Test final sur l'URL deployee.
-- Audit RGAA complet si une declaration d'accessibilite forte est ajoutee.
-- Verification des liens publics GitHub, Figma, Notion et application.
+- derniere verification des liens publics GitHub, Figma, Notion et application ;
+- passe accessibilite finale sur l'URL deployee ;
+- copie Studi finale a controler avant depot ;
+- exports UX/UI PDF a joindre au rendu.
 
 ## Decisions defendables a l'oral
 
@@ -168,8 +169,6 @@ Points restants :
 
 ## Risques restants
 
-- Deploiement public non encore realise.
-- Depot GitHub encore a rendre public avant transmission.
 - Tests automatises applicatifs limites.
 - Configuration SMTP production non branchee.
-- URL finale et identifiants de demo a verifier une derniere fois avant rendu.
+- Liens publics et identifiants de demo a verifier une derniere fois avant rendu.

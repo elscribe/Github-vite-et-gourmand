@@ -1,6 +1,6 @@
 # Documentation securite et veille
 
-Date de consolidation : 21 juillet 2026.
+Date de consolidation : 23 juillet 2026.
 
 Ce document presente les mesures de securite mises en place dans l'application
 Vite & Gourmand et la veille securite retenue pour justifier les choix devant
@@ -33,7 +33,7 @@ de securite visent donc a :
 | XSS | Echappement des sorties dynamiques. | `Security::escape`, `htmlspecialchars`. |
 | Erreurs techniques exposees | Variables `.env` pour separer local/production. | `APP_DEBUG`, `APP_DISPLAY_ERRORS`, `APP_LOG_ERRORS`. |
 | Secrets versionnes | `.env` exclu, `.env.example` documente les variables. | `.gitignore`, `.env.example`. |
-| Email reel indisponible localement | Mode mail `log` en developpement, SMTP prevu en production. | `MailService`, `storage/logs/mail.log`, `MAIL_*`. |
+| Email reel non branche pour le MVP | Mode mail `log` retenu pour le rendu ECF, SMTP possible ensuite. | `MailService`, `storage/logs/mail.log`, `MAIL_*`. |
 
 ## Controle des acces par role
 
@@ -166,8 +166,8 @@ Une recette accessibilite RGAA interne est documentee dans
 echantillon representatif : langue, titres, labels, textes alternatifs,
 captions de tableaux, focus, lien d'evitement et reduction de mouvement.
 
-Reserve restante : la passe finale sur l'URL deployee doit encore verifier
-clavier, contrastes, zoom/reflow et lecteur d'ecran.
+Controle final conseille avant depot : refaire un passage rapide clavier,
+contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee.
 
 ## Veille securite
 
@@ -210,7 +210,7 @@ clavier, contrastes, zoom/reflow et lecteur d'ecran.
 | Limite | Justification | Evolution possible |
 |---|---|---|
 | Pas de MFA | Non demande dans le MVP ECF. | Ajouter une double authentification admin. |
-| Email SMTP non finalise localement | Depend du deploiement. | Brancher SMTP ou service transactionnel. |
+| Email SMTP non branche | Le MVP conserve les preuves en mode log. | Brancher SMTP ou service transactionnel. |
 | Pas de tests automatises de securite | Perimetre ECF centre sur recette manuelle. | Ajouter tests integration et scans OWASP ZAP. |
 | Audit RGAA expert non realise | Une recette interne est documentee, mais pas un audit exhaustif des 106 criteres. | Refaire clavier, contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee. |
 
