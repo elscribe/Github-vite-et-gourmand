@@ -9,6 +9,7 @@
     --color-primary: #722f37;
     --color-primary-dark: #4a1c23;
     --color-accent: #d8a84e;
+    --color-accent-text: #8a641e;
     --color-background: #f9f9f9;
     --color-warm: #fffdf8;
     --color-surface: #ffffff;
@@ -318,7 +319,7 @@ body.mobile-menu-open {
 
 .section-kicker {
     margin: 0 0 10px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -526,7 +527,7 @@ h3 {
 }
 
 .review-rating {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-weight: 700;
     letter-spacing: 0;
 }
@@ -1868,7 +1869,7 @@ h3 {
     background: var(--color-background);
     border: 1px solid var(--color-accent);
     border-radius: 100px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1943,7 +1944,7 @@ h3 {
 }
 
 .home-menu-price-row strong {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-family: "Playfair Display", Georgia, "Times New Roman", serif;
     font-size: 2rem;
     line-height: 1;
@@ -1953,7 +1954,7 @@ h3 {
     padding: 4px 10px;
     background: rgba(216, 168, 78, 0.1);
     border-radius: 4px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 600;
@@ -2152,7 +2153,7 @@ h3 {
     padding: 4px 10px;
     border: 1px solid var(--color-accent);
     border-radius: 100px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.68rem;
     font-weight: 600;
     line-height: 1;
@@ -2546,7 +2547,7 @@ body.filter-overlay-open {
     padding: 0 14px;
     border-radius: 999px;
     background: #fffaf0;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.68rem;
     font-weight: 800;
     line-height: 1;
@@ -2586,7 +2587,7 @@ body.filter-overlay-open {
 }
 
 .menu-card-people i {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.95rem;
 }
 
@@ -2599,7 +2600,7 @@ body.filter-overlay-open {
 
 .menu-card-price {
     margin: 0;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-family: "Playfair Display", Georgia, "Times New Roman", serif;
     font-size: 2.1rem;
     font-weight: 700;
@@ -2613,7 +2614,7 @@ body.filter-overlay-open {
     padding: 4px 10px;
     border-radius: 4px;
     background: #faeccc;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 0.65rem;
     font-weight: 700;
     line-height: 1;
@@ -3143,7 +3144,7 @@ body.image-lightbox-open {
 }
 
 .menu-detail-warning h2 i {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .menu-detail-warning ul {
@@ -3157,7 +3158,7 @@ body.image-lightbox-open {
 }
 
 .menu-detail-warning li::marker {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .menu-detail-actions {
@@ -3343,7 +3344,7 @@ body.image-lightbox-open {
 }
 
 .timeline li::marker {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .timeline span {
@@ -4150,7 +4151,7 @@ body.image-lightbox-open {
 }
 
 .client-review-prompt .client-card h2 i {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 1.05rem;
 }
 
@@ -4273,7 +4274,7 @@ body.image-lightbox-open {
 .client-stars {
     display: inline-flex;
     gap: 6px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .client-profile-grid,
@@ -4850,7 +4851,7 @@ body.image-lightbox-open {
 }
 
 .client-event-list li::marker {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .client-event-list span {
@@ -4956,7 +4957,7 @@ body.image-lightbox-open {
 }
 
 .client-rating-options label.is-selected {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .client-rating-options input:focus-visible + label {
@@ -5022,7 +5023,7 @@ body.image-lightbox-open {
     place-items: center;
     border-radius: 999px;
     background: #fff7e6;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 1.3rem;
 }
 
@@ -5061,7 +5062,7 @@ body.image-lightbox-open {
 
 .client-review-history-stars {
     margin: 18px 0 12px;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-size: 1.1rem;
 }
 
@@ -5587,7 +5588,7 @@ body.backoffice-body {
     height: 34px;
     border-radius: 10px;
     background: rgba(212, 163, 74, 0.16);
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .backoffice-notification-list span,
@@ -5886,7 +5887,7 @@ body.backoffice-body {
 }
 
 .backoffice-content .stat-card:nth-child(odd) strong {
-    color: var(--color-accent);
+    color: var(--color-accent-text);
 }
 
 .backoffice-content .admin-daily-stats {
