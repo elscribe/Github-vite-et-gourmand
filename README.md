@@ -1,131 +1,131 @@
 # Vite & Gourmand
 
-Projet ECF Studi - Developpeur Web et Web Mobile.
+Projet ECF Studi - Développeur Web et Web Mobile.
 
-Vite & Gourmand est une application web prevue pour une entreprise familiale de
-traiteur situee a Bordeaux. Le projet vise a remplacer un fonctionnement base
+Vite & Gourmand est une application web prévue pour une entreprise familiale de
+traiteur située à Bordeaux. Le projet vise à remplacer un fonctionnement basé
 sur l'envoi manuel des menus par mail par une plateforme permettant de consulter
-les menus, passer commande, suivre les commandes et piloter l'activite depuis un
+les menus, passer commande, suivre les commandes et piloter l'activité depuis un
 espace interne.
 
-## Etat Actuel
+## État Actuel
 
-Ce depot contient la version finale ECF du projet :
+Ce dépôt contient la version finale ECF du projet :
 
-- analyse fonctionnelle et gestion de projet centralisees dans Notion ;
-- modelisation Merise disponible : MCD, MLD et MPD ;
+- analyse fonctionnelle et gestion de projet centralisées dans Notion ;
+- modélisation Merise disponible : MCD, MLD et MPD ;
 - diagrammes UML disponibles en sources draw.io et exports PNG ;
-- scripts SQL de creation et d'insertion disponibles ;
-- collections MongoDB creees et alimentees pour les statistiques administrateur ;
-- documentation technique de base de donnees disponible ;
-- application PHP 8.3 MVC preparee avec Composer et autoload PSR-4 ;
+- scripts SQL de création et d'insertion disponibles ;
+- collections MongoDB créées et alimentées pour les statistiques administrateur ;
+- documentation technique de base de données disponible ;
+- application PHP 8.3 MVC préparée avec Composer et autoload PSR-4 ;
 - infrastructure technique disponible : routeur, pages 404/500,
-  session, chargement `.env`, gestion d'erreurs, helpers HTTP/securite et base
+  session, chargement `.env`, gestion d'erreurs, helpers HTTP/sécurité et base
   model ;
-- parcours MVC principaux implementes : menus, contact, authentification,
-  commandes, suivi client, espace employe, avis et statistiques admin ;
-- branches Git `main`, `develop` et `feature/*` utilisees pour le developpement ;
-- lien Figma global synchronise pour les wireframes, maquettes, composants,
+- parcours MVC principaux implémentés : menus, contact, authentification,
+  commandes, suivi client, espace employé, avis et statistiques admin ;
+- branches Git `main`, `develop` et `feature/*` utilisées pour le développement ;
+- lien Figma global synchronisé pour les wireframes, maquettes, composants,
   charte graphique et exports ;
 - fichier `.env.example` disponible pour documenter la configuration.
 
-Le code metier PHP couvre maintenant le MVP principal : consultation des menus,
-filtres, detail menu, contact, inscription, connexion, mot de passe oublie,
-commande, suivi, traitement employe, moderation des avis et dashboard admin. Le
-fichier Figma actuel contient les wireframes basse fidelite, les maquettes haute
-qualite, les composants de base, la charte graphique et une page d'exports PDF.
+Le code métier PHP couvre maintenant le MVP principal : consultation des menus,
+filtres, détail menu, contact, inscription, connexion, mot de passe oublié,
+commande, suivi, traitement employé, modération des avis et dashboard admin. Le
+fichier Figma actuel contient les wireframes basse fidélité, les maquettes haute
+qualité, les composants de base, la charte graphique et une page d'exports PDF.
 
 ## Liens De Rendu
 
-- Depot GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
+- Dépôt GitHub : <https://github.com/elscribe/Github-vite-et-gourmand>
 - Maquettes et charte graphique Figma : <https://www.figma.com/design/sMkvVuvOyBkMvlTIsq2eCY/Vite---Gourmand?m=auto&t=eaqGOcxDQGMr22Ek-6>
 - Outil de gestion de projet : <https://app.notion.com/p/3794ea958e18801aba79dc472cbe9fb7>
-- Application deployee : <https://vite-gourmand-ecf-jmf.fly.dev>
+- Application déployée : <https://vite-gourmand-ecf-jmf.fly.dev>
 
-Avant le depot Studi, les liens GitHub, Figma, Notion et application deployee
-doivent etre testes depuis une fenetre privee ou un navigateur non connecte.
+Avant le dépôt Studi, les liens GitHub, Figma, Notion et application déployée
+doivent être testés depuis une fenêtre privée ou un navigateur non connecté.
 
-## Comptes De Demonstration
+## Comptes De Démonstration
 
-| Role | Email | Mot de passe |
+| Rôle | Email | Mot de passe |
 | --- | --- | --- |
 | Client | `claire.martin@example.test` | `ClientVite2026!` |
-| Employe | `lucas.employee@vitegourmand.test` | `EmployeVite2026!` |
+| Employé | `lucas.employee@vitegourmand.test` | `EmployeVite2026!` |
 | Administrateur | `admin.jose@vitegourmand.test` | `AdminVite2026!` |
 
-Ces mots de passe sont uniquement des identifiants de demonstration. En base,
-ils sont stockes sous forme de hash bcrypt.
+Ces mots de passe sont uniquement des identifiants de démonstration. En base,
+ils sont stockés sous forme de hash bcrypt.
 
 ## Contexte ECF
 
-Le sujet demande une application web ou web mobile securisee, responsive,
-documentee, deployee et appuyee par :
+Le sujet demande une application web ou web mobile sécurisée, responsive,
+documentée, déployée et appuyée par :
 
-- une base de donnees relationnelle ;
-- une base de donnees non relationnelle ;
-- un depot GitHub public ;
+- une base de données relationnelle ;
+- une base de données non relationnelle ;
+- un dépôt GitHub public ;
 - une documentation de gestion de projet ;
 - des maquettes desktop et mobile ;
 - une charte graphique ;
 - un manuel utilisateur ;
-- une documentation de deploiement.
+- une documentation de déploiement.
 
-## Fonctionnalites Attendues
+## Fonctionnalités Attendues
 
 ### Visiteur
 
 - Consulter la page d'accueil.
-- Consulter la presentation de l'entreprise.
-- Consulter les avis clients valides.
+- Consulter la présentation de l'entreprise.
+- Consulter les avis clients validés.
 - Consulter la liste des menus.
 - Filtrer les menus sans rechargement complet de la page.
-- Consulter le detail d'un menu.
-- Acceder a la page de contact.
+- Consulter le détail d'un menu.
+- Accéder à la page de contact.
 - Envoyer un message de contact.
-- Creer un compte utilisateur.
+- Créer un compte utilisateur.
 
-### Utilisateur Connecte
+### Utilisateur Connecté
 
 - Se connecter avec un email et un mot de passe.
-- Reinitialiser son mot de passe.
+- Réinitialiser son mot de passe.
 - Commander un menu.
-- Voir le prix detaille avant validation.
+- Voir le prix détaillé avant validation.
 - Recevoir une confirmation de commande.
 - Consulter ses commandes.
 - Modifier ses informations personnelles.
-- Modifier ou annuler une commande tant qu'elle n'est pas acceptee.
-- Suivre les etats d'une commande acceptee.
-- Laisser un avis apres une commande terminee.
+- Modifier ou annuler une commande tant qu'elle n'est pas acceptée.
+- Suivre les états d'une commande acceptée.
+- Laisser un avis après une commande terminée.
 
-### Employe
+### Employé
 
 - Filtrer les commandes par statut ou par client.
-- Mettre a jour le statut d'une commande.
-- Annuler ou modifier une commande apres contact client.
+- Mettre à jour le statut d'une commande.
+- Annuler ou modifier une commande après contact client.
 - Renseigner le motif d'annulation et le mode de contact.
 - Valider ou refuser les avis clients.
 
 ### Administrateur
 
-- Acceder aux fonctionnalites employe.
-- Gerer les menus et leur composition en plats.
-- Gerer les plats et leurs allergenes.
-- Gerer les horaires.
-- Creer un compte employe.
-- Desactiver un compte employe.
+- Accéder aux fonctionnalités employé.
+- Gérer les menus et leur composition en plats.
+- Gérer les plats et leurs allergènes.
+- Gérer les horaires.
+- Créer un compte employé.
+- Désactiver un compte employé.
 - Visualiser le nombre de commandes par menu.
 - Comparer les menus avec un graphique.
 - Consulter le chiffre d'affaires par menu.
-- Filtrer les statistiques par menu et par periode.
+- Filtrer les statistiques par menu et par période.
 
-### Choix De Perimetre Des Roles
+### Choix De Périmètre Des Rôles
 
-L'enonce place la gestion des menus, des plats et des horaires dans l'espace
-employe. Dans cette implementation, ces actions sont volontairement reservees
-au role `administrateur`, car elles modifient directement le catalogue public,
-les prix, la composition des menus et les horaires affiches aux clients.
-L'espace `employe` reste centre sur le traitement operationnel : commandes,
-annulations justifiees, changements de statuts et moderation des avis.
+L'énoncé place la gestion des menus, des plats et des horaires dans l'espace
+employé. Dans cette implémentation, ces actions sont volontairement réservées
+au rôle `administrateur`, car elles modifient directement le catalogue public,
+les prix, la composition des menus et les horaires affichés aux clients.
+L'espace `employé` reste centré sur le traitement opérationnel : commandes,
+annulations justifiées, changements de statuts et modération des avis.
 
 ## Stack Technique Cible
 
@@ -136,19 +136,19 @@ annulations justifiees, changements de statuts et moderation des avis.
 | Architecture | MVC simple |
 | Autoload | Composer, PSR-4 |
 | Base relationnelle | MariaDB, compatible MySQL 8 pour les tests |
-| Base non relationnelle | MongoDB pour les agregats statistiques du dashboard administrateur |
+| Base non relationnelle | MongoDB pour les agrégats statistiques du dashboard administrateur |
 | Gestion projet | Notion |
-| Depot | GitHub |
-| Deploiement | Fly.io via Docker : <https://vite-gourmand-ecf-jmf.fly.dev> |
+| Dépôt | GitHub |
+| Déploiement | Fly.io via Docker : <https://vite-gourmand-ecf-jmf.fly.dev> |
 
-La base SQL reste la source de verite pour les donnees metier. MongoDB sert les
-agregats statistiques utilises par le tableau de bord administrateur. Le code
-lit ces agregats avec `mongosh` quand MongoDB est disponible et conserve un
+La base SQL reste la source de vérité pour les données métier. MongoDB sert les
+agrégats statistiques utilisés par le tableau de bord administrateur. Le code
+lit ces agrégats avec `mongosh` quand MongoDB est disponible et conserve un
 secours SQL local si MongoDB ou `mongosh` ne sont pas disponibles.
 
-## Organisation Du Depot
+## Organisation Du Dépôt
 
-Arborescence cible du depot :
+Arborescence cible du dépôt :
 
 ```text
 vite-gourmand/
@@ -187,47 +187,47 @@ vite-gourmand/
 └── README.md
 ```
 
-### Role Des Dossiers
+### Rôle Des Dossiers
 
-- `app/` : code PHP prive organise en MVC.
-- `app/Controllers/` : controleurs qui recoivent les actions utilisateur.
-- `app/Models/` : futures classes d'acces aux donnees SQL.
-- `app/Views/` : vues HTML affichees a l'utilisateur.
+- `app/` : code PHP privé organisé en MVC.
+- `app/Controllers/` : contrôleurs qui reçoivent les actions utilisateur.
+- `app/Models/` : futures classes d'accès aux données SQL.
+- `app/Views/` : vues HTML affichées à l'utilisateur.
 - `app/Core/` : routeur, classe de base, connexion et outils communs.
-- `app/Middlewares/` : futurs middlewares de securite et controle d'acces.
-- `app/Services/` : futurs services metier reutilisables.
-- `config/` : configuration applicative, session, routes et base de donnees.
-- `database/sql/` : scripts SQL de creation et de donnees de demonstration.
-- `database/mongodb/` : collections MongoDB alimentees pour les statistiques admin.
+- `app/Middlewares/` : futurs middlewares de sécurité et contrôle d'accès.
+- `app/Services/` : futurs services métier réutilisables.
+- `config/` : configuration applicative, session, routes et base de données.
+- `database/sql/` : scripts SQL de création et de données de démonstration.
+- `database/mongodb/` : collections MongoDB alimentées pour les statistiques admin.
 - `docs/database/` : documentation Merise, dictionnaire, choix et audits.
 - `docs/uml/` : diagrammes UML en draw.io et PNG.
-- `public/` : point d'entree web et assets publics.
-- `scripts/` : outils de generation ou maintenance de documentation.
-- `storage/` : logs et fichiers generes localement, non publics.
-- `tests/` : futurs tests automatises.
-- `docker/` : configuration Apache du conteneur de deploiement.
-- `Dockerfile` : image PHP 8.3 Apache pour le deploiement Fly.io.
-- `fly.toml` / `fly.toml.example` : configuration Fly.io et modele de reference.
+- `public/` : point d'entrée web et assets publics.
+- `scripts/` : outils de génération ou maintenance de documentation.
+- `storage/` : logs et fichiers générés localement, non publics.
+- `tests/` : futurs tests automatisés.
+- `docker/` : configuration Apache du conteneur de déploiement.
+- `Dockerfile` : image PHP 8.3 Apache pour le déploiement Fly.io.
+- `fly.toml` / `fly.toml.example` : configuration Fly.io et modèle de référence.
 
-Chaque dossier important contient un fichier `README.md` pour expliquer son role
-a un developpeur junior ou au jury.
+Chaque dossier important contient un fichier `README.md` pour expliquer son rôle
+à un développeur junior ou au jury.
 
 ## Installation Locale
 
-### Prerequis
+### Prérequis
 
 - Git.
 - PHP 8.3.
 - Composer.
 - MariaDB ou MySQL 8.
 - MongoDB et `mongosh`, pour les statistiques administrateur.
-- Docker, pour tester ou reproduire le deploiement Fly.io.
+- Docker, pour tester ou reproduire le déploiement Fly.io.
 - Navigateur web moderne.
 
-Npm n'est pas requis pour ce squelette : Bootstrap 5 est charge par CDN et le
-CSS propre au projet est ecrit dans `public/assets/css/style.css`.
+Npm n'est pas requis pour ce squelette : Bootstrap 5 est chargé par CDN et le
+CSS propre au projet est écrit dans `public/assets/css/style.css`.
 
-### Recuperer Le Projet
+### Récupérer Le Projet
 
 ```bash
 git clone https://github.com/elscribe/Github-vite-et-gourmand.git
@@ -237,7 +237,7 @@ composer install
 
 ### Configurer L'Environnement
 
-Creer un fichier `.env` local a partir du modele :
+Créer un fichier `.env` local à partir du modèle :
 
 ```bash
 cp .env.example .env
@@ -255,13 +255,13 @@ Adapter ensuite les valeurs selon l'environnement local :
 - `NOSQL_HOST`
 - `NOSQL_PORT`
 - `NOSQL_DATABASE`
-- variables mail si un service SMTP est utilise.
+- variables mail si un service SMTP est utilisé.
 
-Les secrets et mots de passe ne doivent jamais etre versionnes.
+Les secrets et mots de passe ne doivent jamais être versionnés.
 
 ### Initialiser La Base SQL
 
-Attention : `database/sql/create_database.sql` supprime et recree la base
+Attention : `database/sql/create_database.sql` supprime et recrée la base
 `vite_gourmand`.
 
 ```bash
@@ -269,7 +269,7 @@ mariadb -u root -p < database/sql/create_database.sql
 mariadb -u root -p < database/sql/seed_database.sql
 ```
 
-Equivalent possible avec MySQL 8 :
+Équivalent possible avec MySQL 8 :
 
 ```bash
 mysql -u root -p < database/sql/create_database.sql
@@ -278,7 +278,7 @@ mysql -u root -p < database/sql/seed_database.sql
 
 ### Initialiser MongoDB
 
-MongoDB sert les agregats statistiques du tableau de bord administrateur. Si
+MongoDB sert les agrégats statistiques du tableau de bord administrateur. Si
 MongoDB n'est pas disponible en local, l'application conserve un secours SQL
 pour ne pas bloquer la navigation.
 
@@ -287,7 +287,7 @@ mongosh database/mongodb/create_collections.js
 mongosh database/mongodb/seed_mongodb.js
 ```
 
-Collections statistiques prevues :
+Collections statistiques prévues :
 
 - `menu_statistics`
 - `monthly_statistics`
@@ -296,37 +296,37 @@ Collections statistiques prevues :
 
 ### Lancer L'Application
 
-Le squelette MVC peut etre lance en local avec le serveur PHP integre :
+Le squelette MVC peut être lancé en local avec le serveur PHP intégré :
 
 ```bash
 composer serve
 ```
 
-Commande equivalente sans script Composer :
+Commande équivalente sans script Composer :
 
 ```bash
 php -S localhost:8000 -t public
 ```
 
-### Verifier Le Socle Technique
+### Vérifier Le Socle Technique
 
 ```bash
 composer check
 ```
 
-Cette commande valide `composer.json` puis lance un controle de syntaxe PHP sur
+Cette commande valide `composer.json` puis lance un contrôle de syntaxe PHP sur
 `app/`, `config/` et `public/`.
 
-## Guide Developpeur
+## Guide Développeur
 
-Le depot contient le socle MVC attendu pour developper sans framework :
-autoload PSR-4, controleur frontal, routeur, middlewares, configuration
-centralisee, helpers HTTP/securite, connexion PDO et dossiers de documentation.
-La branche courante contient aussi des parcours MVP deja avances ; ils doivent
-etre conserves et stabilises progressivement sans melanger logique metier et
+Le dépôt contient le socle MVC attendu pour développer sans framework :
+autoload PSR-4, contrôleur frontal, routeur, middlewares, configuration
+centralisée, helpers HTTP/sécurité, connexion PDO et dossiers de documentation.
+La branche courante contient aussi des parcours MVP déjà avancés ; ils doivent
+être conservés et stabilisés progressivement sans mélanger logique métier et
 infrastructure.
 
-Sections principales declarees dans [config/routes.php](config/routes.php) :
+Sections principales déclarées dans [config/routes.php](config/routes.php) :
 
 - `GET /menus`
 - `GET /menus/{id}`
@@ -338,19 +338,19 @@ Sections principales declarees dans [config/routes.php](config/routes.php) :
 - `GET /admin`
 - `GET /contact`
 
-Les erreurs 404 sont gerees par le routeur via `ErrorController::notFound`.
-Les erreurs 500 sont gerees par `App\Core\ErrorHandler` et rendues par
+Les erreurs 404 sont gérées par le routeur via `ErrorController::notFound`.
+Les erreurs 500 sont gérées par `App\Core\ErrorHandler` et rendues par
 `ErrorController::serverError`.
 
-Regles de developpement :
+Règles de développement :
 
 - garder `public/` comme seul web root ;
 - ajouter les futures routes dans `config/routes.php` ;
-- garder les controleurs minces ;
-- placer les requetes SQL dans les modeles ;
-- placer la logique reutilisable dans `app/Services/` ;
+- garder les contrôleurs minces ;
+- placer les requêtes SQL dans les modèles ;
+- placer la logique réutilisable dans `app/Services/` ;
 - utiliser `App\Core\Security::escape()` ou `htmlspecialchars()` pour les sorties ;
-- proteger les futurs formulaires POST avec le token CSRF prepare ;
+- protéger les futurs formulaires POST avec le token CSRF préparé ;
 - ne jamais versionner `.env`.
 
 ## Configuration
@@ -360,46 +360,46 @@ Le fichier [.env.example](.env.example) documente les variables attendues :
 | Variable | Description |
 | --- | --- |
 | `APP_NAME` | Nom de l'application. |
-| `APP_ENV` | Environnement d'execution. |
+| `APP_ENV` | Environnement d'exécution. |
 | `APP_DEBUG` | Activation du debug en local. |
-| `APP_DISPLAY_ERRORS` | Affichage des erreurs en developpement. |
+| `APP_DISPLAY_ERRORS` | Affichage des erreurs en développement. |
 | `APP_LOG_ERRORS` | Journalisation des erreurs PHP. |
 | `APP_LOG_PATH` | Chemin du fichier de logs applicatif. |
 | `APP_TIMEZONE` | Fuseau horaire applicatif. |
 | `APP_URL` | URL locale ou publique de l'application. |
-| `APP_KEY` | Cle applicative a remplacer en local. |
+| `APP_KEY` | Clé applicative à remplacer en local. |
 | `PASSWORD_MIN_LENGTH` | Longueur minimale du mot de passe. |
 | `SESSION_NAME` | Nom de la session PHP. |
-| `SESSION_LIFETIME_MINUTES` | Duree de vie prevue de la session. |
-| `SESSION_SECURE` | Cookie de session limite au HTTPS en production. |
+| `SESSION_LIFETIME_MINUTES` | Durée de vie prévue de la session. |
+| `SESSION_SECURE` | Cookie de session limité au HTTPS en production. |
 | `SESSION_HTTP_ONLY` | Cookie de session inaccessible en JavaScript. |
 | `SESSION_SAME_SITE` | Politique SameSite du cookie de session. |
 | `DB_CONNECTION` | Type de connexion SQL. |
-| `DB_HOST` | Hote SQL. |
+| `DB_HOST` | Hôte SQL. |
 | `DB_PORT` | Port SQL. |
 | `DB_NAME` | Nom de la base SQL. |
 | `DB_USER` | Utilisateur SQL. |
 | `DB_PASSWORD` | Mot de passe SQL. |
 | `NOSQL_CONNECTION` | Type de connexion NoSQL. |
-| `NOSQL_HOST` | Hote MongoDB. |
+| `NOSQL_HOST` | Hôte MongoDB. |
 | `NOSQL_PORT` | Port MongoDB. |
 | `NOSQL_DATABASE` | Base MongoDB des statistiques. |
-| `MAIL_MAILER` | Strategie d'envoi des emails. |
-| `MAIL_HOST` | Hote SMTP si necessaire. |
-| `MAIL_PORT` | Port SMTP si necessaire. |
-| `MAIL_USERNAME` | Identifiant mail si necessaire. |
-| `MAIL_PASSWORD` | Mot de passe mail si necessaire. |
-| `MAIL_FROM_ADDRESS` | Adresse d'expedition. |
-| `MAIL_FROM_NAME` | Nom d'expedition. |
+| `MAIL_MAILER` | Stratégie d'envoi des emails. |
+| `MAIL_HOST` | Hôte SMTP si nécessaire. |
+| `MAIL_PORT` | Port SMTP si nécessaire. |
+| `MAIL_USERNAME` | Identifiant mail si nécessaire. |
+| `MAIL_PASSWORD` | Mot de passe mail si nécessaire. |
+| `MAIL_FROM_ADDRESS` | Adresse d'expédition. |
+| `MAIL_FROM_NAME` | Nom d'expédition. |
 | `MAIL_CONTACT_TO` | Adresse recevant les demandes du formulaire contact. |
-| `STORE_CITY` | Ville de reference pour la livraison. |
+| `STORE_CITY` | Ville de référence pour la livraison. |
 | `DELIVERY_BASE_FEE` | Frais fixes hors Bordeaux. |
-| `DELIVERY_PRICE_PER_KM` | Prix par kilometre hors Bordeaux. |
-| `DELIVERY_DISTANCE_PROVIDER` | Methode prevue pour la distance. |
+| `DELIVERY_PRICE_PER_KM` | Prix par kilomètre hors Bordeaux. |
+| `DELIVERY_DISTANCE_PROVIDER` | Méthode prévue pour la distance. |
 
-## Base De Donnees
+## Base De Données
 
-La base SQL cible s'appelle `vite_gourmand`. Le script de creation contient 16
+La base SQL cible s'appelle `vite_gourmand`. Le script de création contient 16
 tables :
 
 - `roles`
@@ -419,19 +419,19 @@ tables :
 - `contact_messages`
 - `password_resets`
 
-Le seed SQL contient des donnees de demonstration pour tester les roles, menus,
+Le seed SQL contient des données de démonstration pour tester les rôles, menus,
 plats, commandes, historiques, avis, horaires, messages de contact et resets de
 mot de passe.
 
 ## Documentation Disponible
 
-### Base De Donnees
+### Base De Données
 
-- [Documentation base de donnees](docs/database/README.md)
-- [Regles metier et cardinalites](database/business-rules.md)
-- [Dictionnaire de donnees](docs/database/data-dictionary.md)
-- [Choix techniques base de donnees](docs/database/database-choices.md)
-- [Rapport d'audit de coherence](docs/database/audit-report.md)
+- [Documentation base de données](docs/database/README.md)
+- [Règles métier et cardinalités](database/business-rules.md)
+- [Dictionnaire de données](docs/database/data-dictionary.md)
+- [Choix techniques base de données](docs/database/database-choices.md)
+- [Rapport d'audit de cohérence](docs/database/audit-report.md)
 - [Audit des scripts SQL et MongoDB](docs/database/scripts-audit.md)
 
 ### Merise
@@ -444,11 +444,11 @@ mot de passe.
 
 - [Cas d'utilisation](docs/uml/use-case-diagram.drawio) / [PNG](docs/uml/use-case-diagram.png)
 - [Diagramme de classes](docs/uml/class-diagram.drawio) / [PNG](docs/uml/class-diagram.png)
-- [Sequence authentification](docs/uml/sequence-authentication.drawio) / [PNG](docs/uml/sequence-authentication.png)
-- [Sequence consultation et commande](docs/uml/sequence-consultation-commande.drawio) / [PNG](docs/uml/sequence-consultation-commande.png)
-- [Sequence gestion commande employe](docs/uml/sequence-gestion-commande-employe.drawio) / [PNG](docs/uml/sequence-gestion-commande-employe.png)
-- [Sequence gestion avis](docs/uml/sequence-gestion-avis.drawio) / [PNG](docs/uml/sequence-gestion-avis.png)
-- [Sequence dashboard administrateur MongoDB](docs/uml/sequence-dashboard-admin-mongodb.drawio) / [PNG](docs/uml/sequence-dashboard-admin-mongodb.png)
+- [Séquence authentification](docs/uml/sequence-authentication.drawio) / [PNG](docs/uml/sequence-authentication.png)
+- [Séquence consultation et commande](docs/uml/sequence-consultation-commande.drawio) / [PNG](docs/uml/sequence-consultation-commande.png)
+- [Séquence gestion commande employé](docs/uml/sequence-gestion-commande-employe.drawio) / [PNG](docs/uml/sequence-gestion-commande-employe.png)
+- [Séquence gestion avis](docs/uml/sequence-gestion-avis.drawio) / [PNG](docs/uml/sequence-gestion-avis.png)
+- [Séquence dashboard administrateur MongoDB](docs/uml/sequence-dashboard-admin-mongodb.drawio) / [PNG](docs/uml/sequence-dashboard-admin-mongodb.png)
 
 ### UX/UI
 
@@ -457,23 +457,23 @@ mot de passe.
 
 ### Scripts
 
-- [Creation SQL complete](database/sql/create_database.sql)
-- [Donnees SQL de demonstration](database/sql/seed_database.sql)
+- [Création SQL complète](database/sql/create_database.sql)
+- [Données SQL de démonstration](database/sql/seed_database.sql)
 - [Collections MongoDB](database/mongodb/collections.md)
 - [Documents d'exemple MongoDB](database/mongodb/sample-data.json)
-- [Creation collections MongoDB](database/mongodb/create_collections.js)
+- [Création collections MongoDB](database/mongodb/create_collections.js)
 - [Seed MongoDB](database/mongodb/seed_mongodb.js)
-- [Generation documentation BDD](scripts/generate_database_docs.py)
-- [Organisation du depot GitHub](docs/repository.md)
+- [Génération documentation BDD](scripts/generate_database_docs.py)
+- [Organisation du dépôt GitHub](docs/repository.md)
 
 ### Documentation De Recette Et Rendu
 
 - [Gestion de projet](docs/project-management/README.md)
-- [Documentation de deploiement](docs/deployment/README.md)
+- [Documentation de déploiement](docs/deployment/README.md)
 - [Manuel utilisateur](docs/manual/README.md)
-- [Documentation securite](docs/security/README.md)
-- [Accessibilite : bases et reserve RGAA](docs/security/README.md#accessibilite-et-securite-des-formulaires)
-- [Veille securite](docs/security/security-watch.md)
+- [Documentation sécurité](docs/security/README.md)
+- [Accessibilité : bases et réserve RGAA](docs/security/README.md#accessibilite-et-securite-des-formulaires)
+- [Veille sécurité](docs/security/security-watch.md)
 - [Recherche anglophone](docs/project-management/recherche-anglophone.md)
 - [Matrice finale de recette](docs/manual/final-user-story-test-matrix.md)
 - [Livrables finaux](docs/deliverables/final-deliverables.md)
@@ -481,107 +481,107 @@ mot de passe.
 - [Mockups](docs/deliverables/mockups/README.md)
 - [Charte graphique](docs/deliverables/graphic-charter/README.md)
 
-## Securite Mise En Place
+## Sécurité Mise En Place
 
-Les mecanismes suivants sont implementes ou documentes :
+Les mécanismes suivants sont implémentés ou documentés :
 
-- mots de passe haches avec `password_hash` ;
-- verification des mots de passe avec `password_verify` ;
-- requetes preparees PDO ;
+- mots de passe hachés avec `password_hash` ;
+- vérification des mots de passe avec `password_verify` ;
+- requêtes préparées PDO ;
 - validation serveur des formulaires ;
 - validation client pour l'ergonomie ;
-- protection des routes selon les roles avec middlewares ;
+- protection des routes selon les rôles avec middlewares ;
 - gestion des sessions ;
 - protection CSRF sur les actions sensibles ;
-- echappement des donnees affichees pour limiter le risque XSS ;
+- échappement des données affichées pour limiter le risque XSS ;
 - messages d'erreur non techniques ;
-- fichier `.env` non versionne ;
-- collecte limitee des donnees personnelles utiles au parcours de commande.
+- fichier `.env` non versionné ;
+- collecte limitée des données personnelles utiles au parcours de commande.
 
-La documentation detaillee se trouve dans
+La documentation détaillée se trouve dans
 [docs/security/README.md](docs/security/README.md).
 
-## Qualite Et Tests
+## Qualité Et Tests
 
-Les controles disponibles sont :
+Les contrôles disponibles sont :
 
 - `composer check` pour valider Composer et la syntaxe PHP ;
-- recette manuelle par role dans [docs/manual/mvp-test-checklist.md](docs/manual/mvp-test-checklist.md) ;
+- recette manuelle par rôle dans [docs/manual/mvp-test-checklist.md](docs/manual/mvp-test-checklist.md) ;
 - matrice finale US / Figma / route / test / preuve dans [docs/manual/final-user-story-test-matrix.md](docs/manual/final-user-story-test-matrix.md) ;
-- rapport d'implementation des user stories dans [docs/project-management/user-story-implementation-report.md](docs/project-management/user-story-implementation-report.md) ;
-- journal des problemes et solutions dans [docs/project-management/user-story-debug-log.md](docs/project-management/user-story-debug-log.md).
+- rapport d'implémentation des user stories dans [docs/project-management/user-story-implementation-report.md](docs/project-management/user-story-implementation-report.md) ;
+- journal des problèmes et solutions dans [docs/project-management/user-story-debug-log.md](docs/project-management/user-story-debug-log.md).
 
 Parcours couverts localement :
 
-- parcours visiteur, client, employe et administrateur ;
-- calcul du prix, de la reduction et des frais de livraison ;
-- droits d'acces par role ;
+- parcours visiteur, client, employé et administrateur ;
+- calcul du prix, de la réduction et des frais de livraison ;
+- droits d'accès par rôle ;
 - transitions de statuts de commande ;
 - formulaires et messages d'erreur ;
-- accessibilite : navigation clavier, contrastes, labels, textes alternatifs ;
-- audit accessibilite RGAA interne sur un echantillon representatif ;
-- dashboard administrateur alimente par MongoDB.
+- accessibilité : navigation clavier, contrastes, labels, textes alternatifs ;
+- audit accessibilité RGAA interne sur un échantillon représentatif ;
+- dashboard administrateur alimenté par MongoDB.
 
-Les tests automatises applicatifs restent une amelioration future. La priorite
-ECF est la recette manuelle documentee et reproductible.
+Les tests automatisés applicatifs restent une amélioration future. La priorité
+ECF est la recette manuelle documentée et reproductible.
 
 ## Roadmap
 
-### Termine
+### Terminé
 
 - [x] Analyse du besoin dans Notion.
 - [x] Cahier des charges dans Notion.
 - [x] Backlog, user stories et priorisation MVP dans Notion.
-- [x] Methode de gestion hybride documentee dans Notion.
-- [x] Architecture MVC cible documentee.
+- [x] Méthode de gestion hybride documentée dans Notion.
+- [x] Architecture MVC cible documentée.
 - [x] MCD, MLD et MPD.
 - [x] Diagrammes UML principaux.
-- [x] Scripts SQL de creation et d'insertion.
-- [x] Scripts MongoDB de creation et d'insertion.
-- [x] Audit de coherence Merise / SQL / MongoDB / UML.
-- [x] Lien Figma global synchronise.
+- [x] Scripts SQL de création et d'insertion.
+- [x] Scripts MongoDB de création et d'insertion.
+- [x] Audit de cohérence Merise / SQL / MongoDB / UML.
+- [x] Lien Figma global synchronisé.
 - [x] Fichier `.env.example`.
 
-### Finalise Pour Le Rendu
+### Finalisé Pour Le Rendu
 
 - [x] Export final des maquettes desktop/mobile et de la charte graphique.
-- [x] Implementation du MVP PHP MVC local.
-- [x] Documentation securite.
-- [x] Preparation Docker/Fly.io.
-- [x] Deploiement public Fly.io.
-- [x] Audit accessibilite RGAA interne.
+- [x] Implémentation du MVP PHP MVC local.
+- [x] Documentation sécurité.
+- [x] Préparation Docker/Fly.io.
+- [x] Déploiement public Fly.io.
+- [x] Audit accessibilité RGAA interne.
 - [ ] Audit RGAA complet final.
 - [x] Recherche anglophone.
 - [x] Matrice finale de recette.
 - [x] Manuel utilisateur Markdown.
-- [x] Documentation de deploiement avec URL reelle.
+- [x] Documentation de déploiement avec URL réelle.
 - [x] Manuel utilisateur PDF.
 - [x] Livrables finaux locaux.
-- [x] Tests principaux sur URL deployee.
+- [x] Tests principaux sur URL déployée.
 
-### Ameliorations Futures
+### Améliorations Futures
 
-- [ ] Ajouter des tests automatises.
-- [ ] Ajouter des captures d'ecran de l'application.
-- [ ] Ajouter une strategie RGPD detaillee.
+- [ ] Ajouter des tests automatisés.
+- [ ] Ajouter des captures d'écran de l'application.
+- [ ] Ajouter une stratégie RGPD détaillée.
 - [ ] Ajouter une documentation de maintenance.
 
 ## Suivi Git
 
 Le README ne liste pas les derniers commits, car cette information devient vite
-obsolete. L'historique complet est consultable directement dans GitHub via
+obsolète. L'historique complet est consultable directement dans GitHub via
 l'onglet des commits.
 
-Regles retenues :
+Règles retenues :
 
-- `main` : branche stable et presentable pour le rendu ;
-- `develop` : branche d'integration du developpement ;
-- `feature/*` : branches de travail par grande fonctionnalite ;
+- `main` : branche stable et présentable pour le rendu ;
+- `develop` : branche d'intégration du développement ;
+- `feature/*` : branches de travail par grande fonctionnalité ;
 - commits courts et explicites ;
-- `.env` et fichiers contenant des secrets exclus du depot ;
+- `.env` et fichiers contenant des secrets exclus du dépôt ;
 - fichiers temporaires, caches et parasites exclus via `.gitignore`.
 
-Branches initialisees pour la suite du projet :
+Branches initialisées pour la suite du projet :
 
 - `feature/setup-mvc` ;
 - `feature/authentication` ;
@@ -591,41 +591,41 @@ Branches initialisees pour la suite du projet :
 - `feature/admin-dashboard` ;
 - `feature/final-documentation`.
 
-Workflow prevu : les fonctionnalites partent de `develop`, sont fusionnees dans
-`develop` apres verification, puis `develop` est fusionnee dans `main` quand une
-version stable est prete pour presentation.
+Workflow prévu : les fonctionnalités partent de `develop`, sont fusionnées dans
+`develop` après vérification, puis `develop` est fusionnée dans `main` quand une
+version stable est prête pour présentation.
 
-## Verification Finale Avant Depot Studi
+## Vérification Finale Avant Dépôt Studi
 
-- Verifier l'acces public au depot GitHub.
-- Verifier l'acces public au fichier Figma.
-- Verifier le lien Notion partage au jury.
-- Verifier l'application deployee : <https://vite-gourmand-ecf-jmf.fly.dev>.
-- Verifier les identifiants administrateur de demonstration.
-- Verifier les informations candidat dans la copie finale Studi.
+- Vérifier l'accès public au dépôt GitHub.
+- Vérifier l'accès public au fichier Figma.
+- Vérifier le lien Notion partagé au jury.
+- Vérifier l'application déployée : <https://vite-gourmand-ecf-jmf.fly.dev>.
+- Vérifier les identifiants administrateur de démonstration.
+- Vérifier les informations candidat dans la copie finale Studi.
 - Joindre les exports PDF des maquettes desktop/mobile et la charte graphique.
 - Joindre le manuel utilisateur PDF.
 
 ## Notes Pour Le Jury
 
-Le depot montre deja :
+Le dépôt montre déjà :
 
-- la comprehension du besoin client ;
-- la transformation de l'enonce en parcours fonctionnels ;
+- la compréhension du besoin client ;
+- la transformation de l'énoncé en parcours fonctionnels ;
 - la priorisation MVP ;
-- la modelisation relationnelle ;
+- la modélisation relationnelle ;
 - la justification SQL / MongoDB ;
-- la preparation d'une architecture MVC ;
+- la préparation d'une architecture MVC ;
 - la production de diagrammes UML ;
-- la prise en compte des enjeux de securite, accessibilite et deploiement.
+- la prise en compte des enjeux de sécurité, accessibilité et déploiement.
 
-Points a expliquer a l'oral :
+Points à expliquer à l'oral :
 
-- pourquoi une stack PHP native MVC plutot qu'un framework complet ;
-- pourquoi SQL reste la source de verite metier ;
-- pourquoi MongoDB est limite aux statistiques administrateur ;
-- comment les roles structurent les acces ;
-- comment les commandes changent d'etat ;
-- comment les regles de prix, reduction et livraison seront controlees ;
-- comment la securite est appliquee dans le code ;
-- comment le deploiement Fly.io relie l'application PHP, MySQL et MongoDB.
+- pourquoi une stack PHP native MVC plutôt qu'un framework complet ;
+- pourquoi SQL reste la source de vérité métier ;
+- pourquoi MongoDB est limité aux statistiques administrateur ;
+- comment les rôles structurent les accès ;
+- comment les commandes changent d'état ;
+- comment les règles de prix, réduction et livraison seront contrôlées ;
+- comment la sécurité est appliquée dans le code ;
+- comment le déploiement Fly.io relie l'application PHP, MySQL et MongoDB.
