@@ -24,10 +24,10 @@ Cette checklist sert au dernier controle avant depot sur Studi.
 ## GitHub
 
 - [x] `develop` contient les corrections finales.
-- [ ] Fusionner `develop` vers `main`.
-- [ ] Pousser `develop` et `main`.
-- [ ] Verifier GitHub public hors session.
-- [ ] Verifier que le README affiche bien l'URL Fly.io, Notion, Figma et les comptes demo.
+- [x] Fusionner `develop` vers `main`.
+- [x] Pousser `develop` et `main`.
+- [x] Verifier que GitHub est public.
+- [x] Verifier que le README affiche bien l'URL Fly.io, Notion, Figma et les comptes demo.
 
 ## Application
 
@@ -36,8 +36,8 @@ Cette checklist sert au dernier controle avant depot sur Studi.
 - [x] Parcours employe verifie : dashboard, commandes, statuts, avis.
 - [x] Parcours administrateur verifie : dashboard, statistiques MongoDB, menus, plats, horaires, employes.
 - [x] Controle d'acces verifie : client bloque sur admin, employe bloque sur statistiques admin.
-- [ ] Redeployer apres la correction finale des mentions legales.
-- [ ] Refaire un test rapide de `/mentions-legales` sur l'URL Fly.io apres redeploiement.
+- [x] Redeployer apres la correction finale des mentions legales.
+- [x] Refaire un test rapide de `/mentions-legales` sur l'URL Fly.io apres redeploiement.
 
 ## Documentation locale
 
