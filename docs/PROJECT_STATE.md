@@ -162,7 +162,9 @@ Points restants :
 - PDO et requetes preparees pour l'acces SQL.
 - SQL comme source de verite metier.
 - MongoDB limite aux agregats statistiques NoSQL.
-- Emails journalises localement tant que SMTP production n'est pas configure.
+- Envoi d'email reel via SMTP implemente et teste en local (sandbox Mailtrap) ;
+  la production (Fly.io) reste volontairement en mode "log" (choix de perimetre
+  assume, pas une limitation technique du code).
 - Middleware serveur pour les droits, pas seulement masquage des liens.
 - Historique des statuts dans `commande_statuts`.
 - Avis publics uniquement apres commande terminee et moderation.
@@ -170,5 +172,5 @@ Points restants :
 ## Risques restants
 
 - Tests automatises applicatifs limites.
-- Configuration SMTP production non branchee.
+- SMTP reel non active en production par choix (voir decisions ci-dessus).
 - Liens publics et identifiants de demo a verifier une derniere fois avant rendu.

@@ -384,11 +384,11 @@ Le fichier [.env.example](.env.example) documente les variables attendues :
 | `NOSQL_HOST` | Hôte MongoDB. |
 | `NOSQL_PORT` | Port MongoDB. |
 | `NOSQL_DATABASE` | Base MongoDB des statistiques. |
-| `MAIL_MAILER` | Stratégie d'envoi des emails. |
-| `MAIL_HOST` | Hôte SMTP si nécessaire. |
-| `MAIL_PORT` | Port SMTP si nécessaire. |
-| `MAIL_USERNAME` | Identifiant mail si nécessaire. |
-| `MAIL_PASSWORD` | Mot de passe mail si nécessaire. |
+| `MAIL_MAILER` | Stratégie d'envoi des emails : `log` (écrit dans `storage/logs/mail.log`, utilisé en production/Fly.io) ou `smtp` (envoi réel via un serveur SMTP, testé en local avec le mode sandbox de Mailtrap). |
+| `MAIL_HOST` | Hôte SMTP si `MAIL_MAILER=smtp`. |
+| `MAIL_PORT` | Port SMTP si `MAIL_MAILER=smtp`. |
+| `MAIL_USERNAME` | Identifiant SMTP si `MAIL_MAILER=smtp`. |
+| `MAIL_PASSWORD` | Mot de passe SMTP si `MAIL_MAILER=smtp`. |
 | `MAIL_FROM_ADDRESS` | Adresse d'expédition. |
 | `MAIL_FROM_NAME` | Nom d'expédition. |
 | `MAIL_CONTACT_TO` | Adresse recevant les demandes du formulaire contact. |
