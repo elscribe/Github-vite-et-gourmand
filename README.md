@@ -42,8 +42,6 @@ qualité, les composants de base, la charte graphique et une page d'exports PDF.
 - Outil de gestion de projet : <https://app.notion.com/p/3794ea958e18801aba79dc472cbe9fb7>
 - Application déployée : <https://vite-gourmand-ecf-jmf.fly.dev>
 
-Avant le dépôt Studi, les liens GitHub, Figma, Notion et application déployée
-doivent être testés depuis une fenêtre privée ou un navigateur non connecté.
 
 ## Comptes De Démonstration
 
@@ -525,46 +523,6 @@ Parcours couverts localement :
 Les tests automatisés applicatifs restent une amélioration future. La priorité
 ECF est la recette manuelle documentée et reproductible.
 
-## Roadmap
-
-### Terminé
-
-- [x] Analyse du besoin dans Notion.
-- [x] Cahier des charges dans Notion.
-- [x] Backlog, user stories et priorisation MVP dans Notion.
-- [x] Méthode de gestion hybride documentée dans Notion.
-- [x] Architecture MVC cible documentée.
-- [x] MCD, MLD et MPD.
-- [x] Diagrammes UML principaux.
-- [x] Scripts SQL de création et d'insertion.
-- [x] Scripts MongoDB de création et d'insertion.
-- [x] Audit de cohérence Merise / SQL / MongoDB / UML.
-- [x] Lien Figma global synchronisé.
-- [x] Fichier `.env.example`.
-
-### Finalisé Pour Le Rendu
-
-- [x] Export final des maquettes desktop/mobile et de la charte graphique.
-- [x] Implémentation du MVP PHP MVC local.
-- [x] Documentation sécurité.
-- [x] Préparation Docker/Fly.io.
-- [x] Déploiement public Fly.io.
-- [x] Audit accessibilité RGAA interne.
-- [ ] Audit RGAA complet final.
-- [x] Recherche anglophone.
-- [x] Matrice finale de recette.
-- [x] Manuel utilisateur Markdown.
-- [x] Documentation de déploiement avec URL réelle.
-- [x] Manuel utilisateur PDF.
-- [x] Livrables finaux locaux.
-- [x] Tests principaux sur URL déployée.
-
-### Améliorations Futures
-
-- [ ] Ajouter des tests automatisés.
-- [ ] Ajouter des captures d'écran de l'application.
-- [ ] Ajouter une stratégie RGPD détaillée.
-- [ ] Ajouter une documentation de maintenance.
 
 ## Suivi Git
 
@@ -595,37 +553,3 @@ Workflow prévu : les fonctionnalités partent de `develop`, sont fusionnées da
 `develop` après vérification, puis `develop` est fusionnée dans `main` quand une
 version stable est prête pour présentation.
 
-## Vérification Finale Avant Dépôt Studi
-
-- Vérifier l'accès public au dépôt GitHub.
-- Vérifier l'accès public au fichier Figma.
-- Vérifier le lien Notion partagé au jury.
-- Vérifier l'application déployée : <https://vite-gourmand-ecf-jmf.fly.dev>.
-- Vérifier les identifiants administrateur de démonstration.
-- Vérifier les informations candidat dans la copie finale Studi.
-- Joindre les exports PDF des maquettes desktop/mobile et la charte graphique.
-- Joindre le manuel utilisateur PDF.
-
-## Notes Pour Le Jury
-
-Le dépôt montre déjà :
-
-- la compréhension du besoin client ;
-- la transformation de l'énoncé en parcours fonctionnels ;
-- la priorisation MVP ;
-- la modélisation relationnelle ;
-- la justification SQL / MongoDB ;
-- la préparation d'une architecture MVC ;
-- la production de diagrammes UML ;
-- la prise en compte des enjeux de sécurité, accessibilité et déploiement.
-
-Points à expliquer à l'oral :
-
-- pourquoi une stack PHP native MVC plutôt qu'un framework complet ;
-- pourquoi SQL reste la source de vérité métier ;
-- pourquoi MongoDB est limité aux statistiques administrateur ;
-- comment les rôles structurent les accès ;
-- comment les commandes changent d'état ;
-- comment les règles de prix, réduction et livraison seront contrôlées ;
-- comment la sécurité est appliquée dans le code ;
-- comment le déploiement Fly.io relie l'application PHP, MySQL et MongoDB.
