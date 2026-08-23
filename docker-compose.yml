@@ -1,10 +1,12 @@
+name: vite-gourmand
+
 services:
   app:
     build:
       context: .
     image: vite-gourmand-app:local
     ports:
-      - "8080:80"
+      - "8081:80"
     environment:
       APP_NAME: ViteEtGourmand
       APP_ENV: local
@@ -13,7 +15,7 @@ services:
       APP_LOG_ERRORS: "true"
       APP_LOG_PATH: storage/logs/app.log
       APP_TIMEZONE: Europe/Paris
-      APP_URL: http://localhost:8080
+      APP_URL: http://localhost:8081
       APP_KEY: docker_local_change_me
       SESSION_NAME: vite_gourmand_session
       SESSION_LIFETIME_MINUTES: "120"
