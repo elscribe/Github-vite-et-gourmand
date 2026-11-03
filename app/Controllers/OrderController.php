@@ -42,6 +42,7 @@ final class OrderController extends BaseController
             'bodyClass' => 'page-client page-client-order-form',
             'menus' => $menuModel->findActiveMenus(),
             'selectedMenuId' => $selectedMenuId,
+            'customer' => (new UserModel())->findById($this->authenticatedUserId()),
             'old' => [],
             'errors' => [],
         ]);
@@ -62,6 +63,7 @@ final class OrderController extends BaseController
                 'bodyClass' => 'page-client page-client-order-form',
                 'menus' => (new MenuModel())->findActiveMenus(),
                 'selectedMenuId' => $menuId,
+                'customer' => (new UserModel())->findById($userId),
                 'old' => $data + ['id_menu' => $menuId],
                 'errors' => $errors,
             ]);
@@ -70,9 +72,36 @@ final class OrderController extends BaseController
         }
 
         $orderId = $orderModel->create($userId, $menuId, $data);
-        $this->notifyOrderCreated($userId, $orderId);
 
-        Session::flash('success', 'Votre commande a ete enregistree et attend validation.');
+        if ($orderId === 0) {
+            $currentMenu = $orderModel->findMenuForOrder($menuId);
+            $message = $currentMenu !== null && (int) $currentMenu['stock_disponible'] > 0
+                && $data['nombre_personnes'] < (int) $currentMenu['nombre_personnes_minimum']
+                ? 'Le minimum de personnes du menu a changé. Vérifiez votre commande.'
+                : 'Ce menu n’est plus disponible.';
+            $this->view('orders/create', [
+                'pageTitle' => 'Validation de votre commande - Vite & Gourmand',
+                'bodyClass' => 'page-client page-client-order-form',
+                'menus' => (new MenuModel())->findActiveMenus(),
+                'selectedMenuId' => $menuId,
+                'customer' => (new UserModel())->findById($userId),
+                'old' => $data + ['id_menu' => $menuId],
+                'errors' => ['id_menu' => $message],
+            ]);
+            return;
+        }
+
+        // La commande est deja enregistree : un e-mail en echec est seulement signale.
+        try {
+            $notified = $this->notifyOrderCreated($userId, $orderId);
+        } catch (\Throwable $exception) {
+            error_log('Notification de commande indisponible après enregistrement.');
+            $notified = false;
+        }
+
+        Session::flash('success', $notified
+            ? 'Votre commande a ete enregistree et attend validation.'
+            : 'Votre commande a été enregistrée, mais la notification n’a pas pu être préparée.');
         $this->redirect('/commandes/' . $orderId);
     }
 
@@ -118,6 +147,7 @@ final class OrderController extends BaseController
             'pageTitle' => 'Modifier la commande - Vite & Gourmand',
             'bodyClass' => 'page-client page-client-order-form',
             'order' => $order,
+            'customer' => (new UserModel())->findById($userId),
             'old' => $order,
             'errors' => [],
         ]);
@@ -147,6 +177,7 @@ final class OrderController extends BaseController
                 'pageTitle' => 'Modifier la commande - Vite & Gourmand',
                 'bodyClass' => 'page-client page-client-order-form',
                 'order' => $order,
+                'customer' => (new UserModel())->findById($userId),
                 'old' => $data,
                 'errors' => $errors,
             ]);
@@ -370,8 +401,14 @@ final class OrderController extends BaseController
             return $errors;
         }
 
-        if ($data['date_prestation'] === '') {
-            $errors['date_prestation'] = 'La date de prestation est obligatoire.';
+        $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $data['date_prestation']);
+        $dateErrors = \DateTimeImmutable::getLastErrors();
+        $hasDateErrors = is_array($dateErrors) && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0);
+
+        if ($data['date_prestation'] === '' || preg_match('/^\d{4}-\d{2}-\d{2}$/', $data['date_prestation']) !== 1 || $date === false || $hasDateErrors) {
+            $errors['date_prestation'] = 'La date de prestation doit être valide.';
+        } elseif ($date < new \DateTimeImmutable('today')) {
+            $errors['date_prestation'] = 'La date de prestation doit être future ou actuelle.';
         }
 
         if ($data['heure_livraison'] === '' || preg_match('/^\d{2}:\d{2}$/', $data['heure_livraison']) !== 1) {
@@ -423,16 +460,16 @@ final class OrderController extends BaseController
         return str_starts_with($path, '/admin') ? '/admin/commandes' : '/employe/commandes';
     }
 
-    private function notifyOrderCreated(int $userId, int $orderId): void
+    private function notifyOrderCreated(int $userId, int $orderId): bool
     {
         $user = (new UserModel())->findById($userId);
         $order = (new OrderModel())->findOneForEmployee($orderId);
 
         if ($user === null || $order === null) {
-            return;
+            return false;
         }
 
-        (new MailService())->send(
+        return (new MailService())->send(
             (string) $user['email'],
             'Confirmation de votre commande Vite & Gourmand',
             "Bonjour {$user['prenom']},\n\nVotre commande #{$orderId} pour le menu {$order['menu_titre']} a bien ete enregistree.\nElle est actuellement en attente de validation par notre equipe.\n\nVous pouvez la suivre depuis votre espace :\n" . $this->absoluteUrl('/commandes/' . $orderId) . "\n\nL'equipe Vite & Gourmand"

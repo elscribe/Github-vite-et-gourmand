@@ -131,10 +131,18 @@ $statusTabUrl = static function (string $status) use ($filters, $searchFilterKey
                                         <h3>Modifier le statut</h3>
                                         <label for="statut-<?= (int) $order['id_commande'] ?>">Nouveau statut</label>
                                         <select id="statut-<?= (int) $order['id_commande'] ?>" name="statut">
-                                            <?php foreach ($backofficeStatusLabels as $value => $label): ?>
-                                                <?php if ($value === 'annulee') {
-                                                    continue;
-                                                } ?>
+                                            <?php
+                                            $nextStatuses = [
+                                                'en_attente' => ['acceptee'],
+                                                'acceptee' => ['en_preparation'],
+                                                'en_preparation' => ['en_cours_de_livraison'],
+                                                'en_cours_de_livraison' => ['livre'],
+                                                'livre' => (int) ($order['materiel_prete'] ?? 0) === 1 ? ['en_attente_retour_materiel'] : ['terminee'],
+                                                'en_attente_retour_materiel' => ['terminee'],
+                                            ];
+                                            foreach ($nextStatuses[$status] ?? [] as $value):
+                                                $label = $backofficeStatusLabels[$value] ?? $value;
+                                            ?>
                                                 <option value="<?= $this->e($value) ?>" <?= $status === $value ? 'selected' : '' ?>><?= $this->e($label) ?></option>
                                             <?php endforeach; ?>
                                         </select>

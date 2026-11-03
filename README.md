@@ -202,7 +202,7 @@ vite-gourmand/
 - `public/` : point d'entrée web et assets publics.
 - `scripts/` : outils de génération ou maintenance de documentation.
 - `storage/` : logs et fichiers générés localement, non publics.
-- `tests/` : futurs tests automatisés.
+- `tests/` : tests automatisés PHPUnit (voir `tests/README.md`).
 - `docker/` : configuration Apache du conteneur de déploiement.
 - `Dockerfile` : image PHP 8.3 Apache pour le déploiement Fly.io.
 - `fly.toml` / `fly.toml.example` : configuration Fly.io et modèle de référence.

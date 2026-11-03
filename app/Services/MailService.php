@@ -30,7 +30,7 @@ final class MailService
     public function __construct()
     {
         $this->mailer = getenv('MAIL_MAILER') ?: 'log';
-        $this->logPath = dirname(__DIR__, 2) . '/storage/logs/mail.log';
+        $this->logPath = getenv('MAIL_LOG_PATH') ?: dirname(__DIR__, 2) . '/storage/logs/mail.log';
         $this->fromAddress = getenv('MAIL_FROM_ADDRESS') ?: 'contact@vitegourmand.test';
         $this->fromName = getenv('MAIL_FROM_NAME') ?: 'Vite & Gourmand';
         $this->host = getenv('MAIL_HOST') ?: 'localhost';
@@ -39,28 +39,36 @@ final class MailService
         $this->password = getenv('MAIL_PASSWORD') ?: '';
     }
 
-    public function send(string $to, string $subject, string $body): void
+    /**
+     * Ne leve jamais d'exception : renvoie false si l'e-mail n'a pas pu etre
+     * prepare, pour que l'appelant puisse le signaler sans annuler son action.
+     */
+    public function send(string $to, string $subject, string $body): bool
     {
         // On garde toujours une trace dans le log, meme en mode SMTP :
         // c'est la preuve locale utilisee pendant les tests et la recette.
-        $this->writeLog($to, $subject, $body);
+        $logged = $this->writeLog($to, $subject, $body);
 
         if ($this->mailer !== 'smtp') {
-            return;
+            return $logged;
         }
 
         try {
             $this->sendSmtp($to, $subject, $body);
+
+            return true;
         } catch (\Throwable $exception) {
             $this->writeLog(
                 $to,
                 '[SMTP echec, repli sur le log] ' . $subject,
                 'Erreur lors de l\'envoi reel : ' . $exception->getMessage()
             );
+
+            return false;
         }
     }
 
-    private function writeLog(string $to, string $subject, string $body): void
+    private function writeLog(string $to, string $subject, string $body): bool
     {
         $entry = [
             'date' => date('Y-m-d H:i:s'),
@@ -76,7 +84,15 @@ final class MailService
         }
         $content .= "\n";
 
-        file_put_contents($this->logPath, $content, FILE_APPEND | LOCK_EX);
+        // Les e-mails partent apres l'enregistrement en base : un journal
+        // impossible a ecrire ne doit pas faire echouer une action deja faite.
+        if (@file_put_contents($this->logPath, $content, FILE_APPEND | LOCK_EX) === false) {
+            error_log('Journal des e-mails indisponible : ' . $this->logPath);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

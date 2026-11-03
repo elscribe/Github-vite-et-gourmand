@@ -124,3 +124,7 @@ $RECYCLE.BIN/
 *.swo
 public/images/menu-details/uploads/*
 !public/images/menu-details/uploads/.gitkeep
+
+# PHPUnit
+.phpunit.cache/
+.phpunit.result.cache

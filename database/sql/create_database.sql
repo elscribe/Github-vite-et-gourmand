@@ -236,6 +236,7 @@ CREATE TABLE `commandes` (
     `prix_livraison` DECIMAL(10,2) DEFAULT 0,
     `prix_total` DECIMAL(10,2) NOT NULL,
     `statut_actuel` VARCHAR(40) NOT NULL DEFAULT 'en_attente',
+    `stock_reserve` BOOLEAN NOT NULL DEFAULT FALSE,
     `materiel_prete` BOOLEAN DEFAULT FALSE,
     `materiel_retourne` BOOLEAN DEFAULT FALSE,
     `mode_contact_modification` VARCHAR(20) NULL,

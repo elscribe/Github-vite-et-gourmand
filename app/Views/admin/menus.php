@@ -185,6 +185,7 @@ $formatPrice = static fn (mixed $price): string => number_format((float) $price,
                 <div class="admin-menu-detail-layout">
                     <form class="admin-menu-edit-form" action="/admin/menus/<?= $selectedMenuId ?>" method="post">
                         <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="stock_initial" value="<?= (int) $selectedMenu['stock_disponible'] ?>">
                         <?php foreach ($currentMenuDishIds as $dishId): ?>
                             <input type="hidden" name="dish_ids[]" value="<?= (int) $dishId ?>">
                         <?php endforeach; ?>

@@ -244,7 +244,12 @@ final class AdminController extends BaseController
         }
 
         $menuId = (int) $id;
-        $menuModel->updateBasic($menuId, $data);
+        $initialStock = Input::postString('stock_initial');
+        if ($initialStock === '' || !ctype_digit($initialStock)
+            || !$menuModel->updateBasic($menuId, $data, (int) $initialStock)) {
+            Session::flash('error', 'Le stock a changé ou le menu est introuvable. Rechargez le menu avant de réessayer.');
+            $this->redirect('/admin/menus?menu=' . $menuId);
+        }
         $menuModel->syncDishes($menuId, $this->selectedIds('dish_ids'));
         Session::flash('success', 'Menu mis a jour.');
 

@@ -179,10 +179,14 @@ $detailSections = $presentation['detail_sections'] ?? [];
                 <?php endif; ?>
 
                 <div class="menu-detail-actions">
+                    <?php if ((int) ($menu['stock_disponible'] ?? 0) > 0): ?>
                     <a class="menu-detail-order-button" href="/commandes/creation/<?= (int) $menu['id_menu'] ?>">
                         Commander ce menu
                     </a>
                     <p>Si vous n'êtes pas connecté, vous devrez vous connecter ou créer un compte avant de commander.</p>
+                    <?php else: ?>
+                    <p>Ce menu est épuisé.</p>
+                    <?php endif; ?>
                     <a class="menu-detail-outline-button" href="/contact">Contacter le traiteur</a>
                     <a class="menu-detail-outline-button" href="/menus">&larr; Retour aux menus</a>
                 </div>

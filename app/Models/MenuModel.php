@@ -283,9 +283,21 @@ final class MenuModel extends BaseModel
     /**
      * @param array{id_regime: int, id_theme: int, titre: string, description: string, conditions: string, nombre_personnes_minimum: int, prix_minimum: float, stock_disponible: int, actif: int} $data
      */
-    public function updateBasic(int $menuId, array $data): bool
+    public function updateBasic(int $menuId, array $data, int $initialStock): bool
     {
-        $statement = $this->pdo()->prepare(
+        $this->pdo()->beginTransaction();
+
+        try {
+            $lock = $this->pdo()->prepare('SELECT stock_disponible FROM menus WHERE id_menu = :id FOR UPDATE');
+            $lock->execute(['id' => $menuId]);
+            $currentStock = $lock->fetchColumn();
+
+            if ($currentStock === false || (int) $currentStock !== $initialStock) {
+                $this->pdo()->rollBack();
+                return false;
+            }
+
+            $statement = $this->pdo()->prepare(
             'UPDATE menus
              SET id_regime = :id_regime,
                  id_theme = :id_theme,
@@ -299,9 +311,14 @@ final class MenuModel extends BaseModel
                  updated_at = CURRENT_TIMESTAMP
              WHERE id_menu = :id_menu'
         );
-        $statement->execute($data + ['id_menu' => $menuId]);
+            $statement->execute($data + ['id_menu' => $menuId]);
+            $this->pdo()->commit();
 
-        return $statement->rowCount() === 1;
+            return true;
+        } catch (\Throwable $exception) {
+            $this->pdo()->rollBack();
+            throw $exception;
+        }
     }
 
     /**

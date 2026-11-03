@@ -211,7 +211,7 @@ contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee.
 |---|---|---|
 | Pas de MFA | Non demande dans le MVP ECF. | Ajouter une double authentification admin. |
 | Email SMTP non branche | Le MVP conserve les preuves en mode log. | Brancher SMTP ou service transactionnel. |
-| Pas de tests automatises de securite | Perimetre ECF centre sur recette manuelle. | Ajouter tests integration et scans OWASP ZAP. |
+| Tests de securite limites | Depuis novembre 2026, PHPUnit verifie le jeton CSRF, les roles et les comptes desactives (voir `tests/README.md`) ; aucun scan automatise n'est realise. | Ajouter un scan OWASP ZAP et des en-tetes HTTP de securite. |
 | Audit RGAA expert non realise | Une recette interne est documentee, mais pas un audit exhaustif des 106 criteres. | Refaire clavier, contrastes, zoom/reflow et lecteur d'ecran sur l'URL deployee. |
 
 ## Phrase de presentation jury

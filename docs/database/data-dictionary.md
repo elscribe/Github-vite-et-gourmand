@@ -144,6 +144,7 @@ Commandes passees par les utilisateurs.
 | `prix_livraison` | `DECIMAL(10,2)` | NOT NULL | Frais livraison |
 | `prix_total` | `DECIMAL(10,2)` | NOT NULL | Total TTC |
 | `statut_actuel` | `VARCHAR(40)` | NOT NULL | Etat courant |
+| `stock_reserve` | `BOOLEAN` | NOT NULL DEFAULT 0 | Indique si la commande a réservé une place de stock encore à restituer en cas d'annulation |
 | `materiel_prete` | `BOOLEAN` | NOT NULL | Materiel a restituer |
 | `materiel_retourne` | `BOOLEAN` | NOT NULL | Retour materiel |
 | `mode_contact_modification` | `VARCHAR(20)` | NULL | Appel ou email |

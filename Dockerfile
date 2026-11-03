@@ -1,4 +1,7 @@
-FROM php:8.3-cli-bookworm AS vendor
+# Version PHP fixee : 8.3.36 corrige les failles annoncees par php.net
+# (avis du 22/10/2026). Un tag "8.3" seul peut reprendre une ancienne image
+# deja presente en cache. Changer les deux lignes FROM ensemble.
+FROM php:8.3.36-cli-bookworm AS vendor
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -14,7 +17,7 @@ RUN composer install \
     --no-progress \
     --optimize-autoloader
 
-FROM php:8.3-apache-bookworm
+FROM php:8.3.36-apache-bookworm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates curl gnupg \

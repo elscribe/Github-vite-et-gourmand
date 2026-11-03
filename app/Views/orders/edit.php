@@ -3,6 +3,7 @@
  * @var array<string, mixed> $order
  * @var array<string, mixed> $old
  * @var array<string, string> $errors
+ * @var array<string, mixed>|null $customer
  */
 $deliveryCity = (string) ($old['ville_livraison'] ?? '');
 $isBordeauxDelivery = strtolower(trim($deliveryCity)) === 'bordeaux';
@@ -33,6 +34,13 @@ $isBordeauxDelivery = strtolower(trim($deliveryCity)) === 'bordeaux';
             >
                 <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                 <h2>Prestation à ajuster</h2>
+
+                <div class="client-order-contact-summary">
+                    <h3>Coordonnées client</h3>
+                    <p><?= $this->e(trim((string) ($customer['prenom'] ?? '') . ' ' . (string) ($customer['nom'] ?? ''))) ?></p>
+                    <p><?= $this->e((string) ($customer['email'] ?? '')) ?><?= !empty($customer['telephone']) ? ' · ' . $this->e((string) $customer['telephone']) : '' ?></p>
+                    <p class="client-muted">Ces coordonnées proviennent de votre compte. Modifiez-les depuis votre profil.</p>
+                </div>
 
                 <div class="client-order-current-menu">
                     <strong><?= $this->e($order['menu_titre']) ?></strong>

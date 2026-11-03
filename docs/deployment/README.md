@@ -37,7 +37,8 @@ La cible de production doit fournir :
 
 - Fly.io et `flyctl` ;
 - Docker pour construire l'image ;
-- PHP 8.3 dans le conteneur ;
+- PHP 8.3.36 minimum dans le conteneur (version de securite publiee par
+  php.net le 22/10/2026) ;
 - `mongosh` dans le conteneur pour lire les agregats MongoDB ;
 - MariaDB ou MySQL 8 accessible depuis Fly.io ;
 - MongoDB ou service MongoDB accessible depuis Fly.io ;
@@ -49,7 +50,8 @@ La cible de production doit fournir :
 
 Les fichiers de preparation sont presents dans le depot :
 
-- `Dockerfile` : construit l'image PHP 8.3 avec Apache, installe `pdo_mysql`
+- `Dockerfile` : construit l'image PHP 8.3.36 avec Apache (version fixee dans
+  les deux lignes `FROM`), installe `pdo_mysql`
   et `mongosh`, installe Composer en mode production et sert `public/` sur le
   port 80 ;
 - `.dockerignore` : exclut les secrets, dependances locales, logs et fichiers

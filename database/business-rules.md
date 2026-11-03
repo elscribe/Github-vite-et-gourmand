@@ -99,6 +99,7 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - `prix_livraison` (DECIMAL(10,2)) : Frais livraison
 - `prix_total` (DECIMAL(10,2)) : Total TTC
 - `statut_actuel` (VARCHAR(40)) : Etat courant
+- `stock_reserve` (BOOLEAN) : une place de stock a été réservée pour cette commande
 - `materiel_prete` (BOOLEAN) : Materiel a restituer
 - `materiel_retourne` (BOOLEAN) : Retour materiel
 - `mode_contact_modification` (VARCHAR(20)) : Appel ou email
@@ -162,6 +163,12 @@ Ce document formalise la partie base de donnees de Vite & Gourmand a partir de l
 - `utilisateurs` (0,n) - demande - `password_resets` (1,1).
 
 ## Contraintes metier
+
+- Une commande créée réserve une place du menu si le stock est positif ; un menu épuisé reste visible mais ne peut pas être commandé.
+- Une annulation client ou employé restitue une place uniquement si cette commande l'avait effectivement réservée. Les anciennes commandes portent par défaut `stock_reserve = 0` lors de la mise à jour de la base.
+- Le stock est une valeur absolue modifiable par l'administrateur. Si le stock a changé depuis l'ouverture de la fiche, sa modification est refusée jusqu'au rechargement. La mise à jour d'une base existante est décrite dans `database/sql/README.md`.
+- Une modification de commande (client ou employé) relit la commande sous verrou avant d'écrire : elle est refusée si la commande a été annulée ou a changé de statut entre-temps. Elle ne change pas le stock.
+- Les e-mails sont préparés après l'enregistrement en base : un e-mail impossible à préparer est signalé mais n'annule pas la commande ni l'action de l'employé.
 
 - Un visiteur peut consulter les menus sans compte, mais doit se connecter ou creer un compte avant de commander.
 - A la creation publique d'un compte, le role attribue est obligatoirement `utilisateur`.

@@ -151,7 +151,7 @@ Elle relie chaque user story a :
 |---|---|
 | Identite narrative | Garder les memes noms dans Figma, Notion, SQL et code. |
 | Anciennete entreprise | Garder une formulation unique : entreprise familiale de Bordeaux, environ 25 ans d'activite si conserve. |
-| Statuts commande | Harmoniser Figma, SQL et interface : `en_attente`, `acceptee`, `en_preparation`, `en_livraison`, `livree`, `en_attente_retour_materiel`, `terminee`, `annulee`. |
+| Statuts commande | Harmoniser Figma, SQL et interface : `en_attente`, `acceptee`, `en_preparation`, `en_cours_de_livraison`, `livre`, `en_attente_retour_materiel`, `terminee`, `annulee`. |
 | Responsive | Verifier les pages principales mobile et desktop. |
 | Accessibilite | Verifier contrastes, labels, alt images et navigation clavier de base. |
 | Source Figma admin desktop | Section `03 - Maquettes 2 > Desktop - Administration` completee le 22 juillet 2026 ; recontroler l'ecran Menus/Plats avec le dernier code avant export final. |

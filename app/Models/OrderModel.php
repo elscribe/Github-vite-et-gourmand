@@ -376,22 +376,41 @@ final class OrderModel extends BaseModel
      */
     public function create(int $userId, int $menuId, array $data): int
     {
-        $menu = $this->findMenuForOrder($menuId);
-
-        if ($menu === null) {
-            return 0;
-        }
-
-        $totals = $this->calculateTotals(
-            $menu,
-            $data['nombre_personnes'],
-            $data['ville_livraison'],
-            $data['distance_km']
-        );
-
         $this->pdo()->beginTransaction();
 
         try {
+            // Relire le menu sous verrou évite d'enregistrer des conditions dépassées.
+            $menuStatement = $this->pdo()->prepare(
+                'SELECT id_menu, titre, prix_minimum, nombre_personnes_minimum, stock_disponible
+                 FROM menus WHERE id_menu = :id AND actif = 1 FOR UPDATE'
+            );
+            $menuStatement->execute(['id' => $menuId]);
+            $menu = $menuStatement->fetch();
+
+            if ($menu === false || (int) $menu['stock_disponible'] <= 0
+                || $data['nombre_personnes'] < (int) $menu['nombre_personnes_minimum']) {
+                $this->pdo()->rollBack();
+                return 0;
+            }
+
+            $totals = $this->calculateTotals(
+                $menu,
+                $data['nombre_personnes'],
+                $data['ville_livraison'],
+                $data['distance_km']
+            );
+
+            $stock = $this->pdo()->prepare(
+                'UPDATE menus SET stock_disponible = stock_disponible - 1
+                 WHERE id_menu = :id AND actif = 1 AND stock_disponible > 0'
+            );
+            $stock->execute(['id' => $menuId]);
+
+            if ($stock->rowCount() !== 1) {
+                $this->pdo()->rollBack();
+                return 0;
+            }
+
             $sql = <<<SQL
                 INSERT INTO commandes (
                     id_utilisateur,
@@ -408,7 +427,8 @@ final class OrderModel extends BaseModel
                     remise,
                     prix_livraison,
                     prix_total,
-                    statut_actuel
+                    statut_actuel,
+                    stock_reserve
                 ) VALUES (
                     :id_utilisateur,
                     :id_menu,
@@ -424,7 +444,8 @@ final class OrderModel extends BaseModel
                     :remise,
                     :prix_livraison,
                     :prix_total,
-                    'en_attente'
+                    'en_attente',
+                    1
                 )
             SQL;
 
@@ -484,6 +505,12 @@ final class OrderModel extends BaseModel
         $this->pdo()->beginTransaction();
 
         try {
+            // La commande a pu etre annulee ou acceptee entre l'affichage et l'envoi.
+            if ($this->lockedOrderStatus($orderId, $userId) !== 'en_attente') {
+                $this->pdo()->rollBack();
+                return false;
+            }
+
             $sql = <<<SQL
                 UPDATE commandes
                 SET
@@ -568,6 +595,13 @@ final class OrderModel extends BaseModel
         $this->pdo()->beginTransaction();
 
         try {
+            $currentStatus = $this->lockedOrderStatus($orderId);
+
+            if ($currentStatus === null || in_array($currentStatus, ['terminee', 'annulee'], true)) {
+                $this->pdo()->rollBack();
+                return false;
+            }
+
             $sql = <<<SQL
                 UPDATE commandes
                 SET
@@ -602,13 +636,8 @@ final class OrderModel extends BaseModel
                 'order_id' => $orderId,
             ]);
 
-            if ($statement->rowCount() !== 1) {
-                $this->pdo()->rollBack();
-                return false;
-            }
-
             $comment = 'Commande modifiee apres contact ' . $modeContact . ' : ' . $motif;
-            $this->insertStatus($orderId, $userId, (string) $order['statut_actuel'], $comment);
+            $this->insertStatus($orderId, $userId, $currentStatus, $comment);
             $this->pdo()->commit();
 
             return true;
@@ -641,6 +670,7 @@ final class OrderModel extends BaseModel
                 return false;
             }
 
+            $this->releaseReservedStock($orderId);
             $this->insertStatus($orderId, $userId, 'annulee', $motif);
             $this->pdo()->commit();
 
@@ -653,6 +683,15 @@ final class OrderModel extends BaseModel
 
     public function changeStatusByEmployee(int $orderId, int $userId, string $status, string $comment): bool
     {
+        $allowedTransitions = [
+            'en_attente' => ['acceptee'],
+            'acceptee' => ['en_preparation'],
+            'en_preparation' => ['en_cours_de_livraison'],
+            'en_cours_de_livraison' => ['livre'],
+            'livre' => ['terminee', 'en_attente_retour_materiel'],
+            'en_attente_retour_materiel' => ['terminee'],
+        ];
+
         if ($status === 'annulee' || !array_key_exists($status, $this->statusLabels())) {
             return false;
         }
@@ -660,15 +699,35 @@ final class OrderModel extends BaseModel
         $this->pdo()->beginTransaction();
 
         try {
+            $currentStatement = $this->pdo()->prepare(
+                'SELECT statut_actuel, materiel_prete FROM commandes WHERE id_commande = :order_id LIMIT 1'
+            );
+            $currentStatement->execute(['order_id' => $orderId]);
+            $currentOrder = $currentStatement->fetch();
+            $currentStatus = is_array($currentOrder) ? ($currentOrder['statut_actuel'] ?? null) : null;
+            $hasLoanedEquipment = is_array($currentOrder) && (int) ($currentOrder['materiel_prete'] ?? 0) === 1;
+
+            if ($currentStatus === 'livre') {
+                $allowedTransitions['livre'] = $hasLoanedEquipment
+                    ? ['en_attente_retour_materiel']
+                    : ['terminee'];
+            }
+
+            if (!is_string($currentStatus) || !in_array($status, $allowedTransitions[$currentStatus] ?? [], true)) {
+                $this->pdo()->rollBack();
+                return false;
+            }
+
             $statement = $this->pdo()->prepare(
                 "UPDATE commandes
                  SET statut_actuel = :status
                  WHERE id_commande = :order_id
-                   AND statut_actuel NOT IN ('terminee', 'annulee')"
+                   AND statut_actuel = :current_status"
             );
             $statement->execute([
                 'status' => $status,
                 'order_id' => $orderId,
+                'current_status' => $currentStatus,
             ]);
 
             if ($statement->rowCount() !== 1) {
@@ -714,6 +773,7 @@ final class OrderModel extends BaseModel
                 return false;
             }
 
+            $this->releaseReservedStock($orderId);
             $this->insertStatus($orderId, $userId, 'annulee', $motif);
             $this->pdo()->commit();
 
@@ -722,6 +782,40 @@ final class OrderModel extends BaseModel
             $this->pdo()->rollBack();
             throw $exception;
         }
+    }
+
+    /**
+     * Lit le statut en verrouillant la commande jusqu'a la fin de la transaction.
+     * Le filtre client est optionnel : il est utilise pour les actions du client.
+     */
+    private function lockedOrderStatus(int $orderId, ?int $userId = null): ?string
+    {
+        $sql = 'SELECT statut_actuel FROM commandes WHERE id_commande = :order_id';
+        $params = ['order_id' => $orderId];
+
+        if ($userId !== null) {
+            $sql .= ' AND id_utilisateur = :user_id';
+            $params['user_id'] = $userId;
+        }
+
+        $statement = $this->pdo()->prepare($sql . ' FOR UPDATE');
+        $statement->execute($params);
+        $status = $statement->fetchColumn();
+
+        return is_string($status) ? $status : null;
+    }
+
+    /** Rend une place uniquement si cette commande l'avait réservée. */
+    private function releaseReservedStock(int $orderId): void
+    {
+        $statement = $this->pdo()->prepare(
+            'UPDATE menus SET stock_disponible = stock_disponible + 1
+             WHERE id_menu = (SELECT id_menu FROM commandes WHERE id_commande = :id AND stock_reserve = 1)'
+        );
+        $statement->execute(['id' => $orderId]);
+
+        $statement = $this->pdo()->prepare('UPDATE commandes SET stock_reserve = 0 WHERE id_commande = :id');
+        $statement->execute(['id' => $orderId]);
     }
 
     /**

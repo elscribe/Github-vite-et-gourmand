@@ -4,6 +4,7 @@
  * @var int $selectedMenuId
  * @var array<string, mixed> $old
  * @var array<string, string> $errors
+ * @var array<string, mixed>|null $customer
  */
 $deliveryCity = (string) ($old['ville_livraison'] ?? 'Bordeaux');
 $isBordeauxDelivery = strtolower(trim($deliveryCity)) === 'bordeaux';
@@ -32,6 +33,13 @@ foreach ($menus as $menu) {
                 <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
                 <h2>Informations de prestation</h2>
 
+                <div class="client-order-contact-summary">
+                    <h3>Coordonnées client</h3>
+                    <p><?= $this->e(trim((string) ($customer['prenom'] ?? '') . ' ' . (string) ($customer['nom'] ?? ''))) ?></p>
+                    <p><?= $this->e((string) ($customer['email'] ?? '')) ?><?= !empty($customer['telephone']) ? ' · ' . $this->e((string) $customer['telephone']) : '' ?></p>
+                    <p class="client-muted">Ces coordonnées proviennent de votre compte. Vous pouvez les modifier depuis votre profil.</p>
+                </div>
+
                 <div class="form-field">
                     <label for="id_menu">Menu</label>
                     <select id="id_menu" name="id_menu" data-order-menu required>
@@ -47,8 +55,9 @@ foreach ($menus as $menu) {
                                 data-conditions="<?= $this->e($menu['conditions'] ?? '') ?>"
                                 data-stock="<?= (int) $menu['stock_disponible'] ?>"
                                 <?= $isSelected ? 'selected' : '' ?>
+                                <?= (int) $menu['stock_disponible'] <= 0 ? 'disabled' : '' ?>
                             >
-                                <?= $this->e($menu['titre']) ?> - minimum <?= (int) $menu['nombre_personnes_minimum'] ?> pers.
+                                <?= $this->e($menu['titre']) ?> - minimum <?= (int) $menu['nombre_personnes_minimum'] ?> pers.<?= (int) $menu['stock_disponible'] <= 0 ? ' - épuisé' : '' ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
