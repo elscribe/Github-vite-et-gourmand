@@ -533,7 +533,7 @@ if (menuFilterForm instanceof HTMLElement) {
         });
 
         if (resultCount !== null) {
-            resultCount.textContent = `${visibleCount} menu${visibleCount > 1 ? 's' : ''} affiche${visibleCount > 1 ? 's' : ''}`;
+            resultCount.textContent = `${visibleCount} menu${visibleCount > 1 ? 's' : ''} affiché${visibleCount > 1 ? 's' : ''}`;
         }
 
         if (emptyState instanceof HTMLElement) {
